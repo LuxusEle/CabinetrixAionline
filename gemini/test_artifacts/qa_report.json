@@ -1,0 +1,6866 @@
+{
+  "timestamp": "2026-08-30 05:08:52 +0530",
+  "base_unit": {
+    "name": "QA_Base_Gola_600W",
+    "path": "QA_Base_Gola_600W",
+    "min": [
+      0.0,
+      -858.0,
+      100.0
+    ],
+    "max": [
+      600.0,
+      0.0,
+      820.0
+    ],
+    "width": 600.0,
+    "depth": 858.0,
+    "height": 720.0,
+    "children": [
+      {
+        "name": "Gable_LH",
+        "path": "QA_Base_Gola_600W > Gable_LH",
+        "min": [
+          0.0,
+          -560.0,
+          100.0
+        ],
+        "max": [
+          18.0,
+          0.0,
+          820.0
+        ],
+        "width": 18.0,
+        "depth": 560.0,
+        "height": 720.0,
+        "children": [
+
+        ]
+      },
+      {
+        "name": "Gable_RH",
+        "path": "QA_Base_Gola_600W > Gable_RH",
+        "min": [
+          582.0,
+          -560.0,
+          100.0
+        ],
+        "max": [
+          600.0,
+          0.0,
+          820.0
+        ],
+        "width": 18.0,
+        "depth": 560.0,
+        "height": 720.0,
+        "children": [
+
+        ]
+      },
+      {
+        "name": "Bottom_Panel",
+        "path": "QA_Base_Gola_600W > Bottom_Panel",
+        "min": [
+          7.0,
+          -560.0,
+          100.0
+        ],
+        "max": [
+          593.0,
+          -18.0,
+          118.3
+        ],
+        "width": 586.0,
+        "depth": 542.0,
+        "height": 18.3,
+        "children": [
+          {
+            "name": "Shelf_Panel",
+            "path": "QA_Base_Gola_600W > Bottom_Panel > Shelf_Panel",
+            "min": [
+              18.0,
+              -560.0,
+              100.0
+            ],
+            "max": [
+              582.0,
+              -18.0,
+              118.0
+            ],
+            "width": 564.0,
+            "depth": 542.0,
+            "height": 18.0,
+            "children": [
+
+            ]
+          },
+          {
+            "name": "Minifix_15_Joint_Set",
+            "path": "QA_Base_Gola_600W > Bottom_Panel > Minifix_15_Joint_Set",
+            "min": [
+              7.0,
+              -77.7,
+              105.0
+            ],
+            "max": [
+              59.8,
+              -34.0,
+              118.3
+            ],
+            "width": 52.8,
+            "depth": 43.7,
+            "height": 13.3,
+            "children": [
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Base_Gola_600W > Bottom_Panel > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  7.0,
+                  -72.5,
+                  106.5
+                ],
+                "max": [
+                  18.0,
+                  -67.5,
+                  111.5
+                ],
+                "width": 11.0,
+                "depth": 5.0,
+                "height": 5.0,
+                "children": [
+
+                ]
+              },
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Base_Gola_600W > Bottom_Panel > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  18.0,
+                  -73.8,
+                  105.3
+                ],
+                "max": [
+                  19.5,
+                  -66.2,
+                  112.8
+                ],
+                "width": 1.5,
+                "depth": 7.5,
+                "height": 7.5,
+                "children": [
+
+                ]
+              },
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Base_Gola_600W > Bottom_Panel > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  19.5,
+                  -73.2,
+                  105.8
+                ],
+                "max": [
+                  52.0,
+                  -66.8,
+                  112.3
+                ],
+                "width": 32.5,
+                "depth": 6.5,
+                "height": 6.5,
+                "children": [
+
+                ]
+              },
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Base_Gola_600W > Bottom_Panel > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  44.5,
+                  -77.4,
+                  105.8
+                ],
+                "max": [
+                  59.5,
+                  -62.6,
+                  118.3
+                ],
+                "width": 15.0,
+                "depth": 14.8,
+                "height": 12.5,
+                "children": [
+
+                ]
+              },
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Base_Gola_600W > Bottom_Panel > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  8.0,
+                  -42.0,
+                  105.0
+                ],
+                "max": [
+                  38.0,
+                  -34.0,
+                  113.0
+                ],
+                "width": 30.0,
+                "depth": 8.0,
+                "height": 8.0,
+                "children": [
+
+                ]
+              }
+            ]
+          },
+          {
+            "name": "Minifix_15_Joint_Set",
+            "path": "QA_Base_Gola_600W > Bottom_Panel > Minifix_15_Joint_Set",
+            "min": [
+              7.0,
+              -497.7,
+              105.0
+            ],
+            "max": [
+              59.8,
+              -454.0,
+              118.3
+            ],
+            "width": 52.8,
+            "depth": 43.7,
+            "height": 13.3,
+            "children": [
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Base_Gola_600W > Bottom_Panel > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  7.0,
+                  -492.5,
+                  106.5
+                ],
+                "max": [
+                  18.0,
+                  -487.5,
+                  111.5
+                ],
+                "width": 11.0,
+                "depth": 5.0,
+                "height": 5.0,
+                "children": [
+
+                ]
+              },
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Base_Gola_600W > Bottom_Panel > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  18.0,
+                  -493.7,
+                  105.3
+                ],
+                "max": [
+                  19.5,
+                  -486.3,
+                  112.8
+                ],
+                "width": 1.5,
+                "depth": 7.5,
+                "height": 7.5,
+                "children": [
+
+                ]
+              },
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Base_Gola_600W > Bottom_Panel > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  19.5,
+                  -493.3,
+                  105.8
+                ],
+                "max": [
+                  52.0,
+                  -486.8,
+                  112.3
+                ],
+                "width": 32.5,
+                "depth": 6.5,
+                "height": 6.5,
+                "children": [
+
+                ]
+              },
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Base_Gola_600W > Bottom_Panel > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  44.5,
+                  -497.4,
+                  105.8
+                ],
+                "max": [
+                  59.5,
+                  -482.6,
+                  118.3
+                ],
+                "width": 15.0,
+                "depth": 14.8,
+                "height": 12.5,
+                "children": [
+
+                ]
+              },
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Base_Gola_600W > Bottom_Panel > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  8.0,
+                  -462.0,
+                  105.0
+                ],
+                "max": [
+                  38.0,
+                  -454.0,
+                  113.0
+                ],
+                "width": 30.0,
+                "depth": 8.0,
+                "height": 8.0,
+                "children": [
+
+                ]
+              }
+            ]
+          },
+          {
+            "name": "Minifix_15_Joint_Set",
+            "path": "QA_Base_Gola_600W > Bottom_Panel > Minifix_15_Joint_Set",
+            "min": [
+              540.2,
+              -77.7,
+              105.0
+            ],
+            "max": [
+              593.0,
+              -34.0,
+              118.3
+            ],
+            "width": 52.8,
+            "depth": 43.7,
+            "height": 13.3,
+            "children": [
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Base_Gola_600W > Bottom_Panel > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  582.0,
+                  -72.5,
+                  106.5
+                ],
+                "max": [
+                  593.0,
+                  -67.5,
+                  111.5
+                ],
+                "width": 11.0,
+                "depth": 5.0,
+                "height": 5.0,
+                "children": [
+
+                ]
+              },
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Base_Gola_600W > Bottom_Panel > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  580.5,
+                  -73.8,
+                  105.3
+                ],
+                "max": [
+                  582.0,
+                  -66.2,
+                  112.8
+                ],
+                "width": 1.5,
+                "depth": 7.5,
+                "height": 7.5,
+                "children": [
+
+                ]
+              },
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Base_Gola_600W > Bottom_Panel > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  548.0,
+                  -73.2,
+                  105.8
+                ],
+                "max": [
+                  580.5,
+                  -66.8,
+                  112.3
+                ],
+                "width": 32.5,
+                "depth": 6.5,
+                "height": 6.5,
+                "children": [
+
+                ]
+              },
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Base_Gola_600W > Bottom_Panel > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  540.5,
+                  -77.4,
+                  105.8
+                ],
+                "max": [
+                  555.5,
+                  -62.6,
+                  118.3
+                ],
+                "width": 15.0,
+                "depth": 14.8,
+                "height": 12.5,
+                "children": [
+
+                ]
+              },
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Base_Gola_600W > Bottom_Panel > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  562.0,
+                  -42.0,
+                  105.0
+                ],
+                "max": [
+                  592.0,
+                  -34.0,
+                  113.0
+                ],
+                "width": 30.0,
+                "depth": 8.0,
+                "height": 8.0,
+                "children": [
+
+                ]
+              }
+            ]
+          },
+          {
+            "name": "Minifix_15_Joint_Set",
+            "path": "QA_Base_Gola_600W > Bottom_Panel > Minifix_15_Joint_Set",
+            "min": [
+              540.2,
+              -497.7,
+              105.0
+            ],
+            "max": [
+              593.0,
+              -454.0,
+              118.3
+            ],
+            "width": 52.8,
+            "depth": 43.7,
+            "height": 13.3,
+            "children": [
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Base_Gola_600W > Bottom_Panel > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  582.0,
+                  -492.5,
+                  106.5
+                ],
+                "max": [
+                  593.0,
+                  -487.5,
+                  111.5
+                ],
+                "width": 11.0,
+                "depth": 5.0,
+                "height": 5.0,
+                "children": [
+
+                ]
+              },
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Base_Gola_600W > Bottom_Panel > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  580.5,
+                  -493.7,
+                  105.3
+                ],
+                "max": [
+                  582.0,
+                  -486.3,
+                  112.8
+                ],
+                "width": 1.5,
+                "depth": 7.5,
+                "height": 7.5,
+                "children": [
+
+                ]
+              },
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Base_Gola_600W > Bottom_Panel > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  548.0,
+                  -493.3,
+                  105.8
+                ],
+                "max": [
+                  580.5,
+                  -486.8,
+                  112.3
+                ],
+                "width": 32.5,
+                "depth": 6.5,
+                "height": 6.5,
+                "children": [
+
+                ]
+              },
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Base_Gola_600W > Bottom_Panel > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  540.5,
+                  -497.4,
+                  105.8
+                ],
+                "max": [
+                  555.5,
+                  -482.6,
+                  118.3
+                ],
+                "width": 15.0,
+                "depth": 14.8,
+                "height": 12.5,
+                "children": [
+
+                ]
+              },
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Base_Gola_600W > Bottom_Panel > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  562.0,
+                  -462.0,
+                  105.0
+                ],
+                "max": [
+                  592.0,
+                  -454.0,
+                  113.0
+                ],
+                "width": 30.0,
+                "depth": 8.0,
+                "height": 8.0,
+                "children": [
+
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "QA_Base_Gola_600W_Back_System",
+        "path": "QA_Base_Gola_600W > QA_Base_Gola_600W_Back_System",
+        "min": [
+          13.0,
+          -24.0,
+          113.0
+        ],
+        "max": [
+          587.0,
+          0.0,
+          807.0
+        ],
+        "width": 574.0,
+        "depth": 24.0,
+        "height": 694.0,
+        "children": [
+          {
+            "name": "QA_Base_Gola_600W_Grooved_Back_Sheet",
+            "path": "QA_Base_Gola_600W > QA_Base_Gola_600W_Back_System > QA_Base_Gola_600W_Grooved_Back_Sheet",
+            "min": [
+              13.0,
+              -24.0,
+              113.0
+            ],
+            "max": [
+              587.0,
+              -18.0,
+              807.0
+            ],
+            "width": 574.0,
+            "depth": 6.0,
+            "height": 694.0,
+            "children": [
+
+            ]
+          },
+          {
+            "name": "QA_Base_Gola_600W_Rear_Top_Vertical_Cleat",
+            "path": "QA_Base_Gola_600W > QA_Base_Gola_600W_Back_System > QA_Base_Gola_600W_Rear_Top_Vertical_Cleat",
+            "min": [
+              18.0,
+              -18.0,
+              702.0
+            ],
+            "max": [
+              582.0,
+              0.0,
+              802.0
+            ],
+            "width": 564.0,
+            "depth": 18.0,
+            "height": 100.0,
+            "children": [
+
+            ]
+          },
+          {
+            "name": "QA_Base_Gola_600W_Rear_Bottom_Vertical_Cleat",
+            "path": "QA_Base_Gola_600W > QA_Base_Gola_600W_Back_System > QA_Base_Gola_600W_Rear_Bottom_Vertical_Cleat",
+            "min": [
+              18.0,
+              -18.0,
+              118.0
+            ],
+            "max": [
+              582.0,
+              0.0,
+              218.0
+            ],
+            "width": 564.0,
+            "depth": 18.0,
+            "height": 100.0,
+            "children": [
+
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Top_Front_Gola_Stretcher",
+        "path": "QA_Base_Gola_600W > Top_Front_Gola_Stretcher",
+        "min": [
+          18.0,
+          -534.0,
+          802.0
+        ],
+        "max": [
+          582.0,
+          -454.0,
+          820.0
+        ],
+        "width": 564.0,
+        "depth": 80.0,
+        "height": 18.0,
+        "children": [
+
+        ]
+      },
+      {
+        "name": "Minifix_15_Joint_Set",
+        "path": "QA_Base_Gola_600W > Minifix_15_Joint_Set",
+        "min": [
+          7.0,
+          -501.7,
+          801.7
+        ],
+        "max": [
+          59.8,
+          -486.3,
+          814.8
+        ],
+        "width": 52.8,
+        "depth": 15.4,
+        "height": 13.1,
+        "children": [
+          {
+            "name": "Unnamed_Group",
+            "path": "QA_Base_Gola_600W > Minifix_15_Joint_Set > Unnamed_Group",
+            "min": [
+              7.0,
+              -496.5,
+              808.5
+            ],
+            "max": [
+              18.0,
+              -491.5,
+              813.5
+            ],
+            "width": 11.0,
+            "depth": 5.0,
+            "height": 5.0,
+            "children": [
+
+            ]
+          },
+          {
+            "name": "Unnamed_Group",
+            "path": "QA_Base_Gola_600W > Minifix_15_Joint_Set > Unnamed_Group",
+            "min": [
+              18.0,
+              -497.7,
+              807.3
+            ],
+            "max": [
+              19.5,
+              -490.3,
+              814.8
+            ],
+            "width": 1.5,
+            "depth": 7.5,
+            "height": 7.5,
+            "children": [
+
+            ]
+          },
+          {
+            "name": "Unnamed_Group",
+            "path": "QA_Base_Gola_600W > Minifix_15_Joint_Set > Unnamed_Group",
+            "min": [
+              19.5,
+              -497.3,
+              807.8
+            ],
+            "max": [
+              52.0,
+              -490.8,
+              814.3
+            ],
+            "width": 32.5,
+            "depth": 6.5,
+            "height": 6.5,
+            "children": [
+
+            ]
+          },
+          {
+            "name": "Unnamed_Group",
+            "path": "QA_Base_Gola_600W > Minifix_15_Joint_Set > Unnamed_Group",
+            "min": [
+              44.5,
+              -501.4,
+              801.7
+            ],
+            "max": [
+              59.5,
+              -486.6,
+              814.2
+            ],
+            "width": 15.0,
+            "depth": 14.8,
+            "height": 12.5,
+            "children": [
+
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Minifix_15_Joint_Set",
+        "path": "QA_Base_Gola_600W > Minifix_15_Joint_Set",
+        "min": [
+          540.2,
+          -501.7,
+          801.7
+        ],
+        "max": [
+          593.0,
+          -486.3,
+          814.8
+        ],
+        "width": 52.8,
+        "depth": 15.4,
+        "height": 13.1,
+        "children": [
+          {
+            "name": "Unnamed_Group",
+            "path": "QA_Base_Gola_600W > Minifix_15_Joint_Set > Unnamed_Group",
+            "min": [
+              582.0,
+              -496.5,
+              808.5
+            ],
+            "max": [
+              593.0,
+              -491.5,
+              813.5
+            ],
+            "width": 11.0,
+            "depth": 5.0,
+            "height": 5.0,
+            "children": [
+
+            ]
+          },
+          {
+            "name": "Unnamed_Group",
+            "path": "QA_Base_Gola_600W > Minifix_15_Joint_Set > Unnamed_Group",
+            "min": [
+              580.5,
+              -497.7,
+              807.3
+            ],
+            "max": [
+              582.0,
+              -490.3,
+              814.8
+            ],
+            "width": 1.5,
+            "depth": 7.5,
+            "height": 7.5,
+            "children": [
+
+            ]
+          },
+          {
+            "name": "Unnamed_Group",
+            "path": "QA_Base_Gola_600W > Minifix_15_Joint_Set > Unnamed_Group",
+            "min": [
+              548.0,
+              -497.3,
+              807.8
+            ],
+            "max": [
+              580.5,
+              -490.8,
+              814.3
+            ],
+            "width": 32.5,
+            "depth": 6.5,
+            "height": 6.5,
+            "children": [
+
+            ]
+          },
+          {
+            "name": "Unnamed_Group",
+            "path": "QA_Base_Gola_600W > Minifix_15_Joint_Set > Unnamed_Group",
+            "min": [
+              540.5,
+              -501.4,
+              801.7
+            ],
+            "max": [
+              555.5,
+              -486.6,
+              814.2
+            ],
+            "width": 15.0,
+            "depth": 14.8,
+            "height": 12.5,
+            "children": [
+
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Mid_C_Gola_Stretcher",
+        "path": "QA_Base_Gola_600W > Mid_C_Gola_Stretcher",
+        "min": [
+          18.0,
+          -534.0,
+          485.5
+        ],
+        "max": [
+          582.0,
+          -474.0,
+          503.5
+        ],
+        "width": 564.0,
+        "depth": 60.0,
+        "height": 18.0,
+        "children": [
+
+        ]
+      },
+      {
+        "name": "Minifix_15_Joint_Set",
+        "path": "QA_Base_Gola_600W > Minifix_15_Joint_Set",
+        "min": [
+          7.0,
+          -511.7,
+          485.2
+        ],
+        "max": [
+          59.8,
+          -496.3,
+          498.3
+        ],
+        "width": 52.8,
+        "depth": 15.4,
+        "height": 13.1,
+        "children": [
+          {
+            "name": "Unnamed_Group",
+            "path": "QA_Base_Gola_600W > Minifix_15_Joint_Set > Unnamed_Group",
+            "min": [
+              7.0,
+              -506.5,
+              492.0
+            ],
+            "max": [
+              18.0,
+              -501.5,
+              497.0
+            ],
+            "width": 11.0,
+            "depth": 5.0,
+            "height": 5.0,
+            "children": [
+
+            ]
+          },
+          {
+            "name": "Unnamed_Group",
+            "path": "QA_Base_Gola_600W > Minifix_15_Joint_Set > Unnamed_Group",
+            "min": [
+              18.0,
+              -507.7,
+              490.8
+            ],
+            "max": [
+              19.5,
+              -500.3,
+              498.3
+            ],
+            "width": 1.5,
+            "depth": 7.5,
+            "height": 7.5,
+            "children": [
+
+            ]
+          },
+          {
+            "name": "Unnamed_Group",
+            "path": "QA_Base_Gola_600W > Minifix_15_Joint_Set > Unnamed_Group",
+            "min": [
+              19.5,
+              -507.2,
+              491.3
+            ],
+            "max": [
+              52.0,
+              -500.8,
+              497.8
+            ],
+            "width": 32.5,
+            "depth": 6.5,
+            "height": 6.5,
+            "children": [
+
+            ]
+          },
+          {
+            "name": "Unnamed_Group",
+            "path": "QA_Base_Gola_600W > Minifix_15_Joint_Set > Unnamed_Group",
+            "min": [
+              44.5,
+              -511.4,
+              485.2
+            ],
+            "max": [
+              59.5,
+              -496.6,
+              497.7
+            ],
+            "width": 15.0,
+            "depth": 14.8,
+            "height": 12.5,
+            "children": [
+
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Minifix_15_Joint_Set",
+        "path": "QA_Base_Gola_600W > Minifix_15_Joint_Set",
+        "min": [
+          540.2,
+          -511.7,
+          485.2
+        ],
+        "max": [
+          593.0,
+          -496.3,
+          498.3
+        ],
+        "width": 52.8,
+        "depth": 15.4,
+        "height": 13.1,
+        "children": [
+          {
+            "name": "Unnamed_Group",
+            "path": "QA_Base_Gola_600W > Minifix_15_Joint_Set > Unnamed_Group",
+            "min": [
+              582.0,
+              -506.5,
+              492.0
+            ],
+            "max": [
+              593.0,
+              -501.5,
+              497.0
+            ],
+            "width": 11.0,
+            "depth": 5.0,
+            "height": 5.0,
+            "children": [
+
+            ]
+          },
+          {
+            "name": "Unnamed_Group",
+            "path": "QA_Base_Gola_600W > Minifix_15_Joint_Set > Unnamed_Group",
+            "min": [
+              580.5,
+              -507.7,
+              490.8
+            ],
+            "max": [
+              582.0,
+              -500.3,
+              498.3
+            ],
+            "width": 1.5,
+            "depth": 7.5,
+            "height": 7.5,
+            "children": [
+
+            ]
+          },
+          {
+            "name": "Unnamed_Group",
+            "path": "QA_Base_Gola_600W > Minifix_15_Joint_Set > Unnamed_Group",
+            "min": [
+              548.0,
+              -507.2,
+              491.3
+            ],
+            "max": [
+              580.5,
+              -500.8,
+              497.8
+            ],
+            "width": 32.5,
+            "depth": 6.5,
+            "height": 6.5,
+            "children": [
+
+            ]
+          },
+          {
+            "name": "Unnamed_Group",
+            "path": "QA_Base_Gola_600W > Minifix_15_Joint_Set > Unnamed_Group",
+            "min": [
+              540.5,
+              -511.4,
+              485.2
+            ],
+            "max": [
+              555.5,
+              -496.6,
+              497.7
+            ],
+            "width": 15.0,
+            "depth": 14.8,
+            "height": 12.5,
+            "children": [
+
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Gola_Profile_L_600mm",
+        "path": "QA_Base_Gola_600W > Gola_Profile_L_600mm",
+        "min": [
+          0.0,
+          -561.2,
+          761.0
+        ],
+        "max": [
+          600.0,
+          -534.0,
+          817.5
+        ],
+        "width": 600.0,
+        "depth": 27.2,
+        "height": 56.5,
+        "children": [
+
+        ]
+      },
+      {
+        "name": "Gola_Profile_C_600mm",
+        "path": "QA_Base_Gola_600W > Gola_Profile_C_600mm",
+        "min": [
+          0.0,
+          -561.2,
+          430.0
+        ],
+        "max": [
+          600.0,
+          -534.0,
+          503.0
+        ],
+        "width": 600.0,
+        "depth": 27.2,
+        "height": 73.0,
+        "children": [
+
+        ]
+      },
+      {
+        "name": "Hettich_Undermount_Drawer_597x315",
+        "path": "QA_Base_Gola_600W > Hettich_Undermount_Drawer_597x315",
+        "min": [
+          1.5,
+          -858.0,
+          112.0
+        ],
+        "max": [
+          598.5,
+          -330.0,
+          427.0
+        ],
+        "width": 597.0,
+        "depth": 528.0,
+        "height": 315.0,
+        "children": [
+          {
+            "name": "Drawer_Front_Face",
+            "path": "QA_Base_Gola_600W > Hettich_Undermount_Drawer_597x315 > Drawer_Front_Face",
+            "min": [
+              1.5,
+              -858.0,
+              112.0
+            ],
+            "max": [
+              598.5,
+              -840.0,
+              427.0
+            ],
+            "width": 597.0,
+            "depth": 18.0,
+            "height": 315.0,
+            "children": [
+
+            ]
+          },
+          {
+            "name": "Drawer_Side_LH",
+            "path": "QA_Base_Gola_600W > Hettich_Undermount_Drawer_597x315 > Drawer_Side_LH",
+            "min": [
+              14.0,
+              -780.0,
+              127.0
+            ],
+            "max": [
+              29.0,
+              -330.0,
+              327.0
+            ],
+            "width": 15.0,
+            "depth": 450.0,
+            "height": 200.0,
+            "children": [
+
+            ]
+          },
+          {
+            "name": "Drawer_Side_RH",
+            "path": "QA_Base_Gola_600W > Hettich_Undermount_Drawer_597x315 > Drawer_Side_RH",
+            "min": [
+              571.0,
+              -780.0,
+              127.0
+            ],
+            "max": [
+              586.0,
+              -330.0,
+              327.0
+            ],
+            "width": 15.0,
+            "depth": 450.0,
+            "height": 200.0,
+            "children": [
+
+            ]
+          },
+          {
+            "name": "Drawer_Sub_Front",
+            "path": "QA_Base_Gola_600W > Hettich_Undermount_Drawer_597x315 > Drawer_Sub_Front",
+            "min": [
+              29.0,
+              -780.0,
+              127.0
+            ],
+            "max": [
+              571.0,
+              -765.0,
+              327.0
+            ],
+            "width": 542.0,
+            "depth": 15.0,
+            "height": 200.0,
+            "children": [
+
+            ]
+          },
+          {
+            "name": "Drawer_Back_Panel",
+            "path": "QA_Base_Gola_600W > Hettich_Undermount_Drawer_597x315 > Drawer_Back_Panel",
+            "min": [
+              29.0,
+              -345.0,
+              127.0
+            ],
+            "max": [
+              571.0,
+              -330.0,
+              327.0
+            ],
+            "width": 542.0,
+            "depth": 15.0,
+            "height": 200.0,
+            "children": [
+
+            ]
+          },
+          {
+            "name": "Drawer_Bottom_Panel",
+            "path": "QA_Base_Gola_600W > Hettich_Undermount_Drawer_597x315 > Drawer_Bottom_Panel",
+            "min": [
+              29.0,
+              -765.0,
+              139.0
+            ],
+            "max": [
+              571.0,
+              -345.0,
+              155.0
+            ],
+            "width": 542.0,
+            "depth": 420.0,
+            "height": 16.0,
+            "children": [
+
+            ]
+          },
+          {
+            "name": "Hettich_Actro5D_Slide_LH",
+            "path": "QA_Base_Gola_600W > Hettich_Undermount_Drawer_597x315 > Hettich_Actro5D_Slide_LH",
+            "min": [
+              2.5,
+              -780.0,
+              114.0
+            ],
+            "max": [
+              13.5,
+              -330.0,
+              138.0
+            ],
+            "width": 11.0,
+            "depth": 450.0,
+            "height": 24.0,
+            "children": [
+
+            ]
+          },
+          {
+            "name": "Hettich_Actro5D_Slide_RH",
+            "path": "QA_Base_Gola_600W > Hettich_Undermount_Drawer_597x315 > Hettich_Actro5D_Slide_RH",
+            "min": [
+              586.5,
+              -780.0,
+              114.0
+            ],
+            "max": [
+              597.5,
+              -330.0,
+              138.0
+            ],
+            "width": 11.0,
+            "depth": 450.0,
+            "height": 24.0,
+            "children": [
+
+            ]
+          },
+          {
+            "name": "Hettich_Catch_LH",
+            "path": "QA_Base_Gola_600W > Hettich_Undermount_Drawer_597x315 > Hettich_Catch_LH",
+            "min": [
+              13.5,
+              -782.0,
+              114.0
+            ],
+            "max": [
+              33.5,
+              -747.0,
+              126.0
+            ],
+            "width": 20.0,
+            "depth": 35.0,
+            "height": 12.0,
+            "children": [
+
+            ]
+          },
+          {
+            "name": "Hettich_Catch_RH",
+            "path": "QA_Base_Gola_600W > Hettich_Undermount_Drawer_597x315 > Hettich_Catch_RH",
+            "min": [
+              566.5,
+              -782.0,
+              114.0
+            ],
+            "max": [
+              586.5,
+              -747.0,
+              126.0
+            ],
+            "width": 20.0,
+            "depth": 35.0,
+            "height": 12.0,
+            "children": [
+
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Hettich_Undermount_Drawer_597x248",
+        "path": "QA_Base_Gola_600W > Hettich_Undermount_Drawer_597x248",
+        "min": [
+          1.5,
+          -758.0,
+          509.5
+        ],
+        "max": [
+          598.5,
+          -230.0,
+          757.5
+        ],
+        "width": 597.0,
+        "depth": 528.0,
+        "height": 248.0,
+        "children": [
+          {
+            "name": "Drawer_Front_Face",
+            "path": "QA_Base_Gola_600W > Hettich_Undermount_Drawer_597x248 > Drawer_Front_Face",
+            "min": [
+              1.5,
+              -758.0,
+              509.5
+            ],
+            "max": [
+              598.5,
+              -740.0,
+              757.5
+            ],
+            "width": 597.0,
+            "depth": 18.0,
+            "height": 248.0,
+            "children": [
+
+            ]
+          },
+          {
+            "name": "Drawer_Side_LH",
+            "path": "QA_Base_Gola_600W > Hettich_Undermount_Drawer_597x248 > Drawer_Side_LH",
+            "min": [
+              14.0,
+              -680.0,
+              524.5
+            ],
+            "max": [
+              29.0,
+              -230.0,
+              664.5
+            ],
+            "width": 15.0,
+            "depth": 450.0,
+            "height": 140.0,
+            "children": [
+
+            ]
+          },
+          {
+            "name": "Drawer_Side_RH",
+            "path": "QA_Base_Gola_600W > Hettich_Undermount_Drawer_597x248 > Drawer_Side_RH",
+            "min": [
+              571.0,
+              -680.0,
+              524.5
+            ],
+            "max": [
+              586.0,
+              -230.0,
+              664.5
+            ],
+            "width": 15.0,
+            "depth": 450.0,
+            "height": 140.0,
+            "children": [
+
+            ]
+          },
+          {
+            "name": "Drawer_Sub_Front",
+            "path": "QA_Base_Gola_600W > Hettich_Undermount_Drawer_597x248 > Drawer_Sub_Front",
+            "min": [
+              29.0,
+              -680.0,
+              524.5
+            ],
+            "max": [
+              571.0,
+              -665.0,
+              664.5
+            ],
+            "width": 542.0,
+            "depth": 15.0,
+            "height": 140.0,
+            "children": [
+
+            ]
+          },
+          {
+            "name": "Drawer_Back_Panel",
+            "path": "QA_Base_Gola_600W > Hettich_Undermount_Drawer_597x248 > Drawer_Back_Panel",
+            "min": [
+              29.0,
+              -245.0,
+              524.5
+            ],
+            "max": [
+              571.0,
+              -230.0,
+              664.5
+            ],
+            "width": 542.0,
+            "depth": 15.0,
+            "height": 140.0,
+            "children": [
+
+            ]
+          },
+          {
+            "name": "Drawer_Bottom_Panel",
+            "path": "QA_Base_Gola_600W > Hettich_Undermount_Drawer_597x248 > Drawer_Bottom_Panel",
+            "min": [
+              29.0,
+              -665.0,
+              536.5
+            ],
+            "max": [
+              571.0,
+              -245.0,
+              552.5
+            ],
+            "width": 542.0,
+            "depth": 420.0,
+            "height": 16.0,
+            "children": [
+
+            ]
+          },
+          {
+            "name": "Hettich_Actro5D_Slide_LH",
+            "path": "QA_Base_Gola_600W > Hettich_Undermount_Drawer_597x248 > Hettich_Actro5D_Slide_LH",
+            "min": [
+              2.5,
+              -680.0,
+              511.5
+            ],
+            "max": [
+              13.5,
+              -230.0,
+              535.5
+            ],
+            "width": 11.0,
+            "depth": 450.0,
+            "height": 24.0,
+            "children": [
+
+            ]
+          },
+          {
+            "name": "Hettich_Actro5D_Slide_RH",
+            "path": "QA_Base_Gola_600W > Hettich_Undermount_Drawer_597x248 > Hettich_Actro5D_Slide_RH",
+            "min": [
+              586.5,
+              -680.0,
+              511.5
+            ],
+            "max": [
+              597.5,
+              -230.0,
+              535.5
+            ],
+            "width": 11.0,
+            "depth": 450.0,
+            "height": 24.0,
+            "children": [
+
+            ]
+          },
+          {
+            "name": "Hettich_Catch_LH",
+            "path": "QA_Base_Gola_600W > Hettich_Undermount_Drawer_597x248 > Hettich_Catch_LH",
+            "min": [
+              13.5,
+              -682.0,
+              511.5
+            ],
+            "max": [
+              33.5,
+              -647.0,
+              523.5
+            ],
+            "width": 20.0,
+            "depth": 35.0,
+            "height": 12.0,
+            "children": [
+
+            ]
+          },
+          {
+            "name": "Hettich_Catch_RH",
+            "path": "QA_Base_Gola_600W > Hettich_Undermount_Drawer_597x248 > Hettich_Catch_RH",
+            "min": [
+              566.5,
+              -682.0,
+              511.5
+            ],
+            "max": [
+              586.5,
+              -647.0,
+              523.5
+            ],
+            "width": 20.0,
+            "depth": 35.0,
+            "height": 12.0,
+            "children": [
+
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "tall_unit": {
+    "name": "QA_Tall_Oven_600W",
+    "path": "QA_Tall_Oven_600W",
+    "min": [
+      700.0,
+      -868.0,
+      0.0
+    ],
+    "max": [
+      1300.0,
+      0.0,
+      2160.0
+    ],
+    "width": 600.0,
+    "depth": 868.0,
+    "height": 2160.0,
+    "children": [
+      {
+        "name": "Gable_LH",
+        "path": "QA_Tall_Oven_600W > Gable_LH",
+        "min": [
+          700.0,
+          -600.0,
+          0.0
+        ],
+        "max": [
+          718.0,
+          0.0,
+          2160.0
+        ],
+        "width": 18.0,
+        "depth": 600.0,
+        "height": 2160.0,
+        "children": [
+
+        ]
+      },
+      {
+        "name": "Gable_RH",
+        "path": "QA_Tall_Oven_600W > Gable_RH",
+        "min": [
+          1282.0,
+          -600.0,
+          0.0
+        ],
+        "max": [
+          1300.0,
+          0.0,
+          2160.0
+        ],
+        "width": 18.0,
+        "depth": 600.0,
+        "height": 2160.0,
+        "children": [
+
+        ]
+      },
+      {
+        "name": "Bottom_Panel",
+        "path": "QA_Tall_Oven_600W > Bottom_Panel",
+        "min": [
+          707.0,
+          -600.0,
+          100.0
+        ],
+        "max": [
+          1293.0,
+          -18.0,
+          118.3
+        ],
+        "width": 586.0,
+        "depth": 582.0,
+        "height": 18.3,
+        "children": [
+          {
+            "name": "Shelf_Panel",
+            "path": "QA_Tall_Oven_600W > Bottom_Panel > Shelf_Panel",
+            "min": [
+              718.0,
+              -600.0,
+              100.0
+            ],
+            "max": [
+              1282.0,
+              -18.0,
+              118.0
+            ],
+            "width": 564.0,
+            "depth": 582.0,
+            "height": 18.0,
+            "children": [
+
+            ]
+          },
+          {
+            "name": "Minifix_15_Joint_Set",
+            "path": "QA_Tall_Oven_600W > Bottom_Panel > Minifix_15_Joint_Set",
+            "min": [
+              707.0,
+              -77.7,
+              105.0
+            ],
+            "max": [
+              759.8,
+              -34.0,
+              118.3
+            ],
+            "width": 52.8,
+            "depth": 43.7,
+            "height": 13.3,
+            "children": [
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Tall_Oven_600W > Bottom_Panel > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  707.0,
+                  -72.5,
+                  106.5
+                ],
+                "max": [
+                  718.0,
+                  -67.5,
+                  111.5
+                ],
+                "width": 11.0,
+                "depth": 5.0,
+                "height": 5.0,
+                "children": [
+
+                ]
+              },
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Tall_Oven_600W > Bottom_Panel > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  718.0,
+                  -73.8,
+                  105.3
+                ],
+                "max": [
+                  719.5,
+                  -66.2,
+                  112.8
+                ],
+                "width": 1.5,
+                "depth": 7.5,
+                "height": 7.5,
+                "children": [
+
+                ]
+              },
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Tall_Oven_600W > Bottom_Panel > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  719.5,
+                  -73.2,
+                  105.8
+                ],
+                "max": [
+                  752.0,
+                  -66.8,
+                  112.3
+                ],
+                "width": 32.5,
+                "depth": 6.5,
+                "height": 6.5,
+                "children": [
+
+                ]
+              },
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Tall_Oven_600W > Bottom_Panel > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  744.5,
+                  -77.4,
+                  105.8
+                ],
+                "max": [
+                  759.5,
+                  -62.6,
+                  118.3
+                ],
+                "width": 15.0,
+                "depth": 14.8,
+                "height": 12.5,
+                "children": [
+
+                ]
+              },
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Tall_Oven_600W > Bottom_Panel > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  708.0,
+                  -42.0,
+                  105.0
+                ],
+                "max": [
+                  738.0,
+                  -34.0,
+                  113.0
+                ],
+                "width": 30.0,
+                "depth": 8.0,
+                "height": 8.0,
+                "children": [
+
+                ]
+              }
+            ]
+          },
+          {
+            "name": "Minifix_15_Joint_Set",
+            "path": "QA_Tall_Oven_600W > Bottom_Panel > Minifix_15_Joint_Set",
+            "min": [
+              707.0,
+              -537.7,
+              105.0
+            ],
+            "max": [
+              759.8,
+              -494.0,
+              118.3
+            ],
+            "width": 52.8,
+            "depth": 43.7,
+            "height": 13.3,
+            "children": [
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Tall_Oven_600W > Bottom_Panel > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  707.0,
+                  -532.5,
+                  106.5
+                ],
+                "max": [
+                  718.0,
+                  -527.5,
+                  111.5
+                ],
+                "width": 11.0,
+                "depth": 5.0,
+                "height": 5.0,
+                "children": [
+
+                ]
+              },
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Tall_Oven_600W > Bottom_Panel > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  718.0,
+                  -533.8,
+                  105.3
+                ],
+                "max": [
+                  719.5,
+                  -526.3,
+                  112.8
+                ],
+                "width": 1.5,
+                "depth": 7.5,
+                "height": 7.5,
+                "children": [
+
+                ]
+              },
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Tall_Oven_600W > Bottom_Panel > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  719.5,
+                  -533.3,
+                  105.8
+                ],
+                "max": [
+                  752.0,
+                  -526.8,
+                  112.3
+                ],
+                "width": 32.5,
+                "depth": 6.5,
+                "height": 6.5,
+                "children": [
+
+                ]
+              },
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Tall_Oven_600W > Bottom_Panel > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  744.5,
+                  -537.4,
+                  105.8
+                ],
+                "max": [
+                  759.5,
+                  -522.6,
+                  118.3
+                ],
+                "width": 15.0,
+                "depth": 14.8,
+                "height": 12.5,
+                "children": [
+
+                ]
+              },
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Tall_Oven_600W > Bottom_Panel > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  708.0,
+                  -502.0,
+                  105.0
+                ],
+                "max": [
+                  738.0,
+                  -494.0,
+                  113.0
+                ],
+                "width": 30.0,
+                "depth": 8.0,
+                "height": 8.0,
+                "children": [
+
+                ]
+              }
+            ]
+          },
+          {
+            "name": "Minifix_15_Joint_Set",
+            "path": "QA_Tall_Oven_600W > Bottom_Panel > Minifix_15_Joint_Set",
+            "min": [
+              1240.2,
+              -77.7,
+              105.0
+            ],
+            "max": [
+              1293.0,
+              -34.0,
+              118.3
+            ],
+            "width": 52.8,
+            "depth": 43.7,
+            "height": 13.3,
+            "children": [
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Tall_Oven_600W > Bottom_Panel > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  1282.0,
+                  -72.5,
+                  106.5
+                ],
+                "max": [
+                  1293.0,
+                  -67.5,
+                  111.5
+                ],
+                "width": 11.0,
+                "depth": 5.0,
+                "height": 5.0,
+                "children": [
+
+                ]
+              },
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Tall_Oven_600W > Bottom_Panel > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  1280.5,
+                  -73.8,
+                  105.3
+                ],
+                "max": [
+                  1282.0,
+                  -66.2,
+                  112.8
+                ],
+                "width": 1.5,
+                "depth": 7.5,
+                "height": 7.5,
+                "children": [
+
+                ]
+              },
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Tall_Oven_600W > Bottom_Panel > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  1248.0,
+                  -73.2,
+                  105.8
+                ],
+                "max": [
+                  1280.5,
+                  -66.8,
+                  112.3
+                ],
+                "width": 32.5,
+                "depth": 6.5,
+                "height": 6.5,
+                "children": [
+
+                ]
+              },
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Tall_Oven_600W > Bottom_Panel > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  1240.5,
+                  -77.4,
+                  105.8
+                ],
+                "max": [
+                  1255.5,
+                  -62.6,
+                  118.3
+                ],
+                "width": 15.0,
+                "depth": 14.8,
+                "height": 12.5,
+                "children": [
+
+                ]
+              },
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Tall_Oven_600W > Bottom_Panel > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  1262.0,
+                  -42.0,
+                  105.0
+                ],
+                "max": [
+                  1292.0,
+                  -34.0,
+                  113.0
+                ],
+                "width": 30.0,
+                "depth": 8.0,
+                "height": 8.0,
+                "children": [
+
+                ]
+              }
+            ]
+          },
+          {
+            "name": "Minifix_15_Joint_Set",
+            "path": "QA_Tall_Oven_600W > Bottom_Panel > Minifix_15_Joint_Set",
+            "min": [
+              1240.2,
+              -537.7,
+              105.0
+            ],
+            "max": [
+              1293.0,
+              -494.0,
+              118.3
+            ],
+            "width": 52.8,
+            "depth": 43.7,
+            "height": 13.3,
+            "children": [
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Tall_Oven_600W > Bottom_Panel > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  1282.0,
+                  -532.5,
+                  106.5
+                ],
+                "max": [
+                  1293.0,
+                  -527.5,
+                  111.5
+                ],
+                "width": 11.0,
+                "depth": 5.0,
+                "height": 5.0,
+                "children": [
+
+                ]
+              },
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Tall_Oven_600W > Bottom_Panel > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  1280.5,
+                  -533.8,
+                  105.3
+                ],
+                "max": [
+                  1282.0,
+                  -526.3,
+                  112.8
+                ],
+                "width": 1.5,
+                "depth": 7.5,
+                "height": 7.5,
+                "children": [
+
+                ]
+              },
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Tall_Oven_600W > Bottom_Panel > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  1248.0,
+                  -533.3,
+                  105.8
+                ],
+                "max": [
+                  1280.5,
+                  -526.8,
+                  112.3
+                ],
+                "width": 32.5,
+                "depth": 6.5,
+                "height": 6.5,
+                "children": [
+
+                ]
+              },
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Tall_Oven_600W > Bottom_Panel > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  1240.5,
+                  -537.4,
+                  105.8
+                ],
+                "max": [
+                  1255.5,
+                  -522.6,
+                  118.3
+                ],
+                "width": 15.0,
+                "depth": 14.8,
+                "height": 12.5,
+                "children": [
+
+                ]
+              },
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Tall_Oven_600W > Bottom_Panel > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  1262.0,
+                  -502.0,
+                  105.0
+                ],
+                "max": [
+                  1292.0,
+                  -494.0,
+                  113.0
+                ],
+                "width": 30.0,
+                "depth": 8.0,
+                "height": 8.0,
+                "children": [
+
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Structural_Base_Datum_Shelf",
+        "path": "QA_Tall_Oven_600W > Structural_Base_Datum_Shelf",
+        "min": [
+          707.0,
+          -600.0,
+          820.0
+        ],
+        "max": [
+          1293.0,
+          -18.0,
+          838.3
+        ],
+        "width": 586.0,
+        "depth": 582.0,
+        "height": 18.3,
+        "children": [
+          {
+            "name": "Shelf_Panel",
+            "path": "QA_Tall_Oven_600W > Structural_Base_Datum_Shelf > Shelf_Panel",
+            "min": [
+              718.0,
+              -600.0,
+              820.0
+            ],
+            "max": [
+              1282.0,
+              -18.0,
+              838.0
+            ],
+            "width": 564.0,
+            "depth": 582.0,
+            "height": 18.0,
+            "children": [
+
+            ]
+          },
+          {
+            "name": "Minifix_15_Joint_Set",
+            "path": "QA_Tall_Oven_600W > Structural_Base_Datum_Shelf > Minifix_15_Joint_Set",
+            "min": [
+              707.0,
+              -77.7,
+              825.0
+            ],
+            "max": [
+              759.8,
+              -34.0,
+              838.3
+            ],
+            "width": 52.8,
+            "depth": 43.7,
+            "height": 13.3,
+            "children": [
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Tall_Oven_600W > Structural_Base_Datum_Shelf > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  707.0,
+                  -72.5,
+                  826.5
+                ],
+                "max": [
+                  718.0,
+                  -67.5,
+                  831.5
+                ],
+                "width": 11.0,
+                "depth": 5.0,
+                "height": 5.0,
+                "children": [
+
+                ]
+              },
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Tall_Oven_600W > Structural_Base_Datum_Shelf > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  718.0,
+                  -73.8,
+                  825.3
+                ],
+                "max": [
+                  719.5,
+                  -66.2,
+                  832.8
+                ],
+                "width": 1.5,
+                "depth": 7.5,
+                "height": 7.5,
+                "children": [
+
+                ]
+              },
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Tall_Oven_600W > Structural_Base_Datum_Shelf > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  719.5,
+                  -73.2,
+                  825.8
+                ],
+                "max": [
+                  752.0,
+                  -66.8,
+                  832.3
+                ],
+                "width": 32.5,
+                "depth": 6.5,
+                "height": 6.5,
+                "children": [
+
+                ]
+              },
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Tall_Oven_600W > Structural_Base_Datum_Shelf > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  744.5,
+                  -77.4,
+                  825.8
+                ],
+                "max": [
+                  759.5,
+                  -62.6,
+                  838.3
+                ],
+                "width": 15.0,
+                "depth": 14.8,
+                "height": 12.5,
+                "children": [
+
+                ]
+              },
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Tall_Oven_600W > Structural_Base_Datum_Shelf > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  708.0,
+                  -42.0,
+                  825.0
+                ],
+                "max": [
+                  738.0,
+                  -34.0,
+                  833.0
+                ],
+                "width": 30.0,
+                "depth": 8.0,
+                "height": 8.0,
+                "children": [
+
+                ]
+              }
+            ]
+          },
+          {
+            "name": "Minifix_15_Joint_Set",
+            "path": "QA_Tall_Oven_600W > Structural_Base_Datum_Shelf > Minifix_15_Joint_Set",
+            "min": [
+              707.0,
+              -537.7,
+              825.0
+            ],
+            "max": [
+              759.8,
+              -494.0,
+              838.3
+            ],
+            "width": 52.8,
+            "depth": 43.7,
+            "height": 13.3,
+            "children": [
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Tall_Oven_600W > Structural_Base_Datum_Shelf > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  707.0,
+                  -532.5,
+                  826.5
+                ],
+                "max": [
+                  718.0,
+                  -527.5,
+                  831.5
+                ],
+                "width": 11.0,
+                "depth": 5.0,
+                "height": 5.0,
+                "children": [
+
+                ]
+              },
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Tall_Oven_600W > Structural_Base_Datum_Shelf > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  718.0,
+                  -533.8,
+                  825.3
+                ],
+                "max": [
+                  719.5,
+                  -526.3,
+                  832.8
+                ],
+                "width": 1.5,
+                "depth": 7.5,
+                "height": 7.5,
+                "children": [
+
+                ]
+              },
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Tall_Oven_600W > Structural_Base_Datum_Shelf > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  719.5,
+                  -533.3,
+                  825.8
+                ],
+                "max": [
+                  752.0,
+                  -526.8,
+                  832.3
+                ],
+                "width": 32.5,
+                "depth": 6.5,
+                "height": 6.5,
+                "children": [
+
+                ]
+              },
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Tall_Oven_600W > Structural_Base_Datum_Shelf > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  744.5,
+                  -537.4,
+                  825.8
+                ],
+                "max": [
+                  759.5,
+                  -522.6,
+                  838.3
+                ],
+                "width": 15.0,
+                "depth": 14.8,
+                "height": 12.5,
+                "children": [
+
+                ]
+              },
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Tall_Oven_600W > Structural_Base_Datum_Shelf > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  708.0,
+                  -502.0,
+                  825.0
+                ],
+                "max": [
+                  738.0,
+                  -494.0,
+                  833.0
+                ],
+                "width": 30.0,
+                "depth": 8.0,
+                "height": 8.0,
+                "children": [
+
+                ]
+              }
+            ]
+          },
+          {
+            "name": "Minifix_15_Joint_Set",
+            "path": "QA_Tall_Oven_600W > Structural_Base_Datum_Shelf > Minifix_15_Joint_Set",
+            "min": [
+              1240.2,
+              -77.7,
+              825.0
+            ],
+            "max": [
+              1293.0,
+              -34.0,
+              838.3
+            ],
+            "width": 52.8,
+            "depth": 43.7,
+            "height": 13.3,
+            "children": [
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Tall_Oven_600W > Structural_Base_Datum_Shelf > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  1282.0,
+                  -72.5,
+                  826.5
+                ],
+                "max": [
+                  1293.0,
+                  -67.5,
+                  831.5
+                ],
+                "width": 11.0,
+                "depth": 5.0,
+                "height": 5.0,
+                "children": [
+
+                ]
+              },
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Tall_Oven_600W > Structural_Base_Datum_Shelf > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  1280.5,
+                  -73.8,
+                  825.3
+                ],
+                "max": [
+                  1282.0,
+                  -66.2,
+                  832.8
+                ],
+                "width": 1.5,
+                "depth": 7.5,
+                "height": 7.5,
+                "children": [
+
+                ]
+              },
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Tall_Oven_600W > Structural_Base_Datum_Shelf > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  1248.0,
+                  -73.2,
+                  825.8
+                ],
+                "max": [
+                  1280.5,
+                  -66.8,
+                  832.3
+                ],
+                "width": 32.5,
+                "depth": 6.5,
+                "height": 6.5,
+                "children": [
+
+                ]
+              },
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Tall_Oven_600W > Structural_Base_Datum_Shelf > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  1240.5,
+                  -77.4,
+                  825.8
+                ],
+                "max": [
+                  1255.5,
+                  -62.6,
+                  838.3
+                ],
+                "width": 15.0,
+                "depth": 14.8,
+                "height": 12.5,
+                "children": [
+
+                ]
+              },
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Tall_Oven_600W > Structural_Base_Datum_Shelf > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  1262.0,
+                  -42.0,
+                  825.0
+                ],
+                "max": [
+                  1292.0,
+                  -34.0,
+                  833.0
+                ],
+                "width": 30.0,
+                "depth": 8.0,
+                "height": 8.0,
+                "children": [
+
+                ]
+              }
+            ]
+          },
+          {
+            "name": "Minifix_15_Joint_Set",
+            "path": "QA_Tall_Oven_600W > Structural_Base_Datum_Shelf > Minifix_15_Joint_Set",
+            "min": [
+              1240.2,
+              -537.7,
+              825.0
+            ],
+            "max": [
+              1293.0,
+              -494.0,
+              838.3
+            ],
+            "width": 52.8,
+            "depth": 43.7,
+            "height": 13.3,
+            "children": [
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Tall_Oven_600W > Structural_Base_Datum_Shelf > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  1282.0,
+                  -532.5,
+                  826.5
+                ],
+                "max": [
+                  1293.0,
+                  -527.5,
+                  831.5
+                ],
+                "width": 11.0,
+                "depth": 5.0,
+                "height": 5.0,
+                "children": [
+
+                ]
+              },
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Tall_Oven_600W > Structural_Base_Datum_Shelf > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  1280.5,
+                  -533.8,
+                  825.3
+                ],
+                "max": [
+                  1282.0,
+                  -526.3,
+                  832.8
+                ],
+                "width": 1.5,
+                "depth": 7.5,
+                "height": 7.5,
+                "children": [
+
+                ]
+              },
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Tall_Oven_600W > Structural_Base_Datum_Shelf > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  1248.0,
+                  -533.3,
+                  825.8
+                ],
+                "max": [
+                  1280.5,
+                  -526.8,
+                  832.3
+                ],
+                "width": 32.5,
+                "depth": 6.5,
+                "height": 6.5,
+                "children": [
+
+                ]
+              },
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Tall_Oven_600W > Structural_Base_Datum_Shelf > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  1240.5,
+                  -537.4,
+                  825.8
+                ],
+                "max": [
+                  1255.5,
+                  -522.6,
+                  838.3
+                ],
+                "width": 15.0,
+                "depth": 14.8,
+                "height": 12.5,
+                "children": [
+
+                ]
+              },
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Tall_Oven_600W > Structural_Base_Datum_Shelf > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  1262.0,
+                  -502.0,
+                  825.0
+                ],
+                "max": [
+                  1292.0,
+                  -494.0,
+                  833.0
+                ],
+                "width": 30.0,
+                "depth": 8.0,
+                "height": 8.0,
+                "children": [
+
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Upper_Appliance_Shelf",
+        "path": "QA_Tall_Oven_600W > Upper_Appliance_Shelf",
+        "min": [
+          707.0,
+          -600.0,
+          1705.0
+        ],
+        "max": [
+          1293.0,
+          -18.0,
+          1723.3
+        ],
+        "width": 586.0,
+        "depth": 582.0,
+        "height": 18.3,
+        "children": [
+          {
+            "name": "Shelf_Panel",
+            "path": "QA_Tall_Oven_600W > Upper_Appliance_Shelf > Shelf_Panel",
+            "min": [
+              718.0,
+              -600.0,
+              1705.0
+            ],
+            "max": [
+              1282.0,
+              -18.0,
+              1723.0
+            ],
+            "width": 564.0,
+            "depth": 582.0,
+            "height": 18.0,
+            "children": [
+
+            ]
+          },
+          {
+            "name": "Minifix_15_Joint_Set",
+            "path": "QA_Tall_Oven_600W > Upper_Appliance_Shelf > Minifix_15_Joint_Set",
+            "min": [
+              707.0,
+              -77.7,
+              1710.0
+            ],
+            "max": [
+              759.8,
+              -34.0,
+              1723.3
+            ],
+            "width": 52.8,
+            "depth": 43.7,
+            "height": 13.3,
+            "children": [
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Tall_Oven_600W > Upper_Appliance_Shelf > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  707.0,
+                  -72.5,
+                  1711.5
+                ],
+                "max": [
+                  718.0,
+                  -67.5,
+                  1716.5
+                ],
+                "width": 11.0,
+                "depth": 5.0,
+                "height": 5.0,
+                "children": [
+
+                ]
+              },
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Tall_Oven_600W > Upper_Appliance_Shelf > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  718.0,
+                  -73.8,
+                  1710.3
+                ],
+                "max": [
+                  719.5,
+                  -66.2,
+                  1717.8
+                ],
+                "width": 1.5,
+                "depth": 7.5,
+                "height": 7.5,
+                "children": [
+
+                ]
+              },
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Tall_Oven_600W > Upper_Appliance_Shelf > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  719.5,
+                  -73.2,
+                  1710.8
+                ],
+                "max": [
+                  752.0,
+                  -66.8,
+                  1717.3
+                ],
+                "width": 32.5,
+                "depth": 6.5,
+                "height": 6.5,
+                "children": [
+
+                ]
+              },
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Tall_Oven_600W > Upper_Appliance_Shelf > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  744.5,
+                  -77.4,
+                  1710.8
+                ],
+                "max": [
+                  759.5,
+                  -62.6,
+                  1723.3
+                ],
+                "width": 15.0,
+                "depth": 14.8,
+                "height": 12.5,
+                "children": [
+
+                ]
+              },
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Tall_Oven_600W > Upper_Appliance_Shelf > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  708.0,
+                  -42.0,
+                  1710.0
+                ],
+                "max": [
+                  738.0,
+                  -34.0,
+                  1718.0
+                ],
+                "width": 30.0,
+                "depth": 8.0,
+                "height": 8.0,
+                "children": [
+
+                ]
+              }
+            ]
+          },
+          {
+            "name": "Minifix_15_Joint_Set",
+            "path": "QA_Tall_Oven_600W > Upper_Appliance_Shelf > Minifix_15_Joint_Set",
+            "min": [
+              707.0,
+              -537.7,
+              1710.0
+            ],
+            "max": [
+              759.8,
+              -494.0,
+              1723.3
+            ],
+            "width": 52.8,
+            "depth": 43.7,
+            "height": 13.3,
+            "children": [
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Tall_Oven_600W > Upper_Appliance_Shelf > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  707.0,
+                  -532.5,
+                  1711.5
+                ],
+                "max": [
+                  718.0,
+                  -527.5,
+                  1716.5
+                ],
+                "width": 11.0,
+                "depth": 5.0,
+                "height": 5.0,
+                "children": [
+
+                ]
+              },
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Tall_Oven_600W > Upper_Appliance_Shelf > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  718.0,
+                  -533.8,
+                  1710.3
+                ],
+                "max": [
+                  719.5,
+                  -526.3,
+                  1717.8
+                ],
+                "width": 1.5,
+                "depth": 7.5,
+                "height": 7.5,
+                "children": [
+
+                ]
+              },
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Tall_Oven_600W > Upper_Appliance_Shelf > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  719.5,
+                  -533.3,
+                  1710.8
+                ],
+                "max": [
+                  752.0,
+                  -526.8,
+                  1717.3
+                ],
+                "width": 32.5,
+                "depth": 6.5,
+                "height": 6.5,
+                "children": [
+
+                ]
+              },
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Tall_Oven_600W > Upper_Appliance_Shelf > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  744.5,
+                  -537.4,
+                  1710.8
+                ],
+                "max": [
+                  759.5,
+                  -522.6,
+                  1723.3
+                ],
+                "width": 15.0,
+                "depth": 14.8,
+                "height": 12.5,
+                "children": [
+
+                ]
+              },
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Tall_Oven_600W > Upper_Appliance_Shelf > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  708.0,
+                  -502.0,
+                  1710.0
+                ],
+                "max": [
+                  738.0,
+                  -494.0,
+                  1718.0
+                ],
+                "width": 30.0,
+                "depth": 8.0,
+                "height": 8.0,
+                "children": [
+
+                ]
+              }
+            ]
+          },
+          {
+            "name": "Minifix_15_Joint_Set",
+            "path": "QA_Tall_Oven_600W > Upper_Appliance_Shelf > Minifix_15_Joint_Set",
+            "min": [
+              1240.2,
+              -77.7,
+              1710.0
+            ],
+            "max": [
+              1293.0,
+              -34.0,
+              1723.3
+            ],
+            "width": 52.8,
+            "depth": 43.7,
+            "height": 13.3,
+            "children": [
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Tall_Oven_600W > Upper_Appliance_Shelf > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  1282.0,
+                  -72.5,
+                  1711.5
+                ],
+                "max": [
+                  1293.0,
+                  -67.5,
+                  1716.5
+                ],
+                "width": 11.0,
+                "depth": 5.0,
+                "height": 5.0,
+                "children": [
+
+                ]
+              },
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Tall_Oven_600W > Upper_Appliance_Shelf > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  1280.5,
+                  -73.8,
+                  1710.3
+                ],
+                "max": [
+                  1282.0,
+                  -66.2,
+                  1717.8
+                ],
+                "width": 1.5,
+                "depth": 7.5,
+                "height": 7.5,
+                "children": [
+
+                ]
+              },
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Tall_Oven_600W > Upper_Appliance_Shelf > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  1248.0,
+                  -73.2,
+                  1710.8
+                ],
+                "max": [
+                  1280.5,
+                  -66.8,
+                  1717.3
+                ],
+                "width": 32.5,
+                "depth": 6.5,
+                "height": 6.5,
+                "children": [
+
+                ]
+              },
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Tall_Oven_600W > Upper_Appliance_Shelf > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  1240.5,
+                  -77.4,
+                  1710.8
+                ],
+                "max": [
+                  1255.5,
+                  -62.6,
+                  1723.3
+                ],
+                "width": 15.0,
+                "depth": 14.8,
+                "height": 12.5,
+                "children": [
+
+                ]
+              },
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Tall_Oven_600W > Upper_Appliance_Shelf > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  1262.0,
+                  -42.0,
+                  1710.0
+                ],
+                "max": [
+                  1292.0,
+                  -34.0,
+                  1718.0
+                ],
+                "width": 30.0,
+                "depth": 8.0,
+                "height": 8.0,
+                "children": [
+
+                ]
+              }
+            ]
+          },
+          {
+            "name": "Minifix_15_Joint_Set",
+            "path": "QA_Tall_Oven_600W > Upper_Appliance_Shelf > Minifix_15_Joint_Set",
+            "min": [
+              1240.2,
+              -537.7,
+              1710.0
+            ],
+            "max": [
+              1293.0,
+              -494.0,
+              1723.3
+            ],
+            "width": 52.8,
+            "depth": 43.7,
+            "height": 13.3,
+            "children": [
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Tall_Oven_600W > Upper_Appliance_Shelf > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  1282.0,
+                  -532.5,
+                  1711.5
+                ],
+                "max": [
+                  1293.0,
+                  -527.5,
+                  1716.5
+                ],
+                "width": 11.0,
+                "depth": 5.0,
+                "height": 5.0,
+                "children": [
+
+                ]
+              },
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Tall_Oven_600W > Upper_Appliance_Shelf > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  1280.5,
+                  -533.8,
+                  1710.3
+                ],
+                "max": [
+                  1282.0,
+                  -526.3,
+                  1717.8
+                ],
+                "width": 1.5,
+                "depth": 7.5,
+                "height": 7.5,
+                "children": [
+
+                ]
+              },
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Tall_Oven_600W > Upper_Appliance_Shelf > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  1248.0,
+                  -533.3,
+                  1710.8
+                ],
+                "max": [
+                  1280.5,
+                  -526.8,
+                  1717.3
+                ],
+                "width": 32.5,
+                "depth": 6.5,
+                "height": 6.5,
+                "children": [
+
+                ]
+              },
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Tall_Oven_600W > Upper_Appliance_Shelf > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  1240.5,
+                  -537.4,
+                  1710.8
+                ],
+                "max": [
+                  1255.5,
+                  -522.6,
+                  1723.3
+                ],
+                "width": 15.0,
+                "depth": 14.8,
+                "height": 12.5,
+                "children": [
+
+                ]
+              },
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Tall_Oven_600W > Upper_Appliance_Shelf > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  1262.0,
+                  -502.0,
+                  1710.0
+                ],
+                "max": [
+                  1292.0,
+                  -494.0,
+                  1718.0
+                ],
+                "width": 30.0,
+                "depth": 8.0,
+                "height": 8.0,
+                "children": [
+
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Roof_Panel",
+        "path": "QA_Tall_Oven_600W > Roof_Panel",
+        "min": [
+          707.0,
+          -600.0,
+          2141.7
+        ],
+        "max": [
+          1293.0,
+          0.0,
+          2160.0
+        ],
+        "width": 586.0,
+        "depth": 600.0,
+        "height": 18.3,
+        "children": [
+          {
+            "name": "Shelf_Panel",
+            "path": "QA_Tall_Oven_600W > Roof_Panel > Shelf_Panel",
+            "min": [
+              718.0,
+              -600.0,
+              2142.0
+            ],
+            "max": [
+              1282.0,
+              0.0,
+              2160.0
+            ],
+            "width": 564.0,
+            "depth": 600.0,
+            "height": 18.0,
+            "children": [
+
+            ]
+          },
+          {
+            "name": "Minifix_15_Joint_Set",
+            "path": "QA_Tall_Oven_600W > Roof_Panel > Minifix_15_Joint_Set",
+            "min": [
+              707.0,
+              -77.7,
+              2141.7
+            ],
+            "max": [
+              759.8,
+              -34.0,
+              2155.0
+            ],
+            "width": 52.8,
+            "depth": 43.7,
+            "height": 13.3,
+            "children": [
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Tall_Oven_600W > Roof_Panel > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  707.0,
+                  -72.5,
+                  2148.5
+                ],
+                "max": [
+                  718.0,
+                  -67.5,
+                  2153.5
+                ],
+                "width": 11.0,
+                "depth": 5.0,
+                "height": 5.0,
+                "children": [
+
+                ]
+              },
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Tall_Oven_600W > Roof_Panel > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  718.0,
+                  -73.8,
+                  2147.3
+                ],
+                "max": [
+                  719.5,
+                  -66.2,
+                  2154.8
+                ],
+                "width": 1.5,
+                "depth": 7.5,
+                "height": 7.5,
+                "children": [
+
+                ]
+              },
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Tall_Oven_600W > Roof_Panel > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  719.5,
+                  -73.2,
+                  2147.8
+                ],
+                "max": [
+                  752.0,
+                  -66.8,
+                  2154.3
+                ],
+                "width": 32.5,
+                "depth": 6.5,
+                "height": 6.5,
+                "children": [
+
+                ]
+              },
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Tall_Oven_600W > Roof_Panel > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  744.5,
+                  -77.4,
+                  2141.7
+                ],
+                "max": [
+                  759.5,
+                  -62.6,
+                  2154.2
+                ],
+                "width": 15.0,
+                "depth": 14.8,
+                "height": 12.5,
+                "children": [
+
+                ]
+              },
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Tall_Oven_600W > Roof_Panel > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  708.0,
+                  -42.0,
+                  2147.0
+                ],
+                "max": [
+                  738.0,
+                  -34.0,
+                  2155.0
+                ],
+                "width": 30.0,
+                "depth": 8.0,
+                "height": 8.0,
+                "children": [
+
+                ]
+              }
+            ]
+          },
+          {
+            "name": "Minifix_15_Joint_Set",
+            "path": "QA_Tall_Oven_600W > Roof_Panel > Minifix_15_Joint_Set",
+            "min": [
+              707.0,
+              -537.7,
+              2141.7
+            ],
+            "max": [
+              759.8,
+              -494.0,
+              2155.0
+            ],
+            "width": 52.8,
+            "depth": 43.7,
+            "height": 13.3,
+            "children": [
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Tall_Oven_600W > Roof_Panel > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  707.0,
+                  -532.5,
+                  2148.5
+                ],
+                "max": [
+                  718.0,
+                  -527.5,
+                  2153.5
+                ],
+                "width": 11.0,
+                "depth": 5.0,
+                "height": 5.0,
+                "children": [
+
+                ]
+              },
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Tall_Oven_600W > Roof_Panel > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  718.0,
+                  -533.8,
+                  2147.3
+                ],
+                "max": [
+                  719.5,
+                  -526.3,
+                  2154.8
+                ],
+                "width": 1.5,
+                "depth": 7.5,
+                "height": 7.5,
+                "children": [
+
+                ]
+              },
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Tall_Oven_600W > Roof_Panel > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  719.5,
+                  -533.3,
+                  2147.8
+                ],
+                "max": [
+                  752.0,
+                  -526.8,
+                  2154.3
+                ],
+                "width": 32.5,
+                "depth": 6.5,
+                "height": 6.5,
+                "children": [
+
+                ]
+              },
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Tall_Oven_600W > Roof_Panel > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  744.5,
+                  -537.4,
+                  2141.7
+                ],
+                "max": [
+                  759.5,
+                  -522.6,
+                  2154.2
+                ],
+                "width": 15.0,
+                "depth": 14.8,
+                "height": 12.5,
+                "children": [
+
+                ]
+              },
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Tall_Oven_600W > Roof_Panel > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  708.0,
+                  -502.0,
+                  2147.0
+                ],
+                "max": [
+                  738.0,
+                  -494.0,
+                  2155.0
+                ],
+                "width": 30.0,
+                "depth": 8.0,
+                "height": 8.0,
+                "children": [
+
+                ]
+              }
+            ]
+          },
+          {
+            "name": "Minifix_15_Joint_Set",
+            "path": "QA_Tall_Oven_600W > Roof_Panel > Minifix_15_Joint_Set",
+            "min": [
+              1240.2,
+              -77.7,
+              2141.7
+            ],
+            "max": [
+              1293.0,
+              -34.0,
+              2155.0
+            ],
+            "width": 52.8,
+            "depth": 43.7,
+            "height": 13.3,
+            "children": [
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Tall_Oven_600W > Roof_Panel > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  1282.0,
+                  -72.5,
+                  2148.5
+                ],
+                "max": [
+                  1293.0,
+                  -67.5,
+                  2153.5
+                ],
+                "width": 11.0,
+                "depth": 5.0,
+                "height": 5.0,
+                "children": [
+
+                ]
+              },
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Tall_Oven_600W > Roof_Panel > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  1280.5,
+                  -73.8,
+                  2147.3
+                ],
+                "max": [
+                  1282.0,
+                  -66.2,
+                  2154.8
+                ],
+                "width": 1.5,
+                "depth": 7.5,
+                "height": 7.5,
+                "children": [
+
+                ]
+              },
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Tall_Oven_600W > Roof_Panel > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  1248.0,
+                  -73.2,
+                  2147.8
+                ],
+                "max": [
+                  1280.5,
+                  -66.8,
+                  2154.3
+                ],
+                "width": 32.5,
+                "depth": 6.5,
+                "height": 6.5,
+                "children": [
+
+                ]
+              },
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Tall_Oven_600W > Roof_Panel > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  1240.5,
+                  -77.4,
+                  2141.7
+                ],
+                "max": [
+                  1255.5,
+                  -62.6,
+                  2154.2
+                ],
+                "width": 15.0,
+                "depth": 14.8,
+                "height": 12.5,
+                "children": [
+
+                ]
+              },
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Tall_Oven_600W > Roof_Panel > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  1262.0,
+                  -42.0,
+                  2147.0
+                ],
+                "max": [
+                  1292.0,
+                  -34.0,
+                  2155.0
+                ],
+                "width": 30.0,
+                "depth": 8.0,
+                "height": 8.0,
+                "children": [
+
+                ]
+              }
+            ]
+          },
+          {
+            "name": "Minifix_15_Joint_Set",
+            "path": "QA_Tall_Oven_600W > Roof_Panel > Minifix_15_Joint_Set",
+            "min": [
+              1240.2,
+              -537.7,
+              2141.7
+            ],
+            "max": [
+              1293.0,
+              -494.0,
+              2155.0
+            ],
+            "width": 52.8,
+            "depth": 43.7,
+            "height": 13.3,
+            "children": [
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Tall_Oven_600W > Roof_Panel > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  1282.0,
+                  -532.5,
+                  2148.5
+                ],
+                "max": [
+                  1293.0,
+                  -527.5,
+                  2153.5
+                ],
+                "width": 11.0,
+                "depth": 5.0,
+                "height": 5.0,
+                "children": [
+
+                ]
+              },
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Tall_Oven_600W > Roof_Panel > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  1280.5,
+                  -533.8,
+                  2147.3
+                ],
+                "max": [
+                  1282.0,
+                  -526.3,
+                  2154.8
+                ],
+                "width": 1.5,
+                "depth": 7.5,
+                "height": 7.5,
+                "children": [
+
+                ]
+              },
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Tall_Oven_600W > Roof_Panel > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  1248.0,
+                  -533.3,
+                  2147.8
+                ],
+                "max": [
+                  1280.5,
+                  -526.8,
+                  2154.3
+                ],
+                "width": 32.5,
+                "depth": 6.5,
+                "height": 6.5,
+                "children": [
+
+                ]
+              },
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Tall_Oven_600W > Roof_Panel > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  1240.5,
+                  -537.4,
+                  2141.7
+                ],
+                "max": [
+                  1255.5,
+                  -522.6,
+                  2154.2
+                ],
+                "width": 15.0,
+                "depth": 14.8,
+                "height": 12.5,
+                "children": [
+
+                ]
+              },
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Tall_Oven_600W > Roof_Panel > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  1262.0,
+                  -502.0,
+                  2147.0
+                ],
+                "max": [
+                  1292.0,
+                  -494.0,
+                  2155.0
+                ],
+                "width": 30.0,
+                "depth": 8.0,
+                "height": 8.0,
+                "children": [
+
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "QA_Tall_Oven_600W_Back_System",
+        "path": "QA_Tall_Oven_600W > QA_Tall_Oven_600W_Back_System",
+        "min": [
+          713.0,
+          -24.0,
+          113.0
+        ],
+        "max": [
+          1287.0,
+          0.0,
+          2147.0
+        ],
+        "width": 574.0,
+        "depth": 24.0,
+        "height": 2034.0,
+        "children": [
+          {
+            "name": "QA_Tall_Oven_600W_Grooved_Back_Sheet",
+            "path": "QA_Tall_Oven_600W > QA_Tall_Oven_600W_Back_System > QA_Tall_Oven_600W_Grooved_Back_Sheet",
+            "min": [
+              713.0,
+              -24.0,
+              113.0
+            ],
+            "max": [
+              1287.0,
+              -18.0,
+              2147.0
+            ],
+            "width": 574.0,
+            "depth": 6.0,
+            "height": 2034.0,
+            "children": [
+
+            ]
+          },
+          {
+            "name": "QA_Tall_Oven_600W_Rear_Top_Vertical_Cleat",
+            "path": "QA_Tall_Oven_600W > QA_Tall_Oven_600W_Back_System > QA_Tall_Oven_600W_Rear_Top_Vertical_Cleat",
+            "min": [
+              718.0,
+              -18.0,
+              2042.0
+            ],
+            "max": [
+              1282.0,
+              0.0,
+              2142.0
+            ],
+            "width": 564.0,
+            "depth": 18.0,
+            "height": 100.0,
+            "children": [
+
+            ]
+          },
+          {
+            "name": "QA_Tall_Oven_600W_Rear_Bottom_Vertical_Cleat",
+            "path": "QA_Tall_Oven_600W > QA_Tall_Oven_600W_Back_System > QA_Tall_Oven_600W_Rear_Bottom_Vertical_Cleat",
+            "min": [
+              718.0,
+              -18.0,
+              118.0
+            ],
+            "max": [
+              1282.0,
+              0.0,
+              218.0
+            ],
+            "width": 564.0,
+            "depth": 18.0,
+            "height": 100.0,
+            "children": [
+
+            ]
+          },
+          {
+            "name": "QA_Tall_Oven_600W_Rear_Mid_Vertical_Cleat",
+            "path": "QA_Tall_Oven_600W > QA_Tall_Oven_600W_Back_System > QA_Tall_Oven_600W_Rear_Mid_Vertical_Cleat",
+            "min": [
+              718.0,
+              -18.0,
+              720.0
+            ],
+            "max": [
+              1282.0,
+              0.0,
+              820.0
+            ],
+            "width": 564.0,
+            "depth": 18.0,
+            "height": 100.0,
+            "children": [
+
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Double_Oven_Appliance",
+        "path": "QA_Tall_Oven_600W > Double_Oven_Appliance",
+        "min": [
+          723.0,
+          -625.0,
+          843.0
+        ],
+        "max": [
+          1277.0,
+          -40.0,
+          1718.0
+        ],
+        "width": 554.0,
+        "depth": 585.0,
+        "height": 875.0,
+        "children": [
+          {
+            "name": "Oven_Lower_Glass",
+            "path": "QA_Tall_Oven_600W > Double_Oven_Appliance > Oven_Lower_Glass",
+            "min": [
+              733.0,
+              -625.0,
+              845.0
+            ],
+            "max": [
+              1267.0,
+              -620.0,
+              1255.0
+            ],
+            "width": 534.0,
+            "depth": 5.0,
+            "height": 410.0,
+            "children": [
+
+            ]
+          },
+          {
+            "name": "Oven_Upper_Glass",
+            "path": "QA_Tall_Oven_600W > Double_Oven_Appliance > Oven_Upper_Glass",
+            "min": [
+              733.0,
+              -625.0,
+              1285.0
+            ],
+            "max": [
+              1267.0,
+              -620.0,
+              1695.0
+            ],
+            "width": 534.0,
+            "depth": 5.0,
+            "height": 410.0,
+            "children": [
+
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Upper_Cupboard_Door",
+        "path": "QA_Tall_Oven_600W > Upper_Cupboard_Door",
+        "min": [
+          701.5,
+          -618.0,
+          1726.0
+        ],
+        "max": [
+          1298.5,
+          -600.0,
+          2157.0
+        ],
+        "width": 597.0,
+        "depth": 18.0,
+        "height": 431.0,
+        "children": [
+
+        ]
+      },
+      {
+        "name": "Hettich_Undermount_Drawer_561x355",
+        "path": "QA_Tall_Oven_600W > Hettich_Undermount_Drawer_561x355",
+        "min": [
+          719.5,
+          -618.0,
+          112.0
+        ],
+        "max": [
+          1280.5,
+          -90.0,
+          467.0
+        ],
+        "width": 561.0,
+        "depth": 528.0,
+        "height": 355.0,
+        "children": [
+          {
+            "name": "Drawer_Front_Face",
+            "path": "QA_Tall_Oven_600W > Hettich_Undermount_Drawer_561x355 > Drawer_Front_Face",
+            "min": [
+              719.5,
+              -618.0,
+              112.0
+            ],
+            "max": [
+              1280.5,
+              -600.0,
+              467.0
+            ],
+            "width": 561.0,
+            "depth": 18.0,
+            "height": 355.0,
+            "children": [
+
+            ]
+          },
+          {
+            "name": "Drawer_Side_LH",
+            "path": "QA_Tall_Oven_600W > Hettich_Undermount_Drawer_561x355 > Drawer_Side_LH",
+            "min": [
+              732.0,
+              -540.0,
+              127.0
+            ],
+            "max": [
+              747.0,
+              -90.0,
+              327.0
+            ],
+            "width": 15.0,
+            "depth": 450.0,
+            "height": 200.0,
+            "children": [
+
+            ]
+          },
+          {
+            "name": "Drawer_Side_RH",
+            "path": "QA_Tall_Oven_600W > Hettich_Undermount_Drawer_561x355 > Drawer_Side_RH",
+            "min": [
+              1253.0,
+              -540.0,
+              127.0
+            ],
+            "max": [
+              1268.0,
+              -90.0,
+              327.0
+            ],
+            "width": 15.0,
+            "depth": 450.0,
+            "height": 200.0,
+            "children": [
+
+            ]
+          },
+          {
+            "name": "Drawer_Sub_Front",
+            "path": "QA_Tall_Oven_600W > Hettich_Undermount_Drawer_561x355 > Drawer_Sub_Front",
+            "min": [
+              747.0,
+              -540.0,
+              127.0
+            ],
+            "max": [
+              1253.0,
+              -525.0,
+              327.0
+            ],
+            "width": 506.0,
+            "depth": 15.0,
+            "height": 200.0,
+            "children": [
+
+            ]
+          },
+          {
+            "name": "Drawer_Back_Panel",
+            "path": "QA_Tall_Oven_600W > Hettich_Undermount_Drawer_561x355 > Drawer_Back_Panel",
+            "min": [
+              747.0,
+              -105.0,
+              127.0
+            ],
+            "max": [
+              1253.0,
+              -90.0,
+              327.0
+            ],
+            "width": 506.0,
+            "depth": 15.0,
+            "height": 200.0,
+            "children": [
+
+            ]
+          },
+          {
+            "name": "Drawer_Bottom_Panel",
+            "path": "QA_Tall_Oven_600W > Hettich_Undermount_Drawer_561x355 > Drawer_Bottom_Panel",
+            "min": [
+              747.0,
+              -525.0,
+              139.0
+            ],
+            "max": [
+              1253.0,
+              -105.0,
+              155.0
+            ],
+            "width": 506.0,
+            "depth": 420.0,
+            "height": 16.0,
+            "children": [
+
+            ]
+          },
+          {
+            "name": "Hettich_Actro5D_Slide_LH",
+            "path": "QA_Tall_Oven_600W > Hettich_Undermount_Drawer_561x355 > Hettich_Actro5D_Slide_LH",
+            "min": [
+              720.5,
+              -540.0,
+              114.0
+            ],
+            "max": [
+              731.5,
+              -90.0,
+              138.0
+            ],
+            "width": 11.0,
+            "depth": 450.0,
+            "height": 24.0,
+            "children": [
+
+            ]
+          },
+          {
+            "name": "Hettich_Actro5D_Slide_RH",
+            "path": "QA_Tall_Oven_600W > Hettich_Undermount_Drawer_561x355 > Hettich_Actro5D_Slide_RH",
+            "min": [
+              1268.5,
+              -540.0,
+              114.0
+            ],
+            "max": [
+              1279.5,
+              -90.0,
+              138.0
+            ],
+            "width": 11.0,
+            "depth": 450.0,
+            "height": 24.0,
+            "children": [
+
+            ]
+          },
+          {
+            "name": "Hettich_Catch_LH",
+            "path": "QA_Tall_Oven_600W > Hettich_Undermount_Drawer_561x355 > Hettich_Catch_LH",
+            "min": [
+              731.5,
+              -542.0,
+              114.0
+            ],
+            "max": [
+              751.5,
+              -507.0,
+              126.0
+            ],
+            "width": 20.0,
+            "depth": 35.0,
+            "height": 12.0,
+            "children": [
+
+            ]
+          },
+          {
+            "name": "Hettich_Catch_RH",
+            "path": "QA_Tall_Oven_600W > Hettich_Undermount_Drawer_561x355 > Hettich_Catch_RH",
+            "min": [
+              1248.5,
+              -542.0,
+              114.0
+            ],
+            "max": [
+              1268.5,
+              -507.0,
+              126.0
+            ],
+            "width": 20.0,
+            "depth": 35.0,
+            "height": 12.0,
+            "children": [
+
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Hettich_Undermount_Drawer_561x335",
+        "path": "QA_Tall_Oven_600W > Hettich_Undermount_Drawer_561x335",
+        "min": [
+          719.5,
+          -868.0,
+          480.0
+        ],
+        "max": [
+          1280.5,
+          -340.0,
+          815.0
+        ],
+        "width": 561.0,
+        "depth": 528.0,
+        "height": 335.0,
+        "children": [
+          {
+            "name": "Drawer_Front_Face",
+            "path": "QA_Tall_Oven_600W > Hettich_Undermount_Drawer_561x335 > Drawer_Front_Face",
+            "min": [
+              719.5,
+              -868.0,
+              480.0
+            ],
+            "max": [
+              1280.5,
+              -850.0,
+              815.0
+            ],
+            "width": 561.0,
+            "depth": 18.0,
+            "height": 335.0,
+            "children": [
+
+            ]
+          },
+          {
+            "name": "Drawer_Side_LH",
+            "path": "QA_Tall_Oven_600W > Hettich_Undermount_Drawer_561x335 > Drawer_Side_LH",
+            "min": [
+              732.0,
+              -790.0,
+              495.0
+            ],
+            "max": [
+              747.0,
+              -340.0,
+              695.0
+            ],
+            "width": 15.0,
+            "depth": 450.0,
+            "height": 200.0,
+            "children": [
+
+            ]
+          },
+          {
+            "name": "Drawer_Side_RH",
+            "path": "QA_Tall_Oven_600W > Hettich_Undermount_Drawer_561x335 > Drawer_Side_RH",
+            "min": [
+              1253.0,
+              -790.0,
+              495.0
+            ],
+            "max": [
+              1268.0,
+              -340.0,
+              695.0
+            ],
+            "width": 15.0,
+            "depth": 450.0,
+            "height": 200.0,
+            "children": [
+
+            ]
+          },
+          {
+            "name": "Drawer_Sub_Front",
+            "path": "QA_Tall_Oven_600W > Hettich_Undermount_Drawer_561x335 > Drawer_Sub_Front",
+            "min": [
+              747.0,
+              -790.0,
+              495.0
+            ],
+            "max": [
+              1253.0,
+              -775.0,
+              695.0
+            ],
+            "width": 506.0,
+            "depth": 15.0,
+            "height": 200.0,
+            "children": [
+
+            ]
+          },
+          {
+            "name": "Drawer_Back_Panel",
+            "path": "QA_Tall_Oven_600W > Hettich_Undermount_Drawer_561x335 > Drawer_Back_Panel",
+            "min": [
+              747.0,
+              -355.0,
+              495.0
+            ],
+            "max": [
+              1253.0,
+              -340.0,
+              695.0
+            ],
+            "width": 506.0,
+            "depth": 15.0,
+            "height": 200.0,
+            "children": [
+
+            ]
+          },
+          {
+            "name": "Drawer_Bottom_Panel",
+            "path": "QA_Tall_Oven_600W > Hettich_Undermount_Drawer_561x335 > Drawer_Bottom_Panel",
+            "min": [
+              747.0,
+              -775.0,
+              507.0
+            ],
+            "max": [
+              1253.0,
+              -355.0,
+              523.0
+            ],
+            "width": 506.0,
+            "depth": 420.0,
+            "height": 16.0,
+            "children": [
+
+            ]
+          },
+          {
+            "name": "Hettich_Actro5D_Slide_LH",
+            "path": "QA_Tall_Oven_600W > Hettich_Undermount_Drawer_561x335 > Hettich_Actro5D_Slide_LH",
+            "min": [
+              720.5,
+              -790.0,
+              482.0
+            ],
+            "max": [
+              731.5,
+              -340.0,
+              506.0
+            ],
+            "width": 11.0,
+            "depth": 450.0,
+            "height": 24.0,
+            "children": [
+
+            ]
+          },
+          {
+            "name": "Hettich_Actro5D_Slide_RH",
+            "path": "QA_Tall_Oven_600W > Hettich_Undermount_Drawer_561x335 > Hettich_Actro5D_Slide_RH",
+            "min": [
+              1268.5,
+              -790.0,
+              482.0
+            ],
+            "max": [
+              1279.5,
+              -340.0,
+              506.0
+            ],
+            "width": 11.0,
+            "depth": 450.0,
+            "height": 24.0,
+            "children": [
+
+            ]
+          },
+          {
+            "name": "Hettich_Catch_LH",
+            "path": "QA_Tall_Oven_600W > Hettich_Undermount_Drawer_561x335 > Hettich_Catch_LH",
+            "min": [
+              731.5,
+              -792.0,
+              482.0
+            ],
+            "max": [
+              751.5,
+              -757.0,
+              494.0
+            ],
+            "width": 20.0,
+            "depth": 35.0,
+            "height": 12.0,
+            "children": [
+
+            ]
+          },
+          {
+            "name": "Hettich_Catch_RH",
+            "path": "QA_Tall_Oven_600W > Hettich_Undermount_Drawer_561x335 > Hettich_Catch_RH",
+            "min": [
+              1248.5,
+              -792.0,
+              482.0
+            ],
+            "max": [
+              1268.5,
+              -757.0,
+              494.0
+            ],
+            "width": 20.0,
+            "depth": 35.0,
+            "height": 12.0,
+            "children": [
+
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "wardrobe_unit": {
+    "name": "QA_Wardrobe_Combo_900W",
+    "path": "QA_Wardrobe_Combo_900W",
+    "min": [
+      1400.0,
+      -766.5,
+      0.0
+    ],
+    "max": [
+      2300.0,
+      0.0,
+      2160.0
+    ],
+    "width": 900.0,
+    "depth": 766.5,
+    "height": 2160.0,
+    "children": [
+      {
+        "name": "Gable_LH",
+        "path": "QA_Wardrobe_Combo_900W > Gable_LH",
+        "min": [
+          1400.0,
+          -600.0,
+          0.0
+        ],
+        "max": [
+          1418.0,
+          0.0,
+          2160.0
+        ],
+        "width": 18.0,
+        "depth": 600.0,
+        "height": 2160.0,
+        "children": [
+
+        ]
+      },
+      {
+        "name": "Gable_RH",
+        "path": "QA_Wardrobe_Combo_900W > Gable_RH",
+        "min": [
+          2282.0,
+          -600.0,
+          0.0
+        ],
+        "max": [
+          2300.0,
+          0.0,
+          2160.0
+        ],
+        "width": 18.0,
+        "depth": 600.0,
+        "height": 2160.0,
+        "children": [
+
+        ]
+      },
+      {
+        "name": "Bottom_Panel",
+        "path": "QA_Wardrobe_Combo_900W > Bottom_Panel",
+        "min": [
+          1407.0,
+          -600.0,
+          100.0
+        ],
+        "max": [
+          2293.0,
+          -18.0,
+          118.3
+        ],
+        "width": 886.0,
+        "depth": 582.0,
+        "height": 18.3,
+        "children": [
+          {
+            "name": "Shelf_Panel",
+            "path": "QA_Wardrobe_Combo_900W > Bottom_Panel > Shelf_Panel",
+            "min": [
+              1418.0,
+              -600.0,
+              100.0
+            ],
+            "max": [
+              2282.0,
+              -18.0,
+              118.0
+            ],
+            "width": 864.0,
+            "depth": 582.0,
+            "height": 18.0,
+            "children": [
+
+            ]
+          },
+          {
+            "name": "Minifix_15_Joint_Set",
+            "path": "QA_Wardrobe_Combo_900W > Bottom_Panel > Minifix_15_Joint_Set",
+            "min": [
+              1407.0,
+              -77.7,
+              105.0
+            ],
+            "max": [
+              1459.8,
+              -34.0,
+              118.3
+            ],
+            "width": 52.8,
+            "depth": 43.7,
+            "height": 13.3,
+            "children": [
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Wardrobe_Combo_900W > Bottom_Panel > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  1407.0,
+                  -72.5,
+                  106.5
+                ],
+                "max": [
+                  1418.0,
+                  -67.5,
+                  111.5
+                ],
+                "width": 11.0,
+                "depth": 5.0,
+                "height": 5.0,
+                "children": [
+
+                ]
+              },
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Wardrobe_Combo_900W > Bottom_Panel > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  1418.0,
+                  -73.8,
+                  105.3
+                ],
+                "max": [
+                  1419.5,
+                  -66.2,
+                  112.8
+                ],
+                "width": 1.5,
+                "depth": 7.5,
+                "height": 7.5,
+                "children": [
+
+                ]
+              },
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Wardrobe_Combo_900W > Bottom_Panel > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  1419.5,
+                  -73.2,
+                  105.8
+                ],
+                "max": [
+                  1452.0,
+                  -66.8,
+                  112.3
+                ],
+                "width": 32.5,
+                "depth": 6.5,
+                "height": 6.5,
+                "children": [
+
+                ]
+              },
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Wardrobe_Combo_900W > Bottom_Panel > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  1444.5,
+                  -77.4,
+                  105.8
+                ],
+                "max": [
+                  1459.5,
+                  -62.6,
+                  118.3
+                ],
+                "width": 15.0,
+                "depth": 14.8,
+                "height": 12.5,
+                "children": [
+
+                ]
+              },
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Wardrobe_Combo_900W > Bottom_Panel > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  1408.0,
+                  -42.0,
+                  105.0
+                ],
+                "max": [
+                  1438.0,
+                  -34.0,
+                  113.0
+                ],
+                "width": 30.0,
+                "depth": 8.0,
+                "height": 8.0,
+                "children": [
+
+                ]
+              }
+            ]
+          },
+          {
+            "name": "Minifix_15_Joint_Set",
+            "path": "QA_Wardrobe_Combo_900W > Bottom_Panel > Minifix_15_Joint_Set",
+            "min": [
+              1407.0,
+              -537.7,
+              105.0
+            ],
+            "max": [
+              1459.8,
+              -494.0,
+              118.3
+            ],
+            "width": 52.8,
+            "depth": 43.7,
+            "height": 13.3,
+            "children": [
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Wardrobe_Combo_900W > Bottom_Panel > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  1407.0,
+                  -532.5,
+                  106.5
+                ],
+                "max": [
+                  1418.0,
+                  -527.5,
+                  111.5
+                ],
+                "width": 11.0,
+                "depth": 5.0,
+                "height": 5.0,
+                "children": [
+
+                ]
+              },
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Wardrobe_Combo_900W > Bottom_Panel > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  1418.0,
+                  -533.8,
+                  105.3
+                ],
+                "max": [
+                  1419.5,
+                  -526.3,
+                  112.8
+                ],
+                "width": 1.5,
+                "depth": 7.5,
+                "height": 7.5,
+                "children": [
+
+                ]
+              },
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Wardrobe_Combo_900W > Bottom_Panel > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  1419.5,
+                  -533.3,
+                  105.8
+                ],
+                "max": [
+                  1452.0,
+                  -526.8,
+                  112.3
+                ],
+                "width": 32.5,
+                "depth": 6.5,
+                "height": 6.5,
+                "children": [
+
+                ]
+              },
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Wardrobe_Combo_900W > Bottom_Panel > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  1444.5,
+                  -537.4,
+                  105.8
+                ],
+                "max": [
+                  1459.5,
+                  -522.6,
+                  118.3
+                ],
+                "width": 15.0,
+                "depth": 14.8,
+                "height": 12.5,
+                "children": [
+
+                ]
+              },
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Wardrobe_Combo_900W > Bottom_Panel > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  1408.0,
+                  -502.0,
+                  105.0
+                ],
+                "max": [
+                  1438.0,
+                  -494.0,
+                  113.0
+                ],
+                "width": 30.0,
+                "depth": 8.0,
+                "height": 8.0,
+                "children": [
+
+                ]
+              }
+            ]
+          },
+          {
+            "name": "Minifix_15_Joint_Set",
+            "path": "QA_Wardrobe_Combo_900W > Bottom_Panel > Minifix_15_Joint_Set",
+            "min": [
+              2240.2,
+              -77.7,
+              105.0
+            ],
+            "max": [
+              2293.0,
+              -34.0,
+              118.3
+            ],
+            "width": 52.8,
+            "depth": 43.7,
+            "height": 13.3,
+            "children": [
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Wardrobe_Combo_900W > Bottom_Panel > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  2282.0,
+                  -72.5,
+                  106.5
+                ],
+                "max": [
+                  2293.0,
+                  -67.5,
+                  111.5
+                ],
+                "width": 11.0,
+                "depth": 5.0,
+                "height": 5.0,
+                "children": [
+
+                ]
+              },
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Wardrobe_Combo_900W > Bottom_Panel > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  2280.5,
+                  -73.8,
+                  105.3
+                ],
+                "max": [
+                  2282.0,
+                  -66.2,
+                  112.8
+                ],
+                "width": 1.5,
+                "depth": 7.5,
+                "height": 7.5,
+                "children": [
+
+                ]
+              },
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Wardrobe_Combo_900W > Bottom_Panel > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  2248.0,
+                  -73.2,
+                  105.8
+                ],
+                "max": [
+                  2280.5,
+                  -66.8,
+                  112.3
+                ],
+                "width": 32.5,
+                "depth": 6.5,
+                "height": 6.5,
+                "children": [
+
+                ]
+              },
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Wardrobe_Combo_900W > Bottom_Panel > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  2240.5,
+                  -77.4,
+                  105.8
+                ],
+                "max": [
+                  2255.5,
+                  -62.6,
+                  118.3
+                ],
+                "width": 15.0,
+                "depth": 14.8,
+                "height": 12.5,
+                "children": [
+
+                ]
+              },
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Wardrobe_Combo_900W > Bottom_Panel > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  2262.0,
+                  -42.0,
+                  105.0
+                ],
+                "max": [
+                  2292.0,
+                  -34.0,
+                  113.0
+                ],
+                "width": 30.0,
+                "depth": 8.0,
+                "height": 8.0,
+                "children": [
+
+                ]
+              }
+            ]
+          },
+          {
+            "name": "Minifix_15_Joint_Set",
+            "path": "QA_Wardrobe_Combo_900W > Bottom_Panel > Minifix_15_Joint_Set",
+            "min": [
+              2240.2,
+              -537.7,
+              105.0
+            ],
+            "max": [
+              2293.0,
+              -494.0,
+              118.3
+            ],
+            "width": 52.8,
+            "depth": 43.7,
+            "height": 13.3,
+            "children": [
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Wardrobe_Combo_900W > Bottom_Panel > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  2282.0,
+                  -532.5,
+                  106.5
+                ],
+                "max": [
+                  2293.0,
+                  -527.5,
+                  111.5
+                ],
+                "width": 11.0,
+                "depth": 5.0,
+                "height": 5.0,
+                "children": [
+
+                ]
+              },
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Wardrobe_Combo_900W > Bottom_Panel > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  2280.5,
+                  -533.8,
+                  105.3
+                ],
+                "max": [
+                  2282.0,
+                  -526.3,
+                  112.8
+                ],
+                "width": 1.5,
+                "depth": 7.5,
+                "height": 7.5,
+                "children": [
+
+                ]
+              },
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Wardrobe_Combo_900W > Bottom_Panel > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  2248.0,
+                  -533.3,
+                  105.8
+                ],
+                "max": [
+                  2280.5,
+                  -526.8,
+                  112.3
+                ],
+                "width": 32.5,
+                "depth": 6.5,
+                "height": 6.5,
+                "children": [
+
+                ]
+              },
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Wardrobe_Combo_900W > Bottom_Panel > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  2240.5,
+                  -537.4,
+                  105.8
+                ],
+                "max": [
+                  2255.5,
+                  -522.6,
+                  118.3
+                ],
+                "width": 15.0,
+                "depth": 14.8,
+                "height": 12.5,
+                "children": [
+
+                ]
+              },
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Wardrobe_Combo_900W > Bottom_Panel > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  2262.0,
+                  -502.0,
+                  105.0
+                ],
+                "max": [
+                  2292.0,
+                  -494.0,
+                  113.0
+                ],
+                "width": 30.0,
+                "depth": 8.0,
+                "height": 8.0,
+                "children": [
+
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Roof_Panel",
+        "path": "QA_Wardrobe_Combo_900W > Roof_Panel",
+        "min": [
+          1407.0,
+          -600.0,
+          2141.7
+        ],
+        "max": [
+          2293.0,
+          0.0,
+          2160.0
+        ],
+        "width": 886.0,
+        "depth": 600.0,
+        "height": 18.3,
+        "children": [
+          {
+            "name": "Shelf_Panel",
+            "path": "QA_Wardrobe_Combo_900W > Roof_Panel > Shelf_Panel",
+            "min": [
+              1418.0,
+              -600.0,
+              2142.0
+            ],
+            "max": [
+              2282.0,
+              0.0,
+              2160.0
+            ],
+            "width": 864.0,
+            "depth": 600.0,
+            "height": 18.0,
+            "children": [
+
+            ]
+          },
+          {
+            "name": "Minifix_15_Joint_Set",
+            "path": "QA_Wardrobe_Combo_900W > Roof_Panel > Minifix_15_Joint_Set",
+            "min": [
+              1407.0,
+              -77.7,
+              2141.7
+            ],
+            "max": [
+              1459.8,
+              -34.0,
+              2155.0
+            ],
+            "width": 52.8,
+            "depth": 43.7,
+            "height": 13.3,
+            "children": [
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Wardrobe_Combo_900W > Roof_Panel > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  1407.0,
+                  -72.5,
+                  2148.5
+                ],
+                "max": [
+                  1418.0,
+                  -67.5,
+                  2153.5
+                ],
+                "width": 11.0,
+                "depth": 5.0,
+                "height": 5.0,
+                "children": [
+
+                ]
+              },
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Wardrobe_Combo_900W > Roof_Panel > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  1418.0,
+                  -73.8,
+                  2147.3
+                ],
+                "max": [
+                  1419.5,
+                  -66.2,
+                  2154.8
+                ],
+                "width": 1.5,
+                "depth": 7.5,
+                "height": 7.5,
+                "children": [
+
+                ]
+              },
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Wardrobe_Combo_900W > Roof_Panel > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  1419.5,
+                  -73.2,
+                  2147.8
+                ],
+                "max": [
+                  1452.0,
+                  -66.8,
+                  2154.3
+                ],
+                "width": 32.5,
+                "depth": 6.5,
+                "height": 6.5,
+                "children": [
+
+                ]
+              },
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Wardrobe_Combo_900W > Roof_Panel > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  1444.5,
+                  -77.4,
+                  2141.7
+                ],
+                "max": [
+                  1459.5,
+                  -62.6,
+                  2154.2
+                ],
+                "width": 15.0,
+                "depth": 14.8,
+                "height": 12.5,
+                "children": [
+
+                ]
+              },
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Wardrobe_Combo_900W > Roof_Panel > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  1408.0,
+                  -42.0,
+                  2147.0
+                ],
+                "max": [
+                  1438.0,
+                  -34.0,
+                  2155.0
+                ],
+                "width": 30.0,
+                "depth": 8.0,
+                "height": 8.0,
+                "children": [
+
+                ]
+              }
+            ]
+          },
+          {
+            "name": "Minifix_15_Joint_Set",
+            "path": "QA_Wardrobe_Combo_900W > Roof_Panel > Minifix_15_Joint_Set",
+            "min": [
+              1407.0,
+              -537.7,
+              2141.7
+            ],
+            "max": [
+              1459.8,
+              -494.0,
+              2155.0
+            ],
+            "width": 52.8,
+            "depth": 43.7,
+            "height": 13.3,
+            "children": [
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Wardrobe_Combo_900W > Roof_Panel > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  1407.0,
+                  -532.5,
+                  2148.5
+                ],
+                "max": [
+                  1418.0,
+                  -527.5,
+                  2153.5
+                ],
+                "width": 11.0,
+                "depth": 5.0,
+                "height": 5.0,
+                "children": [
+
+                ]
+              },
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Wardrobe_Combo_900W > Roof_Panel > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  1418.0,
+                  -533.8,
+                  2147.3
+                ],
+                "max": [
+                  1419.5,
+                  -526.3,
+                  2154.8
+                ],
+                "width": 1.5,
+                "depth": 7.5,
+                "height": 7.5,
+                "children": [
+
+                ]
+              },
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Wardrobe_Combo_900W > Roof_Panel > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  1419.5,
+                  -533.3,
+                  2147.8
+                ],
+                "max": [
+                  1452.0,
+                  -526.8,
+                  2154.3
+                ],
+                "width": 32.5,
+                "depth": 6.5,
+                "height": 6.5,
+                "children": [
+
+                ]
+              },
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Wardrobe_Combo_900W > Roof_Panel > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  1444.5,
+                  -537.4,
+                  2141.7
+                ],
+                "max": [
+                  1459.5,
+                  -522.6,
+                  2154.2
+                ],
+                "width": 15.0,
+                "depth": 14.8,
+                "height": 12.5,
+                "children": [
+
+                ]
+              },
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Wardrobe_Combo_900W > Roof_Panel > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  1408.0,
+                  -502.0,
+                  2147.0
+                ],
+                "max": [
+                  1438.0,
+                  -494.0,
+                  2155.0
+                ],
+                "width": 30.0,
+                "depth": 8.0,
+                "height": 8.0,
+                "children": [
+
+                ]
+              }
+            ]
+          },
+          {
+            "name": "Minifix_15_Joint_Set",
+            "path": "QA_Wardrobe_Combo_900W > Roof_Panel > Minifix_15_Joint_Set",
+            "min": [
+              2240.2,
+              -77.7,
+              2141.7
+            ],
+            "max": [
+              2293.0,
+              -34.0,
+              2155.0
+            ],
+            "width": 52.8,
+            "depth": 43.7,
+            "height": 13.3,
+            "children": [
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Wardrobe_Combo_900W > Roof_Panel > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  2282.0,
+                  -72.5,
+                  2148.5
+                ],
+                "max": [
+                  2293.0,
+                  -67.5,
+                  2153.5
+                ],
+                "width": 11.0,
+                "depth": 5.0,
+                "height": 5.0,
+                "children": [
+
+                ]
+              },
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Wardrobe_Combo_900W > Roof_Panel > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  2280.5,
+                  -73.8,
+                  2147.3
+                ],
+                "max": [
+                  2282.0,
+                  -66.2,
+                  2154.8
+                ],
+                "width": 1.5,
+                "depth": 7.5,
+                "height": 7.5,
+                "children": [
+
+                ]
+              },
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Wardrobe_Combo_900W > Roof_Panel > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  2248.0,
+                  -73.2,
+                  2147.8
+                ],
+                "max": [
+                  2280.5,
+                  -66.8,
+                  2154.3
+                ],
+                "width": 32.5,
+                "depth": 6.5,
+                "height": 6.5,
+                "children": [
+
+                ]
+              },
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Wardrobe_Combo_900W > Roof_Panel > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  2240.5,
+                  -77.4,
+                  2141.7
+                ],
+                "max": [
+                  2255.5,
+                  -62.6,
+                  2154.2
+                ],
+                "width": 15.0,
+                "depth": 14.8,
+                "height": 12.5,
+                "children": [
+
+                ]
+              },
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Wardrobe_Combo_900W > Roof_Panel > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  2262.0,
+                  -42.0,
+                  2147.0
+                ],
+                "max": [
+                  2292.0,
+                  -34.0,
+                  2155.0
+                ],
+                "width": 30.0,
+                "depth": 8.0,
+                "height": 8.0,
+                "children": [
+
+                ]
+              }
+            ]
+          },
+          {
+            "name": "Minifix_15_Joint_Set",
+            "path": "QA_Wardrobe_Combo_900W > Roof_Panel > Minifix_15_Joint_Set",
+            "min": [
+              2240.2,
+              -537.7,
+              2141.7
+            ],
+            "max": [
+              2293.0,
+              -494.0,
+              2155.0
+            ],
+            "width": 52.8,
+            "depth": 43.7,
+            "height": 13.3,
+            "children": [
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Wardrobe_Combo_900W > Roof_Panel > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  2282.0,
+                  -532.5,
+                  2148.5
+                ],
+                "max": [
+                  2293.0,
+                  -527.5,
+                  2153.5
+                ],
+                "width": 11.0,
+                "depth": 5.0,
+                "height": 5.0,
+                "children": [
+
+                ]
+              },
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Wardrobe_Combo_900W > Roof_Panel > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  2280.5,
+                  -533.8,
+                  2147.3
+                ],
+                "max": [
+                  2282.0,
+                  -526.3,
+                  2154.8
+                ],
+                "width": 1.5,
+                "depth": 7.5,
+                "height": 7.5,
+                "children": [
+
+                ]
+              },
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Wardrobe_Combo_900W > Roof_Panel > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  2248.0,
+                  -533.3,
+                  2147.8
+                ],
+                "max": [
+                  2280.5,
+                  -526.8,
+                  2154.3
+                ],
+                "width": 32.5,
+                "depth": 6.5,
+                "height": 6.5,
+                "children": [
+
+                ]
+              },
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Wardrobe_Combo_900W > Roof_Panel > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  2240.5,
+                  -537.4,
+                  2141.7
+                ],
+                "max": [
+                  2255.5,
+                  -522.6,
+                  2154.2
+                ],
+                "width": 15.0,
+                "depth": 14.8,
+                "height": 12.5,
+                "children": [
+
+                ]
+              },
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Wardrobe_Combo_900W > Roof_Panel > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  2262.0,
+                  -502.0,
+                  2147.0
+                ],
+                "max": [
+                  2292.0,
+                  -494.0,
+                  2155.0
+                ],
+                "width": 30.0,
+                "depth": 8.0,
+                "height": 8.0,
+                "children": [
+
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "QA_Wardrobe_Combo_900W_Back_System",
+        "path": "QA_Wardrobe_Combo_900W > QA_Wardrobe_Combo_900W_Back_System",
+        "min": [
+          1413.0,
+          -24.0,
+          113.0
+        ],
+        "max": [
+          2287.0,
+          0.0,
+          2147.0
+        ],
+        "width": 874.0,
+        "depth": 24.0,
+        "height": 2034.0,
+        "children": [
+          {
+            "name": "QA_Wardrobe_Combo_900W_Grooved_Back_Sheet",
+            "path": "QA_Wardrobe_Combo_900W > QA_Wardrobe_Combo_900W_Back_System > QA_Wardrobe_Combo_900W_Grooved_Back_Sheet",
+            "min": [
+              1413.0,
+              -24.0,
+              113.0
+            ],
+            "max": [
+              2287.0,
+              -18.0,
+              2147.0
+            ],
+            "width": 874.0,
+            "depth": 6.0,
+            "height": 2034.0,
+            "children": [
+
+            ]
+          },
+          {
+            "name": "QA_Wardrobe_Combo_900W_Rear_Top_Vertical_Cleat",
+            "path": "QA_Wardrobe_Combo_900W > QA_Wardrobe_Combo_900W_Back_System > QA_Wardrobe_Combo_900W_Rear_Top_Vertical_Cleat",
+            "min": [
+              1418.0,
+              -18.0,
+              2042.0
+            ],
+            "max": [
+              2282.0,
+              0.0,
+              2142.0
+            ],
+            "width": 864.0,
+            "depth": 18.0,
+            "height": 100.0,
+            "children": [
+
+            ]
+          },
+          {
+            "name": "QA_Wardrobe_Combo_900W_Rear_Bottom_Vertical_Cleat",
+            "path": "QA_Wardrobe_Combo_900W > QA_Wardrobe_Combo_900W_Back_System > QA_Wardrobe_Combo_900W_Rear_Bottom_Vertical_Cleat",
+            "min": [
+              1418.0,
+              -18.0,
+              118.0
+            ],
+            "max": [
+              2282.0,
+              0.0,
+              218.0
+            ],
+            "width": 864.0,
+            "depth": 18.0,
+            "height": 100.0,
+            "children": [
+
+            ]
+          },
+          {
+            "name": "QA_Wardrobe_Combo_900W_Rear_Mid_Vertical_Cleat",
+            "path": "QA_Wardrobe_Combo_900W > QA_Wardrobe_Combo_900W_Back_System > QA_Wardrobe_Combo_900W_Rear_Mid_Vertical_Cleat",
+            "min": [
+              1418.0,
+              -18.0,
+              1080.0
+            ],
+            "max": [
+              2282.0,
+              0.0,
+              1180.0
+            ],
+            "width": 864.0,
+            "depth": 18.0,
+            "height": 100.0,
+            "children": [
+
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Mid_Divider_Shelf",
+        "path": "QA_Wardrobe_Combo_900W > Mid_Divider_Shelf",
+        "min": [
+          1407.0,
+          -600.0,
+          950.0
+        ],
+        "max": [
+          2293.0,
+          -18.0,
+          968.3
+        ],
+        "width": 886.0,
+        "depth": 582.0,
+        "height": 18.3,
+        "children": [
+          {
+            "name": "Shelf_Panel",
+            "path": "QA_Wardrobe_Combo_900W > Mid_Divider_Shelf > Shelf_Panel",
+            "min": [
+              1418.0,
+              -600.0,
+              950.0
+            ],
+            "max": [
+              2282.0,
+              -18.0,
+              968.0
+            ],
+            "width": 864.0,
+            "depth": 582.0,
+            "height": 18.0,
+            "children": [
+
+            ]
+          },
+          {
+            "name": "Minifix_15_Joint_Set",
+            "path": "QA_Wardrobe_Combo_900W > Mid_Divider_Shelf > Minifix_15_Joint_Set",
+            "min": [
+              1407.0,
+              -77.7,
+              955.0
+            ],
+            "max": [
+              1459.8,
+              -34.0,
+              968.3
+            ],
+            "width": 52.8,
+            "depth": 43.7,
+            "height": 13.3,
+            "children": [
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Wardrobe_Combo_900W > Mid_Divider_Shelf > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  1407.0,
+                  -72.5,
+                  956.5
+                ],
+                "max": [
+                  1418.0,
+                  -67.5,
+                  961.5
+                ],
+                "width": 11.0,
+                "depth": 5.0,
+                "height": 5.0,
+                "children": [
+
+                ]
+              },
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Wardrobe_Combo_900W > Mid_Divider_Shelf > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  1418.0,
+                  -73.8,
+                  955.2
+                ],
+                "max": [
+                  1419.5,
+                  -66.2,
+                  962.8
+                ],
+                "width": 1.5,
+                "depth": 7.5,
+                "height": 7.5,
+                "children": [
+
+                ]
+              },
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Wardrobe_Combo_900W > Mid_Divider_Shelf > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  1419.5,
+                  -73.2,
+                  955.7
+                ],
+                "max": [
+                  1452.0,
+                  -66.8,
+                  962.2
+                ],
+                "width": 32.5,
+                "depth": 6.5,
+                "height": 6.5,
+                "children": [
+
+                ]
+              },
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Wardrobe_Combo_900W > Mid_Divider_Shelf > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  1444.5,
+                  -77.4,
+                  955.8
+                ],
+                "max": [
+                  1459.5,
+                  -62.6,
+                  968.3
+                ],
+                "width": 15.0,
+                "depth": 14.8,
+                "height": 12.5,
+                "children": [
+
+                ]
+              },
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Wardrobe_Combo_900W > Mid_Divider_Shelf > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  1408.0,
+                  -42.0,
+                  955.0
+                ],
+                "max": [
+                  1438.0,
+                  -34.0,
+                  963.0
+                ],
+                "width": 30.0,
+                "depth": 8.0,
+                "height": 8.0,
+                "children": [
+
+                ]
+              }
+            ]
+          },
+          {
+            "name": "Minifix_15_Joint_Set",
+            "path": "QA_Wardrobe_Combo_900W > Mid_Divider_Shelf > Minifix_15_Joint_Set",
+            "min": [
+              1407.0,
+              -537.7,
+              955.0
+            ],
+            "max": [
+              1459.8,
+              -494.0,
+              968.3
+            ],
+            "width": 52.8,
+            "depth": 43.7,
+            "height": 13.3,
+            "children": [
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Wardrobe_Combo_900W > Mid_Divider_Shelf > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  1407.0,
+                  -532.5,
+                  956.5
+                ],
+                "max": [
+                  1418.0,
+                  -527.5,
+                  961.5
+                ],
+                "width": 11.0,
+                "depth": 5.0,
+                "height": 5.0,
+                "children": [
+
+                ]
+              },
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Wardrobe_Combo_900W > Mid_Divider_Shelf > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  1418.0,
+                  -533.8,
+                  955.2
+                ],
+                "max": [
+                  1419.5,
+                  -526.3,
+                  962.8
+                ],
+                "width": 1.5,
+                "depth": 7.5,
+                "height": 7.5,
+                "children": [
+
+                ]
+              },
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Wardrobe_Combo_900W > Mid_Divider_Shelf > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  1419.5,
+                  -533.3,
+                  955.7
+                ],
+                "max": [
+                  1452.0,
+                  -526.8,
+                  962.2
+                ],
+                "width": 32.5,
+                "depth": 6.5,
+                "height": 6.5,
+                "children": [
+
+                ]
+              },
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Wardrobe_Combo_900W > Mid_Divider_Shelf > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  1444.5,
+                  -537.4,
+                  955.8
+                ],
+                "max": [
+                  1459.5,
+                  -522.6,
+                  968.3
+                ],
+                "width": 15.0,
+                "depth": 14.8,
+                "height": 12.5,
+                "children": [
+
+                ]
+              },
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Wardrobe_Combo_900W > Mid_Divider_Shelf > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  1408.0,
+                  -502.0,
+                  955.0
+                ],
+                "max": [
+                  1438.0,
+                  -494.0,
+                  963.0
+                ],
+                "width": 30.0,
+                "depth": 8.0,
+                "height": 8.0,
+                "children": [
+
+                ]
+              }
+            ]
+          },
+          {
+            "name": "Minifix_15_Joint_Set",
+            "path": "QA_Wardrobe_Combo_900W > Mid_Divider_Shelf > Minifix_15_Joint_Set",
+            "min": [
+              2240.2,
+              -77.7,
+              955.0
+            ],
+            "max": [
+              2293.0,
+              -34.0,
+              968.3
+            ],
+            "width": 52.8,
+            "depth": 43.7,
+            "height": 13.3,
+            "children": [
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Wardrobe_Combo_900W > Mid_Divider_Shelf > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  2282.0,
+                  -72.5,
+                  956.5
+                ],
+                "max": [
+                  2293.0,
+                  -67.5,
+                  961.5
+                ],
+                "width": 11.0,
+                "depth": 5.0,
+                "height": 5.0,
+                "children": [
+
+                ]
+              },
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Wardrobe_Combo_900W > Mid_Divider_Shelf > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  2280.5,
+                  -73.8,
+                  955.2
+                ],
+                "max": [
+                  2282.0,
+                  -66.2,
+                  962.8
+                ],
+                "width": 1.5,
+                "depth": 7.5,
+                "height": 7.5,
+                "children": [
+
+                ]
+              },
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Wardrobe_Combo_900W > Mid_Divider_Shelf > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  2248.0,
+                  -73.2,
+                  955.7
+                ],
+                "max": [
+                  2280.5,
+                  -66.8,
+                  962.2
+                ],
+                "width": 32.5,
+                "depth": 6.5,
+                "height": 6.5,
+                "children": [
+
+                ]
+              },
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Wardrobe_Combo_900W > Mid_Divider_Shelf > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  2240.5,
+                  -77.4,
+                  955.8
+                ],
+                "max": [
+                  2255.5,
+                  -62.6,
+                  968.3
+                ],
+                "width": 15.0,
+                "depth": 14.8,
+                "height": 12.5,
+                "children": [
+
+                ]
+              },
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Wardrobe_Combo_900W > Mid_Divider_Shelf > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  2262.0,
+                  -42.0,
+                  955.0
+                ],
+                "max": [
+                  2292.0,
+                  -34.0,
+                  963.0
+                ],
+                "width": 30.0,
+                "depth": 8.0,
+                "height": 8.0,
+                "children": [
+
+                ]
+              }
+            ]
+          },
+          {
+            "name": "Minifix_15_Joint_Set",
+            "path": "QA_Wardrobe_Combo_900W > Mid_Divider_Shelf > Minifix_15_Joint_Set",
+            "min": [
+              2240.2,
+              -537.7,
+              955.0
+            ],
+            "max": [
+              2293.0,
+              -494.0,
+              968.3
+            ],
+            "width": 52.8,
+            "depth": 43.7,
+            "height": 13.3,
+            "children": [
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Wardrobe_Combo_900W > Mid_Divider_Shelf > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  2282.0,
+                  -532.5,
+                  956.5
+                ],
+                "max": [
+                  2293.0,
+                  -527.5,
+                  961.5
+                ],
+                "width": 11.0,
+                "depth": 5.0,
+                "height": 5.0,
+                "children": [
+
+                ]
+              },
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Wardrobe_Combo_900W > Mid_Divider_Shelf > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  2280.5,
+                  -533.8,
+                  955.2
+                ],
+                "max": [
+                  2282.0,
+                  -526.3,
+                  962.8
+                ],
+                "width": 1.5,
+                "depth": 7.5,
+                "height": 7.5,
+                "children": [
+
+                ]
+              },
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Wardrobe_Combo_900W > Mid_Divider_Shelf > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  2248.0,
+                  -533.3,
+                  955.7
+                ],
+                "max": [
+                  2280.5,
+                  -526.8,
+                  962.2
+                ],
+                "width": 32.5,
+                "depth": 6.5,
+                "height": 6.5,
+                "children": [
+
+                ]
+              },
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Wardrobe_Combo_900W > Mid_Divider_Shelf > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  2240.5,
+                  -537.4,
+                  955.8
+                ],
+                "max": [
+                  2255.5,
+                  -522.6,
+                  968.3
+                ],
+                "width": 15.0,
+                "depth": 14.8,
+                "height": 12.5,
+                "children": [
+
+                ]
+              },
+              {
+                "name": "Unnamed_Group",
+                "path": "QA_Wardrobe_Combo_900W > Mid_Divider_Shelf > Minifix_15_Joint_Set > Unnamed_Group",
+                "min": [
+                  2262.0,
+                  -502.0,
+                  955.0
+                ],
+                "max": [
+                  2292.0,
+                  -494.0,
+                  963.0
+                ],
+                "width": 30.0,
+                "depth": 8.0,
+                "height": 8.0,
+                "children": [
+
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Internal_Drawer_1",
+        "path": "QA_Wardrobe_Combo_900W > Internal_Drawer_1",
+        "min": [
+          1420.5,
+          -766.5,
+          122.0
+        ],
+        "max": [
+          2279.5,
+          -315.0,
+          315.0
+        ],
+        "width": 859.0,
+        "depth": 451.5,
+        "height": 193.0,
+        "children": [
+          {
+            "name": "Drawer_Side_LH",
+            "path": "QA_Wardrobe_Combo_900W > Internal_Drawer_1 > Drawer_Side_LH",
+            "min": [
+              1432.0,
+              -765.0,
+              135.0
+            ],
+            "max": [
+              1447.0,
+              -315.0,
+              315.0
+            ],
+            "width": 15.0,
+            "depth": 450.0,
+            "height": 180.0,
+            "children": [
+
+            ]
+          },
+          {
+            "name": "Drawer_Side_RH",
+            "path": "QA_Wardrobe_Combo_900W > Internal_Drawer_1 > Drawer_Side_RH",
+            "min": [
+              2253.0,
+              -765.0,
+              135.0
+            ],
+            "max": [
+              2268.0,
+              -315.0,
+              315.0
+            ],
+            "width": 15.0,
+            "depth": 450.0,
+            "height": 180.0,
+            "children": [
+
+            ]
+          },
+          {
+            "name": "Drawer_Sub_Front",
+            "path": "QA_Wardrobe_Combo_900W > Internal_Drawer_1 > Drawer_Sub_Front",
+            "min": [
+              1447.0,
+              -765.0,
+              135.0
+            ],
+            "max": [
+              2253.0,
+              -750.0,
+              315.0
+            ],
+            "width": 806.0,
+            "depth": 15.0,
+            "height": 180.0,
+            "children": [
+
+            ]
+          },
+          {
+            "name": "Drawer_Back_Panel",
+            "path": "QA_Wardrobe_Combo_900W > Internal_Drawer_1 > Drawer_Back_Panel",
+            "min": [
+              1447.0,
+              -330.0,
+              135.0
+            ],
+            "max": [
+              2253.0,
+              -315.0,
+              315.0
+            ],
+            "width": 806.0,
+            "depth": 15.0,
+            "height": 180.0,
+            "children": [
+
+            ]
+          },
+          {
+            "name": "Drawer_Bottom_Panel",
+            "path": "QA_Wardrobe_Combo_900W > Internal_Drawer_1 > Drawer_Bottom_Panel",
+            "min": [
+              1447.0,
+              -750.0,
+              147.0
+            ],
+            "max": [
+              2253.0,
+              -330.0,
+              163.0
+            ],
+            "width": 806.0,
+            "depth": 420.0,
+            "height": 16.0,
+            "children": [
+
+            ]
+          },
+          {
+            "name": "Actro5D_Slide_LH",
+            "path": "QA_Wardrobe_Combo_900W > Internal_Drawer_1 > Actro5D_Slide_LH",
+            "min": [
+              1420.5,
+              -765.0,
+              122.0
+            ],
+            "max": [
+              1431.5,
+              -315.0,
+              146.0
+            ],
+            "width": 11.0,
+            "depth": 450.0,
+            "height": 24.0,
+            "children": [
+
+            ]
+          },
+          {
+            "name": "Actro5D_Slide_RH",
+            "path": "QA_Wardrobe_Combo_900W > Internal_Drawer_1 > Actro5D_Slide_RH",
+            "min": [
+              2268.5,
+              -765.0,
+              122.0
+            ],
+            "max": [
+              2279.5,
+              -315.0,
+              146.0
+            ],
+            "width": 11.0,
+            "depth": 450.0,
+            "height": 24.0,
+            "children": [
+
+            ]
+          },
+          {
+            "name": "Tinted_Glass_Front_Insert",
+            "path": "QA_Wardrobe_Combo_900W > Internal_Drawer_1 > Tinted_Glass_Front_Insert",
+            "min": [
+              1457.0,
+              -766.5,
+              150.0
+            ],
+            "max": [
+              2243.0,
+              -762.5,
+              305.0
+            ],
+            "width": 786.0,
+            "depth": 4.0,
+            "height": 155.0,
+            "children": [
+
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Internal_Drawer_2",
+        "path": "QA_Wardrobe_Combo_900W > Internal_Drawer_2",
+        "min": [
+          1420.5,
+          -566.5,
+          382.0
+        ],
+        "max": [
+          2279.5,
+          -115.0,
+          575.0
+        ],
+        "width": 859.0,
+        "depth": 451.5,
+        "height": 193.0,
+        "children": [
+          {
+            "name": "Drawer_Side_LH",
+            "path": "QA_Wardrobe_Combo_900W > Internal_Drawer_2 > Drawer_Side_LH",
+            "min": [
+              1432.0,
+              -565.0,
+              395.0
+            ],
+            "max": [
+              1447.0,
+              -115.0,
+              575.0
+            ],
+            "width": 15.0,
+            "depth": 450.0,
+            "height": 180.0,
+            "children": [
+
+            ]
+          },
+          {
+            "name": "Drawer_Side_RH",
+            "path": "QA_Wardrobe_Combo_900W > Internal_Drawer_2 > Drawer_Side_RH",
+            "min": [
+              2253.0,
+              -565.0,
+              395.0
+            ],
+            "max": [
+              2268.0,
+              -115.0,
+              575.0
+            ],
+            "width": 15.0,
+            "depth": 450.0,
+            "height": 180.0,
+            "children": [
+
+            ]
+          },
+          {
+            "name": "Drawer_Sub_Front",
+            "path": "QA_Wardrobe_Combo_900W > Internal_Drawer_2 > Drawer_Sub_Front",
+            "min": [
+              1447.0,
+              -565.0,
+              395.0
+            ],
+            "max": [
+              2253.0,
+              -550.0,
+              575.0
+            ],
+            "width": 806.0,
+            "depth": 15.0,
+            "height": 180.0,
+            "children": [
+
+            ]
+          },
+          {
+            "name": "Drawer_Back_Panel",
+            "path": "QA_Wardrobe_Combo_900W > Internal_Drawer_2 > Drawer_Back_Panel",
+            "min": [
+              1447.0,
+              -130.0,
+              395.0
+            ],
+            "max": [
+              2253.0,
+              -115.0,
+              575.0
+            ],
+            "width": 806.0,
+            "depth": 15.0,
+            "height": 180.0,
+            "children": [
+
+            ]
+          },
+          {
+            "name": "Drawer_Bottom_Panel",
+            "path": "QA_Wardrobe_Combo_900W > Internal_Drawer_2 > Drawer_Bottom_Panel",
+            "min": [
+              1447.0,
+              -550.0,
+              407.0
+            ],
+            "max": [
+              2253.0,
+              -130.0,
+              423.0
+            ],
+            "width": 806.0,
+            "depth": 420.0,
+            "height": 16.0,
+            "children": [
+
+            ]
+          },
+          {
+            "name": "Actro5D_Slide_LH",
+            "path": "QA_Wardrobe_Combo_900W > Internal_Drawer_2 > Actro5D_Slide_LH",
+            "min": [
+              1420.5,
+              -565.0,
+              382.0
+            ],
+            "max": [
+              1431.5,
+              -115.0,
+              406.0
+            ],
+            "width": 11.0,
+            "depth": 450.0,
+            "height": 24.0,
+            "children": [
+
+            ]
+          },
+          {
+            "name": "Actro5D_Slide_RH",
+            "path": "QA_Wardrobe_Combo_900W > Internal_Drawer_2 > Actro5D_Slide_RH",
+            "min": [
+              2268.5,
+              -565.0,
+              382.0
+            ],
+            "max": [
+              2279.5,
+              -115.0,
+              406.0
+            ],
+            "width": 11.0,
+            "depth": 450.0,
+            "height": 24.0,
+            "children": [
+
+            ]
+          },
+          {
+            "name": "Tinted_Glass_Front_Insert",
+            "path": "QA_Wardrobe_Combo_900W > Internal_Drawer_2 > Tinted_Glass_Front_Insert",
+            "min": [
+              1457.0,
+              -566.5,
+              410.0
+            ],
+            "max": [
+              2243.0,
+              -562.5,
+              565.0
+            ],
+            "width": 786.0,
+            "depth": 4.0,
+            "height": 155.0,
+            "children": [
+
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Internal_Drawer_3",
+        "path": "QA_Wardrobe_Combo_900W > Internal_Drawer_3",
+        "min": [
+          1420.5,
+          -566.5,
+          642.0
+        ],
+        "max": [
+          2279.5,
+          -115.0,
+          835.0
+        ],
+        "width": 859.0,
+        "depth": 451.5,
+        "height": 193.0,
+        "children": [
+          {
+            "name": "Drawer_Side_LH",
+            "path": "QA_Wardrobe_Combo_900W > Internal_Drawer_3 > Drawer_Side_LH",
+            "min": [
+              1432.0,
+              -565.0,
+              655.0
+            ],
+            "max": [
+              1447.0,
+              -115.0,
+              835.0
+            ],
+            "width": 15.0,
+            "depth": 450.0,
+            "height": 180.0,
+            "children": [
+
+            ]
+          },
+          {
+            "name": "Drawer_Side_RH",
+            "path": "QA_Wardrobe_Combo_900W > Internal_Drawer_3 > Drawer_Side_RH",
+            "min": [
+              2253.0,
+              -565.0,
+              655.0
+            ],
+            "max": [
+              2268.0,
+              -115.0,
+              835.0
+            ],
+            "width": 15.0,
+            "depth": 450.0,
+            "height": 180.0,
+            "children": [
+
+            ]
+          },
+          {
+            "name": "Drawer_Sub_Front",
+            "path": "QA_Wardrobe_Combo_900W > Internal_Drawer_3 > Drawer_Sub_Front",
+            "min": [
+              1447.0,
+              -565.0,
+              655.0
+            ],
+            "max": [
+              2253.0,
+              -550.0,
+              835.0
+            ],
+            "width": 806.0,
+            "depth": 15.0,
+            "height": 180.0,
+            "children": [
+
+            ]
+          },
+          {
+            "name": "Drawer_Back_Panel",
+            "path": "QA_Wardrobe_Combo_900W > Internal_Drawer_3 > Drawer_Back_Panel",
+            "min": [
+              1447.0,
+              -130.0,
+              655.0
+            ],
+            "max": [
+              2253.0,
+              -115.0,
+              835.0
+            ],
+            "width": 806.0,
+            "depth": 15.0,
+            "height": 180.0,
+            "children": [
+
+            ]
+          },
+          {
+            "name": "Drawer_Bottom_Panel",
+            "path": "QA_Wardrobe_Combo_900W > Internal_Drawer_3 > Drawer_Bottom_Panel",
+            "min": [
+              1447.0,
+              -550.0,
+              667.0
+            ],
+            "max": [
+              2253.0,
+              -130.0,
+              683.0
+            ],
+            "width": 806.0,
+            "depth": 420.0,
+            "height": 16.0,
+            "children": [
+
+            ]
+          },
+          {
+            "name": "Actro5D_Slide_LH",
+            "path": "QA_Wardrobe_Combo_900W > Internal_Drawer_3 > Actro5D_Slide_LH",
+            "min": [
+              1420.5,
+              -565.0,
+              642.0
+            ],
+            "max": [
+              1431.5,
+              -115.0,
+              666.0
+            ],
+            "width": 11.0,
+            "depth": 450.0,
+            "height": 24.0,
+            "children": [
+
+            ]
+          },
+          {
+            "name": "Actro5D_Slide_RH",
+            "path": "QA_Wardrobe_Combo_900W > Internal_Drawer_3 > Actro5D_Slide_RH",
+            "min": [
+              2268.5,
+              -565.0,
+              642.0
+            ],
+            "max": [
+              2279.5,
+              -115.0,
+              666.0
+            ],
+            "width": 11.0,
+            "depth": 450.0,
+            "height": 24.0,
+            "children": [
+
+            ]
+          },
+          {
+            "name": "Tinted_Glass_Front_Insert",
+            "path": "QA_Wardrobe_Combo_900W > Internal_Drawer_3 > Tinted_Glass_Front_Insert",
+            "min": [
+              1457.0,
+              -566.5,
+              670.0
+            ],
+            "max": [
+              2243.0,
+              -562.5,
+              825.0
+            ],
+            "width": 786.0,
+            "depth": 4.0,
+            "height": 155.0,
+            "children": [
+
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Upper_Hanging_Rail",
+        "path": "QA_Wardrobe_Combo_900W > Upper_Hanging_Rail",
+        "min": [
+          1418.0,
+          -318.0,
+          1925.0
+        ],
+        "max": [
+          2282.0,
+          -282.0,
+          1975.0
+        ],
+        "width": 864.0,
+        "depth": 36.0,
+        "height": 50.0,
+        "children": [
+          {
+            "name": "Unnamed_Group",
+            "path": "QA_Wardrobe_Combo_900W > Upper_Hanging_Rail > Unnamed_Group",
+            "min": [
+              1418.0,
+              -312.5,
+              1937.5
+            ],
+            "max": [
+              2282.0,
+              -287.5,
+              1962.5
+            ],
+            "width": 864.0,
+            "depth": 25.0,
+            "height": 25.0,
+            "children": [
+
+            ]
+          },
+          {
+            "name": "Rail_End_Flange_LH",
+            "path": "QA_Wardrobe_Combo_900W > Upper_Hanging_Rail > Rail_End_Flange_LH",
+            "min": [
+              1418.0,
+              -318.0,
+              1925.0
+            ],
+            "max": [
+              1422.0,
+              -282.0,
+              1975.0
+            ],
+            "width": 4.0,
+            "depth": 36.0,
+            "height": 50.0,
+            "children": [
+
+            ]
+          },
+          {
+            "name": "Rail_End_Flange_RH",
+            "path": "QA_Wardrobe_Combo_900W > Upper_Hanging_Rail > Rail_End_Flange_RH",
+            "min": [
+              2278.0,
+              -318.0,
+              1925.0
+            ],
+            "max": [
+              2282.0,
+              -282.0,
+              1975.0
+            ],
+            "width": 4.0,
+            "depth": 36.0,
+            "height": 50.0,
+            "children": [
+
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Alu_Sash_Door_447x2057",
+        "path": "QA_Wardrobe_Combo_900W > Alu_Sash_Door_447x2057",
+        "min": [
+          1401.5,
+          -621.2,
+          100.0
+        ],
+        "max": [
+          1848.5,
+          -600.0,
+          2157.0
+        ],
+        "width": 447.0,
+        "depth": 21.2,
+        "height": 2057.0,
+        "children": [
+          {
+            "name": "Unnamed_Group",
+            "path": "QA_Wardrobe_Combo_900W > Alu_Sash_Door_447x2057 > Unnamed_Group",
+            "min": [
+              1401.5,
+              -621.2,
+              100.0
+            ],
+            "max": [
+              1848.5,
+              -600.0,
+              145.0
+            ],
+            "width": 447.0,
+            "depth": 21.2,
+            "height": 45.0,
+            "children": [
+
+            ]
+          },
+          {
+            "name": "Unnamed_Group",
+            "path": "QA_Wardrobe_Combo_900W > Alu_Sash_Door_447x2057 > Unnamed_Group",
+            "min": [
+              1401.5,
+              -621.2,
+              2112.0
+            ],
+            "max": [
+              1848.5,
+              -600.0,
+              2157.0
+            ],
+            "width": 447.0,
+            "depth": 21.2,
+            "height": 45.0,
+            "children": [
+
+            ]
+          },
+          {
+            "name": "Unnamed_Group",
+            "path": "QA_Wardrobe_Combo_900W > Alu_Sash_Door_447x2057 > Unnamed_Group",
+            "min": [
+              1401.5,
+              -621.2,
+              100.0
+            ],
+            "max": [
+              1446.5,
+              -600.0,
+              2157.0
+            ],
+            "width": 45.0,
+            "depth": 21.2,
+            "height": 2057.0,
+            "children": [
+
+            ]
+          },
+          {
+            "name": "Unnamed_Group",
+            "path": "QA_Wardrobe_Combo_900W > Alu_Sash_Door_447x2057 > Unnamed_Group",
+            "min": [
+              1803.5,
+              -621.2,
+              100.0
+            ],
+            "max": [
+              1848.5,
+              -600.0,
+              2157.0
+            ],
+            "width": 45.0,
+            "depth": 21.2,
+            "height": 2057.0,
+            "children": [
+
+            ]
+          },
+          {
+            "name": "Infill_Glass_Pane",
+            "path": "QA_Wardrobe_Combo_900W > Alu_Sash_Door_447x2057 > Infill_Glass_Pane",
+            "min": [
+              1411.5,
+              -619.4,
+              110.0
+            ],
+            "max": [
+              1838.5,
+              -616.4,
+              2147.0
+            ],
+            "width": 427.0,
+            "depth": 3.0,
+            "height": 2037.0,
+            "children": [
+
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Alu_Sash_Door_447x2057",
+        "path": "QA_Wardrobe_Combo_900W > Alu_Sash_Door_447x2057",
+        "min": [
+          1850.0,
+          -621.2,
+          100.0
+        ],
+        "max": [
+          2297.0,
+          -600.0,
+          2157.0
+        ],
+        "width": 447.0,
+        "depth": 21.2,
+        "height": 2057.0,
+        "children": [
+          {
+            "name": "Unnamed_Group",
+            "path": "QA_Wardrobe_Combo_900W > Alu_Sash_Door_447x2057 > Unnamed_Group",
+            "min": [
+              1850.0,
+              -621.2,
+              100.0
+            ],
+            "max": [
+              2297.0,
+              -600.0,
+              145.0
+            ],
+            "width": 447.0,
+            "depth": 21.2,
+            "height": 45.0,
+            "children": [
+
+            ]
+          },
+          {
+            "name": "Unnamed_Group",
+            "path": "QA_Wardrobe_Combo_900W > Alu_Sash_Door_447x2057 > Unnamed_Group",
+            "min": [
+              1850.0,
+              -621.2,
+              2112.0
+            ],
+            "max": [
+              2297.0,
+              -600.0,
+              2157.0
+            ],
+            "width": 447.0,
+            "depth": 21.2,
+            "height": 45.0,
+            "children": [
+
+            ]
+          },
+          {
+            "name": "Unnamed_Group",
+            "path": "QA_Wardrobe_Combo_900W > Alu_Sash_Door_447x2057 > Unnamed_Group",
+            "min": [
+              1850.0,
+              -621.2,
+              100.0
+            ],
+            "max": [
+              1895.0,
+              -600.0,
+              2157.0
+            ],
+            "width": 45.0,
+            "depth": 21.2,
+            "height": 2057.0,
+            "children": [
+
+            ]
+          },
+          {
+            "name": "Unnamed_Group",
+            "path": "QA_Wardrobe_Combo_900W > Alu_Sash_Door_447x2057 > Unnamed_Group",
+            "min": [
+              2252.0,
+              -621.2,
+              100.0
+            ],
+            "max": [
+              2297.0,
+              -600.0,
+              2157.0
+            ],
+            "width": 45.0,
+            "depth": 21.2,
+            "height": 2057.0,
+            "children": [
+
+            ]
+          },
+          {
+            "name": "Infill_Glass_Pane",
+            "path": "QA_Wardrobe_Combo_900W > Alu_Sash_Door_447x2057 > Infill_Glass_Pane",
+            "min": [
+              1860.0,
+              -619.4,
+              110.0
+            ],
+            "max": [
+              2287.0,
+              -616.4,
+              2147.0
+            ],
+            "width": 427.0,
+            "depth": 3.0,
+            "height": 2037.0,
+            "children": [
+
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "clashes": [
+
+  ],
+  "status": "PASS"
+}

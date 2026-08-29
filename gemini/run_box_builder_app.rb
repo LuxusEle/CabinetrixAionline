@@ -2,24 +2,19 @@
 # CABINETRIX AI — INTERACTIVE MODULAR BOX BUILDER STUDIO APP (GEMINI MODULE)
 # Load in SketchUp Console:
 #   load 'c:/Users/asank/Documents/CabinetrixAionline/gemini/run_box_builder_app.rb'
-#
-# Production Modules Supported:
-#   • 1. TALL TOWERS (Double Oven Tower, Pantry Larder)
-#   • 2. LUXURY WARDROBES (Hanging Rail, Shelving Tower, Drawers Combo)
-#   • 3. BASE GOLA & CORNER UNITS (Drawers, Cooktop, Sink, Spice, Wine, Blind LeMans, L-Corner)
-#   • 4. WALL UNITS (Glass Display, Cooker Hood)
-#   • 5. ISLAND RUN (Drawers, Sink, Multi-Drawers)
-#   • 6. CONTINUOUS MERGED GOLA PROFILES & PLINTHS
 # ==============================================================================
 require 'sketchup.rb'
 require 'json'
 require_relative 'cabinetrix_box_engine'
+require_relative 'cabinetrix_wardrobe_engine'
 
 module CabinetrixBoxBuilderApp
   @dialog = nil
   @boxes = []
-  @current_base_x    = 0.0.mm
-  @current_tall_x    = 0.0.mm
+  @base_boxes = []
+  @wardrobe_boxes = []
+  @island_boxes = []
+  @current_main_x    = 0.0.mm
   @current_wardrobe_x= 0.0.mm
   @current_wall_x    = 0.0.mm
   @current_island_x  = 0.0.mm
@@ -28,8 +23,10 @@ module CabinetrixBoxBuilderApp
 
   def self.reset_state
     @boxes = []
-    @current_base_x     = 0.0.mm
-    @current_tall_x     = 0.0.mm
+    @base_boxes = []
+    @wardrobe_boxes = []
+    @island_boxes = []
+    @current_main_x     = 0.0.mm
     @current_wardrobe_x = 0.0.mm
     @current_wall_x     = 0.0.mm
     @current_island_x   = 0.0.mm
@@ -37,7 +34,7 @@ module CabinetrixBoxBuilderApp
     model = Sketchup.active_model
     if model
       model.start_operation("Reset Cabinetrix Builder", true)
-      model.active_entities.grep(Sketchup::Group).select { |g| g.name.to_s.start_with?('Cabinetrix') || g.name.to_s.start_with?('Box_') || g.name.to_s.start_with?('Plinth_') || g.name.to_s.start_with?('Continuous_') || g.name.to_s.start_with?('Gola_Continuous_') || g.name.to_s.start_with?('Island_') }.each { |g| g.erase! }
+      model.active_entities.grep(Sketchup::Group).select { |g| g.name.to_s.start_with?('Cabinetrix') || g.name.to_s.start_with?('Box_') || g.name.to_s.start_with?('Wardrobe_') || g.name.to_s.start_with?('Plinth_') || g.name.to_s.start_with?('Continuous_') || g.name.to_s.start_with?('Gola_Continuous_') || g.name.to_s.start_with?('Island_') }.each { |g| g.erase! }
       model.commit_operation
       model.active_view.zoom_extents if model.active_view
     end
@@ -114,8 +111,38 @@ module CabinetrixBoxBuilderApp
   end
 
   # ----------------------------------------------------------------------------
-  # BOX INSERTION ENGINE
+  # BOX & WARDROBE INSERTION ENGINE
   # ----------------------------------------------------------------------------
+  def self.add_wardrobe_box(type, width_mm)
+    model = Sketchup.active_model
+    return unless model
+
+    model.start_operation("Add Wardrobe #{type} (#{width_mm}mm)", true)
+    mats = get_mats
+    root = get_root_group
+    w = width_mm.mm
+
+    robe_idx = @wardrobe_boxes.length + 1
+    name = format("Wardrobe_%02d_%s_%dW", robe_idx, type.to_s.split('_').map(&:capitalize).join('_'), width_mm)
+    x_pos = @current_wardrobe_x
+
+    CabinetrixWardrobeEngine.build_wardrobe(
+      root.entities,
+      type,
+      { name: name, width: w, depth: 600.mm, height: 2160.mm, mode: :hybrid },
+      { x: x_pos, y: -2500.mm, z: 100.mm },
+      mats
+    )
+
+    @wardrobe_boxes << { id: name, type: type, width: width_mm, x: x_pos, w: w }
+    @current_wardrobe_x += w
+    update_continuous_wardrobe_plinth(root.entities, mats)
+
+    model.commit_operation
+    model.active_view.zoom_extents if model.active_view
+    update_ui_stats
+  end
+
   def self.add_box(type, width_mm, opts = {})
     model = Sketchup.active_model
     return unless model
@@ -131,7 +158,7 @@ module CabinetrixBoxBuilderApp
     case type
     # ------------------ TALL TOWERS ------------------
     when :tall_oven_tower, :tall_pantry_larder
-      x_pos = @current_tall_x
+      x_pos = @current_main_x
       CabinetrixBoxEngine.create_cabinet(
         root.entities,
         type,
@@ -139,26 +166,12 @@ module CabinetrixBoxBuilderApp
         { x: x_pos, y: 0.mm, z: 100.mm, facing_dir: :front },
         mats
       )
-      @current_tall_x += w
-      @current_base_x = [@current_base_x, @current_tall_x].max
-      @current_wall_x = [@current_wall_x, @current_tall_x].max
+      @current_main_x += w
+      @current_wall_x = [@current_wall_x, @current_main_x].max
 
-    # ------------------ WARDROBES ------------------
-    when :wardrobe_hanging_rail, :wardrobe_shelving_tower, :wardrobe_drawers_combo
-      x_pos = @current_wardrobe_x
-      CabinetrixBoxEngine.create_cabinet(
-        root.entities,
-        type,
-        { name: name, width: w, depth: 600.mm, height: 2160.mm, mode: :hybrid, front_mat: mats[:front_cashmere] },
-        { x: x_pos, y: -2500.mm, z: 100.mm, facing_dir: :front },
-        mats
-      )
-      @current_wardrobe_x += w
-      update_continuous_wardrobe_plinth(root.entities, mats)
-
-    # ------------------ BASE GOLA & CORNER UNITS ------------------
+    # ------------------ BASE GOLA & CORNERS ------------------
     when :base_gola_drawers, :base_gola_cooktop, :base_gola_sink, :base_gola_spice, :base_gola_wine, :base_blind_corner, :base_l_corner_easy_reach
-      x_pos = @current_base_x
+      x_pos = @current_main_x
       is_corner = (type == :base_blind_corner || type == :base_l_corner_easy_reach)
       CabinetrixBoxEngine.create_cabinet(
         root.entities,
@@ -167,8 +180,9 @@ module CabinetrixBoxBuilderApp
         { x: x_pos, y: 0.mm, z: 100.mm, facing_dir: :front },
         mats
       )
-      @current_base_x += w
-      update_continuous_base_gola(root.entities, mats) unless is_corner
+      @base_boxes << { x: x_pos, w: w, is_corner: is_corner }
+      @current_main_x += w
+      update_exact_base_golas(root.entities, mats)
       update_continuous_base_plinth(root.entities, mats)
 
     # ------------------ WALL UNITS ------------------
@@ -195,8 +209,9 @@ module CabinetrixBoxBuilderApp
         { x: x_pos, y: isl_prep_y, z: 100.mm, facing_dir: :aisle },
         mats
       )
+      @island_boxes << { x: x_pos, w: w }
       @current_island_x += w
-      update_continuous_island_gola(root.entities, mats)
+      update_exact_island_golas(root.entities, mats)
       update_continuous_island_plinth(root.entities, mats)
     end
 
@@ -207,52 +222,65 @@ module CabinetrixBoxBuilderApp
   end
 
   # ----------------------------------------------------------------------------
-  # CONTINUOUS MERGED GOLA PROFILES (TOP L-GOLA & MID C-GOLA)
+  # EXACT GOLA PROFILES (MERGES CONTINUOUSLY ACROSS CONNECTED BASE BOXES ONLY)
   # ----------------------------------------------------------------------------
-  def self.update_continuous_base_gola(entities, mats)
+  def self.update_exact_base_golas(entities, mats)
     entities.grep(Sketchup::Group).select { |g| g.name.to_s.start_with?('Gola_Continuous_Base_') }.each { |g| g.erase! }
-    start_x = @current_tall_x > 0 ? @current_tall_x : 0.mm
-    total_run = @current_base_x - start_x
-    return if total_run <= 0
+    return if @base_boxes.empty?
 
-    curr_x = start_x
-    rem = total_run
-    idx = 1
+    runs = []
+    current_run = nil
 
-    while rem > 0
-      len = [rem, @max_gola_stock].min
-      l_grp = CabinetrixBoxEngine.build_gola_profile(entities, :l, len, Geom::Point3d.new(curr_x, -560.mm + 26.mm, 100.mm + 720.mm - 59.mm), mats, facing_dir: :front)
-      l_grp.name = "Gola_Continuous_Base_L_Sec_#{idx}"
+    @base_boxes.each do |b|
+      next if b[:is_corner]
+      if current_run.nil? || (current_run[:x] + current_run[:w] != b[:x])
+        runs << current_run if current_run
+        current_run = { x: b[:x], w: b[:w] }
+      else
+        current_run[:w] += b[:w]
+      end
+    end
+    runs << current_run if current_run
 
-      c_grp = CabinetrixBoxEngine.build_gola_profile(entities, :c, len, Geom::Point3d.new(curr_x, -560.mm + 26.mm, 100.mm + 330.mm), mats, facing_dir: :front)
-      c_grp.name = "Gola_Continuous_Base_C_Sec_#{idx}"
+    runs.each_with_index do |run, idx|
+      curr_x = run[:x]
+      rem    = run[:w]
+      sec    = 1
+      while rem > 0
+        len = [rem, @max_gola_stock].min
+        l_grp = CabinetrixBoxEngine.build_gola_profile(entities, :l, len, Geom::Point3d.new(curr_x, -560.mm + 26.mm, 100.mm + 720.mm - 59.mm), mats, facing_dir: :front)
+        l_grp.name = "Gola_Continuous_Base_L_Run#{idx+1}_Sec#{sec}"
 
-      curr_x += len
-      rem -= len
-      idx += 1
+        c_grp = CabinetrixBoxEngine.build_gola_profile(entities, :c, len, Geom::Point3d.new(curr_x, -560.mm + 26.mm, 100.mm + 330.mm), mats, facing_dir: :front)
+        c_grp.name = "Gola_Continuous_Base_C_Run#{idx+1}_Sec#{sec}"
+
+        curr_x += len
+        rem -= len
+        sec += 1
+      end
     end
   end
 
-  def self.update_continuous_island_gola(entities, mats)
+  def self.update_exact_island_golas(entities, mats)
     entities.grep(Sketchup::Group).select { |g| g.name.to_s.start_with?('Gola_Continuous_Island_') }.each { |g| g.erase! }
-    total_run = @current_island_x
-    return if total_run <= 0
+    return if @island_boxes.empty?
 
+    total_len = @current_island_x
     curr_x = 1000.mm
-    rem = total_run
-    idx = 1
+    rem = total_len
+    sec = 1
 
     while rem > 0
       len = [rem, @max_gola_stock].min
       l_grp = CabinetrixBoxEngine.build_gola_profile(entities, :l, len, Geom::Point3d.new(curr_x, -1400.mm - 26.mm, 100.mm + 720.mm - 59.mm), mats, facing_dir: :aisle)
-      l_grp.name = "Gola_Continuous_Island_L_Sec_#{idx}"
+      l_grp.name = "Gola_Continuous_Island_L_Sec#{sec}"
 
       c_grp = CabinetrixBoxEngine.build_gola_profile(entities, :c, len, Geom::Point3d.new(curr_x, -1400.mm - 26.mm, 100.mm + 330.mm), mats, facing_dir: :aisle)
-      c_grp.name = "Gola_Continuous_Island_C_Sec_#{idx}"
+      c_grp.name = "Gola_Continuous_Island_C_Sec#{sec}"
 
       curr_x += len
       rem -= len
-      idx += 1
+      sec += 1
     end
   end
 
@@ -261,14 +289,16 @@ module CabinetrixBoxBuilderApp
   # ----------------------------------------------------------------------------
   def self.update_continuous_base_plinth(entities, mats)
     entities.grep(Sketchup::Group).select { |g| g.name.to_s.start_with?('Plinth_Base_Run') }.each { |g| g.erase! }
-    start_x = @current_tall_x > 0 ? @current_tall_x : 0.mm
-    total_base_run = @current_base_x - start_x
-    return if total_base_run <= 0
+    return if @base_boxes.empty?
 
-    curr_x = start_x + 10.mm
-    rem = total_base_run - 20.mm
+    start_x = @base_boxes.first[:x] + 10.mm
+    end_x   = @base_boxes.last[:x] + @base_boxes.last[:w] - 10.mm
+    total_len = end_x - start_x
+    return if total_len <= 0
+
+    curr_x = start_x
+    rem = total_len
     idx = 1
-
     while rem > 0
       len = [rem, @max_plinth_stock].min
       CabinetrixBoxEngine.create_box(entities, [curr_x, -560.mm + 50.mm, 0], [len, 18.mm, 100.mm], mats[:plinth], "Plinth_Base_Run_Section_#{idx}")
@@ -280,13 +310,16 @@ module CabinetrixBoxBuilderApp
 
   def self.update_continuous_wardrobe_plinth(entities, mats)
     entities.grep(Sketchup::Group).select { |g| g.name.to_s.start_with?('Plinth_Wardrobe_Run') }.each { |g| g.erase! }
-    total_w_run = @current_wardrobe_x
+    return if @wardrobe_boxes.empty?
+
+    start_x = @wardrobe_boxes.first[:x] + 10.mm
+    end_x   = @wardrobe_boxes.last[:x] + @wardrobe_boxes.last[:w] - 10.mm
+    total_w_run = end_x - start_x
     return if total_w_run <= 0
 
-    curr_x = 10.mm
-    rem = total_w_run - 20.mm
+    curr_x = start_x
+    rem = total_w_run
     idx = 1
-
     while rem > 0
       len = [rem, @max_plinth_stock].min
       CabinetrixBoxEngine.create_box(entities, [curr_x, -2500.mm - 600.mm + 50.mm, 0], [len, 18.mm, 100.mm], mats[:plinth], "Plinth_Wardrobe_Run_Section_#{idx}")
@@ -322,21 +355,26 @@ module CabinetrixBoxBuilderApp
     mats = get_mats
     root = get_root_group
 
-    start_x = @current_tall_x > 0 ? @current_tall_x : 0.mm
-    base_w = @current_base_x - start_x
-    if base_w > 0
+    if @base_boxes.any?
+      start_x = @base_boxes.first[:x]
+      end_x   = @base_boxes.last[:x] + @base_boxes.last[:w]
+      base_w  = end_x - start_x
       CabinetrixBoxEngine.create_box(root.entities, [start_x, -600.mm, 820.mm], [base_w, 600.mm, 20.mm], mats[:marble], "Main_Worktop_Slab")
     end
 
-    wall_start = @current_tall_x > 0 ? @current_tall_x : 0.mm
-    wall_w = @current_wall_x - wall_start
-    if wall_w > 0
-      pelmet_z = 1440.mm - 18.mm
-      cover_y_front = -350.mm + 25.mm
-      cover_d = 350.mm - 25.mm - 15.mm
-      CabinetrixBoxEngine.create_box(root.entities, [wall_start, cover_y_front, pelmet_z], [wall_w, cover_d, 18.mm], mats[:carcase], "Continuous_Pelmet_Board")
-      CabinetrixBoxEngine.create_box(root.entities, [wall_start, -15.mm, pelmet_z], [wall_w, 15.mm, 12.mm], mats[:gola], "Continuous_Alu_LED_Housing")
-      CabinetrixBoxEngine.create_box(root.entities, [wall_start + 1.mm, -13.5.mm, pelmet_z - 1.5.mm], [wall_w - 2.mm, 12.mm, 2.mm], mats[:diffuser], "Continuous_LED_Diffuser")
+    if @boxes.any? { |b| b[:type].to_s.start_with?('wall') }
+      wall_boxes = @boxes.select { |b| b[:type].to_s.start_with?('wall') }
+      wall_start = wall_boxes.first[:x]
+      wall_end   = wall_boxes.last[:x] + wall_boxes.last[:width].mm
+      wall_w     = wall_end - wall_start
+      if wall_w > 0
+        pelmet_z = 1440.mm - 18.mm
+        cover_y_front = -350.mm + 25.mm
+        cover_d = 350.mm - 25.mm - 15.mm
+        CabinetrixBoxEngine.create_box(root.entities, [wall_start, cover_y_front, pelmet_z], [wall_w, cover_d, 18.mm], mats[:carcase], "Continuous_Pelmet_Board")
+        CabinetrixBoxEngine.create_box(root.entities, [wall_start, -15.mm, pelmet_z], [wall_w, 15.mm, 12.mm], mats[:gola], "Continuous_Alu_LED_Housing")
+        CabinetrixBoxEngine.create_box(root.entities, [wall_start + 1.mm, -13.5.mm, pelmet_z - 1.5.mm], [wall_w - 2.mm, 12.mm, 2.mm], mats[:diffuser], "Continuous_LED_Diffuser")
+      end
     end
 
     if @current_island_x > 0
@@ -358,13 +396,10 @@ module CabinetrixBoxBuilderApp
   def self.update_ui_stats
     return unless @dialog
     stats = {
-      count: @boxes.length,
-      tall_w: @current_tall_x.to_mm.round,
-      base_w: @current_base_x.to_mm.round,
+      count: @boxes.length + @wardrobe_boxes.length,
+      main_w: @current_main_x.to_mm.round,
       wardrobe_w: @current_wardrobe_x.to_mm.round,
-      wall_w: @current_wall_x.to_mm.round,
-      island_w: @current_island_x.to_mm.round,
-      boxes: @boxes
+      island_w: @current_island_x.to_mm.round
     }
     @dialog.execute_script("updateStats(#{stats.to_json});")
   end
@@ -381,7 +416,7 @@ module CabinetrixBoxBuilderApp
       scrollable: true,
       resizable: true,
       width: 520,
-      height: 840,
+      height: 860,
       left: 80,
       top: 60,
       min_width: 440,
@@ -400,7 +435,7 @@ module CabinetrixBoxBuilderApp
           .header { background: linear-gradient(135deg, #0f172a, #1e293b); color: white; padding: 16px; border-radius: 8px; margin-bottom: 14px; }
           .header h1 { font-size: 16px; font-weight: bold; color: #fff; }
           .header p { font-size: 11px; color: #94a3b8; margin-top: 4px; }
-          .stats { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-bottom: 14px; }
+          .stats { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 14px; }
           .stat-box { background: white; padding: 8px; border-radius: 6px; border: 1px solid var(--border); }
           .stat-box .lbl { font-size: 10px; color: #64748b; text-transform: uppercase; font-weight: 600; }
           .stat-box .val { font-size: 14px; font-weight: bold; color: var(--dark); margin-top: 2px; }
@@ -426,46 +461,30 @@ module CabinetrixBoxBuilderApp
       <body>
         <div class="header">
           <h1>Cabinetrix AI — Interactive Studio</h1>
-          <p>Click any box button to place it sequentially on the right side.</p>
+          <p>Full Kitchen & Architectural Wardrobe Engine</p>
         </div>
 
         <div class="stats">
-          <div class="stat-box"><div class="lbl">Total Boxes</div><div class="val" id="st_count">0</div></div>
-          <div class="stat-box"><div class="lbl">Base Run</div><div class="val" id="st_base">0 mm</div></div>
+          <div class="stat-box"><div class="lbl">Total Units Placed</div><div class="val" id="st_count">0</div></div>
+          <div class="stat-box"><div class="lbl">Kitchen Main Run</div><div class="val" id="st_main">0 mm</div></div>
           <div class="stat-box"><div class="lbl">Wardrobe Run</div><div class="val" id="st_wardrobe">0 mm</div></div>
-          <div class="stat-box"><div class="lbl">Wall Run</div><div class="val" id="st_wall">0 mm</div></div>
           <div class="stat-box"><div class="lbl">Island Run</div><div class="val" id="st_island">0 mm</div></div>
-          <div class="stat-box"><div class="lbl">Tall Run</div><div class="val" id="st_tall">0 mm</div></div>
         </div>
 
         <div class="category">
-          <h2>1. Luxury Wardrobes (600D x 2160H)</h2>
+          <h2>1. Architectural Wardrobes (600D x 2160H)</h2>
           <div class="btn-grid">
-            <button class="btn-wardrobe" onclick="callRuby('add_wardrobe_rail', 600)">+ Hanging Rail (600W)</button>
-            <button class="btn-wardrobe" onclick="callRuby('add_wardrobe_rail', 900)">+ Hanging Rail (900W)</button>
-            <button class="btn-wardrobe" onclick="callRuby('add_wardrobe_shelving', 600)">+ Shelving Tower (600W)</button>
-            <button class="btn-wardrobe" onclick="callRuby('add_wardrobe_drawers', 900)">+ Drawers Combo (900W)</button>
+            <button class="btn-wardrobe" onclick="callRuby('add_wardrobe', 'single_hang', 600)">+ Single Hang (600W)</button>
+            <button class="btn-wardrobe" onclick="callRuby('add_wardrobe', 'single_hang', 900)">+ Single Hang (900W)</button>
+            <button class="btn-wardrobe" onclick="callRuby('add_wardrobe', 'double_hang', 900)">+ Double Hang (900W)</button>
+            <button class="btn-wardrobe" onclick="callRuby('add_wardrobe', 'linen_tower', 600)">+ Linen Tower (600W)</button>
+            <button class="btn-wardrobe" onclick="callRuby('add_wardrobe', 'drawers_combo', 900)">+ Drawers Combo (900W)</button>
+            <button class="btn-wardrobe" onclick="callRuby('add_wardrobe', 'trouser_rack', 900)">+ Trouser Pullout (900W)</button>
           </div>
         </div>
 
         <div class="category">
-          <h2>2. Kitchen Corner Units</h2>
-          <div class="btn-grid">
-            <button class="btn-corner" onclick="callRuby('add_base_blind', 1100)">+ Blind LeMans (1100W)</button>
-            <button class="btn-corner" onclick="callRuby('add_base_l_corner', 900)">+ L-Corner 90° (900x900)</button>
-          </div>
-        </div>
-
-        <div class="category">
-          <h2>3. Kitchen Tall Towers (600D x 2160H)</h2>
-          <div class="btn-grid">
-            <button class="btn-tall" onclick="callRuby('add_tall_oven', 600)">+ Oven Tower (600W)</button>
-            <button class="btn-tall" onclick="callRuby('add_tall_pantry', 600)">+ Pantry Larder (600W)</button>
-          </div>
-        </div>
-
-        <div class="category">
-          <h2>4. Base Gola Cabinets (560D x 720H)</h2>
+          <h2>2. Kitchen Base Gola Cabinets (560D x 720H)</h2>
           <div class="btn-grid">
             <button class="btn-base" onclick="callRuby('add_base_drawers', 600)">+ 2-Drawers (600W)</button>
             <button class="btn-base" onclick="callRuby('add_base_drawers', 800)">+ 2-Drawers (800W)</button>
@@ -473,6 +492,22 @@ module CabinetrixBoxBuilderApp
             <button class="btn-base" onclick="callRuby('add_base_sink', 600)">+ Sink Unit (600W)</button>
             <button class="btn-base" onclick="callRuby('add_base_spice', 300)">+ Spice Pullout (300W)</button>
             <button class="btn-base" onclick="callRuby('add_base_wine', 600)">+ Wine Unit (600W)</button>
+          </div>
+        </div>
+
+        <div class="category">
+          <h2>3. Kitchen Corner Units</h2>
+          <div class="btn-grid">
+            <button class="btn-corner" onclick="callRuby('add_base_blind', 1100)">+ Blind LeMans (1100W)</button>
+            <button class="btn-corner" onclick="callRuby('add_base_l_corner', 900)">+ L-Corner 90° (900x900)</button>
+          </div>
+        </div>
+
+        <div class="category">
+          <h2>4. Kitchen Tall Towers (600D x 2160H)</h2>
+          <div class="btn-grid">
+            <button class="btn-tall" onclick="callRuby('add_tall_oven', 600)">+ Oven Tower (600W)</button>
+            <button class="btn-tall" onclick="callRuby('add_tall_pantry', 600)">+ Pantry Larder (600W)</button>
           </div>
         </div>
 
@@ -510,11 +545,9 @@ module CabinetrixBoxBuilderApp
 
           function updateStats(data) {
             document.getElementById('st_count').innerText = data.count;
-            document.getElementById('st_base').innerText = data.base_w + ' mm';
+            document.getElementById('st_main').innerText = data.main_w + ' mm';
             document.getElementById('st_wardrobe').innerText = data.wardrobe_w + ' mm';
-            document.getElementById('st_wall').innerText = data.wall_w + ' mm';
             document.getElementById('st_island').innerText = data.island_w + ' mm';
-            document.getElementById('st_tall').innerText = data.tall_w + ' mm';
           }
         </script>
       </body>
@@ -529,20 +562,8 @@ module CabinetrixBoxBuilderApp
       v2  = params['val2'] || {}
 
       case act
-      when 'add_wardrobe_rail'
-        add_box(:wardrobe_hanging_rail, v1)
-      when 'add_wardrobe_shelving'
-        add_box(:wardrobe_shelving_tower, v1)
-      when 'add_wardrobe_drawers'
-        add_box(:wardrobe_drawers_combo, v1)
-      when 'add_base_blind'
-        add_box(:base_blind_corner, v1)
-      when 'add_base_l_corner'
-        add_box(:base_l_corner_easy_reach, v1)
-      when 'add_tall_oven'
-        add_box(:tall_oven_tower, v1)
-      when 'add_tall_pantry'
-        add_box(:tall_pantry_larder, v1)
+      when 'add_wardrobe'
+        add_wardrobe_box(v1.to_sym, v2.to_i > 0 ? v2.to_i : 900)
       when 'add_base_drawers'
         add_box(:base_gola_drawers, v1)
       when 'add_base_cooktop'
@@ -553,6 +574,14 @@ module CabinetrixBoxBuilderApp
         add_box(:base_gola_spice, v1)
       when 'add_base_wine'
         add_box(:base_gola_wine, v1)
+      when 'add_base_blind'
+        add_box(:base_blind_corner, v1)
+      when 'add_base_l_corner'
+        add_box(:base_l_corner_easy_reach, v1)
+      when 'add_tall_oven'
+        add_box(:tall_oven_tower, v1)
+      when 'add_tall_pantry'
+        add_box(:tall_pantry_larder, v1)
       when 'add_wall_glass'
         add_box(:wall_glass_display, v1, is_left_hinged: v2['is_left_hinged'])
       when 'add_wall_hood'
