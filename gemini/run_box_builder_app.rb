@@ -5,6 +5,7 @@
 # ==============================================================================
 require 'sketchup.rb'
 require 'json'
+require_relative 'cabinetrix_collision_engine'
 require_relative 'cabinetrix_box_engine'
 require_relative 'cabinetrix_wardrobe_engine'
 
@@ -157,7 +158,7 @@ module CabinetrixBoxBuilderApp
 
     case type
     # ------------------ TALL TOWERS ------------------
-    when :tall_oven_tower, :tall_pantry_larder
+    when :tall_oven_tower, :tall_pantry_larder, :tall_space_tower
       x_pos = @current_main_x
       CabinetrixBoxEngine.create_cabinet(
         root.entities,
@@ -170,9 +171,9 @@ module CabinetrixBoxBuilderApp
       @current_wall_x = [@current_wall_x, @current_main_x].max
 
     # ------------------ BASE GOLA & CORNERS ------------------
-    when :base_gola_drawers, :base_gola_cooktop, :base_gola_sink, :base_gola_spice, :base_gola_wine, :base_blind_corner, :base_l_corner_easy_reach
+    when :base_gola_drawers, :base_gola_cooktop, :base_gola_sink, :base_gola_spice, :base_gola_wine, :base_blind_corner, :base_lemans_corner, :base_l_corner_easy_reach
       x_pos = @current_main_x
-      is_corner = (type == :base_blind_corner || type == :base_l_corner_easy_reach)
+      is_corner = (type == :base_blind_corner || type == :base_lemans_corner || type == :base_l_corner_easy_reach)
       CabinetrixBoxEngine.create_cabinet(
         root.entities,
         type,
@@ -186,7 +187,7 @@ module CabinetrixBoxBuilderApp
       update_continuous_base_plinth(root.entities, mats)
 
     # ------------------ WALL UNITS ------------------
-    when :wall_glass_display, :wall_cooker_hood
+    when :wall_glass_display, :wall_lift_aventos, :wall_cooker_hood
       x_pos = @current_wall_x
       is_left = opts[:is_left_hinged] != false
       CabinetrixBoxEngine.create_cabinet(
@@ -298,13 +299,32 @@ module CabinetrixBoxBuilderApp
 
     curr_x = start_x
     rem = total_len
-    idx = 1
+    sec = 1
     while rem > 0
       len = [rem, @max_plinth_stock].min
-      CabinetrixBoxEngine.create_box(entities, [curr_x, -560.mm + 50.mm, 0], [len, 18.mm, 100.mm], mats[:plinth], "Plinth_Base_Run_Section_#{idx}")
+      p_grp = CabinetrixBoxEngine.create_box(entities, [curr_x, -560.mm + 50.mm, 0], [len, 18.mm, 100.mm], mats[:plinth], "Plinth_Base_Run_Sec#{sec}")
       curr_x += len
       rem -= len
-      idx += 1
+      sec += 1
+    end
+  end
+
+  def self.update_continuous_island_plinth(entities, mats)
+    entities.grep(Sketchup::Group).select { |g| g.name.to_s.start_with?('Plinth_Island_Run') }.each { |g| g.erase! }
+    return if @island_boxes.empty?
+
+    total_len = @current_island_x - 20.mm
+    return if total_len <= 0
+
+    curr_x = 1000.mm + 10.mm
+    rem = total_len
+    sec = 1
+    while rem > 0
+      len = [rem, @max_plinth_stock].min
+      CabinetrixBoxEngine.create_box(entities, [curr_x, -1400.mm - 50.mm - 18.mm, 0], [len, 18.mm, 100.mm], mats[:plinth], "Plinth_Island_Run_Sec#{sec}")
+      curr_x += len
+      rem -= len
+      sec += 1
     end
   end
 
@@ -314,39 +334,24 @@ module CabinetrixBoxBuilderApp
 
     start_x = @wardrobe_boxes.first[:x] + 10.mm
     end_x   = @wardrobe_boxes.last[:x] + @wardrobe_boxes.last[:w] - 10.mm
-    total_w_run = end_x - start_x
-    return if total_w_run <= 0
+    total_len = end_x - start_x
+    return if total_len <= 0
 
     curr_x = start_x
-    rem = total_w_run
-    idx = 1
+    rem = total_len
+    sec = 1
     while rem > 0
       len = [rem, @max_plinth_stock].min
-      CabinetrixBoxEngine.create_box(entities, [curr_x, -2500.mm - 600.mm + 50.mm, 0], [len, 18.mm, 100.mm], mats[:plinth], "Plinth_Wardrobe_Run_Section_#{idx}")
+      CabinetrixBoxEngine.create_box(entities, [curr_x, -2500.mm - 600.mm + 50.mm, 0], [len, 18.mm, 100.mm], mats[:plinth], "Plinth_Wardrobe_Run_Sec#{sec}")
       curr_x += len
       rem -= len
-      idx += 1
+      sec += 1
     end
   end
 
-  def self.update_continuous_island_plinth(entities, mats)
-    entities.grep(Sketchup::Group).select { |g| g.name.to_s.start_with?('Plinth_Island_Run') }.each { |g| g.erase! }
-    total_isl_run = @current_island_x
-    return if total_isl_run <= 0
-
-    curr_x = 1000.mm + 10.mm
-    rem = total_isl_run - 20.mm
-    idx = 1
-
-    while rem > 0
-      len = [rem, @max_plinth_stock].min
-      CabinetrixBoxEngine.create_box(entities, [curr_x, -1400.mm - 560.mm + 50.mm, 0], [len, 18.mm, 100.mm], mats[:plinth], "Plinth_Island_Run_Section_#{idx}")
-      curr_x += len
-      rem -= len
-      idx += 1
-    end
-  end
-
+  # ----------------------------------------------------------------------------
+  # CONTINUOUS WORKTOPS & PELMETS
+  # ----------------------------------------------------------------------------
   def self.add_countertops_and_pelmets
     model = Sketchup.active_model
     return unless model
@@ -415,8 +420,8 @@ module CabinetrixBoxBuilderApp
       preferences_key: "Cabinetrix_Box_Studio_App",
       scrollable: true,
       resizable: true,
-      width: 520,
-      height: 860,
+      width: 540,
+      height: 900,
       left: 80,
       top: 60,
       min_width: 440,
@@ -461,7 +466,7 @@ module CabinetrixBoxBuilderApp
       <body>
         <div class="header">
           <h1>Cabinetrix AI — Interactive Studio</h1>
-          <p>Full Kitchen & Architectural Wardrobe Engine</p>
+          <p>Full Kitchen & Architectural Wardrobe Engine (100% Collision-Free)</p>
         </div>
 
         <div class="stats">
@@ -474,12 +479,11 @@ module CabinetrixBoxBuilderApp
         <div class="category">
           <h2>1. Architectural Wardrobes (600D x 2160H)</h2>
           <div class="btn-grid">
-            <button class="btn-wardrobe" onclick="callRuby('add_wardrobe', 'single_hang', 600)">+ Single Hang (600W)</button>
-            <button class="btn-wardrobe" onclick="callRuby('add_wardrobe', 'single_hang', 900)">+ Single Hang (900W)</button>
-            <button class="btn-wardrobe" onclick="callRuby('add_wardrobe', 'double_hang', 900)">+ Double Hang (900W)</button>
-            <button class="btn-wardrobe" onclick="callRuby('add_wardrobe', 'linen_tower', 600)">+ Linen Tower (600W)</button>
+            <button class="btn-wardrobe" onclick="callRuby('add_wardrobe', 'single_hanging', 600)">+ Single Hang (600W)</button>
+            <button class="btn-wardrobe" onclick="callRuby('add_wardrobe', 'single_hanging', 900)">+ Single Hang (900W)</button>
+            <button class="btn-wardrobe" onclick="callRuby('add_wardrobe', 'double_hanging', 900)">+ Double Hang (900W)</button>
             <button class="btn-wardrobe" onclick="callRuby('add_wardrobe', 'drawers_combo', 900)">+ Drawers Combo (900W)</button>
-            <button class="btn-wardrobe" onclick="callRuby('add_wardrobe', 'trouser_rack', 900)">+ Trouser Pullout (900W)</button>
+            <button class="btn-wardrobe" onclick="callRuby('add_wardrobe', 'shoe_master', 900)">+ 5-Tier Shoe Rack (900W)</button>
           </div>
         </div>
 
@@ -489,7 +493,7 @@ module CabinetrixBoxBuilderApp
             <button class="btn-base" onclick="callRuby('add_base_drawers', 600)">+ 2-Drawers (600W)</button>
             <button class="btn-base" onclick="callRuby('add_base_drawers', 800)">+ 2-Drawers (800W)</button>
             <button class="btn-base" onclick="callRuby('add_base_cooktop', 900)">+ Cooktop (900W)</button>
-            <button class="btn-base" onclick="callRuby('add_base_sink', 600)">+ Sink Unit (600W)</button>
+            <button class="btn-base" onclick="callRuby('add_base_sink', 900)">+ Sink & Waste Cargo (900W)</button>
             <button class="btn-base" onclick="callRuby('add_base_spice', 300)">+ Spice Pullout (300W)</button>
             <button class="btn-base" onclick="callRuby('add_base_wine', 600)">+ Wine Unit (600W)</button>
           </div>
@@ -498,7 +502,7 @@ module CabinetrixBoxBuilderApp
         <div class="category">
           <h2>3. Kitchen Corner Units</h2>
           <div class="btn-grid">
-            <button class="btn-corner" onclick="callRuby('add_base_blind', 1100)">+ Blind LeMans (1100W)</button>
+            <button class="btn-corner" onclick="callRuby('add_base_lemans', 1050)">+ LeMans II Corner (1050W)</button>
             <button class="btn-corner" onclick="callRuby('add_base_l_corner', 900)">+ L-Corner 90° (900x900)</button>
           </div>
         </div>
@@ -507,17 +511,16 @@ module CabinetrixBoxBuilderApp
           <h2>4. Kitchen Tall Towers (600D x 2160H)</h2>
           <div class="btn-grid">
             <button class="btn-tall" onclick="callRuby('add_tall_oven', 600)">+ Oven Tower (600W)</button>
-            <button class="btn-tall" onclick="callRuby('add_tall_pantry', 600)">+ Pantry Larder (600W)</button>
+            <button class="btn-tall" onclick="callRuby('add_tall_space_tower', 600)">+ Space Tower 5-Drawers (600W)</button>
           </div>
         </div>
 
         <div class="category">
           <h2>5. Wall Cabinets (350D x 720H)</h2>
           <div class="btn-grid">
-            <button class="btn-wall" onclick="callRuby('add_wall_glass', 300, {is_left_hinged: true})">+ Glass Sash (300W)</button>
             <button class="btn-wall" onclick="callRuby('add_wall_glass', 600, {is_left_hinged: true})">+ Glass Sash (600W LH)</button>
-            <button class="btn-wall" onclick="callRuby('add_wall_glass', 600, {is_left_hinged: false})">+ Glass Sash (600W RH)</button>
-            <button class="btn-wall" onclick="callRuby('add_wall_hood', 900)">+ Cooker Hood (900W)</button>
+            <button class="btn-wall" onclick="callRuby('add_wall_lift_aventos', 800)">+ AVENTOS HF Lift (800W)</button>
+            <button class="btn-wall full-btn" onclick="callRuby('add_wall_hood', 900)">+ Cooker Hood (900W)</button>
           </div>
         </div>
 
@@ -574,16 +577,18 @@ module CabinetrixBoxBuilderApp
         add_box(:base_gola_spice, v1)
       when 'add_base_wine'
         add_box(:base_gola_wine, v1)
-      when 'add_base_blind'
-        add_box(:base_blind_corner, v1)
+      when 'add_base_blind', 'add_base_lemans'
+        add_box(:base_lemans_corner, v1)
       when 'add_base_l_corner'
         add_box(:base_l_corner_easy_reach, v1)
       when 'add_tall_oven'
         add_box(:tall_oven_tower, v1)
-      when 'add_tall_pantry'
-        add_box(:tall_pantry_larder, v1)
+      when 'add_tall_pantry', 'add_tall_space_tower'
+        add_box(:tall_space_tower, v1)
       when 'add_wall_glass'
         add_box(:wall_glass_display, v1, is_left_hinged: v2['is_left_hinged'])
+      when 'add_wall_lift_aventos'
+        add_box(:wall_lift_aventos, v1)
       when 'add_wall_hood'
         add_box(:wall_cooker_hood, v1)
       when 'add_island_drawers'

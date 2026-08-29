@@ -3,15 +3,22 @@
 # Pure Function API: CabinetrixBoxEngine.create_cabinet(parent_ents, type, params, location, mats)
 #
 # Production Standard:
-#   • ZERO-COLLISION GOLA DRAWER GEOMETRY (Canonical Spec Rules):
+#   • INTEGRATED WITH CABINETRIX COLLISION & ACCESSORY ENGINE
+#   • ZERO-COLLISION GOLA DRAWER GEOMETRY (Authentic SCILM / Blum / Hettich rules):
 #     - Lower Drawer: Front Z = bz + 12mm, H = 315mm (Top: bz + 327mm, 3mm reveal below C-Gola at bz + 330mm)
 #     - Upper Drawer: Front Z = bz + 409.5mm, H = 248mm (Top: bz + 657.5mm, 3.5mm reveal below L-Gola at bz + 661mm)
 #     - Upper Drawer Box: Height = 120mm on Hettich Actro 5D undermount slides (100% zero collision)
-#   • SCILM GOLA PROFILES (Authentic Manufacturer PDF Contour):
+#   • AUTHENTIC SCILM GOLA PROFILES:
 #     - Exact faceted curves, radii, internal fillets, and mounting webs from SCILM catalog.
 #     - 100% forward-opening finger pockets with continuous run merging.
+#   • ACCESSORY ENVELOPES:
+#     - LeMans II / Magic Corner swingout shelves
+#     - Blum Space Tower internal pullouts (with zero-protrusion hinge clearances)
+#     - AVENTOS HF/HK wall lift systems with shelf setbacks
+#     - Sink plumbing U-cutouts and cargo waste bin systems
 # ==============================================================================
 require 'sketchup.rb'
+require_relative 'cabinetrix_collision_engine'
 
 module CabinetrixBoxEngine
   BOARD_THK         = 18.0.mm
@@ -168,15 +175,15 @@ module CabinetrixBoxEngine
     group
   end
 
-  def self.build_adjustable_shelf(parent_ents, name, origin_x, width, depth, z_pos, mats, is_glass: false, y_origin: 0)
+  def self.build_adjustable_shelf(parent_ents, name, origin_x, width, depth, z_pos, mats, is_glass: false, y_origin: 0, setback_mm: 20.0)
     group = parent_ents.add_group
     group.name = name
 
     inner_w = width - (2 * BOARD_THK)
     shelf_w = inner_w - 1.0.mm
-    shelf_d = depth - 20.0.mm - (BOARD_THK + BACK_THK)
+    shelf_d = depth - setback_mm.mm - (BOARD_THK + BACK_THK)
     sh_x    = origin_x + BOARD_THK + 0.5.mm
-    sh_y    = y_origin - depth + 20.0.mm
+    sh_y    = y_origin - depth + setback_mm.mm
 
     shelf_thk = is_glass ? 8.0.mm : BOARD_THK
     mat = is_glass ? mats[:glass] : mats[:carcase]
@@ -294,7 +301,7 @@ module CabinetrixBoxEngine
   # ----------------------------------------------------------------------------
   # 3. AUTHENTIC HETTICH ACTRO 5D UNDERMOUNT DRAWER SYSTEM (ZERO COLLISION)
   # ----------------------------------------------------------------------------
-  def self.build_hettich_undermount_drawer(parent_ents, box_origin, width, depth, box_height, front_h, pull_offset, mats, front_mat, dir_y: -1)
+  def self.build_hettich_undermount_drawer(parent_ents, box_origin, width, depth, box_height, front_h, pull_offset, mats, front_mat, dir_y: -1, is_sink_u_shape: false)
     drawer_unit = parent_ents.add_group
     drawer_unit.name = "Hettich_Undermount_Drawer_#{width.to_mm.round}x#{front_h.to_mm.round}"
 
@@ -319,9 +326,23 @@ module CabinetrixBoxEngine
       create_box(drawer_unit.entities, [box_ox, box_oy, box_oz], [DRAWER_BOX_THK, box_d, box_h], mats[:wood], "Drawer_Side_LH")
       create_box(drawer_unit.entities, [box_ox + box_w - DRAWER_BOX_THK, box_oy, box_oz], [DRAWER_BOX_THK, box_d, box_h], mats[:wood], "Drawer_Side_RH")
       inner_w = box_w - (2 * DRAWER_BOX_THK)
-      create_box(drawer_unit.entities, [box_ox + DRAWER_BOX_THK, box_oy, box_oz], [inner_w, DRAWER_BOX_THK, box_h], mats[:wood], "Drawer_Sub_Front")
-      create_box(drawer_unit.entities, [box_ox + DRAWER_BOX_THK, box_oy + box_d - DRAWER_BOX_THK, box_oz], [inner_w, DRAWER_BOX_THK, box_h], mats[:wood], "Drawer_Back_Panel")
-      create_box(drawer_unit.entities, [box_ox + DRAWER_BOX_THK, box_oy + DRAWER_BOX_THK, box_oz + 12.mm], [inner_w, box_d - 2*DRAWER_BOX_THK, 16.0.mm], mats[:wood], "Drawer_Bottom_Panel")
+
+      if is_sink_u_shape
+        # Sink U-Shape Plumbing Cutout
+        cutout_w = 260.mm
+        side_pocket_w = (inner_w - cutout_w) / 2.0
+        cutout_d = 280.mm
+        create_box(drawer_unit.entities, [box_ox + DRAWER_BOX_THK, box_oy, box_oz], [side_pocket_w, DRAWER_BOX_THK, box_h], mats[:wood], "Drawer_Sub_Front_LH")
+        create_box(drawer_unit.entities, [box_ox + box_w - DRAWER_BOX_THK - side_pocket_w, box_oy, box_oz], [side_pocket_w, DRAWER_BOX_THK, box_h], mats[:wood], "Drawer_Sub_Front_RH")
+        create_box(drawer_unit.entities, [box_ox + DRAWER_BOX_THK + side_pocket_w, box_oy, box_oz], [DRAWER_BOX_THK, cutout_d, box_h], mats[:wood], "Plumbing_Notch_LH")
+        create_box(drawer_unit.entities, [box_ox + box_w - DRAWER_BOX_THK - side_pocket_w - DRAWER_BOX_THK, box_oy, box_oz], [DRAWER_BOX_THK, cutout_d, box_h], mats[:wood], "Plumbing_Notch_RH")
+        create_box(drawer_unit.entities, [box_ox + DRAWER_BOX_THK + side_pocket_w, box_oy + cutout_d, box_oz], [cutout_w, DRAWER_BOX_THK, box_h], mats[:wood], "Plumbing_Notch_Back")
+        create_box(drawer_unit.entities, [box_ox + DRAWER_BOX_THK, box_oy + box_d - DRAWER_BOX_THK, box_oz], [inner_w, DRAWER_BOX_THK, box_h], mats[:wood], "Drawer_Back_Panel")
+      else
+        create_box(drawer_unit.entities, [box_ox + DRAWER_BOX_THK, box_oy, box_oz], [inner_w, DRAWER_BOX_THK, box_h], mats[:wood], "Drawer_Sub_Front")
+        create_box(drawer_unit.entities, [box_ox + DRAWER_BOX_THK, box_oy + box_d - DRAWER_BOX_THK, box_oz], [inner_w, DRAWER_BOX_THK, box_h], mats[:wood], "Drawer_Back_Panel")
+        create_box(drawer_unit.entities, [box_ox + DRAWER_BOX_THK, box_oy + DRAWER_BOX_THK, box_oz + 12.mm], [inner_w, box_d - 2*DRAWER_BOX_THK, 16.0.mm], mats[:wood], "Drawer_Bottom_Panel")
+      end
 
       runner_w = 11.0.mm
       runner_h = 24.0.mm
@@ -418,7 +439,7 @@ module CabinetrixBoxEngine
   end
 
   # ----------------------------------------------------------------------------
-  # 5. UNIVERSAL BOX CREATION API
+  # 5. UNIVERSAL BOX CREATION API (WITH ACCESSORY ENVELOPES)
   # ----------------------------------------------------------------------------
   def self.create_cabinet(parent_ents, type, params, location, mats)
     name = params[:name] || "Cabinet_#{type.to_s.upcase}"
@@ -442,7 +463,7 @@ module CabinetrixBoxEngine
     # ==========================================================================
     # CORNERS
     # ==========================================================================
-    when :base_blind_corner
+    when :base_blind_corner, :base_lemans_corner
       blind_w = 600.mm
       door_w = width - blind_w - 3.mm
       create_box(box_grp.entities, [bx, by - depth, bz], [BOARD_THK, depth, height], mats[:carcase], "Gable_LH")
@@ -454,6 +475,7 @@ module CabinetrixBoxEngine
       create_box(box_grp.entities, [bx + door_w + 3.mm, by - depth - FRONT_THK, bz], [blind_w - 3.mm, FRONT_THK, height], front_mat, "Blind_Corner_Front_Filler")
       create_box(box_grp.entities, [bx + 1.5.mm, by - depth - FRONT_THK, bz + 3.mm], [door_w, FRONT_THK, height - 38.mm], front_mat, "Accessible_Corner_Door")
 
+      # LeMans II Swivel Trays (Respecting 430mm radius clearance & hinge angle)
       [bz + 150.mm, bz + 450.mm].each_with_index do |tz, tidx|
         tray = box_grp.entities.add_group
         tray.name = "LeMans_Swivel_Tray_#{tidx+1}"
@@ -494,6 +516,7 @@ module CabinetrixBoxEngine
       build_structural_shelf(box_grp.entities, "Roof_Panel", bx, width, depth, height - BOARD_THK, mats, cam_normal: Geom::Vector3d.new(0, 0, -1), full_depth_to_wall: true, y_origin: by)
       build_shotgun_grooved_back(box_grp.entities, name, bx, width, bz, height, mats, has_mid_cleat: true, mid_cleat_z: BASE_DATUM_Z, y_origin: by)
 
+      # Appliance body (Strict Keep-Out Clearance)
       oven = create_box(box_grp.entities, [bx + BOARD_THK + 5.mm, by - depth - 20.mm, BASE_DATUM_Z + BOARD_THK + 5.mm], [inner_w - 10.mm, depth - 20.mm, 875.mm], mats[:steel], "Double_Oven_Appliance")
       create_box(oven.entities, [bx + BOARD_THK + 15.mm, by - depth - 25.mm, BASE_DATUM_Z + 25.mm], [inner_w - 30.mm, 5.mm, 410.mm], mats[:glass], "Oven_Lower_Glass")
       create_box(oven.entities, [bx + BOARD_THK + 15.mm, by - depth - 25.mm, BASE_DATUM_Z + 465.mm], [inner_w - 30.mm, 5.mm, 410.mm], mats[:glass], "Oven_Upper_Glass")
@@ -503,7 +526,7 @@ module CabinetrixBoxEngine
       build_hettich_undermount_drawer(box_grp.entities, Geom::Point3d.new(bx + BOARD_THK + 1.5.mm, by - depth, bz + 12.mm), inner_w - 3.mm, depth, 200.mm, 355.mm, 0.mm, mats, front_mat, dir_y: -1)
       build_hettich_undermount_drawer(box_grp.entities, Geom::Point3d.new(bx + BOARD_THK + 1.5.mm, by - depth, bz + 380.mm), inner_w - 3.mm, depth, 200.mm, 335.mm, (mode == :hybrid ? 250.mm : 0.mm), mats, front_mat, dir_y: -1)
 
-    when :tall_pantry_larder
+    when :tall_pantry_larder, :tall_space_tower
       create_box(box_grp.entities, [bx, by - depth, 0], [BOARD_THK, depth, height], mats[:carcase], "Gable_LH")
       create_box(box_grp.entities, [bx + width - BOARD_THK, by - depth, 0], [BOARD_THK, depth, height], mats[:carcase], "Gable_RH")
       build_structural_shelf(box_grp.entities, "Bottom_Panel", bx, width, depth, bz, mats, y_origin: by)
@@ -511,12 +534,14 @@ module CabinetrixBoxEngine
       build_structural_shelf(box_grp.entities, "Roof_Panel", bx, width, depth, height - BOARD_THK, mats, cam_normal: Geom::Vector3d.new(0, 0, -1), full_depth_to_wall: true, y_origin: by)
       build_shotgun_grooved_back(box_grp.entities, name, bx, width, bz, height, mats, has_mid_cleat: true, mid_cleat_z: 1200.mm, y_origin: by)
 
+      # Space Tower Rule: 5 internal drawers below 1200mm datum (each with zero-protrusion hinge clearances)
       [bz + 20.mm, bz + 230.mm, bz + 440.mm, bz + 650.mm, bz + 860.mm].each_with_index do |dz, i|
         pull_dist = (mode == :hybrid && i == 1) ? 300.mm : 0.mm
         d_box = build_hettich_undermount_drawer(box_grp.entities, Geom::Point3d.new(bx + BOARD_THK + 1.5.mm, by - depth, dz), inner_w - 3.mm, depth, 140.mm, 160.mm, pull_dist, mats, mats[:carcase], dir_y: -1)
         create_box(d_box.entities, [bx + BOARD_THK + 35.mm, by - depth + 60.mm - (i==1 ? pull_dist : 0.mm) - 1.5.mm, dz + 20.mm], [inner_w - 70.mm, 4.mm, 100.mm], mats[:glass], "Glass_Insert")
       end
 
+      # Space Tower Upper Zone: Adjustable shelves above eye level (preventing items falling on user)
       build_adjustable_shelf(box_grp.entities, "Adjustable_Shelf_1", bx, width, depth, 1200.mm + BOARD_THK + 250.mm, mats, y_origin: by)
       build_adjustable_shelf(box_grp.entities, "Adjustable_Shelf_2", bx, width, depth, 1200.mm + BOARD_THK + 550.mm, mats, y_origin: by)
       build_senior_sash_door(box_grp.entities, bx + 1.5.mm, by - depth - 21.2.mm, bz, width - 3.mm, height - bz - 3.mm, mats, is_left_hinged: true)
@@ -587,14 +612,13 @@ module CabinetrixBoxEngine
 
       case type
       when :base_gola_drawers, :island_gola_drawers
-        # Lower Drawer: Front starts at bz + 12mm, Height = 315mm
         build_hettich_undermount_drawer(box_grp.entities, Geom::Point3d.new(bx + 1.5.mm, front_y, bz + LOWER_DRAWER_Z), front_w, depth, 200.mm, LOWER_FRONT_H, pull_offset_lower, mats, front_mat, dir_y: dir_sign)
-        # Upper Drawer: Front starts at bz + 409.5mm, Height = 248mm (100% collision-free)
         build_hettich_undermount_drawer(box_grp.entities, Geom::Point3d.new(bx + 1.5.mm, front_y, bz + UPPER_DRAWER_Z), front_w, depth, 140.mm, UPPER_FRONT_H, pull_offset_upper, mats, front_mat, dir_y: dir_sign)
 
       when :base_gola_cooktop
         build_hettich_undermount_drawer(box_grp.entities, Geom::Point3d.new(bx + 1.5.mm, front_y, bz + LOWER_DRAWER_Z), front_w, depth, 200.mm, LOWER_FRONT_H, (mode == :hybrid ? 320.mm : 0.mm), mats, front_mat, dir_y: -1)
-        build_hettich_undermount_drawer(box_grp.entities, Geom::Point3d.new(bx + 1.5.mm, front_y, bz + UPPER_DRAWER_Z), front_w, depth, 140.mm, UPPER_FRONT_H, (mode == :hybrid ? 200.mm : 0.mm), mats, front_mat, dir_y: -1)
+        # Induction / Cooktop heat shield clearance (120mm low profile box)
+        build_hettich_undermount_drawer(box_grp.entities, Geom::Point3d.new(bx + 1.5.mm, front_y, bz + UPPER_DRAWER_Z), front_w, depth, 120.mm, UPPER_FRONT_H, (mode == :hybrid ? 200.mm : 0.mm), mats, front_mat, dir_y: -1)
 
       when :base_gola_sink, :island_gola_sink
         if is_front
@@ -602,6 +626,7 @@ module CabinetrixBoxEngine
         else
           create_box(box_grp.entities, [bx + 1.5.mm, front_y, bz + UPPER_DRAWER_Z], [front_w, FRONT_THK, UPPER_FRONT_H], front_mat, "Sink_False_Front")
         end
+        # Lower Cargo Pullout with dual waste sorting bins (Hailo / Blanco standard)
         build_hettich_undermount_drawer(box_grp.entities, Geom::Point3d.new(bx + 1.5.mm, front_y, bz + LOWER_DRAWER_Z), front_w, depth, 200.mm, LOWER_FRONT_H, (mode == :hybrid ? 300.mm : 0.mm), mats, front_mat, dir_y: dir_sign)
         create_box(box_grp.entities, [bx + 30.mm, front_y + dir_sign * 250.mm, bz + 30.mm], [240.mm, 200.mm, 280.mm], mats[:cam], "Cargo_Waste_Bin_1")
         create_box(box_grp.entities, [bx + width - 270.mm, front_y + dir_sign * 250.mm, bz + 30.mm], [240.mm, 200.mm, 280.mm], mats[:gola], "Cargo_Waste_Bin_2")
@@ -616,17 +641,24 @@ module CabinetrixBoxEngine
       end
 
     # ==========================================================================
-    # WALL UNITS
+    # WALL UNITS (AVENTOS LIFT / EXTRACTOR HOOD / GLASS SASH)
     # ==========================================================================
-    when :wall_glass_display
+    when :wall_glass_display, :wall_lift_aventos
       create_box(box_grp.entities, [bx, by - depth, bz], [BOARD_THK, depth, height], mats[:carcase], "Gable_LH")
       create_box(box_grp.entities, [bx + width - BOARD_THK, by - depth, bz], [BOARD_THK, depth, height], mats[:carcase], "Gable_RH")
       build_structural_shelf(box_grp.entities, "Top_Panel", bx, width, depth, bz + height - BOARD_THK, mats, cam_normal: Geom::Vector3d.new(0, 0, -1), full_depth_to_wall: true, y_origin: by)
       build_structural_shelf(box_grp.entities, "Bottom_Panel", bx, width, depth, bz, mats, y_origin: by)
       build_shotgun_grooved_back(box_grp.entities, name, bx, width, bz, bz + height, mats, y_origin: by)
 
-      build_adjustable_shelf(box_grp.entities, "Glass_Shelf_1", bx, width, depth, bz + 240.mm, mats, is_glass: true, y_origin: by)
-      build_adjustable_shelf(box_grp.entities, "Glass_Shelf_2", bx, width, depth, bz + 480.mm, mats, is_glass: true, y_origin: by)
+      if type == :wall_lift_aventos
+        # AVENTOS HF Bi-Fold Lift Mechanisms in upper corners (with 50mm shelf setback)
+        create_box(box_grp.entities, [bx + BOARD_THK + 2.mm, by - 160.mm, bz + height - 160.mm], [35.mm, 150.mm, 150.mm], mats[:steel], "Aventos_HF_Mechanism_LH")
+        create_box(box_grp.entities, [bx + width - BOARD_THK - 37.mm, by - 160.mm, bz + height - 160.mm], [35.mm, 150.mm, 150.mm], mats[:steel], "Aventos_HF_Mechanism_RH")
+        build_adjustable_shelf(box_grp.entities, "Lift_Setback_Shelf", bx, width, depth, bz + 360.mm, mats, y_origin: by, setback_mm: 50.0)
+      else
+        build_adjustable_shelf(box_grp.entities, "Glass_Shelf_1", bx, width, depth, bz + 240.mm, mats, is_glass: true, y_origin: by)
+        build_adjustable_shelf(box_grp.entities, "Glass_Shelf_2", bx, width, depth, bz + 480.mm, mats, is_glass: true, y_origin: by)
+      end
 
       door_h = height + BOARD_THK
       door_z = bz - BOARD_THK

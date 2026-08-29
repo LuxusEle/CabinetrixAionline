@@ -1,21 +1,23 @@
 # ==============================================================================
-# CABINETRIX AI — AUTONOMOUS QA TEST & SCRAPING ENGINE (GEMINI MODULE)
-# Localhost Server & Automated 3D Collision / Scraping / Screenshot Loop
+# CABINETRIX AI — AUTONOMOUS QA TEST & COLLISION AVOIDANCE SUITE (GEMINI MODULE)
+# Localhost Server & Automated 3D Collision / Scraping / Validation Loop
 #
 # Load in SketchUp Ruby Console:
 #   load 'c:/Users/asank/Documents/CabinetrixAionline/gemini/cabinetrix_auto_tester.rb'
 #
 # Features:
-#   1. Automatic 3D Geometry Scraper (Dumps exact bounding boxes, parts matrix, reveals)
-#   2. Mathematical Collision & Interference Detection (Detects clashes between parts)
-#   3. Multi-Angle High-Res Viewport Screenshot Capture (Saved to gemini/test_artifacts/)
-#   4. Lightweight Localhost HTTP Bridge (http://127.0.0.1:9876) for autonomous loop
+#   1. Comprehensive 3D Geometry Scraper (Exact bounding boxes, reveals, parts hierarchy)
+#   2. Intelligent Clash Detection with CabinetrixCollisionEngine (Detects functional collisions)
+#   3. Full Kitchen & Wardrobe Accessory Test Suite (LeMans, Space Tower, Gola, AVENTOS, Robes)
+#   4. Multi-Angle High-Res Viewport Screenshot Capture (Saved to gemini/test_artifacts/)
+#   5. Lightweight Localhost HTTP Bridge (http://127.0.0.1:9876) for autonomous loops
 # ==============================================================================
 require 'sketchup.rb'
 require 'json'
 require 'socket'
 require 'fileutils'
 
+require_relative 'cabinetrix_collision_engine'
 require_relative 'cabinetrix_box_engine'
 require_relative 'cabinetrix_wardrobe_engine'
 
@@ -69,16 +71,19 @@ module CabinetrixAutoTester
     plinth_mat = mats['CBX_Plinth_Black'] || mats.add('CBX_Plinth_Black')
     plinth_mat.color = Sketchup::Color.new(30, 32, 35)
 
+    led_mat = mats['CBX_LED_Warm'] || mats.add('CBX_LED_Warm')
+    led_mat.color = Sketchup::Color.new(255, 240, 200)
+
     {
       carcase: carcase_mat, front_dark: front_dark, front_cashmere: front_cashmere,
       gola: alu_black, marble: marble_mat, glass: glass_mat, cam: cam_mat,
       steel: steel_mat, wood: wood_mat, dowel: dowel_mat, hole: hole_mat,
-      plinth: plinth_mat
+      plinth: plinth_mat, led: led_mat
     }
   end
 
   # ----------------------------------------------------------------------------
-  # 1. 3D GEOMETRY & COLLISION SCRAPER
+  # 1. 3D GEOMETRY SCRAPER & REVEAL EXTRACTOR
   # ----------------------------------------------------------------------------
   def self.scrape_group(group, path = "")
     name = group.name.to_s.empty? ? "Unnamed_Group" : group.name
@@ -103,9 +108,11 @@ module CabinetrixAutoTester
     info
   end
 
+  # ----------------------------------------------------------------------------
+  # 2. INTELLIGENT COLLISION DETECTION VIA CABINETRIX COLLISION ENGINE
+  # ----------------------------------------------------------------------------
   def self.check_clashes(groups)
     clashes = []
-    # Test bounding box intersections between critical functional sub-components
     leaves = []
     extract_leaves = lambda do |g|
       children = g.entities.grep(Sketchup::Group)
@@ -121,46 +128,44 @@ module CabinetrixAutoTester
       b1 = g1.bounds
       b2 = g2.bounds
 
-      # Ignore intended parent-child/touching contacts with < 0.5mm tolerance
-      overlap_x = [0, [b1.max.x, b2.max.x].min - [b1.min.x, b2.min.x].max].max
-      overlap_y = [0, [b1.max.y, b2.max.y].min - [b1.min.y, b2.min.y].max].max
-      overlap_z = [0, [b1.max.z, b2.max.z].min - [b1.min.z, b2.min.z].max].max
+      b1_min = [b1.min.x.to_mm, b1.min.y.to_mm, b1.min.z.to_mm]
+      b1_max = [b1.max.x.to_mm, b1.max.y.to_mm, b1.max.z.to_mm]
+      b2_min = [b2.min.x.to_mm, b2.min.y.to_mm, b2.min.z.to_mm]
+      b2_max = [b2.max.x.to_mm, b2.max.y.to_mm, b2.max.z.to_mm]
 
-      if overlap_x > 1.0.mm && overlap_y > 1.0.mm && overlap_z > 1.0.mm
-        # Check if one is a drawer front hitting a Gola profile or drawer box
-        n1 = g1.name.to_s
-        n2 = g2.name.to_s
-        if (n1.include?('Gola') && n2.include?('Drawer')) || (n2.include?('Gola') && n1.include?('Drawer'))
-          clashes << {
-            part_a: n1,
-            part_b: n2,
-            overlap_mm: [overlap_x.to_mm.round(1), overlap_y.to_mm.round(1), overlap_z.to_mm.round(1)]
-          }
-        end
+      clash_info = CabinetrixCollisionEngine.evaluate_clash(
+        g1.name.to_s, b1_min, b1_max,
+        g2.name.to_s, b2_min, b2_max
+      )
+
+      if clash_info && clash_info[:severity] == :critical
+        clashes << clash_info
       end
     end
     clashes
   end
 
   # ----------------------------------------------------------------------------
-  # 2. RUN FULL TEST SUITE
+  # 3. RUN FULL ACCESSORY & COLLISION TEST MATRIX
   # ----------------------------------------------------------------------------
   def self.run_suite
     init_dirs
     model = Sketchup.active_model
     return { error: "No active model" } unless model
 
-    model.start_operation("Run Autonomous QA Suite", true)
+    model.start_operation("Run Autonomous Collision & Accessory Suite", true)
     mats = get_mats
 
-    # Clear previous test run
+    # Clear previous test runs
     model.active_entities.grep(Sketchup::Group).select { |g| g.name.to_s.start_with?('QA_') || g.name.to_s.start_with?('Cabinetrix') }.each { |g| g.erase! }
 
     root = model.active_entities.add_group
     root.name = "QA_Test_Run_#{Time.now.strftime('%Y%m%d_%H%M%S')}"
 
-    # 1. Build Standard Base 2-Drawer Gola (600W)
-    base_grp = CabinetrixBoxEngine.create_cabinet(
+    units = []
+
+    # 1. Base 2-Drawer Gola (600W) - Zero collision with L-Gola & C-Gola lips
+    units << CabinetrixBoxEngine.create_cabinet(
       root.entities,
       :base_gola_drawers,
       { name: "QA_Base_Gola_600W", width: 600.mm, depth: 560.mm, height: 720.mm, mode: :hybrid, front_mat: mats[:front_dark] },
@@ -168,21 +173,66 @@ module CabinetrixAutoTester
       mats
     )
 
-    # 2. Build Tall Double Oven Tower (600W)
-    tall_grp = CabinetrixBoxEngine.create_cabinet(
+    # 2. Base Sink with Cargo Waste Bins & False Front (900W)
+    units << CabinetrixBoxEngine.create_cabinet(
       root.entities,
-      :tall_oven_tower,
-      { name: "QA_Tall_Oven_600W", width: 600.mm, depth: 600.mm, height: 2160.mm, mode: :hybrid, front_mat: mats[:front_dark] },
+      :base_gola_sink,
+      { name: "QA_Base_Sink_Cargo_900W", width: 900.mm, depth: 560.mm, height: 720.mm, mode: :hybrid, front_mat: mats[:front_dark] },
       { x: 700.mm, y: 0.mm, z: 100.mm, facing_dir: :front },
       mats
     )
 
-    # 3. Build Wardrobe Drawers Combo (900W)
-    robe_grp = CabinetrixWardrobeEngine.build_wardrobe(
+    # 3. Base Blind Corner with LeMans II Trays (1050W)
+    units << CabinetrixBoxEngine.create_cabinet(
+      root.entities,
+      :base_lemans_corner,
+      { name: "QA_Base_LeMans_1050W", width: 1050.mm, depth: 560.mm, height: 720.mm, mode: :hybrid, front_mat: mats[:front_dark] },
+      { x: 1700.mm, y: 0.mm, z: 100.mm, facing_dir: :front },
+      mats
+    )
+
+    # 4. Tall Double Oven Tower (600W)
+    units << CabinetrixBoxEngine.create_cabinet(
+      root.entities,
+      :tall_oven_tower,
+      { name: "QA_Tall_Oven_600W", width: 600.mm, depth: 600.mm, height: 2160.mm, mode: :hybrid, front_mat: mats[:front_dark] },
+      { x: 2850.mm, y: 0.mm, z: 100.mm, facing_dir: :front },
+      mats
+    )
+
+    # 5. Tall Space Tower Larder with 5 Internal Pullouts (600W)
+    units << CabinetrixBoxEngine.create_cabinet(
+      root.entities,
+      :tall_space_tower,
+      { name: "QA_Tall_SpaceTower_600W", width: 600.mm, depth: 600.mm, height: 2160.mm, mode: :hybrid, front_mat: mats[:front_dark] },
+      { x: 3550.mm, y: 0.mm, z: 100.mm, facing_dir: :front },
+      mats
+    )
+
+    # 6. Wall AVENTOS HF Lift Cabinet with 50mm Setback Shelf (800W)
+    units << CabinetrixBoxEngine.create_cabinet(
+      root.entities,
+      :wall_lift_aventos,
+      { name: "QA_Wall_Aventos_800W", width: 800.mm, depth: 350.mm, height: 720.mm, mode: :hybrid, front_mat: mats[:front_cashmere] },
+      { x: 4250.mm, y: 0.mm, z: 1400.mm, facing_dir: :front },
+      mats
+    )
+
+    # 7. Wardrobe Drawers & Trouser Combo (900W)
+    units << CabinetrixWardrobeEngine.build_wardrobe(
       root.entities,
       :drawers_combo,
       { name: "QA_Wardrobe_Combo_900W", width: 900.mm, depth: 600.mm, height: 2160.mm, mode: :hybrid },
-      { x: 1400.mm, y: 0.mm, z: 100.mm },
+      { x: 5150.mm, y: 0.mm, z: 100.mm },
+      mats
+    )
+
+    # 8. Wardrobe 5-Tier Sloping Shoe Master (900W)
+    units << CabinetrixWardrobeEngine.build_wardrobe(
+      root.entities,
+      :shoe_master,
+      { name: "QA_Wardrobe_Shoes_900W", width: 900.mm, depth: 600.mm, height: 2160.mm, mode: :hybrid },
+      { x: 6150.mm, y: 0.mm, z: 100.mm },
       mats
     )
 
@@ -191,15 +241,14 @@ module CabinetrixAutoTester
     # Scrape Part Hierarchy and Bounds
     scraped_data = {
       timestamp: Time.now.to_s,
-      base_unit: scrape_group(base_grp),
-      tall_unit: scrape_group(tall_grp),
-      wardrobe_unit: scrape_group(robe_grp)
+      tested_modules_count: units.length,
+      units: units.map { |u| scrape_group(u) }
     }
 
-    # Clash Detection
-    clashes = check_clashes([base_grp, tall_grp, robe_grp])
+    # Clash Detection via CabinetrixCollisionEngine
+    clashes = check_clashes(units)
     scraped_data[:clashes] = clashes
-    scraped_data[:status] = clashes.empty? ? "PASS" : "FAIL"
+    scraped_data[:status] = clashes.empty? ? "PASS (ZERO COLLISIONS)" : "FAIL (#{clashes.length} CLASHES DETECTED)"
 
     # Write QA JSON Report
     report_path = File.join(ARTIFACTS_DIR, "qa_report.json")
@@ -211,8 +260,8 @@ module CabinetrixAutoTester
     screenshot_path = File.join(ARTIFACTS_DIR, "qa_viewport_full.png")
     view.write_image({
       filename: screenshot_path,
-      width: 1280,
-      height: 720,
+      width: 1920,
+      height: 1080,
       antialias: true,
       compression: 0.9,
       transparent: false
@@ -222,14 +271,15 @@ module CabinetrixAutoTester
     puts " CABINETRIX QA SUITE: #{scraped_data[:status]}"
     puts " Report: #{report_path}"
     puts " Screenshot: #{screenshot_path}"
-    puts " Clashes Detected: #{clashes.length}"
+    puts " Tested Units: #{units.length}"
+    puts " Critical Clashes: #{clashes.length}"
     puts "=================================================="
 
     scraped_data
   end
 
   # ----------------------------------------------------------------------------
-  # 3. LOCALHOST HTTP SERVER BRIDGE (PORT 9876)
+  # 4. LOCALHOST HTTP SERVER BRIDGE (PORT 9876)
   # ----------------------------------------------------------------------------
   def self.start_server
     stop_server if @server_thread
@@ -257,7 +307,6 @@ module CabinetrixAutoTester
           response_data = {}
           case path
           when '/run_tests', '/test'
-            # Must run on SketchUp UI main thread
             UI.start_timer(0, false) do
               response_data = run_suite
             end
@@ -265,6 +314,7 @@ module CabinetrixAutoTester
 
           when '/reload'
             UI.start_timer(0, false) do
+              load File.expand_path('cabinetrix_collision_engine.rb', __dir__)
               load File.expand_path('cabinetrix_box_engine.rb', __dir__)
               load File.expand_path('cabinetrix_wardrobe_engine.rb', __dir__)
               run_suite
