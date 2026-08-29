@@ -7,9 +7,6 @@ require 'json'
 require_relative 'cabinetrix_box_engine'
 
 module CabinetrixLuxuryKitchen
-  # ----------------------------------------------------------------------------
-  # 1. MATERIAL DEFINITIONS
-  # ----------------------------------------------------------------------------
   def self.get_materials(model)
     mats = model.materials
 
@@ -68,9 +65,6 @@ module CabinetrixLuxuryKitchen
     }
   end
 
-  # ----------------------------------------------------------------------------
-  # 2. CONTINUOUS UNDER-CABINET PELMET & UTILITIES
-  # ----------------------------------------------------------------------------
   def self.build_continuous_pelmet(parent_ents, ox, total_w, depth, wall_bottom_z, mats)
     group = parent_ents.add_group
     group.name = "Continuous_Under_Cabinet_Pelmet_#{total_w.to_mm.round}mm"
@@ -90,9 +84,6 @@ module CabinetrixLuxuryKitchen
     group
   end
 
-  # ----------------------------------------------------------------------------
-  # 3. MASTER KITCHEN GENERATION ROUTINE
-  # ----------------------------------------------------------------------------
   def self.build_full_kitchen(parent_ents, mats, mode: :hybrid)
     kitchen_master = parent_ents.add_group
     kitchen_master.name = "Cabinetrix_Master_Luxury_Kitchen"
@@ -101,10 +92,9 @@ module CabinetrixLuxuryKitchen
     wall_z0 = 1440.mm
 
     # ==========================================================================
-    # ZONE 1: MAIN WALL RUN (FUNCTION CALL -> BOX TYPE -> PARAMS -> LOCATION)
+    # ZONE 1: MAIN WALL RUN
     # ==========================================================================
-
-    # Box 01: Tall Double Oven Tower (600W x 600D x 2160H)
+    # Box 01: Tall Double Oven Tower (600W)
     CabinetrixBoxEngine.create_cabinet(
       kitchen_master.entities,
       :tall_oven_tower,
@@ -113,7 +103,7 @@ module CabinetrixLuxuryKitchen
       mats
     )
 
-    # Box 02: Tall Pantry Larder (600W x 600D x 2160H)
+    # Box 02: Tall Pantry Larder (600W)
     CabinetrixBoxEngine.create_cabinet(
       kitchen_master.entities,
       :tall_pantry_larder,
@@ -122,41 +112,42 @@ module CabinetrixLuxuryKitchen
       mats
     )
 
-    # Box 03: Base Spice Pullout (300W x 560D x 720H)
+    # Base Units (Boxes 03 to 06)
     CabinetrixBoxEngine.create_cabinet(
       kitchen_master.entities,
       :base_gola_spice,
-      { name: "Box_03_Base_Spice_300W", width: 300.mm, depth: 560.mm, height: 720.mm, mode: mode, front_mat: mats[:front_dark] },
+      { name: "Box_03_Base_Spice_300W", width: 300.mm, depth: 560.mm, height: 720.mm, mode: mode, front_mat: mats[:front_dark], include_gola: false },
       { x: 1200.mm, y: 0.mm, z: main_oz, facing_dir: :front },
       mats
     )
 
-    # Box 04: Base Cooktop (900W x 560D x 720H)
     CabinetrixBoxEngine.create_cabinet(
       kitchen_master.entities,
       :base_gola_cooktop,
-      { name: "Box_04_Base_Cooktop_900W", width: 900.mm, depth: 560.mm, height: 720.mm, mode: mode, front_mat: mats[:front_dark] },
+      { name: "Box_04_Base_Cooktop_900W", width: 900.mm, depth: 560.mm, height: 720.mm, mode: mode, front_mat: mats[:front_dark], include_gola: false },
       { x: 1500.mm, y: 0.mm, z: main_oz, facing_dir: :front },
       mats
     )
 
-    # Box 05: Base Utility Drawers (600W x 560D x 720H)
     CabinetrixBoxEngine.create_cabinet(
       kitchen_master.entities,
       :base_gola_drawers,
-      { name: "Box_05_Base_Utility_600W", width: 600.mm, depth: 560.mm, height: 720.mm, mode: mode, front_mat: mats[:front_dark] },
+      { name: "Box_05_Base_Utility_600W", width: 600.mm, depth: 560.mm, height: 720.mm, mode: mode, front_mat: mats[:front_dark], include_gola: false },
       { x: 2400.mm, y: 0.mm, z: main_oz, facing_dir: :front },
       mats
     )
 
-    # Box 06: Base Wine Unit (600W x 560D x 720H)
     CabinetrixBoxEngine.create_cabinet(
       kitchen_master.entities,
       :base_gola_wine,
-      { name: "Box_06_Base_Wine_600W", width: 600.mm, depth: 560.mm, height: 720.mm, mode: mode, front_mat: mats[:front_dark] },
+      { name: "Box_06_Base_Wine_600W", width: 600.mm, depth: 560.mm, height: 720.mm, mode: mode, front_mat: mats[:front_dark], include_gola: false },
       { x: 3000.mm, y: 0.mm, z: main_oz, facing_dir: :front },
       mats
     )
+
+    # Continuous Merged Gola Profiles (2400mm Run)
+    CabinetrixBoxEngine.build_gola_profile(kitchen_master.entities, :l, 2400.mm, Geom::Point3d.new(1200.mm, -560.mm + 26.mm, main_oz + 720.mm - 59.mm), mats, facing_dir: :front)
+    CabinetrixBoxEngine.build_gola_profile(kitchen_master.entities, :c, 2400.mm, Geom::Point3d.new(1200.mm, -560.mm + 26.mm, main_oz + 330.mm), mats, facing_dir: :front)
 
     # Main Worktop (20mm Calacatta Marble) & Induction Cooktop
     CabinetrixBoxEngine.create_box(kitchen_master.entities, [1200.mm, -600.mm, main_oz + 720.mm], [2400.mm, 600.mm, 20.mm], mats[:marble], "Main_Marble_Worktop")
@@ -166,9 +157,8 @@ module CabinetrixLuxuryKitchen
     end
 
     # --------------------------------------------------------------------------
-    # UPPER WALL SECTION (INDIVIDUAL DISCRETE BOXES)
+    # UPPER WALL SECTION
     # --------------------------------------------------------------------------
-    # Box 07: Wall Glass Left (300W x 350D x 720H)
     CabinetrixBoxEngine.create_cabinet(
       kitchen_master.entities,
       :wall_glass_display,
@@ -177,7 +167,6 @@ module CabinetrixLuxuryKitchen
       mats
     )
 
-    # Box 08: Wall Cooker Hood Unit (900W x 350D x 720H) — 100% aligned with Cooktop below
     CabinetrixBoxEngine.create_cabinet(
       kitchen_master.entities,
       :wall_cooker_hood,
@@ -186,7 +175,6 @@ module CabinetrixLuxuryKitchen
       mats
     )
 
-    # Box 09: Wall Glass Mid (600W x 350D x 720H)
     CabinetrixBoxEngine.create_cabinet(
       kitchen_master.entities,
       :wall_glass_display,
@@ -195,7 +183,6 @@ module CabinetrixLuxuryKitchen
       mats
     )
 
-    # Box 10: Wall Glass Right (600W x 350D x 720H)
     CabinetrixBoxEngine.create_cabinet(
       kitchen_master.entities,
       :wall_glass_display,
@@ -209,7 +196,7 @@ module CabinetrixLuxuryKitchen
     build_continuous_pelmet(kitchen_master.entities, 2400.mm, 1200.mm, 350.mm, wall_z0, mats)
 
     # ==========================================================================
-    # ZONE 2: LUXURY KITCHEN ISLAND (FUNCTION CALL -> BOX TYPE -> PARAMS -> LOCATION)
+    # ZONE 2: LUXURY KITCHEN ISLAND
     # ==========================================================================
     isl_ox = 1000.0.mm
     isl_prep_y = -1400.0.mm
@@ -218,38 +205,39 @@ module CabinetrixLuxuryKitchen
     isl_w  = 2000.0.mm
     isl_d  = 900.0.mm
 
-    # Box 11: Island Left 2-Drawer Bank (600W)
     CabinetrixBoxEngine.create_cabinet(
       kitchen_master.entities,
       :island_gola_drawers,
-      { name: "Box_11_Island_Drawer_Bank_600W", width: 600.mm, depth: 560.mm, height: 720.mm, mode: mode, front_mat: mats[:front_cashmere] },
+      { name: "Box_11_Island_Drawer_Bank_600W", width: 600.mm, depth: 560.mm, height: 720.mm, mode: mode, front_mat: mats[:front_cashmere], include_gola: false },
       { x: isl_ox, y: isl_prep_y, z: main_oz, facing_dir: :aisle },
       mats
     )
 
-    # Box 12: Island Center Sink Base (600W)
     CabinetrixBoxEngine.create_cabinet(
       kitchen_master.entities,
       :island_gola_sink,
-      { name: "Box_12_Island_Sink_Base_600W", width: 600.mm, depth: 560.mm, height: 720.mm, mode: mode, front_mat: mats[:front_cashmere] },
+      { name: "Box_12_Island_Sink_Base_600W", width: 600.mm, depth: 560.mm, height: 720.mm, mode: mode, front_mat: mats[:front_cashmere], include_gola: false },
       { x: isl_ox + 600.mm, y: isl_prep_y, z: main_oz, facing_dir: :aisle },
       mats
     )
 
-    # Box 13: Island Right Multi-Drawer Bank (800W)
     CabinetrixBoxEngine.create_cabinet(
       kitchen_master.entities,
       :island_gola_drawers,
-      { name: "Box_13_Island_Multi_Drawers_800W", width: 800.mm, depth: 560.mm, height: 720.mm, mode: mode, front_mat: mats[:front_cashmere] },
+      { name: "Box_13_Island_Multi_Drawers_800W", width: 800.mm, depth: 560.mm, height: 720.mm, mode: mode, front_mat: mats[:front_cashmere], include_gola: false },
       { x: isl_ox + 1200.mm, y: isl_prep_y, z: main_oz, facing_dir: :aisle },
       mats
     )
 
+    # Continuous Island Gola Profiles (2000mm Run)
+    CabinetrixBoxEngine.build_gola_profile(kitchen_master.entities, :l, 2000.mm, Geom::Point3d.new(isl_ox, isl_prep_y - 26.mm, main_oz + 720.mm - 59.mm), mats, facing_dir: :aisle)
+    CabinetrixBoxEngine.build_gola_profile(kitchen_master.entities, :c, 2000.mm, Geom::Point3d.new(isl_ox, isl_prep_y - 26.mm, main_oz + 330.mm), mats, facing_dir: :aisle)
+
     # Island Back Cladding Panel & Marble Waterfall Countertop
     CabinetrixBoxEngine.create_box(kitchen_master.entities, [isl_ox, isl_rear_y - 18.mm, main_oz], [isl_w, 18.mm, 720.mm], mats[:front_cashmere], "Island_Back_Cladding")
     CabinetrixBoxEngine.create_box(kitchen_master.entities, [isl_ox, isl_worktop_back_y, main_oz + 720.mm], [isl_w, isl_d, 20.mm], mats[:marble], "Island_Worktop_Slab")
-    CabinetrixBoxEngine.create_box(kitchen_master.entities, [isl_ox - 20.mm, isl_worktop_back_y, 0], [20.mm, isl_d, main_oz + 720.mm + 20.mm], mats[:marble], "Waterfall_Gable_LH")
-    CabinetrixBoxEngine.create_box(kitchen_master.entities, [isl_ox + isl_w, isl_worktop_back_y, 0], [20.mm, isl_d, main_oz + 720.mm + 20.mm], mats[:marble], "Waterfall_Gable_RH")
+    CabinetrixBoxEngine.create_box(kitchen_master.entities, [isl_ox - 20.mm, isl_worktop_back_y, 0], [20.mm, isl_d, main_oz + 720.mm + 20.mm], mats[:marble], "Island_Waterfall_LH")
+    CabinetrixBoxEngine.create_box(kitchen_master.entities, [isl_ox + isl_w, isl_worktop_back_y, 0], [20.mm, isl_d, main_oz + 720.mm + 20.mm], mats[:marble], "Island_Waterfall_RH")
 
     # Undermount Double Basin Sink & Faucet
     CabinetrixBoxEngine.create_box(kitchen_master.entities, [isl_ox + 650.mm, isl_prep_y - 480.mm, main_oz + 720.mm - 180.mm], [500.mm, 400.mm, 180.mm], mats[:steel], "Undermount_Sink_Body")
@@ -275,9 +263,6 @@ module CabinetrixLuxuryKitchen
     kitchen_master
   end
 
-  # ----------------------------------------------------------------------------
-  # 4. CONTROLLER & RUNNER
-  # ----------------------------------------------------------------------------
   def self.build(mode: :hybrid)
     model = Sketchup.active_model
     raise 'No active SketchUp model found.' unless model
@@ -286,7 +271,7 @@ module CabinetrixLuxuryKitchen
 
     begin
       entities = model.active_entities
-      entities.grep(Sketchup::Group).select { |g| g.name.to_s.start_with?('Cabinetrix') || g.name.to_s.start_with?('CG_') || g.name.to_s.start_with?('Box_') || g.name.to_s.start_with?('Kitchen') || g.name.to_s.start_with?('Continuous_') }.each { |g| g.erase! }
+      entities.grep(Sketchup::Group).select { |g| g.name.to_s.start_with?('Cabinetrix') || g.name.to_s.start_with?('CG_') || g.name.to_s.start_with?('Box_') || g.name.to_s.start_with?('Kitchen') || g.name.to_s.start_with?('Continuous_') || g.name.to_s.start_with?('Gola_') }.each { |g| g.erase! }
       entities.grep(Sketchup::Text).each { |t| t.erase! }
 
       mats = get_materials(model)
@@ -296,10 +281,9 @@ module CabinetrixLuxuryKitchen
       model.commit_operation
 
       puts "=========================================================================="
-      puts " ✅ [GEMINI] Master Luxury Gola Kitchen generated via CabinetrixBoxEngine!"
-      puts "    • Standardized API: CabinetrixBoxEngine.create_cabinet(parent, type, params, location, mats)"
-      puts "    • Wall unit doors extend +18mm over bottom panel for handleless finger grip!"
-      puts "    • 100% discrete gables & atomic grouping across all components!"
+      puts " ✅ [GEMINI] Master Luxury Gola Kitchen generated with continuous Golas!"
+      puts "    • Forward-facing SCILM Gola profiles (Top L & Mid C)!"
+      puts "    • Continuous merged Gola profiles spanning across base & island runs!"
       puts "=========================================================================="
     rescue => e
       model.abort_operation
