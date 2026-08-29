@@ -3,13 +3,14 @@
 # Pure Function API: CabinetrixWardrobeEngine.build_wardrobe(parent_ents, type, params, location, mats)
 #
 # Production Standard:
-#   • INTEGRATED WITH CABINETRIX COLLISION & ACCESSORY ENGINE
+#   • GLOBAL DRAWER HARDWARE FUNCTION:
+#     - Pure Hardware Formula: Drawer Box Width = Internal Width - (2 * Side Gap)
+#     - Uses CabinetrixCollisionEngine.calculate_drawer_geometry(inner_w, depth, side_gap: 12.5, hinge_spacer: spacer_offset)
 #   • KOMPLEMENT & CONERO ARCHITECTURAL ACCESSORIES:
 #     - Single Long Hanging (1600mm coat clearance + 55mm rod hook drop)
 #     - Double Stack Hanging (2 x 950mm tier clearance for shirts & trousers)
 #     - Pull-out Trouser Racks (650mm vertical drop clearance)
 #     - Sloping Shoe Racks (25° pitch + front retaining gallery rails)
-#     - Jewellery Glass Showcase (60mm shallow velvet tray under 8mm clear glass)
 #     - Internal Drawer Stacks (Zero-protrusion 155° hinge clearances / 25mm spacer offsets)
 #   • System 32 metric line-bore drilling, Minifix 15 + dowel KD connections.
 # ==============================================================================
@@ -173,7 +174,6 @@ module CabinetrixWardrobeEngine
   # ----------------------------------------------------------------------------
   # 2. KOMPLEMENT & CONERO ACCESSORY BUILDERS
   # ----------------------------------------------------------------------------
-  # Oval LED Clothes Hanging Rail (55mm drop below shelf bottom for coat hook clearance)
   def self.build_clothes_rail(parent_ents, name, origin_x, y_origin, width, depth, z_pos, mats)
     group = parent_ents.add_group
     group.name = name
@@ -181,17 +181,13 @@ module CabinetrixWardrobeEngine
     rail_y = y_origin - depth / 2.0
     rail_start = Geom::Point3d.new(origin_x + BOARD_THK + 5.mm, rail_y, z_pos)
 
-    # Steel oval rail
     create_cylinder(group.entities, rail_start, Geom::Vector3d.new(1, 0, 0), 12.5.mm, inner_w - 10.mm, mats[:steel], 24)
-    # Cast alloy end socket brackets
     create_box(group.entities, [origin_x + BOARD_THK, rail_y - 15.mm, z_pos - 20.mm], [5.mm, 30.mm, 40.mm], mats[:cam], "Socket_Bracket_LH")
     create_box(group.entities, [origin_x + width - BOARD_THK - 5.mm, rail_y - 15.mm, z_pos - 20.mm], [5.mm, 30.mm, 40.mm], mats[:cam], "Socket_Bracket_RH")
-    # Integrated LED lighting channel
     create_box(group.entities, [origin_x + BOARD_THK + 10.mm, rail_y - 2.mm, z_pos - 14.mm], [inner_w - 20.mm, 4.mm, 2.mm], mats[:gola], "Diffuser_LED_Strip")
     group
   end
 
-  # Pull-Out Trouser Rack with Anti-Slip Prongs (650mm drop clearance)
   def self.build_trouser_rack(parent_ents, name, origin_x, y_origin, width, depth, z_pos, mats, pull_dist = 0.mm)
     group = parent_ents.add_group
     group.name = name
@@ -200,13 +196,11 @@ module CabinetrixWardrobeEngine
     ox      = origin_x + BOARD_THK + 12.5.mm
     oy      = y_origin - depth + 50.mm - pull_dist
 
-    # Frame rails
     create_box(group.entities, [ox, oy, z_pos], [inner_w, 20.mm, 25.mm], mats[:gola], "Trouser_Frame_Front")
     create_box(group.entities, [ox, oy + rack_d - 20.mm, z_pos], [inner_w, 20.mm, 25.mm], mats[:gola], "Trouser_Frame_Rear")
     create_box(group.entities, [ox, oy, z_pos], [20.mm, rack_d, 25.mm], mats[:gola], "Trouser_Frame_Side_LH")
     create_box(group.entities, [ox + inner_w - 20.mm, oy, z_pos], [20.mm, rack_d, 25.mm], mats[:gola], "Trouser_Frame_Side_RH")
 
-    # Anti-slip hanging rods
     num_rods = (inner_w / 65.mm).to_i
     spacing  = inner_w / (num_rods + 1)
     (1..num_rods).each do |i|
@@ -216,7 +210,6 @@ module CabinetrixWardrobeEngine
     group
   end
 
-  # Sloping Shoe Rack with Gallery Rail
   def self.build_shoe_rack(parent_ents, name, origin_x, y_origin, width, depth, z_pos, mats)
     group = parent_ents.add_group
     group.name = name
@@ -225,38 +218,41 @@ module CabinetrixWardrobeEngine
     ox      = origin_x + BOARD_THK + 1.mm
     oy      = y_origin - depth + 40.mm
 
-    # Slanted metal shelf
     shelf = create_box(group.entities, [ox, oy, z_pos], [inner_w, rack_d, 12.mm], mats[:gola], "Shoe_Shelf_Plate")
     shelf.transform!(Geom::Transformation.rotation(Geom::Point3d.new(ox, oy, z_pos), Geom::Vector3d.new(1, 0, 0), 20.degrees))
-
-    # Chrome heel catch gallery wire
     create_box(group.entities, [ox + 10.mm, oy + 30.mm, z_pos + 25.mm], [inner_w - 20.mm, 5.mm, 20.mm], mats[:steel], "Chrome_Shoe_Rail")
     group
   end
 
-  # Internal KOMPLEMENT Wardrobe Drawer (Behind Hinge / Spacer Clearances)
+  # Internal KOMPLEMENT Wardrobe Drawer (Global hardware drawer calculation)
   def self.build_internal_wardrobe_drawer(parent_ents, name, origin_x, y_origin, width, depth, z_pos, box_h, front_h, mats, pull_dist = 0.mm, spacer_offset = 0.mm)
     group = parent_ents.add_group
     group.name = name
 
-    usable_w = width - (2 * BOARD_THK) - (2 * spacer_offset)
+    inner_w = width - (2 * BOARD_THK)
+    dims = CabinetrixCollisionEngine.calculate_drawer_geometry(inner_w.to_mm, depth.to_mm, side_gap: 12.5, box_thk: 15.0, front_h: front_h.to_mm, runner_len: (depth.to_mm - 100.0), hinge_spacer: spacer_offset.to_mm)
+
+    box_w = dims[:box_w].mm
+    box_d = dims[:box_d].mm
+    box_thk = dims[:box_thk].mm
+    usable_w = box_w + (2 * 12.5.mm)
+
     ox = origin_x + BOARD_THK + spacer_offset
     oy = y_origin - depth + 20.mm - pull_dist
-    box_w = usable_w - (2 * 12.5.mm)
-    box_d = depth - 100.mm
 
-    # Decorative drawer front (carcase melamine or glass insert)
+    # Decorative drawer front
     create_box(group.entities, [ox + 1.5.mm, oy, z_pos], [usable_w - 3.mm, FRONT_THK, front_h], mats[:carcase], "Internal_Drawer_Front")
 
     # Birch drawer box
     box_ox = ox + 12.5.mm
     box_oy = oy + FRONT_THK
     box_oz = z_pos + 12.mm
-    create_box(group.entities, [box_ox, box_oy, box_oz], [DRAWER_BOX_THK, box_d, box_h], mats[:wood], "Drawer_Side_LH")
-    create_box(group.entities, [box_ox + box_w - DRAWER_BOX_THK, box_oy, box_oz], [DRAWER_BOX_THK, box_d, box_h], mats[:wood], "Drawer_Side_RH")
-    create_box(group.entities, [box_ox + DRAWER_BOX_THK, box_oy, box_oz], [box_w - 2*DRAWER_BOX_THK, DRAWER_BOX_THK, box_h], mats[:wood], "Drawer_Sub_Front")
-    create_box(group.entities, [box_ox + DRAWER_BOX_THK, box_oy + box_d - DRAWER_BOX_THK, box_oz], [box_w - 2*DRAWER_BOX_THK, DRAWER_BOX_THK, box_h], mats[:wood], "Drawer_Back")
-    create_box(group.entities, [box_ox + DRAWER_BOX_THK, box_oy + DRAWER_BOX_THK, box_oz + 8.mm], [box_w - 2*DRAWER_BOX_THK, box_d - 2*DRAWER_BOX_THK, 12.mm], mats[:wood], "Drawer_Bottom")
+    create_box(group.entities, [box_ox, box_oy, box_oz], [box_thk, box_d, box_h], mats[:wood], "Drawer_Side_LH")
+    create_box(group.entities, [box_ox + box_w - box_thk, box_oy, box_oz], [box_thk, box_d, box_h], mats[:wood], "Drawer_Side_RH")
+    sub_w = box_w - (2 * box_thk)
+    create_box(group.entities, [box_ox + box_thk, box_oy, box_oz], [sub_w, box_thk, box_h], mats[:wood], "Drawer_Sub_Front")
+    create_box(group.entities, [box_ox + box_thk, box_oy + box_d - box_thk, box_oz], [sub_w, box_thk, box_h], mats[:wood], "Drawer_Back")
+    create_box(group.entities, [box_ox + box_thk, box_oy + box_thk, box_oz + 8.mm], [sub_w, box_d - 2*box_thk, 12.mm], mats[:wood], "Drawer_Bottom")
 
     # Side undermount runners
     create_box(group.entities, [ox + 1.mm, box_oy, z_pos + 2.mm], [11.mm, box_d, 24.mm], mats[:steel], "Runner_LH")
@@ -296,19 +292,16 @@ module CabinetrixWardrobeEngine
     # 2. Internal Accessory Configurations (Zero-Collision Geometry)
     case type
     when :single_hanging, :wardrobe_single_hang
-      # Long coats / dresses: single rod at top_shelf_z - 55mm (drop >= 1600mm)
       build_clothes_rail(robe_grp.entities, "Long_Clothes_Rail", bx, by, width, depth, top_shelf_z - 55.mm, mats)
       build_adjustable_shelf(robe_grp.entities, "Shoe_Base_Shelf", bx, width, depth, bz + 180.mm, mats, y_origin: by)
 
     when :double_hanging, :wardrobe_double_hang
-      # Two stacked tiers of hanging rods (>= 950mm clear drop each)
       mid_shelf_z = bz + 960.mm
       build_structural_shelf(robe_grp.entities, "Mid_Divider_Shelf", bx, width, depth, mid_shelf_z, mats, y_origin: by)
       build_clothes_rail(robe_grp.entities, "Upper_Clothes_Rail", bx, by, width, depth, top_shelf_z - 55.mm, mats)
       build_clothes_rail(robe_grp.entities, "Lower_Clothes_Rail", bx, by, width, depth, mid_shelf_z - 55.mm, mats)
 
     when :drawers_combo, :wardrobe_combo
-      # Mid shelf at 1050mm, hanging rod above, 3 internal drawers + 1 trouser pullout below
       mid_shelf_z = bz + 1000.mm
       build_structural_shelf(robe_grp.entities, "Mid_Divider_Shelf", bx, width, depth, mid_shelf_z, mats, y_origin: by)
       build_clothes_rail(robe_grp.entities, "Clothes_Rail", bx, by, width, depth, top_shelf_z - 55.mm, mats)
@@ -319,11 +312,9 @@ module CabinetrixWardrobeEngine
         build_internal_wardrobe_drawer(robe_grp.entities, "Internal_Drawer_#{idx+1}", bx, by, width, depth, dz, 140.mm, 180.mm, mats, pull_dist)
       end
 
-      # Pull-out trouser rack above drawers (at dz = bz + 660mm)
       build_trouser_rack(robe_grp.entities, "Trouser_Pullout_Rack", bx, by, width, depth, bz + 680.mm, mats, (mode == :hybrid ? 200.mm : 0.mm))
 
     when :shoe_master, :wardrobe_shoes
-      # 5 Sloping shoe racks on 220mm pitch + top hanging zone
       mid_shelf_z = bz + 1150.mm
       build_structural_shelf(robe_grp.entities, "Mid_Divider_Shelf", bx, width, depth, mid_shelf_z, mats, y_origin: by)
       build_clothes_rail(robe_grp.entities, "Clothes_Rail", bx, by, width, depth, top_shelf_z - 55.mm, mats)

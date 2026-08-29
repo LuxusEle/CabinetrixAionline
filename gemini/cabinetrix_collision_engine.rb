@@ -3,13 +3,12 @@
 # Module: CabinetrixCollisionEngine
 #
 # Production Standard:
-#   Derived from:
-#     - Blum 2027/2028 Technical Catalogue (CLIP top BLUMOTION, SPACE TOWER, AVENTOS HF/HK/HS)
-#     - Hettich Technical Guide (Actro 5D, TopLine XL, AvanTech YOU)
-#     - Kesseböhmer Storage Solutions (LeMans II, Magic Corner, DISPENSA, CONERO)
-#     - SCILM Gola System Catalog (Top L-Profile, Mid C-Profile, Vertical Profiles)
-#     - IKEA METOD & PAX KOMPLEMENT Planning & Assembly Manuals
-#     - Australian / European Cabinetmaking Training Guides
+#   • GLOBAL DRAWER HARDWARE FUNCTION:
+#     - Pure Hardware Formula: Drawer Box Width = Internal Width - (2 * Side Gap)
+#     - Never hardcoded. Dynamically computed for Blum Legrabox, Hettich Actro 5D, Grass Nova Pro.
+#   • SCILM Gola System Catalog & Vertical Profiles
+#   • IKEA METOD & PAX KOMPLEMENT Planning & Assembly Manuals
+#   • Australian / European Cabinetmaking Training Guides
 # ==============================================================================
 
 module CabinetrixCollisionEngine
@@ -111,28 +110,49 @@ module CabinetrixCollisionEngine
   }
 
   # ----------------------------------------------------------------------------
-  # 2. GOLA HANDLELESS CLEARANCE & REVEAL CALCULATOR
+  # 2. GLOBAL DRAWER GEOMETRY FUNCTION (PURE HARDWARE FORMULA)
+  # ----------------------------------------------------------------------------
+  # Formula: Drawer Box Width = Internal Width - (2 * Drawer Side Gap)
+  def self.calculate_drawer_geometry(internal_w, internal_d = 560.0, side_gap: 12.5, box_thk: 15.0, front_h: 248.0, runner_len: 450.0, hinge_spacer: 0.0)
+    total_side_reveal = side_gap + hinge_spacer
+    box_w = internal_w - (2.0 * total_side_reveal)
+    sub_front_w = box_w - (2.0 * box_thk)
+    bottom_w = box_w - (2.0 * box_thk)
+    bottom_d = runner_len - (2.0 * box_thk)
+    max_box_h = [front_h - 40.0, 200.0].min
+
+    {
+      internal_w: internal_w,
+      internal_d: internal_d,
+      side_gap: side_gap,
+      hinge_spacer: hinge_spacer,
+      total_side_reveal: total_side_reveal,
+      box_w: box_w,
+      box_d: runner_len,
+      box_h: max_box_h,
+      sub_front_w: sub_front_w,
+      bottom_w: bottom_w,
+      bottom_d: bottom_d,
+      box_thk: box_thk,
+      slide_w: 11.0,
+      slide_h: 24.0
+    }
+  end
+
+  # ----------------------------------------------------------------------------
+  # 3. GOLA HANDLELESS CLEARANCE & REVEAL CALCULATOR
   # ----------------------------------------------------------------------------
   def self.calculate_gola_drawer_geometry(carcase_h, bz, gola_d = 26.0, c_gola_z0 = 330.0, c_gola_h = 73.5, l_gola_h = 59.0)
-    # Lower Drawer:
-    # Front bottom = bz + 12mm (plinth reveal / bottom gable overlap)
-    # Front top = bz + 327mm (3mm continuous reveal below C-Gola profile at bz + 330mm)
     lower_front_z = bz + 12.0
     lower_front_h = (bz + c_gola_z0 - 3.0) - lower_front_z # 315mm
 
-    # Upper Drawer:
-    # Front bottom = bz + 409.5mm (6.0mm reveal above C-Gola top lip at bz + 403.5mm)
-    # Front top = bz + (carcase_h - l_gola_h) - 3.5mm = bz + 657.5mm (3.5mm reveal below L-Gola lip at 661mm)
     upper_front_z = bz + c_gola_z0 + c_gola_h + 6.0 # 409.5mm
     upper_front_top = bz + carcase_h - l_gola_h - 3.5 # 657.5mm
     upper_front_h = upper_front_top - upper_front_z # 248mm
 
-    # Drawer Box Heights:
-    # Lower Drawer Box: max 200mm high on undermount slides
-    # Upper Drawer Box: max 120-140mm high to guarantee zero clash with subtop stretchers
     {
-      lower: { front_z: lower_front_z, front_h: lower_front_h, box_h: 200.0, max_slide_len: 500.0 },
-      upper: { front_z: upper_front_z, front_h: upper_front_h, box_h: 140.0, max_slide_len: 500.0 },
+      lower: { front_z: lower_front_z, front_h: lower_front_h, box_h: 200.0, max_slide_len: 450.0 },
+      upper: { front_z: upper_front_z, front_h: upper_front_h, box_h: 120.0, max_slide_len: 450.0 },
       c_gola_channel: { z_min: bz + c_gola_z0, z_max: bz + c_gola_z0 + c_gola_h },
       l_gola_channel: { z_min: bz + carcase_h - l_gola_h, z_max: bz + carcase_h },
       reveals: {
@@ -145,33 +165,29 @@ module CabinetrixCollisionEngine
   end
 
   # ----------------------------------------------------------------------------
-  # 3. WARDROBE INTERNALS & HINGE/SLIDER COLLISION RESOLVER
+  # 4. WARDROBE INTERNALS & HINGE/SLIDER COLLISION RESOLVER
   # ----------------------------------------------------------------------------
   def self.calculate_wardrobe_internal_layout(width, height, depth, carcase_thk = 18.0, door_type = :hinged, hinge_type = :zero_protrusion)
     inner_w = width - (2 * carcase_thk)
-    inner_d = depth - (carcase_thk + 6.0) # minus back sheet and cleat
+    inner_d = depth - (carcase_thk + 6.0)
 
-    # Drawer width calculation considering hinge clearance
     drawer_side_clearance = if door_type == :hinged
       (hinge_type == :zero_protrusion) ? 12.5 : (12.5 + ENVELOPES[:space_tower][:hinge_side_spacer_offset])
     else
-      # Sliding doors: drawers must be within active half-leaf zone
       12.5
     end
 
-    drawer_w = inner_w - (2 * drawer_side_clearance)
+    drawer_dims = calculate_drawer_geometry(inner_w, inner_d, side_gap: 12.5, hinge_spacer: (drawer_side_clearance - 12.5))
 
-    # Calculate optimal zones
-    top_shelf_z = height - 350.0 # Top storage compartment (hat / luggage)
+    top_shelf_z = height - 350.0
     clothes_rod_z = top_shelf_z - ENVELOPES[:wardrobe_organizers][:clothes_rail][:rod_drop_from_top_shelf]
-
-    # Mid divider / hanging shelf
     mid_shelf_z = 1050.0
 
     {
       inner_w: inner_w,
       inner_d: inner_d,
-      drawer_w: drawer_w,
+      drawer_w: drawer_dims[:box_w],
+      drawer_dims: drawer_dims,
       drawer_side_clearance: drawer_side_clearance,
       top_shelf_z: top_shelf_z,
       clothes_rod_z: clothes_rod_z,
@@ -182,9 +198,8 @@ module CabinetrixCollisionEngine
   end
 
   # ----------------------------------------------------------------------------
-  # 4. 3D BOUNDING BOX CLASH DETECTION & INTERFERENCE ANALYZER
+  # 5. 3D BOUNDING BOX CLASH DETECTION & INTERFERENCE ANALYZER
   # ----------------------------------------------------------------------------
-  # Checks whether two 3D Axis-Aligned Bounding Boxes (AABB) intersect beyond allowed tolerance
   def self.box_intersects?(bb1_min, bb1_max, bb2_min, bb2_max, tolerance = 0.5)
     overlap_x = [0.0, [bb1_max[0], bb2_max[0]].min - [bb1_min[0], bb2_min[0]].max].max
     overlap_y = [0.0, [bb1_max[1], bb2_max[1]].min - [bb1_min[1], bb2_min[1]].max].max
@@ -197,7 +212,6 @@ module CabinetrixCollisionEngine
     end
   end
 
-  # Categorizes whether two overlapping parts represent a valid join or a true functional clash
   def self.evaluate_clash(name_a, bb_a_min, bb_a_max, name_b, bb_b_min, bb_b_max)
     overlap = box_intersects?(bb_a_min, bb_a_max, bb_b_min, bb_b_max, 1.0)
     return nil unless overlap
@@ -205,15 +219,14 @@ module CabinetrixCollisionEngine
     na = name_a.to_s.downcase
     nb = name_b.to_s.downcase
 
-    # Allowed / Intended Structural Connections (Minifix, Dowel, Dado, Rabbet, Screws):
+    # Allowed / Intended Structural Connections
     is_dowel_or_cam = na.include?('minifix') || nb.include?('minifix') || na.include?('dowel') || nb.include?('dowel') || na.include?('catch') || nb.include?('catch')
     is_grooved_back = (na.include?('back') && nb.include?('gable')) || (nb.include?('back') && na.include?('gable'))
     is_slide_to_side = (na.include?('slide') && (nb.include?('gable') || nb.include?('side'))) || (nb.include?('slide') && (na.include?('gable') || na.include?('side')))
 
     return nil if is_dowel_or_cam || is_grooved_back || is_slide_to_side
 
-    # CRITICAL Functional Clashes:
-    # 1. Drawer front or box colliding with Gola profile
+    # CRITICAL Functional Clashes
     if (na.include?('gola') && (nb.include?('drawer') || nb.include?('front'))) || (nb.include?('gola') && (na.include?('drawer') || na.include?('front')))
       return {
         severity: :critical,
@@ -225,7 +238,6 @@ module CabinetrixCollisionEngine
       }
     end
 
-    # 2. Drawer front colliding with adjacent drawer front
     if (na.include?('drawer_front') && nb.include?('drawer_front')) || (na.include?('front_face') && nb.include?('front_face'))
       return {
         severity: :critical,
@@ -237,7 +249,6 @@ module CabinetrixCollisionEngine
       }
     end
 
-    # 3. Internal shelf colliding with appliance body
     if (na.include?('oven') && nb.include?('shelf')) || (nb.include?('oven') && na.include?('shelf'))
       return {
         severity: :critical,
@@ -249,7 +260,6 @@ module CabinetrixCollisionEngine
       }
     end
 
-    # 4. Clothes rod colliding with shelf or gable
     if (na.include?('rod') && nb.include?('shelf')) || (nb.include?('rod') && na.include?('shelf'))
       return {
         severity: :high,
@@ -261,7 +271,6 @@ module CabinetrixCollisionEngine
       }
     end
 
-    # General geometric collision
     {
       severity: :medium,
       category: "Solid_Body_Interference",

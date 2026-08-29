@@ -3,20 +3,15 @@
 # Pure Function API: CabinetrixBoxEngine.create_cabinet(parent_ents, type, params, location, mats)
 #
 # Production Standard:
+#   • GLOBAL DRAWER HARDWARE FUNCTION:
+#     - Pure Hardware Formula: Drawer Box Width = Internal Width - (2 * Side Gap)
+#     - Uses CabinetrixCollisionEngine.calculate_drawer_geometry(inner_w, depth, side_gap: 12.5)
 #   • ZERO-COLLISION GOLA DRAWER GEOMETRY (SCILM / Hettich / Blum Standards):
 #     - Lower Drawer: Front Z = bz + 12mm, H = 315mm (Top: bz + 327mm, 3mm reveal below C-Gola at bz + 330mm)
 #     - Mid C-Gola: Cutout Z = 330mm to 403.5mm, fixed with SCILM clips directly to gable notches (NO colliding mid-stretchers)
 #     - Upper Drawer: Front Z = bz + 409.5mm, H = 248mm (Top: bz + 657.5mm, 3.5mm reveal below L-Gola at bz + 661mm)
 #     - Upper Drawer Box: Height = 120mm on Hettich Actro 5D undermount slides (100% zero collision)
 #     - Stationary Slide Runner: Fixed to internal carcase gable behind Gola notch, drawer box glides cleanly.
-#   • AUTHENTIC SCILM GOLA PROFILES:
-#     - Exact faceted curves, radii, internal fillets, and mounting webs from SCILM catalog.
-#     - 100% forward-opening finger pockets with continuous run merging.
-#   • ACCESSORY ENVELOPES:
-#     - LeMans II / Magic Corner swingout shelves
-#     - Blum Space Tower internal pullouts (with zero-protrusion hinge clearances)
-#     - AVENTOS HF/HK wall lift systems with shelf setbacks
-#     - Sink plumbing U-cutouts and cargo waste bin systems
 # ==============================================================================
 require 'sketchup.rb'
 require_relative 'cabinetrix_collision_engine'
@@ -300,81 +295,87 @@ module CabinetrixBoxEngine
   end
 
   # ----------------------------------------------------------------------------
-  # 3. AUTHENTIC HETTICH ACTRO 5D UNDERMOUNT DRAWER SYSTEM (ZERO COLLISION)
+  # 3. GLOBAL DRAWER FUNCTION: HETTICH ACTRO 5D UNDERMOUNT DRAWER SYSTEM
+  # Formula: Drawer Box Width = Internal Width - (2 * Side Gap)
   # ----------------------------------------------------------------------------
-  def self.build_hettich_undermount_drawer(parent_ents, box_origin, width, depth, box_height, front_h, pull_offset, mats, front_mat, dir_y: -1, is_sink_u_shape: false)
+  def self.build_hettich_undermount_drawer(parent_ents, inner_origin, inner_w, depth, box_height, front_h, pull_offset, mats, front_mat, dir_y: -1, is_sink_u_shape: false, front_w: nil)
     drawer_unit = parent_ents.add_group
-    drawer_unit.name = "Hettich_Undermount_Drawer_#{width.to_mm.round}x#{front_h.to_mm.round}"
+    drawer_unit.name = "Hettich_Undermount_Drawer_#{inner_w.to_mm.round}x#{front_h.to_mm.round}"
 
-    ox = box_origin.x
-    base_y = box_origin.y
+    # Hardware calculation via pure global function
+    dims = CabinetrixCollisionEngine.calculate_drawer_geometry(inner_w.to_mm, depth.to_mm, side_gap: 12.5, box_thk: 15.0, front_h: front_h.to_mm)
+    box_w = dims[:box_w].mm
+    box_d = dims[:box_d].mm
+    box_h = [box_height, dims[:box_h].mm].min
+    box_thk = dims[:box_thk].mm
+    f_w = front_w || (inner_w + (2 * BOARD_THK) - 3.mm)
+
+    ox = inner_origin.x
+    base_y = inner_origin.y
     oy = base_y + (dir_y * pull_offset)
-    oz = box_origin.z
+    oz = inner_origin.z
 
     # 1. Decorative Drawer Front
     if dir_y == -1
-      create_box(drawer_unit.entities, [ox, oy - FRONT_THK, oz], [width, FRONT_THK, front_h], front_mat, "Drawer_Front_Face")
+      create_box(drawer_unit.entities, [ox - BOARD_THK + 1.5.mm, oy - FRONT_THK, oz], [f_w, FRONT_THK, front_h], front_mat, "Drawer_Front_Face")
     else
-      create_box(drawer_unit.entities, [ox, oy, oz], [width, FRONT_THK, front_h], front_mat, "Island_Drawer_Front_Face")
+      create_box(drawer_unit.entities, [ox - BOARD_THK + 1.5.mm, oy, oz], [f_w, FRONT_THK, front_h], front_mat, "Island_Drawer_Front_Face")
     end
 
-    box_w = width - (2 * 12.5.mm)
-    box_d = 450.0.mm
+    # 2. Moving Drawer Box Structure (Glides forward with pull_offset)
     box_ox = ox + 12.5.mm
     box_oz = oz + 15.0.mm
-    box_h = [box_height, front_h - 40.mm].min
 
-    # 2. Moving Drawer Box Structure (Glides forward with pull_offset)
     if dir_y == -1
       box_oy = oy + 60.0.mm
-      create_box(drawer_unit.entities, [box_ox, box_oy, box_oz], [DRAWER_BOX_THK, box_d, box_h], mats[:wood], "Drawer_Side_LH")
-      create_box(drawer_unit.entities, [box_ox + box_w - DRAWER_BOX_THK, box_oy, box_oz], [DRAWER_BOX_THK, box_d, box_h], mats[:wood], "Drawer_Side_RH")
-      inner_w = box_w - (2 * DRAWER_BOX_THK)
+      create_box(drawer_unit.entities, [box_ox, box_oy, box_oz], [box_thk, box_d, box_h], mats[:wood], "Drawer_Side_LH")
+      create_box(drawer_unit.entities, [box_ox + box_w - box_thk, box_oy, box_oz], [box_thk, box_d, box_h], mats[:wood], "Drawer_Side_RH")
+      sub_w = box_w - (2 * box_thk)
 
       if is_sink_u_shape
         # Sink U-Shape Plumbing Cutout
         cutout_w = 260.mm
-        side_pocket_w = (inner_w - cutout_w) / 2.0
+        side_pocket_w = (sub_w - cutout_w) / 2.0
         cutout_d = 280.mm
-        create_box(drawer_unit.entities, [box_ox + DRAWER_BOX_THK, box_oy, box_oz], [side_pocket_w, DRAWER_BOX_THK, box_h], mats[:wood], "Drawer_Sub_Front_LH")
-        create_box(drawer_unit.entities, [box_ox + box_w - DRAWER_BOX_THK - side_pocket_w, box_oy, box_oz], [side_pocket_w, DRAWER_BOX_THK, box_h], mats[:wood], "Drawer_Sub_Front_RH")
-        create_box(drawer_unit.entities, [box_ox + DRAWER_BOX_THK + side_pocket_w, box_oy, box_oz], [DRAWER_BOX_THK, cutout_d, box_h], mats[:wood], "Plumbing_Notch_LH")
-        create_box(drawer_unit.entities, [box_ox + box_w - DRAWER_BOX_THK - side_pocket_w - DRAWER_BOX_THK, box_oy, box_oz], [DRAWER_BOX_THK, cutout_d, box_h], mats[:wood], "Plumbing_Notch_RH")
-        create_box(drawer_unit.entities, [box_ox + DRAWER_BOX_THK + side_pocket_w, box_oy + cutout_d, box_oz], [cutout_w, DRAWER_BOX_THK, box_h], mats[:wood], "Plumbing_Notch_Back")
-        create_box(drawer_unit.entities, [box_ox + DRAWER_BOX_THK, box_oy + box_d - DRAWER_BOX_THK, box_oz], [inner_w, DRAWER_BOX_THK, box_h], mats[:wood], "Drawer_Back_Panel")
+        create_box(drawer_unit.entities, [box_ox + box_thk, box_oy, box_oz], [side_pocket_w, box_thk, box_h], mats[:wood], "Drawer_Sub_Front_LH")
+        create_box(drawer_unit.entities, [box_ox + box_w - box_thk - side_pocket_w, box_oy, box_oz], [side_pocket_w, box_thk, box_h], mats[:wood], "Drawer_Sub_Front_RH")
+        create_box(drawer_unit.entities, [box_ox + box_thk + side_pocket_w, box_oy, box_oz], [box_thk, cutout_d, box_h], mats[:wood], "Plumbing_Notch_LH")
+        create_box(drawer_unit.entities, [box_ox + box_w - box_thk - side_pocket_w - box_thk, box_oy, box_oz], [box_thk, cutout_d, box_h], mats[:wood], "Plumbing_Notch_RH")
+        create_box(drawer_unit.entities, [box_ox + box_thk + side_pocket_w, box_oy + cutout_d, box_oz], [cutout_w, box_thk, box_h], mats[:wood], "Plumbing_Notch_Back")
+        create_box(drawer_unit.entities, [box_ox + box_thk, box_oy + box_d - box_thk, box_oz], [sub_w, box_thk, box_h], mats[:wood], "Drawer_Back_Panel")
       else
-        create_box(drawer_unit.entities, [box_ox + DRAWER_BOX_THK, box_oy, box_oz], [inner_w, DRAWER_BOX_THK, box_h], mats[:wood], "Drawer_Sub_Front")
-        create_box(drawer_unit.entities, [box_ox + DRAWER_BOX_THK, box_oy + box_d - DRAWER_BOX_THK, box_oz], [inner_w, DRAWER_BOX_THK, box_h], mats[:wood], "Drawer_Back_Panel")
-        create_box(drawer_unit.entities, [box_ox + DRAWER_BOX_THK, box_oy + DRAWER_BOX_THK, box_oz + 12.mm], [inner_w, box_d - 2*DRAWER_BOX_THK, 16.0.mm], mats[:wood], "Drawer_Bottom_Panel")
+        create_box(drawer_unit.entities, [box_ox + box_thk, box_oy, box_oz], [sub_w, box_thk, box_h], mats[:wood], "Drawer_Sub_Front")
+        create_box(drawer_unit.entities, [box_ox + box_thk, box_oy + box_d - box_thk, box_oz], [sub_w, box_thk, box_h], mats[:wood], "Drawer_Back_Panel")
+        create_box(drawer_unit.entities, [box_ox + box_thk, box_oy + box_thk, box_oz + 12.mm], [sub_w, box_d - 2*box_thk, 16.0.mm], mats[:wood], "Drawer_Bottom_Panel")
       end
 
       # Front Catch Clips (Attached to moving drawer box)
       create_box(drawer_unit.entities, [ox + 12.mm, box_oy - 2.mm, oz + 2.mm], [20.mm, 35.mm, 12.mm], mats[:cam], "Hettich_Catch_LH")
-      create_box(drawer_unit.entities, [ox + width - 32.mm, box_oy - 2.mm, oz + 2.mm], [20.mm, 35.mm, 12.mm], mats[:cam], "Hettich_Catch_RH")
+      create_box(drawer_unit.entities, [ox + inner_w - 32.mm, box_oy - 2.mm, oz + 2.mm], [20.mm, 35.mm, 12.mm], mats[:cam], "Hettich_Catch_RH")
 
       # 3. Fixed Carcase Slide Body (Stationary inside carcase behind Gola recess)
       runner_w = 11.0.mm
       runner_h = 24.0.mm
       fixed_slide_y = base_y + 40.mm
       create_box(drawer_unit.entities, [ox + 1.0.mm, fixed_slide_y, oz + 2.mm], [runner_w, box_d, runner_h], mats[:steel], "Hettich_Actro5D_Slide_LH")
-      create_box(drawer_unit.entities, [ox + width - runner_w - 1.0.mm, fixed_slide_y, oz + 2.mm], [runner_w, box_d, runner_h], mats[:steel], "Hettich_Actro5D_Slide_RH")
+      create_box(drawer_unit.entities, [ox + inner_w - runner_w - 1.0.mm, fixed_slide_y, oz + 2.mm], [runner_w, box_d, runner_h], mats[:steel], "Hettich_Actro5D_Slide_RH")
     else
       box_oy = oy - 60.0.mm - box_d
-      create_box(drawer_unit.entities, [box_ox, box_oy, box_oz], [DRAWER_BOX_THK, box_d, box_h], mats[:wood], "Drawer_Side_LH")
-      create_box(drawer_unit.entities, [box_ox + box_w - DRAWER_BOX_THK, box_oy, box_oz], [DRAWER_BOX_THK, box_d, box_h], mats[:wood], "Drawer_Side_RH")
-      inner_w = box_w - (2 * DRAWER_BOX_THK)
-      create_box(drawer_unit.entities, [box_ox + DRAWER_BOX_THK, oy - 60.mm - DRAWER_BOX_THK, box_oz], [inner_w, DRAWER_BOX_THK, box_h], mats[:wood], "Drawer_Sub_Front")
-      create_box(drawer_unit.entities, [box_ox + DRAWER_BOX_THK, box_oy, box_oz], [inner_w, DRAWER_BOX_THK, box_h], mats[:wood], "Drawer_Back_Panel")
-      create_box(drawer_unit.entities, [box_ox + DRAWER_BOX_THK, box_oy + DRAWER_BOX_THK, box_oz + 12.mm], [inner_w, box_d - 2*DRAWER_BOX_THK, 16.0.mm], mats[:wood], "Drawer_Bottom_Panel")
+      create_box(drawer_unit.entities, [box_ox, box_oy, box_oz], [box_thk, box_d, box_h], mats[:wood], "Drawer_Side_LH")
+      create_box(drawer_unit.entities, [box_ox + box_w - box_thk, box_oy, box_oz], [box_thk, box_d, box_h], mats[:wood], "Drawer_Side_RH")
+      sub_w = box_w - (2 * box_thk)
+      create_box(drawer_unit.entities, [box_ox + box_thk, oy - 60.mm - box_thk, box_oz], [sub_w, box_thk, box_h], mats[:wood], "Drawer_Sub_Front")
+      create_box(drawer_unit.entities, [box_ox + box_thk, box_oy, box_oz], [sub_w, box_thk, box_h], mats[:wood], "Drawer_Back_Panel")
+      create_box(drawer_unit.entities, [box_ox + box_thk, box_oy + box_thk, box_oz + 12.mm], [sub_w, box_d - 2*box_thk, 16.0.mm], mats[:wood], "Drawer_Bottom_Panel")
 
       create_box(drawer_unit.entities, [ox + 12.mm, oy - 60.mm - 33.mm, oz + 2.mm], [20.mm, 35.mm, 12.mm], mats[:cam], "Hettich_Catch_LH")
-      create_box(drawer_unit.entities, [ox + width - 32.mm, oy - 60.mm - 33.mm, oz + 2.mm], [20.mm, 35.mm, 12.mm], mats[:cam], "Hettich_Catch_RH")
+      create_box(drawer_unit.entities, [ox + inner_w - 32.mm, oy - 60.mm - 33.mm, oz + 2.mm], [20.mm, 35.mm, 12.mm], mats[:cam], "Hettich_Catch_RH")
 
       runner_w = 11.0.mm
       runner_h = 24.0.mm
       fixed_slide_y = base_y - 40.mm - box_d
       create_box(drawer_unit.entities, [ox + 1.0.mm, fixed_slide_y, oz + 2.mm], [runner_w, box_d, runner_h], mats[:steel], "Hettich_Actro5D_Slide_LH")
-      create_box(drawer_unit.entities, [ox + width - runner_w - 1.0.mm, fixed_slide_y, oz + 2.mm], [runner_w, box_d, runner_h], mats[:steel], "Hettich_Actro5D_Slide_RH")
+      create_box(drawer_unit.entities, [ox + inner_w - runner_w - 1.0.mm, fixed_slide_y, oz + 2.mm], [runner_w, box_d, runner_h], mats[:steel], "Hettich_Actro5D_Slide_RH")
     end
     drawer_unit
   end
@@ -533,8 +534,8 @@ module CabinetrixBoxEngine
 
       upper_door_h = height - (BASE_DATUM_Z + 885.mm + BOARD_THK) - 6.mm
       create_box(box_grp.entities, [bx + 1.5.mm, by - depth - FRONT_THK, BASE_DATUM_Z + 885.mm + BOARD_THK + 3.mm], [width - 3.mm, FRONT_THK, upper_door_h], front_mat, "Upper_Cupboard_Door")
-      build_hettich_undermount_drawer(box_grp.entities, Geom::Point3d.new(bx + BOARD_THK + 1.5.mm, by - depth, bz + 12.mm), inner_w - 3.mm, depth, 200.mm, 355.mm, 0.mm, mats, front_mat, dir_y: -1)
-      build_hettich_undermount_drawer(box_grp.entities, Geom::Point3d.new(bx + BOARD_THK + 1.5.mm, by - depth, bz + 380.mm), inner_w - 3.mm, depth, 200.mm, 335.mm, (mode == :hybrid ? 250.mm : 0.mm), mats, front_mat, dir_y: -1)
+      build_hettich_undermount_drawer(box_grp.entities, Geom::Point3d.new(bx + BOARD_THK, by - depth, bz + 12.mm), inner_w, depth, 200.mm, 355.mm, 0.mm, mats, front_mat, dir_y: -1)
+      build_hettich_undermount_drawer(box_grp.entities, Geom::Point3d.new(bx + BOARD_THK, by - depth, bz + 380.mm), inner_w, depth, 200.mm, 335.mm, (mode == :hybrid ? 250.mm : 0.mm), mats, front_mat, dir_y: -1)
 
     when :tall_pantry_larder, :tall_space_tower
       create_box(box_grp.entities, [bx, by - depth, 0], [BOARD_THK, depth, height], mats[:carcase], "Gable_LH")
@@ -547,7 +548,7 @@ module CabinetrixBoxEngine
       # Space Tower Rule: 5 internal drawers below 1200mm datum (each with zero-protrusion hinge clearances)
       [bz + 20.mm, bz + 230.mm, bz + 440.mm, bz + 650.mm, bz + 860.mm].each_with_index do |dz, i|
         pull_dist = (mode == :hybrid && i == 1) ? 300.mm : 0.mm
-        d_box = build_hettich_undermount_drawer(box_grp.entities, Geom::Point3d.new(bx + BOARD_THK + 1.5.mm, by - depth, dz), inner_w - 3.mm, depth, 140.mm, 160.mm, pull_dist, mats, mats[:carcase], dir_y: -1)
+        d_box = build_hettich_undermount_drawer(box_grp.entities, Geom::Point3d.new(bx + BOARD_THK, by - depth, dz), inner_w, depth, 140.mm, 160.mm, pull_dist, mats, mats[:carcase], dir_y: -1, front_w: (inner_w - 3.mm))
         create_box(d_box.entities, [bx + BOARD_THK + 35.mm, by - depth + 60.mm - (i==1 ? pull_dist : 0.mm) - 1.5.mm, dz + 20.mm], [inner_w - 70.mm, 4.mm, 100.mm], mats[:glass], "Glass_Insert")
       end
 
@@ -625,13 +626,13 @@ module CabinetrixBoxEngine
 
       case type
       when :base_gola_drawers, :island_gola_drawers
-        build_hettich_undermount_drawer(box_grp.entities, Geom::Point3d.new(bx + 1.5.mm, front_y, bz + LOWER_DRAWER_Z), front_w, depth, 200.mm, LOWER_FRONT_H, pull_offset_lower, mats, front_mat, dir_y: dir_sign)
-        build_hettich_undermount_drawer(box_grp.entities, Geom::Point3d.new(bx + 1.5.mm, front_y, bz + UPPER_DRAWER_Z), front_w, depth, 120.mm, UPPER_FRONT_H, pull_offset_upper, mats, front_mat, dir_y: dir_sign)
+        build_hettich_undermount_drawer(box_grp.entities, Geom::Point3d.new(bx + BOARD_THK, front_y, bz + LOWER_DRAWER_Z), inner_w, depth, 200.mm, LOWER_FRONT_H, pull_offset_lower, mats, front_mat, dir_y: dir_sign)
+        build_hettich_undermount_drawer(box_grp.entities, Geom::Point3d.new(bx + BOARD_THK, front_y, bz + UPPER_DRAWER_Z), inner_w, depth, 120.mm, UPPER_FRONT_H, pull_offset_upper, mats, front_mat, dir_y: dir_sign)
 
       when :base_gola_cooktop
-        build_hettich_undermount_drawer(box_grp.entities, Geom::Point3d.new(bx + 1.5.mm, front_y, bz + LOWER_DRAWER_Z), front_w, depth, 200.mm, LOWER_FRONT_H, (mode == :hybrid ? 320.mm : 0.mm), mats, front_mat, dir_y: -1)
+        build_hettich_undermount_drawer(box_grp.entities, Geom::Point3d.new(bx + BOARD_THK, front_y, bz + LOWER_DRAWER_Z), inner_w, depth, 200.mm, LOWER_FRONT_H, (mode == :hybrid ? 320.mm : 0.mm), mats, front_mat, dir_y: -1)
         # Induction / Cooktop heat shield clearance (120mm low profile box)
-        build_hettich_undermount_drawer(box_grp.entities, Geom::Point3d.new(bx + 1.5.mm, front_y, bz + UPPER_DRAWER_Z), front_w, depth, 120.mm, UPPER_FRONT_H, (mode == :hybrid ? 200.mm : 0.mm), mats, front_mat, dir_y: -1)
+        build_hettich_undermount_drawer(box_grp.entities, Geom::Point3d.new(bx + BOARD_THK, front_y, bz + UPPER_DRAWER_Z), inner_w, depth, 120.mm, UPPER_FRONT_H, (mode == :hybrid ? 200.mm : 0.mm), mats, front_mat, dir_y: -1)
 
       when :base_gola_sink, :island_gola_sink
         if is_front
@@ -640,7 +641,7 @@ module CabinetrixBoxEngine
           create_box(box_grp.entities, [bx + 1.5.mm, front_y, bz + UPPER_DRAWER_Z], [front_w, FRONT_THK, UPPER_FRONT_H], front_mat, "Sink_False_Front")
         end
         # Lower Cargo Pullout with dual waste sorting bins (Hailo / Blanco standard)
-        build_hettich_undermount_drawer(box_grp.entities, Geom::Point3d.new(bx + 1.5.mm, front_y, bz + LOWER_DRAWER_Z), front_w, depth, 200.mm, LOWER_FRONT_H, (mode == :hybrid ? 300.mm : 0.mm), mats, front_mat, dir_y: dir_sign)
+        build_hettich_undermount_drawer(box_grp.entities, Geom::Point3d.new(bx + BOARD_THK, front_y, bz + LOWER_DRAWER_Z), inner_w, depth, 200.mm, LOWER_FRONT_H, (mode == :hybrid ? 300.mm : 0.mm), mats, front_mat, dir_y: dir_sign)
         create_box(box_grp.entities, [bx + 30.mm, front_y + dir_sign * 250.mm, bz + 30.mm], [240.mm, 200.mm, 280.mm], mats[:cam], "Cargo_Waste_Bin_1")
         create_box(box_grp.entities, [bx + width - 270.mm, front_y + dir_sign * 250.mm, bz + 30.mm], [240.mm, 200.mm, 280.mm], mats[:gola], "Cargo_Waste_Bin_2")
 
