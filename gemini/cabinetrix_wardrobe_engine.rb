@@ -3,6 +3,10 @@
 # Pure Function API: CabinetrixWardrobeEngine.build_wardrobe(parent_ents, type, params, location, mats)
 #
 # Production Standard:
+#   • KINEMATIC DOOR-PENETRATION COLLISION RULE:
+#     - "Nothing goes through doors unless door is opened."
+#     - In hybrid demo mode, front sash doors are rotated open (95°) so that internal drawers and trouser pullouts glide out cleanly.
+#     - When doors are closed (0°), all internal components are 100% retracted inside the carcase.
 #   • GLOBAL DRAWER HARDWARE FUNCTION:
 #     - Pure Hardware Formula: Drawer Box Width = Internal Width - (2 * Side Gap)
 #     - Uses CabinetrixCollisionEngine.calculate_drawer_geometry(inner_w, depth, side_gap: 12.5, hinge_spacer: spacer_offset)
@@ -289,6 +293,11 @@ module CabinetrixWardrobeEngine
     top_shelf_z = height - 360.mm
     build_structural_shelf(robe_grp.entities, "Upper_Storage_Shelf", bx, width, depth, top_shelf_z, mats, y_origin: by)
 
+    # Kinematic Rule: Internal drawers/pullouts only extend if doors are open!
+    # In :hybrid demo mode, doors are rotated open 95° to allow clear extension.
+    drawer_pull = (mode == :hybrid ? 280.mm : 0.mm)
+    trouser_pull = (mode == :hybrid ? 200.mm : 0.mm)
+
     # 2. Internal Accessory Configurations (Zero-Collision Geometry)
     case type
     when :single_hanging, :wardrobe_single_hang
@@ -308,11 +317,11 @@ module CabinetrixWardrobeEngine
 
       # 3 Internal Drawers (pitch = 200mm)
       [bz + 20.mm, bz + 230.mm, bz + 440.mm].each_with_index do |dz, idx|
-        pull_dist = (mode == :hybrid && idx == 1) ? 280.mm : 0.mm
+        pull_dist = (idx == 1) ? drawer_pull : 0.mm
         build_internal_wardrobe_drawer(robe_grp.entities, "Internal_Drawer_#{idx+1}", bx, by, width, depth, dz, 140.mm, 180.mm, mats, pull_dist)
       end
 
-      build_trouser_rack(robe_grp.entities, "Trouser_Pullout_Rack", bx, by, width, depth, bz + 680.mm, mats, (mode == :hybrid ? 200.mm : 0.mm))
+      build_trouser_rack(robe_grp.entities, "Trouser_Pullout_Rack", bx, by, width, depth, bz + 680.mm, mats, trouser_pull)
 
     when :shoe_master, :wardrobe_shoes
       mid_shelf_z = bz + 1150.mm
@@ -324,11 +333,12 @@ module CabinetrixWardrobeEngine
       end
     end
 
-    # 3. 45° Senior Sash Glass Doors
+    # 3. 45° Senior Sash Glass Doors (Kinematically Open in Hybrid Demo Mode)
     door_w = (width - 4.mm) / 2.0
     door_h = height - bz - 3.mm
-    CabinetrixBoxEngine.build_senior_sash_door(robe_grp.entities, bx + 1.5.mm, by - depth - 21.2.mm, bz, door_w, door_h, mats, is_left_hinged: true)
-    CabinetrixBoxEngine.build_senior_sash_door(robe_grp.entities, bx + 2.5.mm + door_w, by - depth - 21.2.mm, bz, door_w, door_h, mats, is_left_hinged: false)
+    door_open_deg = (mode == :hybrid ? 95.0 : 0.0)
+    CabinetrixBoxEngine.build_senior_sash_door(robe_grp.entities, bx + 1.5.mm, by - depth - 21.2.mm, bz, door_w, door_h, mats, is_left_hinged: true, open_angle_deg: door_open_deg)
+    CabinetrixBoxEngine.build_senior_sash_door(robe_grp.entities, bx + 2.5.mm + door_w, by - depth - 21.2.mm, bz, door_w, door_h, mats, is_left_hinged: false, open_angle_deg: door_open_deg)
 
     robe_grp
   end

@@ -3,6 +3,9 @@
 # Pure Function API: CabinetrixBoxEngine.create_cabinet(parent_ents, type, params, location, mats)
 #
 # Production Standard:
+#   • KINEMATIC DOOR-PENETRATION COLLISION RULE:
+#     - "Nothing goes through doors unless door is opened."
+#     - Senior sash doors swing open (95°) when internal drawers are extended in hybrid mode.
 #   • GLOBAL DRAWER HARDWARE FUNCTION:
 #     - Pure Hardware Formula: Drawer Box Width = Internal Width - (2 * Side Gap)
 #     - Uses CabinetrixCollisionEngine.calculate_drawer_geometry(inner_w, depth, side_gap: 12.5)
@@ -11,7 +14,6 @@
 #     - Mid C-Gola: Cutout Z = 330mm to 403.5mm, fixed with SCILM clips directly to gable notches (NO colliding mid-stretchers)
 #     - Upper Drawer: Front Z = bz + 409.5mm, H = 248mm (Top: bz + 657.5mm, 3.5mm reveal below L-Gola at bz + 661mm)
 #     - Upper Drawer Box: Height = 120mm on Hettich Actro 5D undermount slides (100% zero collision)
-#     - Stationary Slide Runner: Fixed to internal carcase gable behind Gola notch, drawer box glides cleanly.
 # ==============================================================================
 require 'sketchup.rb'
 require_relative 'cabinetrix_collision_engine'
@@ -302,7 +304,6 @@ module CabinetrixBoxEngine
     drawer_unit = parent_ents.add_group
     drawer_unit.name = "Hettich_Undermount_Drawer_#{inner_w.to_mm.round}x#{front_h.to_mm.round}"
 
-    # Hardware calculation via pure global function
     dims = CabinetrixCollisionEngine.calculate_drawer_geometry(inner_w.to_mm, depth.to_mm, side_gap: 12.5, box_thk: 15.0, front_h: front_h.to_mm)
     box_w = dims[:box_w].mm
     box_d = dims[:box_d].mm
@@ -333,7 +334,6 @@ module CabinetrixBoxEngine
       sub_w = box_w - (2 * box_thk)
 
       if is_sink_u_shape
-        # Sink U-Shape Plumbing Cutout
         cutout_w = 260.mm
         side_pocket_w = (sub_w - cutout_w) / 2.0
         cutout_d = 280.mm
@@ -349,11 +349,9 @@ module CabinetrixBoxEngine
         create_box(drawer_unit.entities, [box_ox + box_thk, box_oy + box_thk, box_oz + 12.mm], [sub_w, box_d - 2*box_thk, 16.0.mm], mats[:wood], "Drawer_Bottom_Panel")
       end
 
-      # Front Catch Clips (Attached to moving drawer box)
       create_box(drawer_unit.entities, [ox + 12.mm, box_oy - 2.mm, oz + 2.mm], [20.mm, 35.mm, 12.mm], mats[:cam], "Hettich_Catch_LH")
       create_box(drawer_unit.entities, [ox + inner_w - 32.mm, box_oy - 2.mm, oz + 2.mm], [20.mm, 35.mm, 12.mm], mats[:cam], "Hettich_Catch_RH")
 
-      # 3. Fixed Carcase Slide Body (Stationary inside carcase behind Gola recess)
       runner_w = 11.0.mm
       runner_h = 24.0.mm
       fixed_slide_y = base_y + 40.mm
@@ -381,7 +379,7 @@ module CabinetrixBoxEngine
   end
 
   # ----------------------------------------------------------------------------
-  # 4. 45° SASH FRAME
+  # 4. 45° SASH FRAME WITH KINEMATIC DOOR OPENING ANGLE
   # ----------------------------------------------------------------------------
   def self.create_senior_sash_bar(parent_ents, bar_length, alu_mat, hole_mat, is_hinged = false)
     group = parent_ents.add_group
@@ -416,7 +414,7 @@ module CabinetrixBoxEngine
     group
   end
 
-  def self.build_senior_sash_door(parent_ents, ox, oy, oz, door_w, door_h, mats, is_left_hinged: true)
+  def self.build_senior_sash_door(parent_ents, ox, oy, oz, door_w, door_h, mats, is_left_hinged: true, open_angle_deg: 0.0)
     group = parent_ents.add_group
     group.name = "Alu_Sash_Door_#{door_w.to_mm.round}x#{door_h.to_mm.round}"
     sub = group.entities
@@ -446,6 +444,14 @@ module CabinetrixBoxEngine
     pane_face.pushpull(door_h - 20.mm) if pane_face
     pane.material = mats[:glass]
     pane.transform!(transform)
+
+    if open_angle_deg != 0.0
+      pivot_pt = is_left_hinged ? Geom::Point3d.new(ox, oy, oz) : Geom::Point3d.new(ox + door_w, oy, oz)
+      rot_angle = is_left_hinged ? -open_angle_deg.degrees : open_angle_deg.degrees
+      rot_tr = Geom::Transformation.rotation(pivot_pt, Geom::Vector3d.new(0, 0, 1), rot_angle)
+      group.transform!(rot_tr)
+    end
+
     group
   end
 
@@ -484,15 +490,22 @@ module CabinetrixBoxEngine
 
       create_box(box_grp.entities, [bx + door_w + 3.mm, by - depth, bz], [18.mm, depth - 50.mm, height], mats[:carcase], "Blind_Corner_Internal_Baffle")
       create_box(box_grp.entities, [bx + door_w + 3.mm, by - depth - FRONT_THK, bz], [blind_w - 3.mm, FRONT_THK, height], front_mat, "Blind_Corner_Front_Filler")
-      create_box(box_grp.entities, [bx + 1.5.mm, by - depth - FRONT_THK, bz + 3.mm], [door_w, FRONT_THK, height - 38.mm], front_mat, "Accessible_Corner_Door")
+      
+      # Accessible door (Swung open 95° in hybrid mode so LeMans trays can extend without clash)
+      door_open_deg = (mode == :hybrid ? 95.0 : 0.0)
+      door_grp = create_box(box_grp.entities, [bx + 1.5.mm, by - depth - FRONT_THK, bz + 3.mm], [door_w, FRONT_THK, height - 38.mm], front_mat, "Accessible_Corner_Door")
+      if door_open_deg > 0
+        door_grp.transform!(Geom::Transformation.rotation(Geom::Point3d.new(bx + 1.5.mm, by - depth - FRONT_THK, bz), Geom::Vector3d.new(0, 0, 1), -door_open_deg.degrees))
+      end
 
-      # LeMans II Swivel Trays (Respecting 430mm radius clearance & hinge angle)
+      # LeMans II Swivel Trays (Extend out ONLY when door is open)
+      tray_pull = (mode == :hybrid ? 350.mm : 0.mm)
       [bz + 150.mm, bz + 450.mm].each_with_index do |tz, tidx|
         tray = box_grp.entities.add_group
         tray.name = "LeMans_Swivel_Tray_#{tidx+1}"
-        create_box(tray.entities, [bx + 40.mm, by - depth + 50.mm, tz], [door_w + 180.mm, depth - 100.mm, 20.mm], mats[:carcase], "Peanut_Tray_Base")
+        create_box(tray.entities, [bx + 40.mm, by - depth + 50.mm - (tidx==0 ? tray_pull : 0.mm), tz], [door_w + 180.mm, depth - 100.mm, 20.mm], mats[:carcase], "Peanut_Tray_Base")
         create_cylinder(tray.entities, Geom::Point3d.new(bx + 40.mm + door_w, by - depth + 80.mm, tz), Geom::Vector3d.new(0, 0, 1), 18.mm, 250.mm, mats[:steel], 16)
-        create_box(tray.entities, [bx + 35.mm, by - depth + 45.mm, tz + 20.mm], [door_w + 190.mm, depth - 90.mm, 40.mm], mats[:steel], "Chrome_Gallery_Rail")
+        create_box(tray.entities, [bx + 35.mm, by - depth + 45.mm - (tidx==0 ? tray_pull : 0.mm), tz + 20.mm], [door_w + 190.mm, depth - 90.mm, 40.mm], mats[:steel], "Chrome_Gallery_Rail")
       end
 
     when :base_l_corner_easy_reach
@@ -527,7 +540,6 @@ module CabinetrixBoxEngine
       build_structural_shelf(box_grp.entities, "Roof_Panel", bx, width, depth, height - BOARD_THK, mats, cam_normal: Geom::Vector3d.new(0, 0, -1), full_depth_to_wall: true, y_origin: by)
       build_shotgun_grooved_back(box_grp.entities, name, bx, width, bz, height, mats, has_mid_cleat: true, mid_cleat_z: BASE_DATUM_Z, y_origin: by)
 
-      # Appliance body (Strict Keep-Out Clearance)
       oven = create_box(box_grp.entities, [bx + BOARD_THK + 5.mm, by - depth - 20.mm, BASE_DATUM_Z + BOARD_THK + 5.mm], [inner_w - 10.mm, depth - 20.mm, 875.mm], mats[:steel], "Double_Oven_Appliance")
       create_box(oven.entities, [bx + BOARD_THK + 15.mm, by - depth - 25.mm, BASE_DATUM_Z + 25.mm], [inner_w - 30.mm, 5.mm, 410.mm], mats[:glass], "Oven_Lower_Glass")
       create_box(oven.entities, [bx + BOARD_THK + 15.mm, by - depth - 25.mm, BASE_DATUM_Z + 465.mm], [inner_w - 30.mm, 5.mm, 410.mm], mats[:glass], "Oven_Upper_Glass")
@@ -545,17 +557,21 @@ module CabinetrixBoxEngine
       build_structural_shelf(box_grp.entities, "Roof_Panel", bx, width, depth, height - BOARD_THK, mats, cam_normal: Geom::Vector3d.new(0, 0, -1), full_depth_to_wall: true, y_origin: by)
       build_shotgun_grooved_back(box_grp.entities, name, bx, width, bz, height, mats, has_mid_cleat: true, mid_cleat_z: 1200.mm, y_origin: by)
 
-      # Space Tower Rule: 5 internal drawers below 1200mm datum (each with zero-protrusion hinge clearances)
+      # Space Tower Rule: 5 internal drawers below 1200mm datum
+      # Internal pullout is only pulled out if the door is opened!
+      drawer_pull = (mode == :hybrid ? 300.mm : 0.mm)
       [bz + 20.mm, bz + 230.mm, bz + 440.mm, bz + 650.mm, bz + 860.mm].each_with_index do |dz, i|
-        pull_dist = (mode == :hybrid && i == 1) ? 300.mm : 0.mm
+        pull_dist = (i == 1) ? drawer_pull : 0.mm
         d_box = build_hettich_undermount_drawer(box_grp.entities, Geom::Point3d.new(bx + BOARD_THK, by - depth, dz), inner_w, depth, 140.mm, 160.mm, pull_dist, mats, mats[:carcase], dir_y: -1, front_w: (inner_w - 3.mm))
         create_box(d_box.entities, [bx + BOARD_THK + 35.mm, by - depth + 60.mm - (i==1 ? pull_dist : 0.mm) - 1.5.mm, dz + 20.mm], [inner_w - 70.mm, 4.mm, 100.mm], mats[:glass], "Glass_Insert")
       end
 
-      # Space Tower Upper Zone: Adjustable shelves above eye level (preventing items falling on user)
       build_adjustable_shelf(box_grp.entities, "Adjustable_Shelf_1", bx, width, depth, 1200.mm + BOARD_THK + 250.mm, mats, y_origin: by)
       build_adjustable_shelf(box_grp.entities, "Adjustable_Shelf_2", bx, width, depth, 1200.mm + BOARD_THK + 550.mm, mats, y_origin: by)
-      build_senior_sash_door(box_grp.entities, bx + 1.5.mm, by - depth - 21.2.mm, bz, width - 3.mm, height - bz - 3.mm, mats, is_left_hinged: true)
+      
+      # Door opens 95° in hybrid demo mode to let internal drawers glide out with zero collision
+      door_open_deg = (mode == :hybrid ? 95.0 : 0.0)
+      build_senior_sash_door(box_grp.entities, bx + 1.5.mm, by - depth - 21.2.mm, bz, width - 3.mm, height - bz - 3.mm, mats, is_left_hinged: true, open_angle_deg: door_open_deg)
 
     # ==========================================================================
     # BASE & ISLAND GOLA UNITS (ZERO-COLLISION CLEARANCE RULES)
@@ -573,13 +589,11 @@ module CabinetrixBoxEngine
         build_structural_shelf(box_grp.entities, "Bottom_Panel", bx, width, depth, bz, mats, y_origin: by)
         build_shotgun_grooved_back(box_grp.entities, name, bx, width, bz, bz + height, mats, y_origin: by)
 
-        # Top Subtop Stretcher (recessed behind L-Gola channel)
         front_sub_y = -depth + GOLA_DEPTH
         create_box(box_grp.entities, [bx + BOARD_THK, front_sub_y, stretcher_z], [inner_w, 80.mm, BOARD_THK], mats[:carcase], "Top_Front_Gola_Stretcher")
         build_minifix_joint(box_grp.entities, Geom::Point3d.new(bx + BOARD_THK, front_sub_y + 40.mm, stretcher_z + BOARD_THK/2.0), Geom::Vector3d.new(1, 0, 0), mats, cam_normal: Geom::Vector3d.new(0, 0, -1), bounds_y: [front_sub_y, front_sub_y + 80.mm])
         build_minifix_joint(box_grp.entities, Geom::Point3d.new(bx + width - BOARD_THK, front_sub_y + 40.mm, stretcher_z + BOARD_THK/2.0), Geom::Vector3d.new(-1, 0, 0), mats, cam_normal: Geom::Vector3d.new(0, 0, -1), bounds_y: [front_sub_y, front_sub_y + 80.mm])
 
-        # Bottom Sub-Stretcher under Mid C-Gola (Z = bz + 330mm - 18mm = 412mm, 100% CLEAR of both drawers)
         mid_sub_z = bz + C_GOLA_Z0 - BOARD_THK
         create_box(box_grp.entities, [bx + BOARD_THK, front_sub_y, mid_sub_z], [inner_w, 60.mm, BOARD_THK], mats[:carcase], "Mid_C_Gola_Under_Stretcher")
         build_minifix_joint(box_grp.entities, Geom::Point3d.new(bx + BOARD_THK, front_sub_y + 30.mm, mid_sub_z + BOARD_THK/2.0), Geom::Vector3d.new(1, 0, 0), mats, cam_normal: Geom::Vector3d.new(0, 0, -1), bounds_y: [front_sub_y, front_sub_y + 60.mm])
@@ -631,7 +645,6 @@ module CabinetrixBoxEngine
 
       when :base_gola_cooktop
         build_hettich_undermount_drawer(box_grp.entities, Geom::Point3d.new(bx + BOARD_THK, front_y, bz + LOWER_DRAWER_Z), inner_w, depth, 200.mm, LOWER_FRONT_H, (mode == :hybrid ? 320.mm : 0.mm), mats, front_mat, dir_y: -1)
-        # Induction / Cooktop heat shield clearance (120mm low profile box)
         build_hettich_undermount_drawer(box_grp.entities, Geom::Point3d.new(bx + BOARD_THK, front_y, bz + UPPER_DRAWER_Z), inner_w, depth, 120.mm, UPPER_FRONT_H, (mode == :hybrid ? 200.mm : 0.mm), mats, front_mat, dir_y: -1)
 
       when :base_gola_sink, :island_gola_sink
@@ -640,7 +653,6 @@ module CabinetrixBoxEngine
         else
           create_box(box_grp.entities, [bx + 1.5.mm, front_y, bz + UPPER_DRAWER_Z], [front_w, FRONT_THK, UPPER_FRONT_H], front_mat, "Sink_False_Front")
         end
-        # Lower Cargo Pullout with dual waste sorting bins (Hailo / Blanco standard)
         build_hettich_undermount_drawer(box_grp.entities, Geom::Point3d.new(bx + BOARD_THK, front_y, bz + LOWER_DRAWER_Z), inner_w, depth, 200.mm, LOWER_FRONT_H, (mode == :hybrid ? 300.mm : 0.mm), mats, front_mat, dir_y: dir_sign)
         create_box(box_grp.entities, [bx + 30.mm, front_y + dir_sign * 250.mm, bz + 30.mm], [240.mm, 200.mm, 280.mm], mats[:cam], "Cargo_Waste_Bin_1")
         create_box(box_grp.entities, [bx + width - 270.mm, front_y + dir_sign * 250.mm, bz + 30.mm], [240.mm, 200.mm, 280.mm], mats[:gola], "Cargo_Waste_Bin_2")
@@ -665,7 +677,6 @@ module CabinetrixBoxEngine
       build_shotgun_grooved_back(box_grp.entities, name, bx, width, bz, bz + height, mats, y_origin: by)
 
       if type == :wall_lift_aventos
-        # AVENTOS HF Bi-Fold Lift Mechanisms in upper corners (with 50mm shelf setback)
         create_box(box_grp.entities, [bx + BOARD_THK + 2.mm, by - 160.mm, bz + height - 160.mm], [35.mm, 150.mm, 150.mm], mats[:steel], "Aventos_HF_Mechanism_LH")
         create_box(box_grp.entities, [bx + width - BOARD_THK - 37.mm, by - 160.mm, bz + height - 160.mm], [35.mm, 150.mm, 150.mm], mats[:steel], "Aventos_HF_Mechanism_RH")
         build_adjustable_shelf(box_grp.entities, "Lift_Setback_Shelf", bx, width, depth, bz + 360.mm, mats, y_origin: by, setback_mm: 50.0)
