@@ -3,11 +3,12 @@
 # Pure Function API: CabinetrixBoxEngine.create_cabinet(parent_ents, type, params, location, mats)
 #
 # Production Standard:
-#   • INTEGRATED WITH CABINETRIX COLLISION & ACCESSORY ENGINE
-#   • ZERO-COLLISION GOLA DRAWER GEOMETRY (Authentic SCILM / Blum / Hettich rules):
+#   • ZERO-COLLISION GOLA DRAWER GEOMETRY (SCILM / Hettich / Blum Standards):
 #     - Lower Drawer: Front Z = bz + 12mm, H = 315mm (Top: bz + 327mm, 3mm reveal below C-Gola at bz + 330mm)
+#     - Mid C-Gola: Cutout Z = 330mm to 403.5mm, fixed with SCILM clips directly to gable notches (NO colliding mid-stretchers)
 #     - Upper Drawer: Front Z = bz + 409.5mm, H = 248mm (Top: bz + 657.5mm, 3.5mm reveal below L-Gola at bz + 661mm)
 #     - Upper Drawer Box: Height = 120mm on Hettich Actro 5D undermount slides (100% zero collision)
+#     - Stationary Slide Runner: Fixed to internal carcase gable behind Gola notch, drawer box glides cleanly.
 #   • AUTHENTIC SCILM GOLA PROFILES:
 #     - Exact faceted curves, radii, internal fillets, and mounting webs from SCILM catalog.
 #     - 100% forward-opening finger pockets with continuous run merging.
@@ -306,9 +307,11 @@ module CabinetrixBoxEngine
     drawer_unit.name = "Hettich_Undermount_Drawer_#{width.to_mm.round}x#{front_h.to_mm.round}"
 
     ox = box_origin.x
-    oy = box_origin.y + (dir_y * pull_offset)
+    base_y = box_origin.y
+    oy = base_y + (dir_y * pull_offset)
     oz = box_origin.z
 
+    # 1. Decorative Drawer Front
     if dir_y == -1
       create_box(drawer_unit.entities, [ox, oy - FRONT_THK, oz], [width, FRONT_THK, front_h], front_mat, "Drawer_Front_Face")
     else
@@ -321,6 +324,7 @@ module CabinetrixBoxEngine
     box_oz = oz + 15.0.mm
     box_h = [box_height, front_h - 40.mm].min
 
+    # 2. Moving Drawer Box Structure (Glides forward with pull_offset)
     if dir_y == -1
       box_oy = oy + 60.0.mm
       create_box(drawer_unit.entities, [box_ox, box_oy, box_oz], [DRAWER_BOX_THK, box_d, box_h], mats[:wood], "Drawer_Side_LH")
@@ -344,12 +348,16 @@ module CabinetrixBoxEngine
         create_box(drawer_unit.entities, [box_ox + DRAWER_BOX_THK, box_oy + DRAWER_BOX_THK, box_oz + 12.mm], [inner_w, box_d - 2*DRAWER_BOX_THK, 16.0.mm], mats[:wood], "Drawer_Bottom_Panel")
       end
 
-      runner_w = 11.0.mm
-      runner_h = 24.0.mm
-      create_box(drawer_unit.entities, [ox + 1.0.mm, box_oy, oz + 2.mm], [runner_w, box_d, runner_h], mats[:steel], "Hettich_Actro5D_Slide_LH")
-      create_box(drawer_unit.entities, [ox + width - runner_w - 1.0.mm, box_oy, oz + 2.mm], [runner_w, box_d, runner_h], mats[:steel], "Hettich_Actro5D_Slide_RH")
+      # Front Catch Clips (Attached to moving drawer box)
       create_box(drawer_unit.entities, [ox + 12.mm, box_oy - 2.mm, oz + 2.mm], [20.mm, 35.mm, 12.mm], mats[:cam], "Hettich_Catch_LH")
       create_box(drawer_unit.entities, [ox + width - 32.mm, box_oy - 2.mm, oz + 2.mm], [20.mm, 35.mm, 12.mm], mats[:cam], "Hettich_Catch_RH")
+
+      # 3. Fixed Carcase Slide Body (Stationary inside carcase behind Gola recess)
+      runner_w = 11.0.mm
+      runner_h = 24.0.mm
+      fixed_slide_y = base_y + 40.mm
+      create_box(drawer_unit.entities, [ox + 1.0.mm, fixed_slide_y, oz + 2.mm], [runner_w, box_d, runner_h], mats[:steel], "Hettich_Actro5D_Slide_LH")
+      create_box(drawer_unit.entities, [ox + width - runner_w - 1.0.mm, fixed_slide_y, oz + 2.mm], [runner_w, box_d, runner_h], mats[:steel], "Hettich_Actro5D_Slide_RH")
     else
       box_oy = oy - 60.0.mm - box_d
       create_box(drawer_unit.entities, [box_ox, box_oy, box_oz], [DRAWER_BOX_THK, box_d, box_h], mats[:wood], "Drawer_Side_LH")
@@ -359,12 +367,14 @@ module CabinetrixBoxEngine
       create_box(drawer_unit.entities, [box_ox + DRAWER_BOX_THK, box_oy, box_oz], [inner_w, DRAWER_BOX_THK, box_h], mats[:wood], "Drawer_Back_Panel")
       create_box(drawer_unit.entities, [box_ox + DRAWER_BOX_THK, box_oy + DRAWER_BOX_THK, box_oz + 12.mm], [inner_w, box_d - 2*DRAWER_BOX_THK, 16.0.mm], mats[:wood], "Drawer_Bottom_Panel")
 
-      runner_w = 11.0.mm
-      runner_h = 24.0.mm
-      create_box(drawer_unit.entities, [ox + 1.0.mm, box_oy, oz + 2.mm], [runner_w, box_d, runner_h], mats[:steel], "Hettich_Actro5D_Slide_LH")
-      create_box(drawer_unit.entities, [ox + width - runner_w - 1.0.mm, box_oy, oz + 2.mm], [runner_w, box_d, runner_h], mats[:steel], "Hettich_Actro5D_Slide_RH")
       create_box(drawer_unit.entities, [ox + 12.mm, oy - 60.mm - 33.mm, oz + 2.mm], [20.mm, 35.mm, 12.mm], mats[:cam], "Hettich_Catch_LH")
       create_box(drawer_unit.entities, [ox + width - 32.mm, oy - 60.mm - 33.mm, oz + 2.mm], [20.mm, 35.mm, 12.mm], mats[:cam], "Hettich_Catch_RH")
+
+      runner_w = 11.0.mm
+      runner_h = 24.0.mm
+      fixed_slide_y = base_y - 40.mm - box_d
+      create_box(drawer_unit.entities, [ox + 1.0.mm, fixed_slide_y, oz + 2.mm], [runner_w, box_d, runner_h], mats[:steel], "Hettich_Actro5D_Slide_LH")
+      create_box(drawer_unit.entities, [ox + width - runner_w - 1.0.mm, fixed_slide_y, oz + 2.mm], [runner_w, box_d, runner_h], mats[:steel], "Hettich_Actro5D_Slide_RH")
     end
     drawer_unit
   end
@@ -439,7 +449,7 @@ module CabinetrixBoxEngine
   end
 
   # ----------------------------------------------------------------------------
-  # 5. UNIVERSAL BOX CREATION API (WITH ACCESSORY ENVELOPES)
+  # 5. UNIVERSAL BOX CREATION API (WITH ZERO-COLLISION ENVELOPES)
   # ----------------------------------------------------------------------------
   def self.create_cabinet(parent_ents, type, params, location, mats)
     name = params[:name] || "Cabinet_#{type.to_s.upcase}"
@@ -551,7 +561,6 @@ module CabinetrixBoxEngine
     # ==========================================================================
     when :base_gola_drawers, :base_gola_cooktop, :base_gola_sink, :base_gola_spice, :base_gola_wine, :island_gola_drawers, :island_gola_sink
       stretcher_z = bz + height - BOARD_THK
-      mid_stretcher_z = bz + C_GOLA_Z0 + C_GOLA_H - BOARD_THK # 485.5mm
       front_w = width - 3.mm
       is_front = (facing_dir == :front)
       front_y = is_front ? (by - depth) : by
@@ -563,14 +572,17 @@ module CabinetrixBoxEngine
         build_structural_shelf(box_grp.entities, "Bottom_Panel", bx, width, depth, bz, mats, y_origin: by)
         build_shotgun_grooved_back(box_grp.entities, name, bx, width, bz, bz + height, mats, y_origin: by)
 
+        # Top Subtop Stretcher (recessed behind L-Gola channel)
         front_sub_y = -depth + GOLA_DEPTH
         create_box(box_grp.entities, [bx + BOARD_THK, front_sub_y, stretcher_z], [inner_w, 80.mm, BOARD_THK], mats[:carcase], "Top_Front_Gola_Stretcher")
         build_minifix_joint(box_grp.entities, Geom::Point3d.new(bx + BOARD_THK, front_sub_y + 40.mm, stretcher_z + BOARD_THK/2.0), Geom::Vector3d.new(1, 0, 0), mats, cam_normal: Geom::Vector3d.new(0, 0, -1), bounds_y: [front_sub_y, front_sub_y + 80.mm])
         build_minifix_joint(box_grp.entities, Geom::Point3d.new(bx + width - BOARD_THK, front_sub_y + 40.mm, stretcher_z + BOARD_THK/2.0), Geom::Vector3d.new(-1, 0, 0), mats, cam_normal: Geom::Vector3d.new(0, 0, -1), bounds_y: [front_sub_y, front_sub_y + 80.mm])
 
-        create_box(box_grp.entities, [bx + BOARD_THK, front_sub_y, mid_stretcher_z], [inner_w, 60.mm, BOARD_THK], mats[:carcase], "Mid_C_Gola_Stretcher")
-        build_minifix_joint(box_grp.entities, Geom::Point3d.new(bx + BOARD_THK, front_sub_y + 30.mm, mid_stretcher_z + BOARD_THK/2.0), Geom::Vector3d.new(1, 0, 0), mats, cam_normal: Geom::Vector3d.new(0, 0, -1), bounds_y: [front_sub_y, front_sub_y + 60.mm])
-        build_minifix_joint(box_grp.entities, Geom::Point3d.new(bx + width - BOARD_THK, front_sub_y + 30.mm, mid_stretcher_z + BOARD_THK/2.0), Geom::Vector3d.new(-1, 0, 0), mats, cam_normal: Geom::Vector3d.new(0, 0, -1), bounds_y: [front_sub_y, front_sub_y + 60.mm])
+        # Bottom Sub-Stretcher under Mid C-Gola (Z = bz + 330mm - 18mm = 412mm, 100% CLEAR of both drawers)
+        mid_sub_z = bz + C_GOLA_Z0 - BOARD_THK
+        create_box(box_grp.entities, [bx + BOARD_THK, front_sub_y, mid_sub_z], [inner_w, 60.mm, BOARD_THK], mats[:carcase], "Mid_C_Gola_Under_Stretcher")
+        build_minifix_joint(box_grp.entities, Geom::Point3d.new(bx + BOARD_THK, front_sub_y + 30.mm, mid_sub_z + BOARD_THK/2.0), Geom::Vector3d.new(1, 0, 0), mats, cam_normal: Geom::Vector3d.new(0, 0, -1), bounds_y: [front_sub_y, front_sub_y + 60.mm])
+        build_minifix_joint(box_grp.entities, Geom::Point3d.new(bx + width - BOARD_THK, front_sub_y + 30.mm, mid_sub_z + BOARD_THK/2.0), Geom::Vector3d.new(-1, 0, 0), mats, cam_normal: Geom::Vector3d.new(0, 0, -1), bounds_y: [front_sub_y, front_sub_y + 60.mm])
 
         if include_gola
           build_gola_profile(box_grp.entities, :l, width, Geom::Point3d.new(bx, -depth + GOLA_DEPTH, bz + height - L_GOLA_H), mats, facing_dir: :front)
@@ -596,9 +608,10 @@ module CabinetrixBoxEngine
         build_minifix_joint(box_grp.entities, Geom::Point3d.new(bx + width - BOARD_THK, front_sub_y + 40.mm, stretcher_z + BOARD_THK/2.0), Geom::Vector3d.new(-1, 0, 0), mats, cam_normal: Geom::Vector3d.new(0, 0, -1), bounds_y: [front_sub_y, front_sub_y + 80.mm])
 
         mid_sub_y = front_y - GOLA_DEPTH - 60.mm
-        create_box(box_grp.entities, [bx + BOARD_THK, mid_sub_y, mid_stretcher_z], [inner_w, 60.mm, BOARD_THK], mats[:carcase], "Mid_C_Gola_Stretcher")
-        build_minifix_joint(box_grp.entities, Geom::Point3d.new(bx + BOARD_THK, mid_sub_y + 30.mm, mid_stretcher_z + BOARD_THK/2.0), Geom::Vector3d.new(1, 0, 0), mats, cam_normal: Geom::Vector3d.new(0, 0, -1), bounds_y: [mid_sub_y, mid_sub_y + 60.mm])
-        build_minifix_joint(box_grp.entities, Geom::Point3d.new(bx + width - BOARD_THK, mid_sub_y + 30.mm, mid_stretcher_z + BOARD_THK/2.0), Geom::Vector3d.new(-1, 0, 0), mats, cam_normal: Geom::Vector3d.new(0, 0, -1), bounds_y: [mid_sub_y, mid_sub_y + 60.mm])
+        mid_sub_z = bz + C_GOLA_Z0 - BOARD_THK
+        create_box(box_grp.entities, [bx + BOARD_THK, mid_sub_y, mid_sub_z], [inner_w, 60.mm, BOARD_THK], mats[:carcase], "Mid_C_Gola_Under_Stretcher")
+        build_minifix_joint(box_grp.entities, Geom::Point3d.new(bx + BOARD_THK, mid_sub_y + 30.mm, mid_sub_z + BOARD_THK/2.0), Geom::Vector3d.new(1, 0, 0), mats, cam_normal: Geom::Vector3d.new(0, 0, -1), bounds_y: [mid_sub_y, mid_sub_y + 60.mm])
+        build_minifix_joint(box_grp.entities, Geom::Point3d.new(bx + width - BOARD_THK, mid_sub_y + 30.mm, mid_sub_z + BOARD_THK/2.0), Geom::Vector3d.new(-1, 0, 0), mats, cam_normal: Geom::Vector3d.new(0, 0, -1), bounds_y: [mid_sub_y, mid_sub_y + 60.mm])
 
         if include_gola
           build_gola_profile(box_grp.entities, :l, width, Geom::Point3d.new(bx, front_y - GOLA_DEPTH, bz + height - L_GOLA_H), mats, facing_dir: :aisle)
@@ -613,7 +626,7 @@ module CabinetrixBoxEngine
       case type
       when :base_gola_drawers, :island_gola_drawers
         build_hettich_undermount_drawer(box_grp.entities, Geom::Point3d.new(bx + 1.5.mm, front_y, bz + LOWER_DRAWER_Z), front_w, depth, 200.mm, LOWER_FRONT_H, pull_offset_lower, mats, front_mat, dir_y: dir_sign)
-        build_hettich_undermount_drawer(box_grp.entities, Geom::Point3d.new(bx + 1.5.mm, front_y, bz + UPPER_DRAWER_Z), front_w, depth, 140.mm, UPPER_FRONT_H, pull_offset_upper, mats, front_mat, dir_y: dir_sign)
+        build_hettich_undermount_drawer(box_grp.entities, Geom::Point3d.new(bx + 1.5.mm, front_y, bz + UPPER_DRAWER_Z), front_w, depth, 120.mm, UPPER_FRONT_H, pull_offset_upper, mats, front_mat, dir_y: dir_sign)
 
       when :base_gola_cooktop
         build_hettich_undermount_drawer(box_grp.entities, Geom::Point3d.new(bx + 1.5.mm, front_y, bz + LOWER_DRAWER_Z), front_w, depth, 200.mm, LOWER_FRONT_H, (mode == :hybrid ? 320.mm : 0.mm), mats, front_mat, dir_y: -1)
