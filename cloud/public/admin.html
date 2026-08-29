@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cabinex AI — Admin Control Console & Token Monetization Manager</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0b1120;
+      --card-bg: #1e293b;
+      --card-border: #334155;
+      --primary: #38bdf8;
+      --accent: #2563eb;
+      --emerald: #10b981;
+      --amber: #f59e0b;
+      --rose: #f43f5e;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+      font-size: 13px;
+      padding: 24px 32px;
+    }
+    .header-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--card-border);
+      margin-bottom: 24px;
+    }
+    .brand-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .brand-logo { font-size: 28px; }
+    .brand-title {
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--primary);
+      letter-spacing: -0.5px;
+    }
+    .badge-live {
+      background: rgba(16, 185, 129, 0.15);
+      color: var(--emerald);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .badge-live::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      background: var(--emerald);
+      border-radius: 50%;
+      box-shadow: 0 0 8px var(--emerald);
+    }
+    
+    /* Metric Cards */
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+    .metric-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 10px;
+      padding: 18px 20px;
+      position: relative;
+      overflow: hidden;
+    }
+    .metric-card::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: var(--accent);
+    }
+    .metric-title {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+    .metric-val {
+      font-size: 24px;
+      font-weight: 800;
+      color: var(--text);
+    }
+    .metric-sub {
+      font-size: 11px;
+      color: var(--emerald);
+      margin-top: 4px;
+      font-weight: 600;
+    }
+
+    /* Tabs */
+    .nav-tabs {
+      display: flex;
+      gap: 10px;
+      border-bottom: 1px solid var(--card-border);
+      margin-bottom: 20px;
+    }
+    .tab-btn {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-size: 13px;
+      font-weight: 700;
+      padding: 10px 18px;
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      transition: all 0.2s;
+    }
+    .tab-btn:hover { color: var(--text); }
+    .tab-btn.active {
+      color: var(--primary);
+      border-bottom-color: var(--primary);
+    }
+
+    .btn-create {
+      background: linear-gradient(135deg, #0284c7, #2563eb);
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 6px;
+      font-weight: 700;
+      font-size: 12px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 4px 12px rgba(37,99,235,0.3);
+    }
+    .btn-create:hover { background: #1d4ed8; }
+
+    /* Tables */
+    .table-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+    }
+    th {
+      background: #0f172a;
+      color: var(--text-muted);
+      text-align: left;
+      padding: 12px 16px;
+      font-weight: 700;
+      border-bottom: 1px solid var(--card-border);
+    }
+    td {
+      padding: 12px 16px;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      color: var(--text);
+      vertical-align: middle;
+    }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: rgba(255,255,255,0.02); }
+
+    .token-pill {
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 700;
+      background: #0f172a;
+      border: 1px solid #38bdf8;
+      color: #38bdf8;
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-size: 11px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .copy-btn {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 10px;
+    }
+    .copy-btn:hover { color: white; }
+
+    .token-badge {
+      background: rgba(245, 158, 11, 0.15);
+      border: 1px solid rgba(245, 158, 11, 0.3);
+      color: var(--amber);
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-size: 11px;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .btn-topup {
+      background: rgba(16, 185, 129, 0.2);
+      border: 1px solid var(--emerald);
+      color: var(--emerald);
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 10px;
+      font-weight: 700;
+      cursor: pointer;
+      margin-left: 6px;
+    }
+    .btn-topup:hover { background: var(--emerald); color: black; }
+
+    .status-badge {
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 10px;
+      font-weight: 700;
+      display: inline-block;
+    }
+    .badge-active { background: rgba(16, 185, 129, 0.15); color: var(--emerald); border: 1px solid rgba(16, 185, 129, 0.3); }
+    .badge-expired { background: rgba(244, 63, 94, 0.15); color: var(--rose); border: 1px solid rgba(244, 63, 94, 0.3); }
+
+    /* Modal Form */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.7);
+      backdrop-filter: blur(4px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+    .modal-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      width: 480px;
+      padding: 24px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+    .modal-title {
+      font-size: 16px;
+      font-weight: 800;
+      color: var(--primary);
+      margin-bottom: 16px;
+    }
+    .form-group { margin-bottom: 14px; }
+    .form-group label {
+      display: block;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+    .form-group input, .form-group select {
+      width: 100%;
+      padding: 10px 12px;
+      background: #0f172a;
+      border: 1px solid var(--card-border);
+      border-radius: 6px;
+      color: white;
+      font-size: 12px;
+      outline: none;
+    }
+    .modal-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      margin-top: 20px;
+    }
+    .btn-secondary {
+      background: #334155;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    /* ── Download Panel ── */
+    .download-hero {
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f2840 100%);
+      border: 1px solid #334155;
+      border-radius: 16px;
+      padding: 36px 40px;
+      display: flex;
+      align-items: center;
+      gap: 36px;
+      margin-bottom: 24px;
+      position: relative;
+      overflow: hidden;
+    }
+    .download-hero::before {
+      content: '';
+      position: absolute;
+      top: -60px; right: -60px;
+      width: 220px; height: 220px;
+      background: radial-gradient(circle, rgba(56,189,248,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .dl-icon { font-size: 72px; flex-shrink: 0; }
+    .dl-info { flex: 1; }
+    .dl-title {
+      font-size: 22px;
+      font-weight: 800;
+      color: #f8fafc;
+      margin-bottom: 6px;
+      letter-spacing: -0.4px;
+    }
+    .dl-subtitle {
+      font-size: 13px;
+      color: #94a3b8;
+      margin-bottom: 18px;
+      line-height: 1.6;
+    }
+    .dl-meta {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+    .dl-badge {
+      background: rgba(56,189,248,0.12);
+      color: #38bdf8;
+      border: 1px solid rgba(56,189,248,0.25);
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 700;
+    }
+    .dl-badge.green  { background: rgba(16,185,129,0.12); color: #10b981; border-color: rgba(16,185,129,0.25); }
+    .dl-badge.amber  { background: rgba(245,158,11,0.12);  color: #f59e0b; border-color: rgba(245,158,11,0.25); }
+    .btn-download {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: linear-gradient(135deg, #0284c7, #2563eb);
+      color: white;
+      text-decoration: none;
+      padding: 14px 28px;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 800;
+      box-shadow: 0 8px 24px rgba(37,99,235,0.4);
+      transition: transform 0.15s, box-shadow 0.15s;
+      border: none;
+      cursor: pointer;
+    }
+    .btn-download:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 32px rgba(37,99,235,0.5);
+    }
+    .install-steps {
+      background: #1e293b;
+      border: 1px solid #334155;
+      border-radius: 12px;
+      padding: 24px 28px;
+      margin-bottom: 20px;
+    }
+    .install-steps h3 {
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: #94a3b8;
+      letter-spacing: 0.06em;
+      margin-bottom: 16px;
+    }
+    .step-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      list-style: none;
+    }
+    .step-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      font-size: 13px;
+      color: #cbd5e1;
+      line-height: 1.5;
+    }
+    .step-num {
+      flex-shrink: 0;
+      width: 26px; height: 26px;
+      background: linear-gradient(135deg, #0284c7, #2563eb);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 800;
+      color: white;
+    }
+    .step-note {
+      background: rgba(245,158,11,0.08);
+      border: 1px solid rgba(245,158,11,0.2);
+      border-radius: 8px;
+      padding: 12px 16px;
+      color: #fbbf24;
+      font-size: 12px;
+      margin-top: 4px;
+    }
+    .changelog-card {
+      background: #1e293b;
+      border: 1px solid #334155;
+      border-radius: 12px;
+      padding: 24px 28px;
+    }
+    .changelog-card h3 {
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: #94a3b8;
+      letter-spacing: 0.06em;
+      margin-bottom: 14px;
+    }
+    .changelog-item {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      padding: 8px 0;
+      border-bottom: 1px solid rgba(51,65,85,0.5);
+      font-size: 13px;
+      color: #e2e8f0;
+    }
+    .changelog-item:last-child { border-bottom: none; }
+    .cl-dot { color: #38bdf8; font-size: 16px; margin-top: 1px; }
+  </style>
+</head>
+<body>
+
+  <div class="header-bar">
+    <div class="brand-group">
+      <div class="brand-logo">💎</div>
+      <div>
+        <div class="brand-title">CABINEX AI — CLOUD ADMIN CONSOLE</div>
+        <div style="font-size: 11px; color: var(--text-muted);">Monetization, Token Licensing, Complexity Costs & Live Telemetry</div>
+      </div>
+    </div>
+    <div style="display: flex; align-items: center; gap: 14px;">
+      <span class="badge-live" id="lblDbStatus">Connected to Supabase</span>
+      <button class="btn-create" onclick="openTokenModal()">
+        + Generate License Token
+      </button>
+    </div>
+  </div>
+
+  <!-- Key Metrics -->
+  <div class="metrics-grid">
+    <div class="metric-card" style="--accent: #38bdf8;">
+      <div class="metric-title">Active License Tokens</div>
+      <div class="metric-val" id="valActiveTokens">0</div>
+      <div class="metric-sub">Monetized Accounts</div>
+    </div>
+    <div class="metric-card" style="--accent: #10b981;">
+      <div class="metric-title">3D Kitchens Modeled</div>
+      <div class="metric-val" id="valTotalKitchens">0</div>
+      <div class="metric-sub">Across All Studios</div>
+    </div>
+    <div class="metric-card" style="--accent: #f59e0b;">
+      <div class="metric-title">Quoted Project Value</div>
+      <div class="metric-val" id="valTotalQuoted">LKR 0</div>
+      <div class="metric-sub">Total Client Quotes</div>
+    </div>
+    <div class="metric-card" style="--accent: #a855f7;">
+      <div class="metric-title">Total Linear Feet</div>
+      <div class="metric-val" id="valTotalLinearFt">0 ft</div>
+      <div class="metric-sub">Cabinetry Fabricated</div>
+    </div>
+  </div>
+
+  <!-- Tabs Navigation -->
+  <div class="nav-tabs">
+    <button class="tab-btn active" onclick="switchTab('tokens', this)">🔑 License Tokens & Token Balances</button>
+    <button class="tab-btn" onclick="switchTab('activity', this)">⚡ Live Activity & Complexity Token Stream</button>
+    <button class="tab-btn" onclick="switchTab('download', this)">📦 Download Extension (.rbz)</button>
+  </div>
+
+  <!-- TAB 1: LICENSE TOKENS -->
+  <div id="tabTokens">
+    <div class="table-card">
+      <table>
+        <thead>
+          <tr>
+            <th>Client / Studio</th>
+            <th>License Token Key</th>
+            <th>Plan Tier</th>
+            <th>Available Token Balance</th>
+            <th>Expiry Date</th>
+            <th>Status</th>
+            <th style="text-align: right;">Action</th>
+          </tr>
+        </thead>
+        <tbody id="tokensTableBody">
+          <tr>
+            <td colspan="7" style="text-align: center; color: var(--text-muted); padding: 24px;">Loading license tokens...</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- TAB 2: LIVE ACTIVITY STREAM -->
+  <div id="tabActivity" style="display: none;">
+    <div class="table-card">
+      <table>
+        <thead>
+          <tr>
+            <th>Timestamp</th>
+            <th>User / Studio</th>
+            <th>Action Event</th>
+            <th>Complexity & Tokens Deducted</th>
+            <th>Dimensions</th>
+            <th>Quoted Amount</th>
+          </tr>
+        </thead>
+        <tbody id="activityTableBody">
+          <tr>
+            <td colspan="6" style="text-align: center; color: var(--text-muted); padding: 24px;">Loading live activity stream...</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- TAB 3: DOWNLOAD EXTENSION -->
+  <div id="tabDownload" style="display: none;">
+
+    <!-- Hero download card -->
+    <div class="download-hero">
+      <div class="dl-icon">📦</div>
+      <div class="dl-info">
+        <div class="dl-title">Cabinex AI Kitchen Designer Suite — Extensions</div>
+        <div class="dl-subtitle">
+          Full AI-powered 3D kitchen configurator for SketchUp 2021+.<br>
+          Supports aluminum carcass frames or BoardSash Pro melamine board cabinet runs.
+        </div>
+        <div class="dl-meta">
+          <span class="dl-badge">v4.0.0</span>
+          <span class="dl-badge green">✓ SketchUp 2021 – 2025</span>
+          <span class="dl-badge amber">Requires License Token</span>
+          <span class="dl-badge">~100 KB compressed</span>
+        </div>
+        <div style="display: flex; gap: 12px; margin-top: 15px; flex-wrap: wrap;">
+          <a href="/downloads/CabinexAI_v4.rbz" download="CabinexAI_v4.rbz" class="btn-download">
+            ⬇ Download Aluminum App (CabinexAI_v4.rbz)
+          </a>
+          <a href="/downloads/BoardSash_v2.rbz" download="BoardSash_v2.rbz" class="btn-download" style="background: linear-gradient(135deg, #10b981, #047857); border: none; box-shadow: 0 4px 14px rgba(16,185,129,0.3);">
+            ⬇ Download Board/Sash App (BoardSash_v2.rbz)
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Installation steps -->
+    <div class="install-steps">
+      <h3>📋 Installation Instructions</h3>
+      <ul class="step-list">
+        <li>
+          <div class="step-num">1</div>
+          <div>
+            <strong>Download</strong> either the <code>CabinexAI_v4.rbz</code> or <code>BoardSash_v2.rbz</code> file using the buttons above.
+          </div>
+        </li>
+        <li>
+          <div class="step-num">2</div>
+          <div>
+            In SketchUp, go to <strong>Window → Extension Manager → Install Extension</strong>
+            and select the downloaded <code>.rbz</code> file.
+          </div>
+        </li>
+        <li>
+          <div class="step-num">3</div>
+          <div>
+            Click <strong>Yes</strong> when prompted to install the extension from a downloaded source.
+          </div>
+        </li>
+        <li>
+          <div class="step-num">4</div>
+          <div>
+            After installation, find <strong>Plugins → Cabinex AI → Kitchen Designer</strong> in the menu bar.
+          </div>
+        </li>
+        <li>
+          <div class="step-num">5</div>
+          <div>
+            On first launch, enter your <strong>License Token Key</strong> (issued from this admin panel).
+            <div class="step-note">⚠️ Each licensed studio requires a valid token. Generate tokens from the License Tokens tab above.</div>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Changelog -->
+    <div class="changelog-card">
+      <h3>📝 Version History</h3>
+      <div class="changelog-item"><span class="cl-dot">●</span><div><strong>v4.0.0</strong> — Cloud RAM-engine fix (module namespace shadow), nil-safe 2D nesting solver, Base64 in-memory planner/report streaming, workshop report & PDF stability fixes.</div></div>
+      <div class="changelog-item"><span class="cl-dot">●</span><div><strong>v2.0.0</strong> — Per-bay unit expansion in Section 6, multi-angle snapshots (ISO/Front/Top/Frame/X-Ray), continuous run bar-cut plans, Vercel cloud deployment.</div></div>
+      <div class="changelog-item"><span class="cl-dot">●</span><div><strong>v1.9.0</strong> — Workshop Report Pack: 6-section PDF-ready report with bar-cut guide and assembly breakdown.</div></div>
+      <div class="changelog-item"><span class="cl-dot">●</span><div><strong>v1.8.0</strong> — Aluminum continuous base & wall runs, L-return, blind corner support.</div></div>
+      <div class="changelog-item"><span class="cl-dot">●</span><div><strong>v1.5.0</strong> — Cloud token licensing, Supabase-backed session management.</div></div>
+      <div class="changelog-item"><span class="cl-dot">●</span><div><strong>v1.0.0</strong> — Initial release: AI chat-driven kitchen layout, 3D model generation.</div></div>
+    </div>
+
+  </div>
+
+  <!-- MODAL: GENERATE LICENSE TOKEN -->
+  <div class="modal-overlay" id="tokenModal">
+    <div class="modal-card">
+      <div class="modal-title">🔑 Generate New Monetized License Token</div>
+      
+      <div class="form-group">
+        <label>Client / Company / Studio Name</label>
+        <input type="text" id="mClientName" placeholder="e.g. Modern Kitchens Colombo" />
+      </div>
+
+      <div class="form-group">
+        <label>Contact Email (Optional)</label>
+        <input type="email" id="mClientEmail" placeholder="client@company.com" />
+      </div>
+
+      <div class="form-group">
+        <label>Allowed App Engine</label>
+        <select id="mAllowedApp">
+          <option value="ALUMINUM" selected>Aluminum (Cabinex AI)</option>
+          <option value="BOARD">Board (Cabinetrix AI)</option>
+          <option value="BOTH">Both / Hybrid</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Subscription Plan Tier</label>
+        <select id="mPlanTier" onchange="updateDefaultTokens()">
+          <option value="STARTER">Starter Plan (50 Tokens - 30 Days)</option>
+          <option value="PRO" selected>Pro Studio Plan (150 Tokens - 1 Year)</option>
+          <option value="ENTERPRISE">Enterprise (500 Tokens - Unlimited)</option>
+          <option value="TRIAL">Trial License (10 Tokens - 7 Days)</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Initial Tokens Balance</label>
+        <input type="number" id="mInitialTokens" value="150" />
+      </div>
+
+      <div class="form-group">
+        <label>Custom Duration (Days)</label>
+        <input type="number" id="mDurationDays" value="365" />
+      </div>
+
+      <div class="modal-actions">
+        <button class="btn-secondary" onclick="closeTokenModal()">Cancel</button>
+        <button class="btn-create" onclick="submitCreateLicense()">Create & Issue Token</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function updateDefaultTokens() {
+      const p = document.getElementById('mPlanTier').value;
+      const tokInput = document.getElementById('mInitialTokens');
+      if (p === 'STARTER') tokInput.value = 50;
+      if (p === 'PRO') tokInput.value = 150;
+      if (p === 'ENTERPRISE') tokInput.value = 500;
+      if (p === 'TRIAL') tokInput.value = 10;
+    }
+
+    function switchTab(tab, btn) {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('tabTokens').style.display   = (tab === 'tokens')   ? 'block' : 'none';
+      document.getElementById('tabActivity').style.display = (tab === 'activity') ? 'block' : 'none';
+      document.getElementById('tabDownload').style.display = (tab === 'download') ? 'block' : 'none';
+    }
+
+    function openTokenModal() { document.getElementById('tokenModal').style.display = 'flex'; }
+    function closeTokenModal() { document.getElementById('tokenModal').style.display = 'none'; }
+
+    async function loadDashboardData() {
+      try {
+        const res = await fetch('/api/admin/dashboard-stats');
+        const data = await res.json();
+
+        if (data.success) {
+          document.getElementById('valActiveTokens').innerText = data.stats.active_tokens || 0;
+          document.getElementById('valTotalKitchens').innerText = data.stats.total_kitchens || 0;
+          document.getElementById('valTotalQuoted').innerText = 'LKR ' + (data.stats.total_quoted_lkr || 0).toLocaleString('en-US');
+          document.getElementById('valTotalLinearFt').innerText = (data.stats.total_linear_ft || 0).toFixed(0) + ' ft';
+
+          renderTokensTable(data.licenses || []);
+          renderActivityTable(data.logs || []);
+        }
+      } catch (err) {
+        console.error('Error fetching admin data:', err);
+      }
+    }
+
+    function renderTokensTable(list) {
+      const tbody = document.getElementById('tokensTableBody');
+      if (list.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; padding: 24px; color: #94a3b8;">No license tokens generated yet. Click "+ Generate License Token" above.</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = list.map(l => {
+        const isActive = l.status === 'ACTIVE';
+        const expDate = new Date(l.expires_at).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
+        const bal = l.tokens_balance !== undefined ? l.tokens_balance : (l.tokens_total || 100);
+        const tot = l.tokens_total || 100;
+        return `
+          <tr>
+            <td><strong>${l.client_name}</strong><br><span style="color: #64748b; font-size: 11px;">${l.client_email || ''}</span></td>
+            <td>
+              <span class="token-pill">
+                ${l.license_key}
+                <button class="copy-btn" onclick="navigator.clipboard.writeText('${l.license_key}'); alert('Copied token: ${l.license_key}');">📋</button>
+              </span>
+            </td>
+            <td>
+              <span style="font-weight: 700; color: #38bdf8;">${l.plan_type}</span><br>
+              <span style="font-size: 10px; color: #94a3b8; background: #334155; padding: 2px 4px; border-radius: 3px; display: inline-block; margin-top: 4px;">APP: ${l.allowed_app || 'ALUMINUM'}</span>
+            </td>
+            <td>
+              <span class="token-badge">🪙 <strong>${bal}</strong> / ${tot} Tokens</span>
+              <button class="btn-topup" onclick="topUpTokens('${l.license_key}')">+ Top Up</button>
+            </td>
+            <td>${expDate}</td>
+            <td><span class="status-badge ${isActive ? 'badge-active' : 'badge-expired'}">${l.status}</span></td>
+            <td style="text-align: right;">
+              <button class="copy-btn" style="color: #ef4444;" onclick="revokeLicense('${l.id}')">Revoke</button>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function renderActivityTable(logs) {
+      const tbody = document.getElementById('activityTableBody');
+      if (logs.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; padding: 24px; color: #94a3b8;">No activity logged yet. When users build kitchens in SketchUp, live events appear here!</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = logs.map(l => {
+        const time = new Date(l.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) + ', ' + new Date(l.created_at).toLocaleDateString('en-GB', { day: '2-digit', month: 'short' });
+        const dimStr = (l.wall_a_mm) ? `${l.wall_a_mm}mm × ${l.wall_b_mm || 0}mm (${(l.total_linear_ft || 0).toFixed(1)} ft)` : '—';
+        const quoteStr = (l.quoted_amount_lkr) ? 'LKR ' + Math.round(l.quoted_amount_lkr).toLocaleString('en-US') : '—';
+
+        let badge = '<span style="color: #38bdf8; font-weight: 700;">3D Kitchen</span>';
+        if (l.action_type === 'QUOTATION_EXPORTED') badge = '<span style="color: #10b981; font-weight: 700;">Quotation Export</span>';
+        if (l.action_type === 'LOGIN') badge = '<span style="color: #94a3b8;">User Login</span>';
+
+        const tokConsumed = l.tokens_consumed ? `<span style="color: #f59e0b; font-weight: 800;">🪙 -${l.tokens_consumed} Token(s)</span> <span style="font-size: 10px; color: #94a3b8;">(${l.complexity_level || 'STANDARD'}) [Rem: ${l.tokens_remaining || '—'}]</span>` : '—';
+
+        return `
+          <tr>
+            <td style="color: #94a3b8; font-size: 11px;">${time}</td>
+            <td><strong>${l.user_identifier}</strong></td>
+            <td>${badge}</td>
+            <td>${tokConsumed}</td>
+            <td>${dimStr}</td>
+            <td style="font-weight: 700; color: #10b981;">${quoteStr}</td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    async function topUpTokens(identifier) {
+      const amount = prompt(`Enter number of tokens to add for ${identifier}:`, "50");
+      if (!amount || isNaN(amount)) return;
+
+      try {
+        const res = await fetch('/api/admin/topup-tokens', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ identifier, add_tokens: parseInt(amount) })
+        });
+        const data = await res.json();
+        if (data.success) {
+          alert(`✅ Added ${amount} tokens to ${identifier}! New Balance: ${data.new_balance}`);
+          loadDashboardData();
+        } else {
+          alert('Error: ' + data.error);
+        }
+      } catch (err) {
+        alert('Failed: ' + err.message);
+      }
+    }
+
+    async function submitCreateLicense() {
+      const client_name = document.getElementById('mClientName').value.trim();
+      const client_email = document.getElementById('mClientEmail').value.trim();
+      const plan_type = document.getElementById('mPlanTier').value;
+      const allowed_app = document.getElementById('mAllowedApp').value;
+      const tokens_total = parseInt(document.getElementById('mInitialTokens').value) || 100;
+      const duration_days = parseInt(document.getElementById('mDurationDays').value) || 30;
+
+      if (!client_name) {
+        alert('Please enter client or studio name');
+        return;
+      }
+
+      try {
+        const res = await fetch('/api/admin/create-license', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ client_name, client_email, plan_type, duration_days, tokens_total, allowed_app })
+        });
+        const data = await res.json();
+        if (data.success) {
+          closeTokenModal();
+          alert(`✅ License Token Created Successfully!\n\nToken: ${data.license.license_key}\nTokens Allocated: ${tokens_total}\n\nClient can now use this token to activate inside SketchUp.`);
+          loadDashboardData();
+        } else {
+          alert('Error: ' + data.error);
+        }
+      } catch (err) {
+        alert('Failed to create license: ' + err.message);
+      }
+    }
+
+    loadDashboardData();
+    setInterval(loadDashboardData, 8000);
+  </script>
+</body>
+</html>

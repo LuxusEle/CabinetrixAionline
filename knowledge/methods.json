@@ -1,0 +1,59 @@
+{
+  "$schema": "cabinetry-knowledge/v1",
+  "doc": "Construction method switch. One master switch per box (NOT separate geometry), plus front-geometry model.",
+  "source": [
+    "Mozaik Const / ConstW / ConstT (p17-18, p39 appliance pos, p60 toe)",
+    "eCabinet door taxonomy (p417-420)",
+    "CabMaker types (p43) + reveal math (p300-302)"
+  ],
+  "session_level_title": "LEVEL 5,6 — FRONT GEOMETRY & CONSTRUCTION METHODS",
+
+  "construction_methods": {
+    "const_base": "Const",
+    "const_wall": "ConstW",
+    "const_tall": "ConstT",
+    "methods": [
+      { "id": "face_frame", "name": "Face Frame", "fr": "USA framed; fronts = opening + overlay" },
+      { "id": "frameless", "name": "Frameless", "fr": "EU box; shelf boring + hardware holes bored independently" },
+      { "id": "32mm", "name": "32mm", "fr": "frameless + System 32 holes used for hinges & guides; hinge/drawer sizes auto-align to grid" },
+      { "id": "full_overlay", "name": "Full Overlay", "fr": "face frame but European-look full-cover fronts (reveal params)" },
+      { "id": "frame_inset", "name": "Frame Inset", "fr": "face frame, fronts inset flush with frame, auto inset amount" },
+      { "id": "frameless_inset", "name": "Frameless Inset", "fr": "frameless, fronts inset flush with case front" }
+    ],
+    "toe": { "toeH": "toe height (ToeH, p60)", "toeR": "toe recess", "frameless_vs_face_frame": "differs" }
+  },
+
+  "front_geometry": {
+    "so": "OVERLAY / HALF-OVERLAY / INSET + gaps. Cabinetry software fails here most often.",
+    "front_layout_kinds": ["equal", "ratio_based", "fixed_sizes", "hardware_defined"],
+    "equal_fronts_rule": "available_front_height = opening_height - total_required_gaps; then divide by front_count",
+    "front_model": {
+      "FrontLayout": ["opening_height", "front_gap", "front_count", "front_height"]
+    }
+  },
+
+  "reveal_math": {
+    "source": "CabMaker p300-302",
+    "formulas": {
+      "frameless_overlay_front_h": "spacing - door_gap (200-3 = 197)",
+      "frameless_inset_front_h": "spacing - 2*door_gap (200-6 = 194)",
+      "face_frame_inset_full": "spacing - 2*door_gap (194)",
+      "face_frame_inset_partial": "spacing - door_gap (197)"
+    },
+    "default_door_gap": 3
+  },
+
+  "door_taxonomy": {
+    "source": "eCabinet p417-420",
+    "types": [
+      { "id": "slab", "name": "slab door", "note": "flat panel + edgebanding around perimeter" },
+      { "id": "mdf_profile", "name": "MDF profiled door", "note": "machined MDF, outside profile + centre raise (5-piece look from one sheet)" },
+      { "id": "five_piece_shaker", "name": "5-piece / shaker (stile & rail)", "note": "Conestoga / Thermwood, rail + stiles + center panel; arches/cathedrals" }
+    ]
+  },
+
+  "carcase_rails": {
+    "note": "Frameless cabinet = back + base + two ends + TWO rails (front + back rail to fix bench top; front rail turned ON EDGE for sink/hob) - LMFKB3005A p54",
+    "front_rail_on_edge": "for sink / hob cabinets"
+  }
+}

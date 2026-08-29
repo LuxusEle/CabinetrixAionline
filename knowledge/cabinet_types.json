@@ -1,0 +1,131 @@
+{
+  "$schema": "cabinetry-knowledge/v1",
+  "doc": "Master cabinet box taxonomy. Every box is a parameterised template, NOT a separately drawn object.",
+  "source": [
+    "IKEA METOD Cabinets Planning Guide (module sizes)",
+    "IKEA PAX KOMPLEMENT Planning Guide (frame families)",
+    "Fabricating Cabinets Learner Guide LMFKB3005A",
+    "Mozaik Const/ConstW/ConstT (methods)",
+    "Blum / GRASS / Kesseboehmer (hardware drivers)"
+  ],
+  "session_level_title": "LEVEL 4 — MASTER CABINET TAXONOMY",
+  "mental_model": "ROOM -> RUN -> CABINET -> OPENING -> COMPONENT -> HARDWARE -> MACHINING",
+  "units": "millimetres unless stated",
+
+  "frame_defaults": {
+    "carcase_thickness": 18,
+    "back_thickness": 6,
+    "door_thickness": 18,
+    "drawer_box_thickness": 16,
+    "system32": { "diameter": 5, "pitch": 32 },
+    "shelf_thickness": 18,
+    "toe_height": 100,
+    "toe_setback": 50
+  },
+
+  "base_cabinets": {
+    "category": "BASE",
+    "standard_heights": [720, 800, 870, 880],
+    "standard_depths": [560, 600],
+    "node_widths": [200, 300, 400, 500, 600, 800, 1000],
+    "types": [
+      { "id": "BASE_DOOR", "name": "single/double door base", "fronts": ["door_1x", "door_2x"] },
+      { "id": "BASE_SHELF", "name": "shelf base", "fronts": ["door"] },
+      { "id": "BASE_DRAWER_2", "name": "2-drawer base", "fronts": ["drawer_2"] },
+      { "id": "BASE_DRAWER_3", "name": "3-drawer base", "fronts": ["drawer_3"] },
+      { "id": "BASE_DRAWER_4", "name": "4-drawer base", "fronts": ["drawer_4"] },
+      { "id": "BASE_SINK", "name": "sink cabinet (false front)", "fronts": ["door", "false_drawer_front"] },
+      { "id": "BASE_HOB", "name": "hob base (rail on edge)", "fronts": ["drawer_2"] },
+      { "id": "BASE_OVEN", "name": "oven base", "fronts": ["appliance_oven"] },
+      { "id": "BASE_MICROWAVE", "name": "microwave base", "fronts": ["appliance_micro"] },
+      { "id": "BASE_DISHWASHER", "name": "dishwasher space", "fronts": ["appliance_dw"] },
+      { "id": "BASE_PULLOUT", "name": "pull-out base", "accessories": ["pullout_tray"] },
+      { "id": "BASE_SPICE", "name": "spice pull-out", "accessories": ["pullout_spice"] },
+      { "id": "BASE_BOTTLE", "name": "bottle pull-out", "accessories": ["pullout_bottle"] },
+      { "id": "BASE_BIN", "name": "bin cabinet", "accessories": ["bin_system"] },
+      { "id": "BASE_BLIND_CORNER", "name": "blind corner", "corner": true },
+      { "id": "BASE_DIAGONAL_CORNER", "name": "diagonal corner", "corner": true },
+      { "id": "BASE_CAROUSEL", "name": "corner carousel", "corner": true, "accessories": ["carousel"] },
+      { "id": "BASE_OPEN_SHELF", "name": "open shelf base", "fronts": ["open"] },
+      { "id": "BASE_END", "name": "end cabinet / filler-adjacent", "fronts": ["door", "fillers"] }
+    ]
+  },
+
+  "wall_cabinets": {
+    "category": "WALL",
+    "standard_heights": [350, 400, 500, 600, 700, 800, 1000],
+    "standard_depths": [300, 350, 370, 400],
+    "node_widths": [200, 300, 400, 500, 600, 800, 1000],
+    "mounting": "suspension_rail (leveled, wall cabinets installed first)",
+    "types": [
+      { "id": "WALL_DOOR", "name": "single/double door wall", "fronts": ["door_1x", "door_2x"] },
+      { "id": "WALL_HORIZONTAL_DOOR", "name": "horizontal (flap) door", "fronts": ["flap"] },
+      { "id": "WALL_LIFT_UP", "name": "lift-up wall (AVENTOS)", "fronts": ["lift_aventos_hk"] },
+      { "id": "WALL_BIFOLD_LIFT", "name": "bi-fold lift (AVENTOS HF)", "fronts": ["lift_aventos_hf"] },
+      { "id": "WALL_HOOD", "name": "hood cabinet (raised/ventilated)", "fronts": ["open_hood"] },
+      { "id": "WALL_MICROWAVE", "name": "microwave wall", "fronts": ["appliance_micro"] },
+      { "id": "WALL_GLASS", "name": "glass cabinet", "fronts": ["glass_door"] },
+      { "id": "WALL_OPEN", "name": "open cabinet", "fronts": ["open"] },
+      { "id": "WALL_BLIND_CORNER", "name": "blind corner wall", "corner": true },
+      { "id": "WALL_DIAGONAL_CORNER", "name": "diagonal corner wall", "corner": true },
+      { "id": "WALL_BRIDGE", "name": "bridge cabinet", "fronts": ["door"] },
+      { "id": "WALL_FRIDGE_TOP", "name": "fridge-top cabinet", "fronts": ["door"] }
+    ]
+  },
+
+  "tall_cabinets": {
+    "category": "TALL",
+    "standard_heights": [1400, 2000, 2100, 2133, 2200, 2400],
+    "standard_depths": [560, 600],
+    "node_widths": [300, 400, 450, 500, 600, 800],
+    "types": [
+      { "id": "TALL_PANTRY", "name": "pantry (full-height storage)", "internals": "shelves" },
+      { "id": "TALL_BROOM", "name": "broom / utility cabinet", "internals": "open" },
+      { "id": "TALL_OVEN", "name": "oven tower", "fronts": ["appliance_oven"] },
+      { "id": "TALL_OVEN_MICRO", "name": "oven + microwave tower", "fronts": ["appliance_oven", "appliance_micro"] },
+      { "id": "TALL_FRIDGE", "name": "fridge housing", "fronts": ["appliance_fridge"] },
+      { "id": "TALL_INTEGRATED_FRIDGE", "name": "integrated fridge cabinet", "fronts": ["appliance_fridge"] },
+      { "id": "TALL_PULLOUT_PANTRY", "name": "pull-out pantry (DISPENSA)", "accessories": ["dispensa"] },
+      { "id": "TALL_INTERNAL_DRAWER", "name": "internal drawer pantry", "internals": "drawers_inside" },
+      { "id": "TALL_UTILITY", "name": "utility cabinet", "internals": "shelves" },
+      { "id": "TALL_WARDROBE_STYLE", "name": "wardrobe-style tall storage", "internals": "wardrobe" }
+    ]
+  },
+
+  "special_cabinets": {
+    "category": "SPECIAL",
+    "types": [
+      { "id": "SPECIAL_ISLAND", "name": "island cabinet", "fronts": ["door", "drawer"] },
+      { "id": "SPECIAL_PENINSULA", "name": "peninsula cabinet", "fronts": ["door"] },
+      { "id": "SPECIAL_BREAKFAST_COUNTER", "name": "breakfast counter / bartop return", "fronts": ["open", "door"] },
+      { "id": "SPECIAL_WINE", "name": "wine storage", "internals": "wine_racks" },
+      { "id": "SPECIAL_APPLIANCE_GARAGE", "name": "appliance garage", "fronts": ["roll_front"] },
+      { "id": "SPECIAL_DISPLAY", "name": "display cabinet", "fronts": ["glass_door"] },
+      { "id": "SPECIAL_OPEN_SHELVING", "name": "open shelving", "fronts": ["open"] }
+    ]
+  },
+
+  "corner_rules": {
+    "note": "Corner calculation is its own subsystem; do NOT scatter corner exceptions through ordinary cabinet code (Level 24).",
+    "required_considerations": [
+      "required_void",
+      "door_width", "cabinet_width",
+      "adjacent_clearance", "handle_collision", "drawer_collision",
+      "mechanism_envelope"
+    ],
+    "components": [
+      { "id": "blind_corner", "so": "dead corner", "note": "blind divider + door on main face; return at 90deg" },
+      { "id": "diagonal_corner", "so": "angled corner front", "note": "45deg mitered front over corner" },
+      { "id": "l_corner", "so": "L-corner", "note": "two runs meeting, shared end / filler" },
+      { "id": "carousel", "so": "lazy susan", "note": "shelf carousel on vertical rod (eCabinet p493)" },
+      { "id": "lemans", "so": "corner pull-out", "note": "Kesseboehmer LeMans, rack swings out" },
+      { "id": "corner_drawers", "so": "corner drawer units", "note": "drawer stack in corner" },
+      { "id": "corner_wall", "so": "corner wall cabinet", "note": "blind/diagonal at wall corner" }
+    ]
+  },
+
+  "rebuild_rule": {
+    "note": "Parametric rebuild rule (Level 36). Changing W or material must propagate through sides, bottom, back, shelf, door, hinge relationship, drawer, runner, drilling, cut list, BOM, SketchUp model, DXF. If dimensions break, the architecture is wrong.",
+    "test": "W=600,H=720,D=560,M=18 -> W=750 and M=16, everything recomputes"
+  }
+}

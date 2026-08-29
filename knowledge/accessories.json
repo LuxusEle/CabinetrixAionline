@@ -1,0 +1,120 @@
+{
+  "$schema": "cabinetry-knowledge/v1",
+  "doc": "Accessory / mechanism library. Every accessory is an occupancy envelope (3D collision object), NOT a label or image. Hardware spec cannot be treated as decoration.",
+  "source": [
+    "Kessebohmer storage-solution library (LeMans, Magic Corner, DISPENSA, CONERO)",
+    "Blum (SPACE TOWER, pot/bottle pull-outs, TANDEM)",
+    "IKEA METOD (waste sorting, pull-outs)",
+    "IKEA PAX KOMPLEMENT (wardrobe accessories)"
+  ],
+  "session_level_title": "LEVEL 10,12,13 — KITCHEN & WARDROBE ACCESSORIES",
+  "envelope_model": "Accessory { min_width, max_width, min_depth, required_height, front_clearance, side_clearance, mounting_points, collisions }",
+  "compat_engine": "Cabinet + accessory request -> NOT COMPATIBLE | compatible options (Accessory compatibility engine, Level 38)",
+
+  "corner_accessories": {
+    "manufacturer": "Kessebohmer",
+    "group": "CORNER",
+    "items": [
+      { "id": "LEMANS", "name": "LeMans corner swing-out shelf", "storage_increase": "up to 70%", "note": "organically shaped shelves; specific cabinet-space + installation requirements; separate mounting instructions" },
+      { "id": "MAGIC_CORNER", "name": "Magic Corner (full pull-out corner)", "so": "ideal for corner kitchens with HINGED doors" },
+      { "id": "REVO_90", "name": "REVO 90 kitchen carousel", "load_mm": "25 kg per shelf", "adjustment": "infinitely adjustable" },
+      { "id": "THREE_QUARTER_CIRCLE", "name": "three-quarter circle carousel", "load_mm": "25 kg per shelf", "adjustment": "adjustable" },
+      { "id": "CAROUSEL", "name": "carousel / lazy susan", "note": "shelves on vertical rod (eCabinet p493)" },
+      { "id": "KIDNEY_SHELF", "name": "kidney shelf" },
+      { "id": "BLIND_CORNER_PULLOUT", "name": "blind-corner pull-out" }
+    ]
+  },
+
+  "larder_tall_pullouts": {
+    "manufacturer": "Kessebohmer",
+    "group": "LARDER / TALL",
+    "items": [
+      { "id": "DISPENSA", "name": "DISPENSA larder pull-out", "load_mm": "100 kg", "note": "modular, variable, hanging shelves; very significant load, not decorative" },
+      { "id": "CONVOY", "name": "CONVOY family", "so": "inside pull-out with infinitely height-adjustable shelves; NOT attached to front panel; for WIDE larder units" },
+      { "id": "TANDEM", "name": "TANDEM family (TANDEM/solo/side/diagonal)", "load_mm": "60 kg pull-out frame + 20 kg door shelving" },
+      { "id": "TURN_MOTION_II", "name": "TurnMotion II rotating fitting", "so": "single or double tray, brings cabinet contents to front, any height" },
+      { "id": "TURN_MOTION_III", "name": "TurnMotion III rotating pull-out tray", "so": "open up furthest corners" },
+      { "id": "INTERNAL_DRAWERS", "name": "internal drawer tower (shelf above eye level, drawers below - SPACE TOWER rule)" }
+    ]
+  },
+
+  "base_accessories": {
+    "group": "BASE",
+    "items": [
+      { "id": "DISPENSA_JUNIOR_III", "name": "DISPENSA junior III pull-out larder", "width_span_mm": "300-600", "feature": "full extension + SoftStoppPlus" },
+      { "id": "DISPENSA_JUNIOR_SLIM", "name": "DISPENSA junior slim" },
+      { "id": "K_LINE_BASE", "name": "K-Line base full-extension runners", "width_span_mm": "200-400" },
+      { "id": "NO_15", "name": "No. 15 niche unit", "width_mm": 150 },
+      { "id": "NO_15_3D_X", "name": "No. 15 3D-X K-Line niche unit", "width_mm": 150 },
+      { "id": "COMFORT_II", "name": "COMFORT II base pull-out", "width_mm": 300, "inserts": "bottles/coffee/tea" },
+      { "id": "cookingAGENT", "name": "cookingAGENT (spices, ingredients, chopping boards, plates, bowls)" },
+      { "id": "cleaningAGENT", "name": "cleaningAGENT (cleaning/household products)" },
+      { "id": "PORTERO", "name": "PORTERO cleaning-products organizer" },
+      { "id": "BOTTLE_PULLOUT", "name": "bottle / oil pull-out" },
+      { "id": "SPICE_PULLOUT", "name": "spice pull-out" },
+      { "id": "TRAY_PULLOUT", "name": "tray pull-out" },
+      { "id": "BIN_SYSTEM", "name": "waste sorting bin system (40L/42L, ventilated, 60cm drawer)" },
+      { "id": "POT_DRAWER", "name": "high drawer / pot drawer (H250)" }
+    ]
+  },
+
+  "wall_unit_mechanisms": {
+    "manufacturer": "Kessebohmer",
+    "group": "WALL",
+    "items": [
+      { "id": "iMOVE", "name": "iMove pull-out wall system", "so": "shelves move completely out of the unit with fluid motion" },
+      { "id": "FREELIFT_FAMILY", "name": "FREElift family (FREEfold/flap/light/slide/space/swing)", "so": "easy-to-install flap lift fittings" },
+      { "id": "FREESLIM", "name": "FREEslim family", "so": "ultra-thin flap fitting, just 8mm (as slim as an iPad)" },
+      { "id": "DUO", "name": "Duo flap fitting & stay", "opening_angle": 110, "feature": "left or right, self-closing" },
+      { "id": "MAXI", "name": "Maxi flap fitting & stay", "load_mm": "up to 27 kg, infinitely adjustable", "feature": "left or right, holds heavy flaps in any position" }
+    ]
+  },
+
+  "magic_features": {
+    "manufacturer": "Kessebohmer",
+    "group": "FEATURES",
+    "items": [
+      { "id": "ClickFixx", "name": "click-assembly system", "so": "front panel + support frame connection elements clipped TOOLLESSLY; shortens installation time" },
+      { "id": "eTouch_plus", "name": "eTouch / eTouch+", "so": "gentle pressure against front triggers fully automatic opening" },
+      { "id": "push_to_open", "name": "push-to-open latch", "so": "handleless doors opened with a light touch" },
+      { "id": "SoftSTOPP", "name": "SoftSTOPP / SoftSTOPPplus / SoftSTOPPpro", "so": "powerful damping system for cabinets with high weight load" }
+    ],
+    "processing_aid": "K2X Multitool"
+  },
+
+  "wardrobe_accessories": {
+    "group": "WARDROBE (LEVEL 12)",
+    "items": [
+      { "id": "FIXED_SHELF", "name": "fixed shelf" },
+      { "id": "ADJUSTABLE_SHELF", "name": "adjustable shelf (on System 32)" },
+      { "id": "CLOTHES_RAIL", "name": "clothes rail / hanging rod", "positioning": "ClosetRodPosition (rode top -> opening top)" },
+      { "id": "SHORT_HANGING", "name": "short hanging zone" },
+      { "id": "LONG_HANGING", "name": "long hanging zone" },
+      { "id": "DOUBLE_HANGING", "name": "double hanging (two rods stacked)" },
+      { "id": "DRAWER", "name": "drawer (internal, inside frame behind doors)" },
+      { "id": "INTERNAL_DRAWER", "name": "internal drawer" },
+      { "id": "SHOE_SHELF", "name": "shoe shelf" },
+      { "id": "SLOPING_SHOE_RACK", "name": "sloping shoe rack" },
+      { "id": "TROUSER_RACK", "name": "pull-out trouser rack" },
+      { "id": "TRAY_PULLOUT", "name": "pull-out tray" },
+      { "id": "JEWELLERY_TRAY", "name": "jewellery tray / inset drawer" },
+      { "id": "LAUNDRY_BASKET", "name": "laundry basket / pull-out" },
+      { "id": "TIE_RACK", "name": "tie rack" },
+      { "id": "BELT_RACK", "name": "belt rack" },
+      { "id": "MIRROR", "name": "mirror (door-mounted / internal)" },
+      { "id": "WARDROBE_LIFT", "name": "wardrobe lift (CONERO)" },
+      { "id": "HANDBAG_SHELF", "name": "handbag shelf" },
+      { "id": "SAFE", "name": "safe" },
+      { "id": "LED_PROFILE", "name": "LED profile lighting" }
+    ]
+  },
+
+  "dressing_room_program": {
+    "manufacturer": "Kessebohmer CONERO",
+    "note": "wardrobe lifts, pull-outs, belts/ties, clothes rails, shoe storage -> accessories library objects"
+  },
+
+  "accessory_compatibility_engine": {
+    "note": "Accessories must respect cabinet dims + opening type (door vs drawer). Tell the designer what IS possible, not merely allow incorrect geometry (Level 38)."
+  }
+}

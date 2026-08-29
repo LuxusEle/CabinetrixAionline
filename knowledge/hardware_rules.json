@@ -1,0 +1,121 @@
+{
+  "$schema": "cabinetry-knowledge/v1",
+  "doc": "Hardware engineering rules. Hardware geometry BELONGS to the hardware definition; the cabinet asks the hardware engine, it never hard-codes a drawer width.",
+  "source": [
+    "Blum 2027/2028 Catalogue & Technical Manual (live)",
+    "GRASS Movement Systems 2026 (live) - Nova Pro Scala formulas",
+    "Hettich AvanTech YOU / Quadro / TopLine XL",
+    "Fabricating Cabinets Learner Guide p58-60",
+    "Kesseboehmer storage-solution library"
+  ],
+  "session_level_title": "LEVEL 6,7 — CONCEALED HINGES & DRAWERS",
+  "rule": "Never hard-code `drawer_width = cabinet_width - 100`. Call `hardware_system.calculate_drawer_width(internal_cabinet_width)`.",
+  "units": "millimetres unless stated",
+
+  "hinge_systems": {
+    "manufacturer": "Blum",
+    "series": ["CLIP top BLUMOTION", "CLIP top", "MODUL"],
+    "cup": { "diameter": 35, "cup_depth": 13, "edge_offset_from_door_edge": 3 },
+    "opening_angles": [95, 100, 107, 110, 125, 155, 170],
+    "drilling_distance": {
+      "concept": "TB = drilling distance from door edge, chosen from hinge overlay table",
+      "note": "Blum publishes per-overlay drilling-distance tables (front thickness vs overlay vs min gaps)"
+    },
+    "mounting_plates": {
+      "grid_37_32": "cruciform mounting plate, spacing 37/32 (system-grid aligned)",
+      "grid_20_32": "horizontal cam mounting plate, spacing 20/32",
+      "note": "Mounting plates sit on the 32mm System 32 grid (Blum 37/32 and 20/32)"
+    },
+    "applications": [
+      { "id": "full_overlay", "note": "front covers a full 18mm side panel" },
+      { "id": "half_overlay", "note": "two fronts share one side panel edge" },
+      { "id": "inset", "note": "front sits flush within the opening" },
+      { "id": "wide_angle", "note": ">=155deg for corner/angular" },
+      { "id": "zero_protrusion", "note": "180deg / pocket systems" },
+      { "id": "blind_corner", "note": "for corner cabinets (hinges + bifold)" },
+      { "id": "thick_front", "note": "profile/thick door hinge (>=22mm front)" },
+      { "id": "aluminium_frame", "note": "95deg alu frame door hinge" },
+      { "id": "glass_door", "note": "CRISTALLO / glass door hinge" }
+    ],
+    "hinge_count_rule": "more hinges for wider/heavier fronts (3 at KB>=1200 / weight>=12kg; 4 at KB>=1800 / >=20kg)",
+    "min_gap": { "door_to_cabinet": 1, "inter_front": 2, "note": "1mm door-cabinet gap (LMFKB3005A p59)" }
+  },
+
+  "drawer_systems": {
+    "providers": [
+      { "make": "GRASS", "platforms": ["Nova Pro Scala", "Nova Pro One", "Vionaro V8", "Dynapro"] },
+      { "make": "Blum", "platforms": ["LEGRABOX", "MERIVOBOX", "TANDEMBOX", "MOVENTO (runner)", "TANDEM (runner)", "METABOX"] },
+      { "make": "Hettich", "platforms": ["AvanTech YOU", "Quadro (runner)"] }
+    ],
+    "grass_nova_pro_scala": {
+      "legend": {
+        "LWK": "inside cabinet width", "NL": "nominal (slide) length",
+        "EB": "installation width", "BB": "bottom panel width",
+        "BL": "bottom panel length", "RWB": "back panel width",
+        "RWH": "back panel height", "RW": "slide height"
+      },
+      "formulas": {
+        "EB": { "s16_s19": 29, "s18": 30, "note": "installation width of the slide" },
+        "BB": "LWK - 2 * EB",
+        "BL": "NL - 19",
+        "RWB_H63_90": "BB",
+        "RWB_H122": "BB - 16",
+        "RWB_H186_250": "BB - 84",
+        "RWH": "RW + 10"
+      },
+      "standard_heights": { "H63": 63, "H90": 90, "H122": 122, "H186": 186, "H250": 250 },
+      "materials": { "board": 16, "chipboard_screw": "O 3.5 x 15", "dowel": "O 10 x 12/13" },
+      "accessory_rules": {
+        "front_bottom_connector": "recommended at KB >= 800",
+        "front_support": "for high fronts (H186/H250) up to 780mm front height",
+        "side_stabilising_device": "for wide drawers",
+        "max_load": "70 kg"
+      }
+    },
+    "wood_drawer_concealed_runner": {
+      "note": "LMFKB3005A p60: open box, front+back+sides in 16mm PB + MDF/hardboard base, 12-13mm free space each side for runners, separate drawer front",
+      "reveal_per_side": [12, 13],
+      "box_board": 16,
+      "base_board": "MDF or hardboard"
+    }
+  },
+
+  "lift_systems": {
+    "manufacturer": "Blum",
+    "family": "AVENTOS",
+    "types": {
+      "AVENTOS_HKi": "integrated stay lift (KH max 600, KB up to 1800, SWD 16-25)",
+      "AVENTOS_HF_top": "bi-fold lift (KH 480-1200, LT min 264)",
+      "AVENTOS_HS_top": "up-and-over lift",
+      "AVENTOS_HL_top": "lift-up",
+      "AVENTOS_HK_top": "stay lift",
+      "AVENTOS_HK_S": "stay lift / small",
+      "AVENTOS_HK_XS": "stay lift / extra small"
+    },
+    "software_lesson": "mechanisms CONSUME internal cabinet space. Accessories are 3D collision objects, not labels.",
+    "min_internal_depth_LT": {"HKi": 271, "HF": 264}
+  },
+
+  "space_tower_rule": {
+    "note": "Blum SPACE TOWER: shelf above eye level, drawers below; inner pull-outs at different heights by item height. Cabinet design is user-behaviour-driven.",
+    "future_model": "StorageObject { height, width, depth, weight, frequency_of_use } -> propose storage positions"
+  },
+
+  "sliding_wardrobe_doors": {
+    "manufacturer": "Hettich TopLine XL (reference system)",
+    "parameters": [
+      "track_system (top/bottom)", "door_thickness", "door_weight",
+      "min_door_width", "max_door_width", "door_overlap",
+      "number_of_doors", "front/back door position",
+      "soft_close_mechanism", "bottom_guide", "top_runner", "adjustment_allowance"
+    ],
+    "topline_xl_capability": "18-30mm doors up to 60 kg with defined door-width constraints",
+    "paix_note": "PAX sliding doors sold in PAIRS, metal frame + panels, size = total two-door measurement, soft-closing"
+  },
+
+  "hardware_abstraction": {
+    "level_title": "LEVEL 41 — PLUG-IN HARDWARE PROVIDER",
+    "providers": ["Blum", "Hettich", "Grass", "Hafele", "Kessebohmer", "Generic"],
+    "each_provider_exposes": ["products", "dimensions", "compatibility", "machining", "CAD model", "BOM", "rules"]
+  }
+}

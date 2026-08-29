@@ -1,0 +1,92 @@
+{
+  "$schema": "cabinetry-knowledge/v1",
+  "doc": "Wardrobe / closet construction rules. PAX is the reverse-engineerable reference; learn the SYSTEM PRINCIPLE, not IKEA's exact dims (which change).",
+  "source": [
+    "IKEA PAX KOMPLEMENT Planning Guide (frame families, KOMPLEMENT organizers, sliding doors, lighting)",
+    "IKEA PAX Wardrobe Frame Assembly",
+    "Mozaik ClosetRodPosition / ClosetThruBore (p162-163)",
+    "Hettich TopLine XL sliding system",
+    "Fabricating Cabinets Learner Guide"
+  ],
+  "session_level_title": "LEVEL 11,12,14 — WARDROBES, INTERNALS, SLIDING DOORS",
+  "note": "Do not blindly copy IKEA dimensions into the software. Learn the system principle.",
+
+  "frame_families": {
+    "reference": "PAX (teach principle, not exact dims)",
+    "widths": [500, 750, 1000],
+    "depths": [350, 580, 600],
+    "heights": [2010, 2360],
+    "carcase_thickness": 18,
+    "note": "PAX uses an 18mm frame. Current standard sizes confirmed by IKEA: 500/750/1000 wide, 350/580 deep, 2010/2360 high.",
+    "corner_addon": "corner frame add-on unit; all PAX frames; 4 adjustable shelves included"
+  },
+
+  "interior_organizers_inside_frame": {
+    "so": "THE key correction: drawer boxes, rods, shelves are SEPARATE KOMPLEMENT interior organizers sized to the frame's INNER width/depth, sitting BEHIND the door plane. They are INSIDE the wardrobe, not part of the carcase.",
+    "rule": "organizer_inner_width = frame_carcase_width - 2 * frame_thickness",
+    "sized_to": "frame inner width + depth; actual dims vary by organizer",
+    "drawer": {
+      "note": "KOMPLEMENT drawers are separate interior drawers (50/75/100cm wide x 35/58cm deep). Standard drawer heights H63/90/122/186/250.",
+      "runner_reveal_per_side": [12, 13]
+    },
+    "shelf": "adjustable shelves on System 32 grid"
+  },
+
+  "closet_rod": {
+    "mozaik": {
+      "ClosetRodPosition": "distance from the TOP of the rod to the TOP of the opening (p163)",
+      "ClosetThruBore": "whether line-bore holes that line up on the opposite side are treated as thru-bore (p162)"
+    },
+    "positioning_rule": "rod hangs UNDER a structural TOP SHELF; clothes hang below the rod.",
+    "hanging_zones": {
+      "single_hang": "one rod high (~1700mm rod, long garments)",
+      "double_hang": "two stacked rods (~1050/1100mm each, shorter garments)",
+      "top_shelf": "structural fixed shelf above rod (folded items)"
+    },
+    "hardware_rule": "rod is located on the 32mm grid; rail + sockets/rail end supports."
+  },
+
+  "sliding_wardrobe_doors": {
+    "reference": "Hettich TopLine XL + PAX sliding doors",
+    "components": [
+      "track_system (top/bottom u-channel rail)",
+      "door_thickness (18-30mm)",
+      "door_weight (up to 60kg)",
+      "min/max door width",
+      "door_overlap (leaves must overlap so they don't catch)",
+      "number_of_doors",
+      "front/back door position",
+      "soft_close_mechanism",
+      "bottom_guide / top_runner",
+      "adjustment_allowance"
+    ],
+    "pax_note": "PAX sliding doors sold in PAIRS; size refers to total measurement of two doors together; metal frame + panels; soft-closing device.",
+    "frame": "aluminium/steel metal frame, panels (wood/glass/mirror) fitted in, leaves ride front and back track",
+    "hettich_topline_xl": {
+      "system": "TOP RUNNING sliding door system (floor-to-ceiling, large-format, 'top-last word in sliding perfection')",
+      "engineering": [
+        "running component is extremely SHALLOW, hardly visible; damper behind the profile",
+        "bottom guide profile is SET BACK BENEATH the base panel, almost hidden",
+        "Silent System damper: slow down doors gently; screws into end cap (no complex formula); auto-activates on first close; cannot be inserted wrongly",
+        "centre door opens left AND right; slowed from either direction and pulled to end position",
+        "door height adjusted from the FRONT (from the side for ceiling-height); overlay adjusted by any amount with door closed, no tools",
+        "floor standing guard so doors can be set down without damage; bottom guide glides up automatically",
+        "decorative self-adhesive tapes: champagne, white, black (harmonise visible profile surface)",
+        "iF Design Award"
+      ],
+      "application": "TopLine XL for top-running large sliding wardrobes; Slideline M = the sliding companion (complementary product)"
+    }
+  },
+
+  "wardrobe_lighting": {
+    "note": "LED lighting strips fitted in PAX (VERSIDAN) + over-cabinet lighting (TV RODRAG / YTBERG). LED driver (TRADFRI smart / ANSLUTA basic). Add LED groove + wire hole (user requirement)."
+  },
+
+  "build_order": [
+    "carcass (frame) -> back fixing -> door frames",
+    "interior organizers placed INSIDE frame, behind door plane",
+    "rod under top shelf, on System 32 grid",
+    "internal drawer boxes (KOMPLEMENT) between shelves",
+    "sliding door track + leaves (front/back position)"
+  ]
+}

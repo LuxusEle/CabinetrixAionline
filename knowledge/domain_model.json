@@ -1,0 +1,95 @@
+{
+  "$schema": "cabinetry-knowledge/v1",
+  "doc": "Domain model + collision/compatibility engines + BOM/cut-list architecture + master study order.",
+  "session_level_title": "LEVEL 34,35,37,38,39",
+  "note": "Guide for ARCHITECTING the software. Do not scatter corner exceptions; do not maintain BOM independently; keep all domain objects separate.",
+
+  "domain_model": {
+    "tree": {
+      "PROJECT": [ "ROOM" ],
+      "ROOM": [ "WALLS", "WINDOWS", "DOORS", "COLUMNS", "SERVICES" ],
+      "CABINET_RUN": [ "CABINET" ],
+      "CABINET": [
+        "CARCASS", "OPENINGS", "HARDWARE", "MACHINING"
+      ],
+      "CARCASS": [ "side", "side", "bottom", "top", "back", "shelves" ],
+      "OPENINGS": [ "door", "drawer", "appliance", "open" ],
+      "HARDWARE": [ "hinges", "runners", "accessories" ],
+      "MACHINING": [ "holes", "grooves", "routes" ]
+    },
+    "separate_objects": [
+      "CABINET", "CARCASS", "FRONT", "PANEL", "OPENING",
+      "HARDWARE", "ACCESSORY", "APPLIANCE", "MACHINING", "MATERIAL"
+    ],
+    "examples_of_confusion_to_avoid": [
+      "A door is NOT a cabinet",
+      "A drawer is NOT merely a front",
+      "An oven is NOT a cabinet",
+      "A Gola profile is NOT decoration (it is physical geometry)",
+      "A LeMans is NOT an image (it occupies space)"
+    ]
+  },
+
+  "collision_engine": {
+    "level_title": "LEVEL 37",
+    "compute_3d_bounding_for": ["doors", "handles", "drawers", "appliances", "accessories", "walls", "windows", "neighbour_cabinets"],
+    "examples": [
+      "door.open(110deg).intersects(wall) -> collision",
+      "drawer.extended_geometry.intersects(opposite_island) -> collision"
+    ],
+    "provenance": "Blum's own configurator performs collision checks during cabinet planning — a proven professional feature, not overengineering."
+  },
+
+  "accessory_compatibility_engine": {
+    "level_title": "LEVEL 38",
+    "examples": [
+      { "cabinet": { "width": 450, "depth": 560, "opening": "door" }, "request": "LeMans", "result": "NOT COMPATIBLE" },
+      { "cabinet": { "corner": "blind", "handing": "right" }, "system": "compatible accessory options: [...]" }
+    ],
+    "rule": "The software should tell the designer what IS possible, not merely allow incorrect geometry."
+  },
+
+  "bom_engine": {
+    "level_title": "LEVEL 39",
+    "so": "BOM must come FROM the model. Never maintain BOM independently.",
+    "structure": {
+      "CARCASE": ["2 x side", "1 x bottom", "2 x stretcher", "1 x back", "1 x shelf"],
+      "FRONTS": ["2 x door"],
+      "HARDWARE": ["4 x hinge", "4 x plate", "4 x feet", "8 x shelf support", "x x screws"],
+      "EDGING": ["door perimeter", "side fronts", "shelf front"],
+      "MACHINING": ["System32", "hinge cup", "mounting plate", "connector holes"]
+    }
+  },
+
+  "cut_list": {
+    "level_title": "LEVEL 40",
+    "fields": ["job", "cabinet", "part", "quantity", "length", "width", "thickness", "material", "grain", "edge_top", "edge_bottom", "edge_left", "edge_right", "label"],
+    "bridges_to": ["beam_saw", "panel_saw", "nesting_cnc", "edgebander", "drilling_cnc"]
+  },
+
+  "hardware_plug_in": {
+    "level_title": "LEVEL 41",
+    "providers": ["Blum", "Hettich", "Grass", "Hafele", "Kessebohmer", "Generic"],
+    "each_provider_exposes": ["products", "dimensions", "compatibility", "machining", "cad_model", "bom", "rules"]
+  },
+
+  "validation": {
+    "level_title": "LEVEL 32",
+    "methods": ["validate_load", "validate_span", "validate_hardware_capacity", "validate_front_weight"],
+    "principle": "A geometrically valid cabinet is not necessarily a structurally valid cabinet (ANSI/KCMA A161.1)."
+  },
+
+  "master_study_order": {
+    "week1": "PHYSICAL CABINET (fabricate; disassemble METOD; build base/wall/tall; backs/plinths/shelves/stretchers; explain System 32)",
+    "week2": "FRONTS + HARDWARE (doors; overlay/inset/gaps; hinges + drilling; wood drawers; metal drawers; drawer-front calc)",
+    "week3": "REAL KITCHENS (sink; hob+hood; oven+microwave tower; fridge housing; pantry; corners; islands + fillers)",
+    "week4": "ACCESSORIES (bottle/spice pull-outs; bins; LeMans/corners; tall pull-outs; lift-up doors; gola; lighting/open/glass)",
+    "week5": "WARDROBES (carcasses; hinged doors; sliding doors; short/long/double hanging; drawers+shelves; shoes/trousers/jewellery; lifts)",
+    "week6": "INSTALLATION + MANUFACTURING (measure; walls+fillers; levelling; wall fixing; services; cut list+edging; drilling+CNC)"
+  },
+
+  "final_exam": {
+    "kitchen": "3500x4000 room, door/window/water/waste/electrical/gas. Design complete kitchen -> room model, cabinet layout, cabinet list, carcass, fronts, drawers, hinges, appliances, accessories, fillers, plinth, end panels, worktop, BOM, cut list, edge list, machining list, hardware list, installation drawings, DXF/CNC.",
+    "wardrobe": "3000 W x 600 D x 2600 H wardrobe space -> carcasses, hinged/sliding doors, double hanging, long hanging, drawers, shelves, shoe racks, accessories, fillers, end panels, hardware, BOM, manufacturing output."
+  }
+}

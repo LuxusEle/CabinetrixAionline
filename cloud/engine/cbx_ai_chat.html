@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Cabinex AI Chat</title>
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background-color: #f3f4f6; margin: 0; padding: 0; display: flex; flex-direction: column; height: 100vh; }
+    #header { background: #4f46e5; color: white; padding: 15px; font-weight: bold; text-align: center; }
+    #chat-container { flex: 1; padding: 15px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; }
+    .message { max-width: 80%; padding: 10px 14px; border-radius: 8px; font-size: 14px; line-height: 1.4; word-wrap: break-word; }
+    .msg-user { align-self: flex-end; background: #4f46e5; color: white; border-bottom-right-radius: 2px; }
+    .msg-ai { align-self: flex-start; background: #e5e7eb; color: #111827; border-bottom-left-radius: 2px; }
+    .msg-system { align-self: center; background: #fef3c7; color: #92400e; font-size: 12px; border-radius: 12px; padding: 4px 10px; }
+    #input-area { background: white; padding: 10px; border-top: 1px solid #d1d5db; display: flex; gap: 8px; }
+    #message-input { flex: 1; padding: 10px; border: 1px solid #d1d5db; border-radius: 6px; outline: none; }
+    #message-input:focus { border-color: #4f46e5; }
+    button { background: #4f46e5; color: white; border: none; padding: 0 15px; border-radius: 6px; cursor: pointer; font-weight: bold; }
+    button:hover { background: #4338ca; }
+    #settings { padding: 10px; background: white; border-bottom: 1px solid #d1d5db; display: flex; gap: 8px; }
+    #api-key { flex: 1; padding: 6px; font-size: 12px; }
+  </style>
+</head>
+<body>
+
+  <div id="header">Cabinex AI Designer</div>
+  
+  <div id="settings">
+    <input type="password" id="api-key" placeholder="Paste Gemini API Key here...">
+    <button id="save-key-btn" style="font-size:12px; padding: 6px 10px;">Save Key</button>
+  </div>
+
+  <div id="chat-container">
+    <div class="message msg-ai">Hello! I can help you generate cabinets in SketchUp. Please tell me the configuration you need.</div>
+  </div>
+
+  <div id="input-area">
+    <input type="text" id="message-input" placeholder="Describe cabinets..." value="tall unit one glass sash door , gola bottom sink, 3drawer box, sink , top frame top amuminum structure sash door , one open sehlf unit seperatemade by bootm 18mm material">
+    <button id="send-btn">Send</button>
+  </div>
+
+  <script>
+    const chatContainer = document.getElementById('chat-container');
+    const messageInput = document.getElementById('message-input');
+    const sendBtn = document.getElementById('send-btn');
+    const apiKeyInput = document.getElementById('api-key');
+    const saveKeyBtn = document.getElementById('save-key-btn');
+
+    let chatHistory = [];
+    
+    // System instruction to guide the Gemini model
+    const systemPrompt = `You are an AI assistant for a SketchUp cabinet plugin (Cabinex AI). The user will describe a cabinet or a full kitchen. You must output a JSON array of cabinet specifications. ONLY output raw JSON. Do not include markdown formatting or backticks.
+
+Allowed keys per cabinet:
+- type: 'base', 'wall', or 'tall'
+- width: integer (e.g. 600)
+- height: integer (e.g. 870)
+- depth: integer (e.g. 560)
+- doors: 'handled', 'sash', 'gola', or 'none'
+- bottom_config: 'standard' or 'drawers'
+- drawers_count: integer (e.g. 3)
+- subtype: 'standard', 'sink', 'cooker'
+
+You must deduce dimensions logically if not provided (e.g. base cabinets are usually 870h x 600d). If multiple units are requested, output a single flat array containing all of them in order.`;
+
+    // Load API key on start
+    const savedKey = localStorage.getItem('cabinex_gemini_key');
+    if(savedKey) apiKeyInput.value = savedKey;
+
+    saveKeyBtn.onclick = () => {
+      localStorage.setItem('cabinex_gemini_key', apiKeyInput.value);
+      addMessage('API Key saved securely in your SketchUp dialog storage.', 'system');
+      bestModelCache = null; // Clear cache to refetch if key changes
+    };
+
+    let bestModelCache = null;
+
+    async function getBestModel(apiKey) {
+      if (bestModelCache) return bestModelCache;
+      try {
+        const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models?key=${apiKey}`);
+        const data = await res.json();
+        if (data.models) {
+          // Filter for gemini models that support generateContent
+          let models = data.models.filter(m => m.name.includes('gemini') && m.supportedGenerationMethods.includes('generateContent'));
+          
+          // Sort them to prefer 'pro' models over 'flash' or 'lite', and higher versions (e.g. 1.5 over 1.0)
+          models.sort((a, b) => {
+            const aIsPro = a.name.includes('pro');
+            const bIsPro = b.name.includes('pro');
+            if (aIsPro && !bIsPro) return -1;
+            if (!aIsPro && bIsPro) return 1;
+            // Both are pro or both are not pro, sort descending by name to get higher version numbers
+            return b.name.localeCompare(a.name);
+          });
+          
+          if (models.length > 0) {
+            bestModelCache = models[0].name.replace('models/', '');
+            console.log("Selected best model:", bestModelCache);
+            return bestModelCache;
+          }
+        }
+      } catch (err) {
+        console.error("Failed to fetch models", err);
+      }
+      return 'gemini-1.5-flash'; // Fallback
+    }
+
+    function addMessage(text, sender) {
+      const div = document.createElement('div');
+      div.className = `message msg-${sender}`;
+      div.textContent = text;
+      chatContainer.appendChild(div);
+      chatContainer.scrollTop = chatContainer.scrollHeight;
+    }
+
+    async function sendMessageToGemini(userText) {
+      const apiKey = apiKeyInput.value.trim();
+      if(!apiKey) {
+        addMessage('Please enter your Gemini API Key at the top first.', 'system');
+        return;
+      }
+
+      addMessage(userText, 'user');
+      messageInput.value = '';
+      sendBtn.disabled = true;
+      sendBtn.textContent = '...';
+
+      // Build conversation history for Gemini API
+      const contents = chatHistory.map(msg => ({
+        role: msg.role,
+        parts: [{ text: msg.text }]
+      }));
+      
+      // Add system prompt to the first user message context, or as a system instruction (supported in v1beta)
+      // We will append user text
+      contents.push({ role: 'user', parts: [{ text: userText }] });
+
+      try {
+        const modelToUse = await getBestModel(apiKey);
+        
+        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${modelToUse}:generateContent?key=${apiKey}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            system_instruction: { parts: [{ text: systemPrompt }] },
+            contents: contents,
+            generationConfig: { temperature: 0.2 }
+          })
+        });
+
+        const data = await response.json();
+        
+        if(data.error) {
+          throw new Error(data.error.message);
+        }
+
+        const aiResponseText = data.candidates[0].content.parts[0].text.trim();
+        
+        // Update history
+        chatHistory.push({ role: 'user', text: userText });
+        chatHistory.push({ role: 'model', text: aiResponseText });
+
+          // Check if the AI returned JSON (array or object)
+          try {
+            // Strip markdown backticks if the AI accidentally includes them
+            let cleanText = aiResponseText.replace(/```json/gi, '').replace(/```/g, '').trim();
+            const finalJson = JSON.parse(cleanText);
+            let specsArray = null;
+            
+            // Handle both the old format {"ready":true, "specs": [...]} and the new direct array format [...]
+            if (Array.isArray(finalJson)) {
+              specsArray = finalJson;
+            } else if (finalJson.ready && finalJson.specs) {
+              specsArray = Array.isArray(finalJson.specs) ? finalJson.specs : [finalJson.specs];
+            }
+
+            if (specsArray && specsArray.length > 0) {
+              addMessage(`Sending ${specsArray.length} cabinet(s) to CBX Engine...`, 'system');
+              
+              // CALL SKETCHUP RUBY
+              if(typeof sketchup !== 'undefined' && sketchup.buildCabinet) {
+                sketchup.buildCabinet(JSON.stringify(specsArray));
+              } else {
+                console.warn("sketchup object not found. Running outside of SketchUp?");
+              }
+              return;
+            }
+          } catch(e) {
+            // Not valid JSON, fall through to conversational reply
+          }
+  
+          // If not JSON, it's a conversational reply
+          addMessage(aiResponseText, 'ai');
+
+      } catch(err) {
+        addMessage(`Error: ${err.message}`, 'system');
+      } finally {
+        sendBtn.disabled = false;
+        sendBtn.textContent = 'Send';
+      }
+    }
+
+    sendBtn.onclick = () => {
+      const text = messageInput.value.trim();
+      if(text) sendMessageToGemini(text);
+    };
+
+    messageInput.addEventListener('keypress', (e) => {
+      if(e.key === 'Enter') sendBtn.click();
+    });
+
+  </script>
+</body>
+</html>

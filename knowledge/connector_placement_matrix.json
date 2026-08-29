@@ -1,0 +1,166 @@
+{
+  "$schema": "cabinetry-knowledge/v1",
+  "doc": "CONNECTOR PLACEMENT MATRIX. The authoritative rule for WHERE a connector (dowel/cam/confirmat/Rafix) is machined is ALWAYS in a JOINT - where one panel's EDGE meets another panel's FACE - positioned on the System 32 grid. It is never a floating marker mid-face.",
+  "source": [
+    "Fabricating Cabinets Learner Guide LMFKB3005A p50 (joints & fasteners), p52 (System 32, dowel+cam flush fitting), p54 (carcase = back+base+two ends+two rails), p58 (concealed hinge 35mm cup, 3mm edge, mounting plate to carcase)",
+    "Mozaik JointFast 1-8 + PnlFast (joint fastener templates, dedupe guard p133)",
+    "eCabinet KD/RTA hardware; Blum 37/32 + 20/32 mounting-place grids",
+    "GRASS drawer installation width EB=29/30"
+  ],
+  "session_level_title": "SYSTEM 32 + CONNECTOR JOINT PLACEMENT",
+  "units": "millimetres",
+
+  "system32_grid": {
+    "so": "THE coordinate system for cabinet interiors. Each vertical panel's internal face has rows of 5mm holes at 32mm centres.",
+    "hole_diameter": 5,
+    "hole_pitch": 32,
+    "homes": ["shelf supports", "concealed hinge mounting plates", "drawer runners", "connectors (cam/dowel)", "accessories"],
+    "grid_vertical_panel": "bored on BOTH internal faces of ends + partitions; visible rows",
+    "grid_horizontal_panel": "NOT line-bored; horizontal panels receive edge machining (bolt/dowel in their EDGE)"
+  },
+
+  "connector_placement_matrix": {
+    "so": "A joint is a BUTT joint: the EDGE of one panel butted against the FACE of another (LMFKB3005A p40). The connector bridges that seam. Who carries the pocket/insert (FACE) vs the dowel/screw (EDGE) depends on the KD fitting group.",
+    "joint_definition": {
+      "butt_joint": "edge of panel A against face of panel B (most common in manufactured-board carcases)",
+      "variations": ["rebated butt joint", "mitre joint"]
+    },
+    "kd_fitting_groups": {
+      "so": "Knock-down fittings divided into THREE main groups (p41-42). Each maps to WHERE it is machined.",
+      "quick_assembly": {
+        "action": "press-stud",
+        "components": "insert fixed into ONE component + metal dowel drilled into the OTHER",
+        "face_vs_edge": "insert in face, dowel in edge",
+        "examples": ["Rafix", "cam-lock systems"]
+      },
+      "surface": {
+        "action": "locking / screwing / wedging",
+        "components": "two parts fixed directly to the SURFACE",
+        "face_vs_edge": "on the surface (no hole)",
+        "examples": ["brackets", "corner braces"]
+      },
+      "flush": {
+        "action": "fixed into pre-machined holes or rebates",
+        "components": "elements sit IN the hole",
+        "face_vs_edge": "dowel+cam : cam pocket in face, dowel in edge",
+        "examples": ["dowel and cam fitting", "confirmat"]
+      }
+    },
+    "system32_holes_location": {
+      "so": "Rows of 5mm holes at 32mm centres on the INTERNAL FACES OF ALL VERTICAL PANELS ONLY (p42). Housings: drawer runners, catches, hinges, adjustable shelf supports.",
+      "vertical_panels": "line-bored on internal faces (5mm @ 32mm)",
+      "horizontal_panels": "NOT line-bored; machined in their EDGE (dowel/bolt/insert)",
+      "hole_diameter": 5,
+      "pile": 32
+    },
+    "joint_definitions": [
+      {
+        "joint": "bottom_to_side",
+        "mating": "bottom panel edge -> side panel face",
+        "cam_pocket": "side panel internal FACE (vertical, 32mm line)",
+        "bolt_dowel_connector": "bottom panel EDGE"
+      },
+      {
+        "joint": "top_rail_to_side",
+        "mating": "top/front rail edge -> side panel face",
+        "cam_pocket": "side panel internal FACE",
+        "bolt_dowel_connector": "rail EDGE"
+      },
+      {
+        "joint": "back_stretcher_to_side",
+        "mating": "back stretcher edge -> side panel face",
+        "cam_pocket": "side panel internal FACE",
+        "bolt_dowel_connector": "stretcher EDGE"
+      },
+      {
+        "joint": "partition_to_bottom_top",
+        "mating": "partition edge -> bottom/top panel face",
+        "cam_pocket": "partition internal FACE",
+        "bolt_dowel_connector": "bottom/top panel EDGE (or partition dado)"
+      }
+    ],
+    "cam_pocket_on_vertical_face": {
+      "so": "On the 32mm pitch, near the mating edge. Standard = 37mm from the panel edge on the 32mm line.",
+      "blum_grid_37_32": "37mm from edge on the 32mm line",
+      "blum_grid_20_32": "20mm from edge on the 32mm line"
+    },
+    "system32_starting_row": {
+      "so": "Datum is commonly 37mm from the top/bottom of the panel, then every 32mm."
+    }
+  },
+
+  "board_joint_machining": {
+    "edge_connector": "dowel/bolt is machined into the panel EDGE (not the face)",
+    "face_connector": "cam pocket / Rafix / shelf-support hole is machined into the panel FACE (vertical panels)",
+    "cross_confirmat": "confirmat screws through ONE panel edge into the END of another (unfinished ends), OR edge-to-edge"
+  },
+
+  "gola_drawer_bank_production_spec": {
+    "source": "gola_drawer_bank_minifix.rb (authoritative production reference)",
+    "so": "THE production Gola drawer bank pattern. Hardware is placed by a DIRECTION VECTOR, never guessed [x,y,z]. This is the 'sense of direction' the engine must use.",
+    "dimensions": {
+      "board_thickness": 18, "drawer_front_thickness": 18, "back_thickness": 6,
+      "carcase_height": 720, "carcase_depth": 560, "plinth_height": 100, "plinth_setback": 50,
+      "drawer_box_side_thickness": 15, "drawer_box_bottom": 12, "drawer_runner_reveal": 12.5
+    },
+    "gola": {
+      "depth": 26, "L_height": 59, "C_height": 73.5, "wall": 1.5,
+      "profile_d": 27.2, "L_profile_h": 56.5, "C_profile_h": 73.0,
+      "CNC_side_pockets": "L-cutout 59mm + C-cutout 73.5mm, 26mm inset depth (single face loop pushed to 18mm)"
+    },
+    "minifix_joint": {
+      "signature": "build_minifix_joint(parent_ents, bolt_center, dir_vector, mats, face_z_offset)",
+      "cam": "D15 x 12.5mm, B=34mm drilling distance (cam at bolt_center + dir*B_DIST)",
+      "bolt": "Euro thread O5 x 11mm into vertical face + collar O7.5 x 1.5 at joint + pin O6.5 x 32.5 reaching into cam",
+      "dowel": "fluted beech O8 x 30mm placed 32mm away (System 32 pitch)"
+    },
+    "joint_count": "16x Minifix per 2x600 drawer bank (4 per bottom front/rear + 4 per top stretcher front/rear x 2 bays)",
+    "drawer_box": {
+      "so": "real box: 2 sides (15mm) + front + back + bottom (12mm), concealed runners each side",
+      "runner_reveal": "12.5mm per side",
+      "front": "bays width - 3mm; upper 305mm, lower 315mm high",
+      "runners": "10 x 24mm box-profile, full length"
+    },
+    "materials": {
+      "carcase_white": "[242,240,235]", "front_anthracite": "[50,53,58]",
+      "gola_black_anodized": "[30,32,35]", "drawer_birch": "[228,215,192]",
+      "minifix_zinc": "[175,180,185]", "hardware_steel": "[80,95,120]",
+      "beech_dowel": "[212,160,102]", "drill_hole": "[30,28,25]",
+      "minifix_arrow_accent": "[235,75,30]", "plinth_black": "[40,42,45]"
+    },
+    "modes": ["hybrid (one bank open one closed)", "joinery (drawers hidden)", "open", "closed", "exploded"]
+  },
+  "steelfix_minifix": {
+    "so": "Steelfix / Minifix cam-lock. A flush KD fitting: cam housing in the panel FACE, connecting bolt in the mating panel EDGE running horizontally into the cam. (Authoritative dims from demo_ljoint_connections.rb = Hafele 15mm / Hettich Rastex.)",
+    "cam": { "pocket_diameter": 15, "pocket_depth": 12.5, "b_dist": 34, "note": "D15x12.5mm, B=34mm = distance from joint edge to cam centre; cam bored on the horizontal panel TOP face" },
+    "edge_bore": { "diameter": 8, "length": 34, "note": "D8x34mm bolt channel hole in the horizontal panel edge (runs along the joining axis toward cam)" },
+    "face_bore": { "diameter": 5, "length": 11.5, "note": "D5x11.5mm thread hole in the vertical panel face" },
+    "bolt_model": {
+      "thread": "O5 x 11mm (into vertical face, -Y)",
+      "collar": "O7.5 x 1.5mm (stop ring at interface)",
+      "pin": "O6.5 x 26mm (smooth shank reaching into cam, +Y)",
+      "head": "O6.8 x 6.5mm (spherical locking head in cam)",
+      "axis": "along Y (edge panel -> cam)"
+    },
+    "dowel": { "diameter": 8, "length": 30, "face_depth": 10.5, "edge_depth": 21, "note": "fluted beech pin D8x30mm; face bore D8x10.5, edge bore D8x21" },
+    "confirmat": { "shank_diameter": 7, "length": 50, "head_diameter": 10, "pilot_diameter": 5, "pilot_depth": 42, "head_height": 3.5, "note": "D7x50mm countersunk; vert panel D7 + D10 bevel; horiz pilot D5x42" },
+    "cap": "cover cap over the cam pocket face",
+    "installation": "insert cam housing in face -> drop bolt wall in -> turn cam 90deg to lock"
+  },
+
+  "practical_placement_numbers": {
+    "board_thickness": 18,
+    "edge_setback_bolt": 9,
+    "cam_pocket_diameter": 15,
+    "cam_pocket_depth": 13,
+    "bolt_diameter": 10,
+    "dowel_diameter": 6,
+    "first_grid_row_from_edge": 37,
+    "grid_pitch": 32,
+    "note": "Values per industry-standard KD hardware (confirm with specific manufacturer catalogue for exact bore depths/sizes)"
+  },
+
+  "implementation_rule": {
+    "so": "When drawing a connector for a unit, place it at the JOINT SEAM (edge-of-one-panel ∩ face-of-other-panel), on a 32mm grid row - NOT floating mid-face. Tool: resolve the joint, find panel-B face point at (grid row, coupling edge), then draw cam pocket there + bolt/dowel in the mating edge. Always verify against System32/hardware rules - never invent a mid-seam position."
+  }
+}

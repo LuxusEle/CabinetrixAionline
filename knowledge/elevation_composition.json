@@ -1,0 +1,348 @@
+{
+  "$schema": "cabinetry-knowledge/v1",
+  "doc": "ELEVATION COMPOSITION STANDARD. THE MISSING LAYER. This sits ABOVE the cabinet rule engine. It solves doors, drawers, cabinets and wall elevations BEFORE any cabinet geometry is drawn. Without it the generator does greedy remaining_width take 900 take 600 -> ugly walls.",
+  "note": "The generator must NOT do: remaining_width=2340, take 900, take 600, take 450, remainder=390, make 390 cabinet (greedy). It must LOCK anchors -> FIND centres -> DIVIDE into groups -> GENERATE many candidates -> APPLY hardware + front templates -> SCORE -> return best.",
+  "session_level_title": "LEVEL 43 — ELEVATION COMPOSER",
+
+  "core_principle": {
+    "so": "Cabinets must never be distributed simply to fill available wall width.",
+    "solve_order": [
+      "ROOM CONSTRAINTS",
+      "FUNCTIONAL ANCHORS",
+      "VISUAL AXES",
+      "CABINET MODULES",
+      "FRONT DIVISIONS",
+      "HARDWARE VALIDATION",
+      "VISUAL BALANCE",
+      "FILLERS / SCRIBES"
+    ],
+    "goal": "FUNCTION + RHYTHM + ALIGNMENT + PROPORTION + MANUFACTURABILITY (NOT maximum symmetry)"
+  },
+
+  "two_rule_types": {
+    "HARD_CONSTRAINTS": {
+      "cannot_be_violated": [
+        "appliance_size", "sink_position", "plumbing_position",
+        "hardware_minimum_cabinet_width", "hinge_restrictions",
+        "drawer_runner_restrictions", "corner_mechanism_space",
+        "door_collision", "window", "wall", "column", "service_penetration",
+        "minimum_filler", "opening_clearance"
+      ],
+      "violation": "INVALID design"
+    },
+    "SOFT_DESIGN_CONSTRAINTS": {
+      "determine_if_valid_design_looks_good": [
+        "symmetry", "repetition", "equal_door_widths", "aligned_drawer_fronts",
+        "aligned_wall/base_joints", "consistent_cabinet_widths", "balanced_mass",
+        "matching_top_lines", "focal_point_centering"
+      ],
+      "produce": "DESIGN SCORE"
+    }
+  },
+
+  "elevation_axes": {
+    "so": "Identify visual axes BEFORE placing cabinets.",
+    "typical_axes": [
+      "WINDOW_CENTRE", "SINK_CENTRE", "COOKER/HOB_CENTRE", "HOOD_CENTRE",
+      "ISLAND_CENTRE", "TALL_CABINET_EDGE", "ROOM_CENTRE", "DOOR_EDGE"
+    ],
+    "rule": "Important architectural objects create STRONGER axes than cabinet joints.",
+    "sink_under_window": "SINK_CENTRE ~= WINDOW_CENTRE unless plumbing/hard constraint prevents it; balance outward from that centre."
+  },
+
+  "focal_groups": {
+    "so": "Certain objects visually dominate an elevation.",
+    "priority": [
+      "cooker + hood",
+      "window + sink",
+      "tall appliance tower",
+      "decorative/glass cabinet",
+      "large pantry",
+      "island"
+    ],
+    "rule": "Surrounding cabinets form a GROUP. Example: 450|600|HOOD 900|600|450 is stronger than 300|800|HOOD 900|450|600 even if both fill the wall exactly."
+  },
+
+  "preferred_modular_widths": {
+    "metric_library": [300, 400, 450, 500, 600, 800, 900],
+    "specialist_widths": [150, 200, 250, 350, 700, 1000, 1200],
+    "usage": {
+      "150-300": "bottle/spice pull-out",
+      "300-600": "single-door base or wall cabinet",
+      "600-900": "drawer cabinet",
+      "600-1000": "double-door cabinet",
+      "800-1200": "wide drawer bank where hardware permits"
+    },
+    "rule": "Use specialist widths ONLY when function requires. Exact allowable width still comes from selected hardware + construction system."
+  },
+
+  "reduce_width_variety": {
+    "so": "600|600|600|450|450 reads better than 570|420|680|530|500 even at identical length.",
+    "rule": "Prefer no more than THREE principal module widths on one elevation. Custom dimensions should absorb unavoidable wall differences, not become the visual language."
+  },
+
+  "repeat_before_inventing": {
+    "so": "When another cabinet with the same width solves the problem, prefer repetition.",
+    "bad": "450|550|620|430|700",
+    "good": "450|600|600|600|450",
+    "principle": "Repetition creates rhythm."
+  },
+
+  "mirror_around_focal_points": {
+    "so": "Symmetry is a SOFT rule, NOT hard.",
+    "examples": {
+      "good": ["450|600|[900 HOB]|600|450", "600|[900 HOB]|600"],
+      "acceptable": "450|600|[900 HOB]|600 when room function prevents symmetry"
+    },
+    "rule": "Avoid forced symmetry if it damages storage or appliance placement."
+  },
+
+  "door_leaf_width_rule": {
+    "preferred_single_door_front": [250, 600],
+    "above_600": "consider two doors unless hardware/front material supports a large single front intentionally",
+    "double_door_equal": "900 cabinet = 447/gap/447 (NOT 297/gap/597) unless deliberate functional reason",
+    "override": "Hardware manufacturer limits ALWAYS override the visual guideline."
+  },
+
+  "cabinet_grid_vs_front_grid": {
+    "so": "CABINET width != DOOR width. Carcass grid and front grid are SEPARATE systems.",
+    "example": "CABINET=900 may contain 2x hinged doors OR 1x wide drawer front OR 3x drawers vertically OR internal drawers behind one large door OR special accessory.",
+    "model": "Model CABINET_GRID and FRONT_GRID independently."
+  },
+
+  "horizontal_front_grid": {
+    "so": "An elevation should establish common horizontal datum lines.",
+    "datums": [
+      "TOP OF TALL/WALL CABINETS",
+      "WALL CABINET BOTTOM",
+      "WORKTOP",
+      "PLINTH"
+    ],
+    "principle": "Repeated horizontal lines make the elevation visually calm."
+  },
+
+  "drawer_front_tiers": {
+    "so": "Do NOT generate arbitrary drawer-front heights per cabinet. Create standard FRONT HEIGHT FAMILIES.",
+    "modular_family": [100, 200, 400],
+    "example_800_front_zone": ["200+300+300", "200+200+400", "400+400"],
+    "principle": "Adjacent drawer cabinets should SHARE horizontal front lines whenever practical. (GOOD: aligned 200/300/300 tiers; POOR: 170/260/280/350 vs 540)."
+  },
+
+  "default_drawer_compositions": {
+    "so": "Provide approved templates rather than unlimited random division.",
+    "percentages_of_front_zone_after_gaps": {
+      "TWO_FRONT": ["50/50", "40/60"],
+      "THREE_FRONT": ["25/37.5/37.5", "33/33/34"],
+      "FOUR_FRONT": ["25/25/25/25", "20/20/30/30"]
+    },
+    "usage": "Shallow upper drawers for cutlery/utensils; deeper lower drawers for pots/plates/bulky storage.",
+    "validation": "Hardware engine must verify the selected drawer system physically fits each opening."
+  },
+
+  "design_proportions": {
+    "so": "Geometric ratios + standardized sizing + visual weight. These are SOFT design constraints; the HARD constraint is the selected hardware system (a Fibonacci drawer stack is overridden by GRASS/Blum standard heights H63/90/122/186/250).",
+    "soft_rules": {
+      "golden_ratio": { "ratio": "1 : 1.618", "use": "door height = door width x 1.618; ideal width = height / 1.618" },
+      "fibonacci_drawers": { "seq": [3, 5, 8, 13], "use": "graduated stack: e.g. 5in top, 8in mid, 13in bottom", "caveat": "overridden by standard hardware heights" },
+      "rule_of_thirds": { "use": "divide vertical elevation into thirds: bottom 2/3 = enclosed doors/big drawers, top 1/3 = open shelf or glass" },
+      "visual_gravity": { "use": "heaviest (deep drawers, solid doors) at BOTTOM; lightest (narrow drawers, glass) at TOP" },
+      "continuous_sightlines": { "use": "a drawer-tier reveal line should run across the whole elevation, aligning with adjacent door top rails" },
+      "symmetry_vs_asymmetry": { "use": "symmetry = easiest balance; if asymmetric, balance heavy element (tall pantry door) with equal weight (wide deep drawer stack)" }
+    },
+    "standard_increments": {
+      "us_imperial_3_inch": [12, 15, 18, 21, 24, 27, 30, 33, 36, 39, 42],
+      "metric_modular": [300, 400, 450, 500, 600, 800, 900],
+      "rule": "stick to 3-inch increments (US) / metric modules; breaking it for custom sizes creates awkward disproportionate spaces"
+    },
+    "double_door_over": {
+      "threshold_inch": 22,
+      "threshold_mm": 600,
+      "use": "if opening exceeds ~22-24in (600mm) split into two doors; a single wide door looks stout + needs too much swing clearance"
+    },
+    "hardware_proportions": {
+      "pull_length_rule": "pull length ~= 1/3 of door/drawer width (eg 24in drawer -> 8in pull)",
+      "pull_placement": {
+        "drawers": "centered both vertically and horizontally",
+        "upper_doors": "on side opposite hinges, aligned with bottom edge of top rail",
+        "base_doors": "on side opposite hinges, aligned with top edge of bottom rail"
+      }
+    },
+    "hard_constraint_override": "HARDWARE MANUFACTURER LIMITS ALWAYS OVERRIDE the visual guideline (same as door_leaf_width_rule)."
+  },
+
+  "adjacent_drawer_bank_rule": {
+    "so": "900 DRAWERS | 600 DRAWERS | 900 DRAWERS touching: use SAME TIER SYSTEM and SAME HORIZONTAL JOINTS even if drawer widths differ -> one continuous architectural line."
+  },
+
+  "wall_cabinet_top_line": {
+    "rule": "TOP OF WALL CABINETS SHOULD NORMALLY ALIGN on an uninterrupted elevation. Avoid random 2100/2250/1980 unless hood/window/architectural feature/appliance/intentional stepped design requires it."
+  },
+
+  "wall_cabinet_bottom_line": {
+    "rule": "WALL CABINET BOTTOMS should share one datum. Exceptions: hood, microwave, open decorative shelf, window, special lift cabinet.",
+    "penalty": "Random changes in wall cabinet height should receive a STRONG design penalty."
+  },
+
+  "wall_cabinet_width_relationship": {
+    "rule": "Relate wall widths to base below when practical.",
+    "examples": {
+      "base_600": "wall 600",
+      "base_900": "wall 450+450",
+      "base_1200": "wall 600+600"
+    },
+    "note": "Not every vertical seam must align, but seams should appear deliberate."
+  },
+
+  "donot_align_every_joint_blindly": {
+    "so": "Perfect vertical alignment is not always good design.",
+    "example": "sink base=900; wall above may be 450+450 because two smaller doors give better proportions.",
+    "alignment_can_occur_through": ["cabinet edge", "door edge", "centre line", "focal centre", "not necessarily carcass-to-carcass"]
+  },
+
+  "tall_cabinet_rule": {
+    "so": "Where tall cabinets touch wall cabinets: TALL TOP approximates WALL CABINET TOP. Avoid tall stopping randomly below wall-cabinet top unless intentional."
+  },
+
+  "tall_cabinet_front_divisions": {
+    "rule": "Horizontal lines on tall cabinets relate to nearby architectural lines (top of wall cabs, bottom of wall cabs, worktop, drawer tier, oven top/bottom, adjacent open shelf).",
+    "so": "INTERNAL DIVISION != EXTERNAL FRONT DIVISION. Do not divide tall doors arbitrarily just because the carcass contains shelves."
+  },
+
+  "top_double_height_cabinet_rule": {
+    "so": "Maintain consistent horizontal divisions across the elevation for double-height wall cabinets (TOP/MAIN/TOP/MAIN). Do not individually choose the top split per cabinet."
+  },
+
+  "handle_alignment": {
+    "so": "Handles create another visual grid.",
+    "rules": [
+      "neighbouring doors: handle height should normally align",
+      "drawer banks: handles align horizontally within each tier",
+      "tall doors: consistent ergonomic handle zone",
+      "integrated profiles/Gola are actual horizontal/vertical design lines (physical geometry)"
+    ]
+  },
+
+  "fillers_must_not_become_visual_modules": {
+    "so": "A filler solves wall tolerance, door opening, handle collision, corner clearance, scribe, installation. NOT part of main rhythm.",
+    "good": "WALL | FILLER | 600 | 600 | 600",
+    "bad": "600 | 37 filler | 600 | 600 (in middle of a focal elevation)",
+    "migrate_residual_to": ["wall ends", "corners", "tall-unit sides", "hidden service zones", "not the centre of the composition"]
+  },
+
+  "balance_mass_not_only_width": {
+    "so": "Consider visual weight (a 600 glass cabinet != 600 solid tall pantry).",
+    "visual_weights": {
+      "OPEN_SHELF": 0.4, "GLASS_FRONT": 0.7, "STANDARD_FRONT": 1.0,
+      "DARK_TALL_CABINET": 1.2, "APPLIANCE_TOWER": 1.3
+    },
+    "rule": "Compare left/right visual mass around major focal points. This is an AESTHETIC heuristic, not a manufacturing rule."
+  },
+
+  "visual_complexity_penalty": {
+    "penalize": [
+      "too many cabinet widths", "too many door widths", "too many drawer tier heights",
+      "random height changes", "small isolated cabinets", "central fillers",
+      "misaligned handles", "misaligned drawer fronts", "unexplained asymmetry"
+    ],
+    "reward": [
+      "repetition", "clear focal points", "common datums", "equal door pairs",
+      "repeated drawer tiers", "clean end conditions"
+    ]
+  },
+
+  "design_scoring_engine": {
+    "so": "After all hard constraints satisfied, compute TOTAL SCORE.",
+    "formula": "FUNCTION+ALIGNMENT+RHYTHM+PROPORTION+SYMMETRY+STORAGE+MANUFACTURABILITY - COLLISION - ODD_MODULE - FILLER - MISALIGNMENT",
+    "example_weighting": {
+      "FUNCTION": 30, "ALIGNMENT": 20, "RHYTHM": 15, "PROPORTION": 15,
+      "SYMMETRY": 10, "MANUFACTURABILITY": 10, "TOTAL": 100
+    },
+    "note": "Symmetry intentionally receives less importance than function."
+  },
+
+  "worked_example_3300": {
+    "so": "Functional centre = 900 cooker. Remaining 2400. Balanced: 600|600|900|600|600 = 3300 (excellent).",
+    "wall_3150": {
+      "remaining": 2250,
+      "candidates": [
+        { "layout": "450|600|900|600|600", "note": "functionally valid but visually biased" },
+        { "layout": "600|525|900|525|600", "note": "visually balanced but custom dimensions" },
+        { "layout": "450|675|900|675|450", "note": "depending manufacturing rules" }
+      ]
+    },
+    "rule": "Generate multiple valid candidates and score them. Do NOT greedily fill left-to-right."
+  },
+
+  "generate_multiple_partitions": {
+    "so": "For available width W generate all practical combinations of permitted modules.",
+    "example_W_1800": [
+      "600+600+600",
+      "450+450+450+450",
+      "900+900",
+      "600+450+450+300"
+    ],
+    "scored_note": "Normally 600+600+600 beats 600+450+450+300 unless different cabinet functions require it."
+  },
+
+  "solver_thinks_in_groups": {
+    "so": "Do NOT optimize individual cabinets. Optimize ELEVATION GROUPS.",
+    "groups": [
+      { "id": "window_group", "parts": "LEFT GROUP | WINDOW/SINK | RIGHT GROUP" },
+      { "id": "cooker_group", "parts": "LEFT STORAGE | HOB/HOOD | RIGHT STORAGE" },
+      { "id": "tall_group", "parts": "FRIDGE | OVEN | PANTRY" }
+    ],
+    "rule": "Groups balanced independently before the whole wall is scored."
+  },
+
+  "three_levels_of_alignment": {
+    "LEVEL_1_GLOBAL_DATUM": ["wall top", "wall bottom", "worktop", "plinth"],
+    "LEVEL_2_GROUP_DATUM": ["drawer tiers", "wall cabinet bottom", "upper split line"],
+    "LEVEL_3_LOCAL_DATUM": ["door pair", "handle", "appliance opening"],
+    "so": "Better than trying to align everything with everything."
+  },
+
+  "rule_priority_when_conflicting": [
+    "1 SAFETY",
+    "2 APPLIANCE REQUIREMENTS",
+    "3 HARDWARE REQUIREMENTS",
+    "4 ACCESS / CLEARANCE",
+    "5 FUNCTION",
+    "6 ARCHITECTURAL AXES",
+    "7 ALIGNMENT",
+    "8 RHYTHM",
+    "9 SYMMETRY",
+    "10 MINOR AESTHETIC PREFERENCE"
+  ],
+
+  "final_design_test": {
+    "so": "Hide handles, materials, colours, textures, lighting. Display only black outlines of the fronts. If the elevation still looks calm, organized and intentional, the composition is good.",
+    "fundamental_test": "DO THE LINES MAKE SENSE? A good elevation should look balanced before expensive finishes are applied."
+  },
+
+  "references_to_study": {
+    "Blum_Cabinet_Configurator": "separates front planning from cabinet construction; divide front widths/heights, large fronts, fixed dims, tier systems, move vertical/horizontal gaps. The architectural model to emulate.",
+    "IKEA_METOD": "modular vocabulary; frame widths 200/300/400/600/800; front families 100/200/400 heights -> discrete grid produces calmer elevations.",
+    "Blum_LEGRABOX": "defined side heights + space requirements rather than arbitrary drawer-box geometry; visual front division must be validated against selected hardware.",
+    "NKBA_Guidelines": "govern space planning, storage, ergonomics, safety. NOT the front-proportion engine. Role = make a beautiful elevation still function as a kitchen."
+  },
+
+  "critical_software_change": {
+    "so": "Your generator should NOT do greedy remaining_width=2340 -> take 900 -> take 600 -> take 450 -> remainder=390 -> make 390 cabinet. That is exactly how you get ugly walls.",
+    "should_do": [
+      "1 LOCK functional anchors",
+      "2 FIND visual centre lines",
+      "3 DIVIDE wall into composition groups",
+      "4 GENERATE 20-100 valid module combinations",
+      "5 APPLY hardware constraints",
+      "6 APPLY front/division templates",
+      "7 SCORE every elevation",
+      "8 RETURN best 3 designs"
+    ],
+    "candidate_example": {
+      "A": { "layout": "600|600|HOB 900|600|600", "score": 96 },
+      "B": { "layout": "450|750|HOB 900|750|450", "score": 92 },
+      "C": { "layout": "300|900|HOB 900|600|600", "score": 74 }
+    },
+    "conclusion": "AI chooses among top valid compositions rather than inventing cabinets one by one. This is the missing layer above the cabinet rule engine. Once it exists, balanced doors, drawer banks, top cabinets, tall-unit divisions and wardrobes all use the same underlying visual grammar."
+  }
+}

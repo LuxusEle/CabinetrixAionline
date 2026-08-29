@@ -1,0 +1,158 @@
+{
+  "$schema": "cabinetry-knowledge/v1",
+  "doc": "Manufacturing / machining rules. Every panel becomes operations; machining logic lives OUTSIDE SketchUp drawing code for scalability.",
+  "source": [
+    "Fabricating Cabinets Learner Guide (System 32, cutting lists, edging, assembly)",
+    "Blum (drilling templates, MINIPRESS), GRASS (TECMATOR)",
+    "IKEA METOD (suspension rails, fillers, install order)",
+    "Installation Requirements + Installing On-Site learner guides"
+  ],
+  "session_level_title": "LEVEL 18,19,27,28,40 — BACKS, PLINTHS, MACHINING, CUT LIST",
+  "units": "millimetres unless stated",
+
+  "system32": {
+    "so": "THE coordinate system for cabinet interiors. THE root cause fix.",
+    "concept": "rows of 5mm holes on the internal faces of all vertical panels, spaced at 32mm centres",
+    "geometry": { "diameter": 5, "pitch": 32 },
+    "homes": ["shelf supports", "hinges", "mounting plates (37/32, 20/32)", "drawer runners", "connectors", "accessories"],
+    "software_model": {
+      "System32Line": ["origin_x", "origin_y", "pitch=32", "diameter=5", "start_index", "end_index"]
+    },
+    "rule": "DO NOT hard-code every hole. Hardware references the System 32 grid. Rods, shelves, drawers, hinges snap to grid."
+  },
+
+  "backs": {
+    "configurations": [
+      { "id": "applied_back", "dwg": "back fixed BEHIND the sides/base" },
+      { "id": "grooved_inset_back", "dwg": "sides grooved, back sits IN groove (rebated)" },
+      { "id": "rebated_back", "dwg": "rebate into sides" },
+      { "id": "partial_back", "dwg": "back only where needed (e.g. behind sinks)" },
+      { "id": "no_back", "dwg": "against wall / island" },
+      { "id": "service_void", "dwg": "gap for plumbing/electrical behind" }
+    ],
+    "common_method": "external back (LMFKB3005A p54-55)",
+    "software_model": "BackConfiguration { type, thickness, inset, groove_depth, groove_width, service_gap }",
+    "affects": ["panel dimensions", "grooves", "cabinet depth", "internal depth", "squareness", "installation"]
+  },
+
+  "plinth_toe": {
+    "styles": [
+      { "id": "ladder_frame", "note": "PB/MDF, nailed/stapled/screwed, cross-supports NOTCHED at bottom for uneven floors; installed full-length on-site then levelled, THEN cabinets on top (LMFKB3005A p53)" },
+      { "id": "legs", "note": "CAPITA / METOD leg 8cm; hidden behind plinth or exposed (METOD p13)" },
+      { "id": "detachable_plinth", "note": "clipped-on front kickboard" },
+      { "id": "integral_plinth", "note": "recessed toe kick built into cabinet" },
+      { "id": "recessed_toe", "note": "toe setback ~50mm" },
+      { "id": "plinth_clips", "note": "detachable front" },
+      { "id": "end_returns", "note": "plinth return at run ends" },
+      { "id": "ventilation_grille", "note": "for appliances/heat" }
+    ],
+    "software_model": "Plinth { height, front_inset, side_inset, construction, leg_spacing, finish_panel }"
+  },
+
+  "fillers_scribes": {
+    "so": "FILLER != CABINET, END_PANEL != CABINET_SIDE, SCRIBE_PANEL != FILLER (Level 20). Real walls bow/lean/taper and contain pipes, columns, skirting, cornices.",
+    "items": ["filler", "scribe_panel", "end_panel", "service_gap", "tolerance"],
+    "rule": "never assume wall_width = sum(cabinets); account for fillers and scribes at the ends"
+  },
+
+  "materials": {
+    "so": "Materials are independent of geometry. Never `board_thickness = 18`; use `cabinet.carcase_material.thickness`. Changing 18->16 must propagate everywhere.",
+    "model": {
+      "Material": ["id", "category", "manufacturer", "name", "thickness", "sheet_width", "sheet_height", "grain_direction", "edgeable", "density", "cost", "finish", "color", "texture", "cnc_parameters"]
+    },
+    "categories": [
+      "particleboard", "MDF", "plywood", "melamine", "laminate", "acrylic",
+      "aluminium_composite", "aluminium_extrusion", "glass", "solid_surface",
+      "compact_laminate", "natural_stone", "engineered_stone"
+    ],
+    "standard_sheet": "2400 x 1200 (LMFKB3005A p27)"
+  },
+
+  "edgebanding": {
+    "level_title": "LEVEL 28",
+    "four_edges": ["TOP", "BOTTOM", "LEFT", "RIGHT"],
+    "per_edge": ["type", "material", "thickness", "finished", "visible"],
+    "rule": "know whether cut-size dimensions are BEFORE or AFTER edging (production tolerance)",
+    "range": "0.07mm - 2.00mm (LMFKB3005A p41); thickness affects door/drawer gap, so set before cutting",
+    "mozaik": "Edgebanding Assignment Template, up to 4 bandings per cabinet (Banding 1=box parts, 2=doors/drawer fronts, 3=drawer box parts)"
+  },
+
+  "grain_direction": {
+    "level_title": "LEVEL 29",
+    "states": ["vertical", "horizontal", "none"],
+    "matching_grain": "grain_group_id, sequence_index, source_sheet (for nesting + visual continuity)"
+  },
+
+  "machining": {
+    "level_title": "LEVEL 27",
+    "panel_operations": ["PROFILE", "DRILL", "BORE", "GROOVE", "POCKET", "ROUTE", "EDGE"],
+    "software_model": "DrillOperation { x, y, z, diameter, depth, face }",
+    "outputs": ["DXF", "CNC", "drilling_sheet", "barcode", "shop_drawing"]
+  },
+
+  "cut_list": {
+    "level_title": "LEVEL 40",
+    "fields": ["job", "cabinet", "part", "quantity", "length", "width", "thickness", "material", "grain", "edge_top", "edge_bottom", "edge_left", "edge_right", "label"],
+    "bridges_to": ["beam_saw", "panel_saw", "nesting_cnc", "edgebander", "drilling_cnc"]
+  },
+
+  "installation": {
+    "level_title": "LEVEL 30",
+    "order": [
+      "build suspension rails (base first, then wall), leveled pre-hang",
+      "wall cabinets first (except single-line with high cabinet -> high first)",
+      "fillers at walls; support strip to hold filler",
+      "drawer rails fitted to carcase BEFORE doors/shelves",
+      "bench tops, appliances, final inspection"
+    ],
+    "fixings": ["masonry fixings", "stud-wall fixings", "plinth levelling", "scribing"]
+  },
+
+  "quality_control": {
+    "level_title": "LEVEL 31",
+    "checks": ["doors plumb", "gaps even", "drawers smooth", "handles aligned", "shelves installed", "fillers fitted", "screws capped", "service cut-outs correct", "kickboards complete", "accessories operating", "worktops secured", "sinks sealed", "interiors clean"],
+    "software_validate": ["validate_load", "validate_span", "validate_hardware_capacity", "validate_front_weight"],
+    "kwcma": "ANSI/KCMA A161.1 performance standard: a geometrically valid cabinet is not necessarily a structurally valid cabinet"
+  },
+
+  "NO_INTERPENETRATION_RULE": {
+    "so": "GLOBAL HARD RULE (user-mandated): except for a CONNECTOR, and except for the BACK SHEET sitting INTO a groove, NOTHING penetrates or nests inside another material/panel. Drawer boxes ride on runners in the OPENING - they are never modelled as penetrating into a panel. Every part is a separate, non-overlapping solid; panels JOIN by butt/edge/face, not by being nested inside one another.",
+    "allowed_penetrations": [
+      "connectors (cam pocket into a panel face; bolt/dowel into a mating edge - these ARE machined INTO material by design)",
+      "back sheet seated into a groove (dado/rebate) in the sides"
+    ],
+    "forbidden": [
+      "a drawer box solid overlapping/tangent-penetrating a side, bottom, or rail panel",
+      "any panel solid nested inside another panel's volume",
+      "any accessory solid buried inside carcase material"
+    ],
+    "validation": "engine must assert bounding-box disjointness for every pair of non-connector parts; a conflict = FAIL the build, never silently overlap."
+  },
+
+  "GOLA_OVERLAP_RULE": {
+    "so": "TRUE handleless finger-pull geometry (learned from build_luxury_gola_kitchen_master.rb). Drawer fronts OVERLAP the Gola profiles by design - the front extends INTO the L-Gola channel at top and INTO the C-Gola channel at mid, so the finger grab is real, not a gap.",
+    "L_overlap": { "top_drawer_front_extends_up": "into L-Gola", "grab_mm": 35 },
+    "C_overlap": { "upper_drawer_front_extends_down": "into C-Gola", "bottom_drawer_front_extends_up": "into C-Gola", "grab_mm": 22 },
+    "example_front_heights": { "upper_drawer": 310, "lower_drawer": 355, "spice_pullout": "carcase_h - 38" },
+    "note": "Gola L (H56.5, D26) and C (H73, D26) profiles seat RECESSED 26mm behind the front plane; fronts overlap them, front plane is proud by FRONT_THK."
+  },
+
+  "FACING_DIR_RULE": {
+    "so": "Gola profile channel opening direction must match the run (learned from build_luxury_gola_kitchen_master.rb). Wall run channel opens -Y; island channel opens +Y (into the aisle). Same profile, flipped by facing_dir.",
+    "values": ["front (-Y wall)", "aisle (+Y island)"],
+    "note": "This is the 'sense of direction' rule - every Gola/handleless profile and every connector is placed by a facing vector, never a guessed coordinate."
+  },
+
+  "DRAWER_BOX_5_PIECE_RULE": {
+    "so": "Authentic undermount drawer box (learned from build_luxury_gola_kitchen_master.rb Hettich Actro 5D). True 5-piece construction, rides on concealed runners in the opening - NEVER penetrates panels.",
+    "pieces": ["left side (15mm)", "right side (15mm)", "sub-front (15mm)", "back panel (15mm)", "RECESSED bottom (16mm sitting 12mm up inside the sides)"],
+    "clearances": { "side_runner_reveal_each": 12.5, "runner_space_under_bottom": 15, "runner_size": "11 x 24mm", "runner_pilot_hole": "37mm System 32" },
+    "front": "decorative drawer front, FRONT_THK, overlaps Gola profiles (see GOLA_OVERLAP_RULE)",
+    "accessory": "front adjustment clip + soft-close runners"
+  },
+
+  "SELECTIVE_DRILLING_RULE": {
+    "so": "CNC drills ONLY where hardware connects (Minifix, dowels, slide runners, hinge plates). No grid/no unnecessary holes. System 32 is a coordinate for placement, not a guarantee every hole gets drilled (learned from build_luxury_gola_kitchen_master.rb).",
+    "drill_only_at": ["minifix cam pocket", "minifix bolt/dowel", "drawer runner pilot holes", "hinge cup + mounting plate"]
+  }
+}

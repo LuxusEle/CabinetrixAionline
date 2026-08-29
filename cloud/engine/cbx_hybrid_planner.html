@@ -1,0 +1,2664 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cabinex AI - Modular Kitchen Planner & Studio</title>
+  <style>
+    :root {
+      --bg-primary: #0f172a;
+      --bg-secondary: #1e293b;
+      --bg-card: rgba(30, 41, 59, 0.85);
+      --border-color: rgba(255, 255, 255, 0.1);
+      --accent-color: #38bdf8;
+      --accent-hover: #0ea5e9;
+      --accent-gradient: linear-gradient(135deg, #0284c7, #38bdf8);
+      --text-primary: #f8fafc;
+      --text-secondary: #94a3b8;
+      --text-muted: #64748b;
+      --success: #34d399;
+      --warning: #f59e0b;
+      --danger: #f87171;
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --radius-lg: 14px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      -webkit-user-select: none;
+      user-select: none;
+    }
+
+    body {
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    /* Header */
+    header {
+      padding: 10px 18px;
+      background: var(--bg-secondary);
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-shrink: 0;
+    }
+
+    .logo-badge {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo-icon {
+      width: 28px;
+      height: 28px;
+      background: var(--accent-gradient);
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      color: white;
+      font-size: 14px;
+    }
+
+    .logo-text {
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+
+    .version-tag {
+      font-size: 9px;
+      padding: 2px 6px;
+      background: rgba(56, 189, 248, 0.15);
+      color: #38bdf8;
+      border-radius: 4px;
+      font-weight: 700;
+    }
+
+    /* Stepper Navigation */
+    nav {
+      display: flex;
+      background: rgba(15, 23, 42, 0.98);
+      border-bottom: 1px solid var(--border-color);
+      padding: 0 8px;
+      gap: 2px;
+      overflow-x: auto;
+      flex-shrink: 0;
+    }
+
+    .nav-tab {
+      padding: 10px 12px;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      border-bottom: 2px solid transparent;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .nav-tab:hover {
+      color: var(--text-primary);
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    .nav-tab.active {
+      color: #38bdf8;
+      border-bottom-color: #38bdf8;
+      background: rgba(56, 189, 248, 0.08);
+      font-weight: 700;
+    }
+
+    .nav-tab.completed::after {
+      content: '✓';
+      color: #34d399;
+      font-size: 10px;
+      font-weight: bold;
+    }
+
+    /* Content Area */
+    main {
+      flex: 1;
+      overflow-y: auto;
+      padding: 14px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .tab-pane {
+      display: none;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .tab-pane.active {
+      display: flex;
+    }
+
+    /* Step Banner Header */
+    .step-banner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(56, 189, 248, 0.08);
+      border: 1px solid rgba(56, 189, 248, 0.25);
+      border-radius: var(--radius-sm);
+      padding: 8px 12px;
+    }
+
+    .step-banner-title {
+      font-size: 12px;
+      font-weight: 700;
+      color: #38bdf8;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .step-banner-desc {
+      font-size: 11px;
+      color: var(--text-secondary);
+    }
+
+    /* Card */
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 12px 14px;
+      backdrop-filter: blur(10px);
+    }
+
+    .card-title {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    /* Form Grids */
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px 10px;
+    }
+
+    .form-grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+    }
+
+    .form-grid-4 {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .form-group.full-width {
+      grid-column: 1 / -1;
+    }
+
+    label {
+      font-size: 10.5px;
+      font-weight: 600;
+      color: var(--text-secondary);
+    }
+
+    input, select {
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      padding: 6px 9px;
+      font-size: 11.5px;
+      color: var(--text-primary);
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    input:focus, select:focus {
+      border-color: var(--accent-color);
+      box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.2);
+    }
+
+    input:disabled, select:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+      background: rgba(15, 23, 42, 0.4);
+    }
+
+    /* Layout Archetype Selector Cards */
+    .layout-cards-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-bottom: 6px;
+    }
+
+    .layout-card {
+      background: rgba(15, 23, 42, 0.7);
+      border: 1.5px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      padding: 8px;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.2s;
+    }
+
+    .layout-card:hover {
+      border-color: #38bdf8;
+      background: rgba(56, 189, 248, 0.08);
+      transform: translateY(-1px);
+    }
+
+    .layout-card.selected {
+      border-color: #38bdf8;
+      background: rgba(56, 189, 248, 0.18);
+      box-shadow: 0 0 10px rgba(56, 189, 248, 0.25);
+    }
+
+    .layout-card-icon {
+      font-size: 18px;
+      margin-bottom: 3px;
+    }
+
+    .layout-card-title {
+      font-size: 11px;
+      font-weight: 700;
+      color: white;
+    }
+
+    .layout-card-sub {
+      font-size: 9.5px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    /* 2D Canvas Preview */
+    #floorplanCanvas {
+      width: 100%;
+      height: 160px;
+      background: #0b0f17;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      display: block;
+    }
+
+    /* Checkbox & Radio Pills */
+    .pill-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .pill-label {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 10px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .pill-label:hover {
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--text-primary);
+    }
+
+    .pill-label input[type="checkbox"],
+    .pill-label input[type="radio"] {
+      display: none;
+    }
+
+    .pill-label:has(input:checked) {
+      background: rgba(56, 189, 248, 0.2);
+      border-color: #38bdf8;
+      color: #38bdf8;
+      font-weight: 600;
+    }
+
+    /* Wall Box Strip Visualizer */
+    .wall-selector-tabs {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 10px;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 6px;
+    }
+
+    .wall-btn {
+      padding: 6px 12px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      color: var(--text-secondary);
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .wall-btn.active {
+      background: #38bdf8;
+      color: #0f172a;
+      border-color: #38bdf8;
+    }
+
+    /* Quick Add Component Toolbar */
+    .quick-add-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+      margin-bottom: 10px;
+      padding: 8px 10px;
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px dashed rgba(56, 189, 248, 0.3);
+      border-radius: var(--radius-sm);
+    }
+
+    .btn-quick-add {
+      padding: 5px 8px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      font-size: 10.5px;
+      font-weight: 600;
+      color: #cbd5e1;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      transition: all 0.15s;
+    }
+
+    .btn-quick-add:hover {
+      background: rgba(56, 189, 248, 0.15);
+      border-color: #38bdf8;
+      color: #38bdf8;
+      transform: translateY(-1px);
+    }
+
+    .box-layout-strip {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding: 8px 4px;
+      background: #0b0f17;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      min-height: 85px;
+      align-items: center;
+    }
+
+    .box-card-item {
+      flex-shrink: 0;
+      width: 105px;
+      padding: 7px;
+      background: #1e293b;
+      border: 1.5px solid #334155;
+      border-radius: 6px;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.2s;
+      position: relative;
+    }
+
+    .box-card-item:hover {
+      border-color: #38bdf8;
+      transform: translateY(-2px);
+    }
+
+    .box-card-item.selected {
+      border-color: #38bdf8;
+      background: rgba(56, 189, 248, 0.15);
+      box-shadow: 0 0 10px rgba(56, 189, 248, 0.3);
+    }
+
+    .box-card-badge {
+      font-size: 8px;
+      font-weight: 800;
+      color: #38bdf8;
+      text-transform: uppercase;
+      margin-bottom: 2px;
+    }
+
+    .box-card-name {
+      font-size: 10.5px;
+      font-weight: 700;
+      color: white;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .box-card-dim {
+      font-size: 9.5px;
+      color: #94a3b8;
+      margin-top: 2px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* Per-Box Detail Editor Form */
+    .box-editor-panel {
+      margin-top: 10px;
+      padding: 10px 12px;
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px dashed #38bdf8;
+      border-radius: var(--radius-sm);
+    }
+
+    /* 3D Previews Grid */
+    .preview-shots-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+
+    .preview-shot-card {
+      background: #0b0f17;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .preview-shot-header {
+      padding: 6px 10px;
+      background: rgba(255, 255, 255, 0.05);
+      font-size: 10.5px;
+      font-weight: 700;
+      color: #38bdf8;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .preview-shot-img-wrap {
+      width: 100%;
+      height: 140px;
+      background: #090d14;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .preview-shot-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .preview-placeholder-text {
+      font-size: 10px;
+      color: #64748b;
+      text-align: center;
+      padding: 12px;
+    }
+
+    /* Footer Action Bar */
+    footer {
+      padding: 10px 18px;
+      background: var(--bg-secondary);
+      border-top: 1px solid var(--border-color);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-shrink: 0;
+    }
+
+    .btn {
+      padding: 8px 14px;
+      border-radius: var(--radius-sm);
+      font-size: 11.5px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      border: none;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .btn-primary {
+      background: var(--accent-gradient);
+      color: #0f172a;
+      font-weight: 700;
+      box-shadow: 0 4px 12px rgba(56, 189, 248, 0.3);
+    }
+
+    .btn-primary:hover {
+      opacity: 0.95;
+      transform: translateY(-1px);
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.06);
+      color: var(--text-secondary);
+      border: 1px solid var(--border-color);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: var(--text-primary);
+    }
+
+    .btn-danger {
+      background: rgba(239, 68, 68, 0.15);
+      color: #f87171;
+      border: 1px solid rgba(239, 68, 68, 0.35);
+    }
+
+    .user-account-pill {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 3px 8px;
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 10.5px;
+    }
+
+    .token-balance-pill {
+      background: rgba(245, 158, 11, 0.15);
+      border: 1px solid rgba(245, 158, 11, 0.35);
+      padding: 3px 8px;
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 10.5px;
+    }
+
+    .btn-logout {
+      background: rgba(239, 68, 68, 0.15);
+      border: 1px solid rgba(239, 68, 68, 0.35);
+      color: #f87171;
+      padding: 3px 8px;
+      border-radius: 5px;
+      font-size: 10px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .complexity-pill {
+      background: rgba(56, 189, 248, 0.1);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      padding: 5px 10px;
+      border-radius: 6px;
+      font-size: 10.5px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    /* =========================================================================
+       CABINEX ALUMINUM - LIGHT GREY NATIVE WINDOWS DESKTOP STYLE OVERRIDES
+       ========================================================================= */
+    :root {
+      --bg-primary: #f0f0f0;       /* Native light-grey background */
+      --bg-secondary: #e0e0e0;     /* Navigation panel grey */
+      --bg-card: #ffffff;          /* Flat white cards */
+      --border-color: #b0b0b0;     /* Defined window borders */
+      --accent-color: #3b82f6;     /* Microsoft blue active indicator */
+      --accent-hover: #1d4ed8;
+      --accent-gradient: #3b82f6;
+      --text-primary: #111827;     /* Standard dark grey text */
+      --text-secondary: #374151;   /* Medium grey body text */
+      --text-muted: #6b7280;
+      --success: #10b981;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --radius-sm: 4px;            /* Flat Windows 10/11 utility corners */
+      --radius-md: 4px;
+      --radius-lg: 4px;
+    }
+
+    body {
+      background-color: var(--bg-primary) !important;
+      color: var(--text-primary) !important;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
+    }
+
+    header {
+      background: #e6e6e6 !important;
+      border-bottom: 1px solid #c0c0c0 !important;
+      padding: 8px 14px !important;
+    }
+
+    .logo-badge .logo-text {
+      color: #333333 !important;
+      font-weight: 700 !important;
+    }
+
+    .user-account-pill {
+      background: #ffffff !important;
+      border: 1px solid #c0c0c0 !important;
+      color: #333333 !important;
+    }
+    
+    .token-balance-pill {
+      background: #fef3c7 !important;
+      border: 1px solid #f59e0b !important;
+      color: #b45309 !important;
+    }
+
+    /* Vertical Dashboard Flex Layout */
+    .app-layout {
+      display: flex;
+      flex: 1;
+      overflow: hidden;
+      background: var(--bg-primary);
+    }
+
+    /* Vertical Sidebar Navigation */
+    nav#wizardNav {
+      display: flex !important;
+      flex-direction: column !important;
+      width: 175px !important;
+      background: #e6e6e6 !important;
+      border-right: 1px solid #c0c0c0 !important;
+      border-bottom: none !important;
+      padding: 10px 4px !important;
+      gap: 4px !important;
+      flex-shrink: 0 !important;
+      overflow-y: auto !important;
+      height: 100% !important;
+    }
+
+    .nav-tab {
+      padding: 8px 12px !important;
+      font-size: 11px !important;
+      font-weight: 600 !important;
+      color: #333333 !important;
+      border-radius: var(--radius-sm) !important;
+      border: 1px solid transparent !important;
+      margin-bottom: 2px !important;
+      white-space: normal !important;
+      text-align: left !important;
+      display: flex !important;
+      align-items: center !important;
+      gap: 6px !important;
+    }
+
+    .nav-tab:hover {
+      background: rgba(0, 0, 0, 0.05) !important;
+      color: #000000 !important;
+      border-color: #c0c0c0 !important;
+    }
+
+    .nav-tab.active {
+      color: #ffffff !important;
+      background: var(--accent-color) !important;
+      border-color: var(--accent-hover) !important;
+      font-weight: 700 !important;
+    }
+
+    /* Content Area Frame */
+    .main-container {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      overflow: hidden;
+    }
+
+    main {
+      padding: 14px 16px !important;
+      background: var(--bg-primary) !important;
+      gap: 10px !important;
+    }
+
+    .step-banner {
+      background: #eef2ff !important;
+      border: 1px solid #c7d2fe !important;
+      color: #3730a3 !important;
+      padding: 6px 12px !important;
+    }
+    
+    .step-banner-title {
+      color: #4f46e5 !important;
+    }
+
+    .card {
+      background: #ffffff !important;
+      border: 1px solid #c0c0c0 !important;
+      border-radius: var(--radius-md) !important;
+      padding: 12px 14px !important;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05) !important;
+      color: #111827 !important;
+    }
+
+    .card-title {
+      color: #111827 !important;
+      border-bottom: 1px solid #e5e7eb !important;
+      padding-bottom: 6px !important;
+      margin-bottom: 12px !important;
+    }
+
+    /* Inputs, selects, and text fields looking like native Windows utility */
+    input, select, textarea {
+      background: #ffffff !important;
+      color: #111827 !important;
+      border: 1px solid #a0a0a0 !important;
+      border-radius: 4px !important;
+      padding: 5px 8px !important;
+      font-size: 11px !important;
+      box-shadow: inset 0 1px 2px rgba(0,0,0,0.05) !important;
+      transition: border-color 0.15s !important;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--accent-color) !important;
+      outline: none !important;
+    }
+
+    label {
+      color: #374151 !important;
+      font-size: 11px !important;
+      font-weight: 600 !important;
+      margin-bottom: 4px !important;
+    }
+
+    /* Flat Windows desktop style buttons */
+    .btn {
+      border-radius: var(--radius-sm) !important;
+      border: 1px solid #8f8f8f !important;
+      background: linear-gradient(to bottom, #ffffff, #f0f0f0) !important;
+      color: #333333 !important;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.04) !important;
+      font-size: 11px !important;
+      font-weight: 600 !important;
+      padding: 5px 12px !important;
+      cursor: pointer !important;
+    }
+
+    .btn:hover {
+      background: linear-gradient(to bottom, #fafafa, #e0e0e0) !important;
+      border-color: #707070 !important;
+      color: #000000 !important;
+    }
+
+    .btn-primary {
+      background: linear-gradient(to bottom, #2563eb, #1d4ed8) !important;
+      color: #ffffff !important;
+      border-color: #1e3a8a !important;
+    }
+
+    .btn-primary:hover {
+      background: linear-gradient(to bottom, #3b82f6, #2563eb) !important;
+      border-color: #1d4ed8 !important;
+      color: #ffffff !important;
+    }
+    
+    .btn-secondary {
+      background: linear-gradient(to bottom, #ffffff, #f3f4f6) !important;
+      border-color: #d1d5db !important;
+    }
+
+    footer {
+      background: #e6e6e6 !important;
+      border-top: 1px solid #c0c0c0 !important;
+      padding: 8px 16px !important;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="logo-badge">
+      <div class="logo-icon">✨</div>
+      <div class="logo-text">Cabinex AI Kitchen Studio</div>
+      <span class="version-tag">ALL-ALUMINUM &amp; SASH V2.0</span>
+    </div>
+
+    <!-- User Account & Live Token Balance Bar -->
+    <div style="display: flex; align-items: center; gap: 8px;">
+      <div class="user-account-pill">
+        <span style="color: #94a3b8;">User:</span>
+        <strong id="lblUserEmail" style="color: #38bdf8;">Devoly Studio</strong>
+      </div>
+
+      <div class="token-balance-pill" id="tokenBalanceWrap" title="Available Generation Tokens">
+        <span>🪙</span>
+        <strong id="lblTokenBalance" style="color: #f59e0b; font-size: 11.5px;">100</strong>
+        <span style="color: #cbd5e1; font-size: 9.5px;">Tokens</span>
+      </div>
+
+      <button class="btn-logout" onclick="triggerLogout()" title="Sign Out">🚪</button>
+    </div>
+  </header>
+
+  <div class="app-layout">
+    <!-- Step Wizard Navigation Tabs -->
+    <nav id="wizardNav">
+      <div class="nav-tab active" data-tab="tab-room" data-step="1">1. 📐 Room & Walls</div>
+      <div class="nav-tab" data-tab="tab-openings" data-step="2">2. 🚪 Openings</div>
+      <div class="nav-tab" data-tab="tab-project-settings" data-step="3">3. ⚙️ Project Settings</div>
+      <div class="nav-tab" data-tab="tab-modules" data-step="4">4. 🧩 Modular Design</div>
+      <div class="nav-tab" data-tab="tab-previews" data-step="5">5. 👁️ 3D Previews</div>
+      <div class="nav-tab" data-tab="tab-bom" data-step="6">6. 📊 BOM & Reports</div>
+    </nav>
+
+    <div class="main-container">
+      <!-- Main Content Area -->
+      <main>
+
+    <!-- STEP 1: Room & Walls -->
+    <div class="tab-pane active" id="tab-room">
+      <div class="step-banner">
+        <div class="step-banner-title"><span>Step 1 of 6:</span> Room Geometry & Kitchen Archetype</div>
+        <div class="step-banner-desc">Select kitchen layout and specify millimeter wall runs</div>
+      </div>
+
+      <!-- Layout Type Archetype Selector -->
+      <div class="card">
+        <div class="card-title">1. Select Kitchen Layout Archetype (6 Pro Types)</div>
+        <div class="layout-cards-grid">
+          <div class="layout-card" data-layout="LINEAR" onclick="selectLayoutArchetype('LINEAR')">
+            <div class="layout-card-icon">━</div>
+            <div class="layout-card-title">1. Single Wall (I)</div>
+            <div class="layout-card-sub">Straight Run (Wall A)</div>
+          </div>
+          <div class="layout-card selected" data-layout="L_SHAPE" onclick="selectLayoutArchetype('L_SHAPE')">
+            <div class="layout-card-icon">┗</div>
+            <div class="layout-card-title">2. L-Shaped</div>
+            <div class="layout-card-sub">Corner (Wall A + B)</div>
+          </div>
+          <div class="layout-card" data-layout="U_SHAPE" onclick="selectLayoutArchetype('U_SHAPE')">
+            <div class="layout-card-icon">⊔</div>
+            <div class="layout-card-title">3. U-Shaped</div>
+            <div class="layout-card-sub">3 Walls (A + B + C)</div>
+          </div>
+          <div class="layout-card" data-layout="L_ISLAND" onclick="selectLayoutArchetype('L_ISLAND')">
+            <div class="layout-card-icon">┗ ▤</div>
+            <div class="layout-card-title">4. L with Island</div>
+            <div class="layout-card-sub">L-Shape + Free Island</div>
+          </div>
+          <div class="layout-card" data-layout="U_ISLAND" onclick="selectLayoutArchetype('U_ISLAND')">
+            <div class="layout-card-icon">⊔ ▤</div>
+            <div class="layout-card-title">5. U with Island</div>
+            <div class="layout-card-sub">U-Shape + Center Island</div>
+          </div>
+          <div class="layout-card" data-layout="U_BAR_BULKHEAD" onclick="selectLayoutArchetype('U_BAR_BULKHEAD')">
+            <div class="layout-card-icon">🍸 🏛️</div>
+            <div class="layout-card-title">6. U + Bar & Bulkhead</div>
+            <div class="layout-card-sub">Breakfast Bar + Soffit</div>
+          </div>
+        </div>
+        <div id="aisleAdvisory" style="display: none; margin-top: 6px; padding: 6px 10px; background: rgba(245, 158, 11, 0.15); border: 1px solid rgba(245, 158, 11, 0.35); border-radius: 6px; font-size: 10.5px; color: #fbbf24;">
+          ⚠️ <strong>Mid-Aisle Clearance:</strong> <span id="aisleText">Calculating...</span>
+        </div>
+      </div>
+
+      <!-- Wall Dimensions Card -->
+      <div class="card">
+        <div class="card-title">2. Wall Dimensions (mm)</div>
+        <div class="form-grid">
+          <div class="form-group" id="groupWallA">
+            <label for="wallA">Wall A (Main Run mm)</label>
+            <input type="number" id="wallA" value="2488" step="10" min="600">
+          </div>
+          <div class="form-group" id="groupWallB">
+            <label for="wallB">Wall B (Return Run mm)</label>
+            <input type="number" id="wallB" value="2379" step="10" min="0">
+          </div>
+          <div class="form-group" id="groupWallC">
+            <label for="wallC">Wall C (Optional U-Wall mm)</label>
+            <input type="number" id="wallC" value="0" step="10" min="0" disabled>
+          </div>
+          <div class="form-group" id="groupIsland">
+            <label for="islandLength">Island Length (mm)</label>
+            <input type="number" id="islandLength" value="0" step="50" min="0" disabled>
+          </div>
+        </div>
+      </div>
+
+      <!-- Vertical Datum Heights Card -->
+      <div class="card">
+        <div class="card-title">3. Vertical Datum Heights (mm)</div>
+        <div class="form-grid-4">
+          <div class="form-group">
+            <label for="ceilingHeight">Room Height</label>
+            <input type="number" id="ceilingHeight" value="2743" step="50">
+          </div>
+          <div class="form-group">
+            <label for="baseHeight">Base Height</label>
+            <input type="number" id="baseHeight" value="870">
+          </div>
+          <div class="form-group">
+            <label for="topZ">Top Bottom Datum</label>
+            <input type="number" id="topZ" value="1500">
+          </div>
+          <div class="form-group">
+            <label for="tallHeight">Tall Tower Height</label>
+            <input type="number" id="tallHeight" value="2123">
+          </div>
+        </div>
+      </div>
+
+      <!-- 2D Schematic Plan Preview -->
+      <div class="card">
+        <div class="card-title">2D Schematic Plan Preview</div>
+        <canvas id="floorplanCanvas"></canvas>
+      </div>
+    </div>
+
+    <!-- STEP 2: Openings & Obstacles -->
+    <div class="tab-pane" id="tab-openings">
+      <div class="step-banner">
+        <div class="step-banner-title"><span>Step 2 of 6:</span> Windows, Doors & Clearances</div>
+        <div class="step-banner-desc">Position windows and door entry obstacles along walls</div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Add Opening / Obstacle</div>
+        <div class="form-grid-3">
+          <div class="form-group">
+            <label for="opWall">Located On Wall</label>
+            <select id="opWall">
+              <option value="A">Wall A (Main)</option>
+              <option value="B" selected>Wall B (Return)</option>
+              <option value="C">Wall C</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="opType">Type</label>
+            <select id="opType">
+              <option value="window" selected>Window</option>
+              <option value="door">Door / Walkway</option>
+              <option value="obstacle">Column / Obstacle</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="opOffset">Offset from Wall Start (mm)</label>
+            <input type="number" id="opOffset" value="600">
+          </div>
+          <div class="form-group">
+            <label for="opWidth">Clear Width (mm)</label>
+            <input type="number" id="opWidth" value="900">
+          </div>
+          <div class="form-group">
+            <label for="opHeight">Height / Sill Datum (mm)</label>
+            <input type="number" id="opHeight" value="1050" title="For Windows: Sill Height. For Doors: Total Height.">
+          </div>
+          <div class="form-group" style="display: flex; align-items: flex-end;">
+            <button class="btn btn-secondary" type="button" id="btnAddOpening" style="width: 100%; height: 28px; background: rgba(56, 189, 248, 0.15); color: #38bdf8; border-color: #38bdf8;" onclick="addOpening()">+ Add Opening</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Configured Openings List</div>
+        <div id="openingsListContainer" style="display: flex; flex-direction: column; gap: 8px;">
+           <div style="font-size: 11px; color: #64748b; text-align: center; padding: 10px;">No openings configured. Click "+ Add Opening" to define.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 3: Project Settings & Profile Measurements (NEW) -->
+    <div class="tab-pane" id="tab-project-settings">
+      <div class="step-banner">
+        <div class="step-banner-title"><span>Step 3 of 6:</span> Project Global Settings & Profiles</div>
+        <div class="step-banner-desc">Configure construction logic, bar-to-carcase mapping, and profile measurements</div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">1. Construction Logic Archetype</div>
+        <div class="pill-group">
+          <label class="pill-label">
+            <input type="radio" name="kitchenType" value="FULL_ALU_FRAME" checked>
+            Premium — Full Aluminum BoxBar + 45° Sash
+          </label>
+          <label class="pill-label">
+            <input type="radio" name="kitchenType" value="ECONOMY_FRAME">
+            Economy — Aluminum Frame + ACP Cladding
+          </label>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">2. Extrusion & Profile Mapping</div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="cfgCarcaseBar">Carcase Framing Extrusion</label>
+            <select id="cfgCarcaseBar">
+              <option value="boxbar_25" selected>Matte Black Box-Bar (1" × 1" / 25.4×25.4mm)</option>
+              <option value="boxbar_38">Heavy Duty Box-Bar (1.5" × 1.5" / 38×38mm)</option>
+              <option value="rect_50x25">Rectangular Tube (50 × 25mm)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="cfgDoorSash">Door / Drawer Front Profile</label>
+            <select id="cfgDoorSash">
+              <option value="sash_45_finger" selected>45° Integrated Finger-Pull Sash (19×45mm)</option>
+              <option value="sash_50_flush">Wide Flush Sash Frame (20×50mm)</option>
+              <option value="sash_20_glass">Minimalist Glass Sash Frame (20×20mm)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="golaMode">Handle / Profile Style</label>
+            <select id="golaMode">
+              <option value="finger_pull" selected>Aluminum Sash 45° Finger-Pull (Best for Aluminum & Glass)</option>
+              <option value="integrated">Continuous Integrated Gola (C + L Aluminum Rails)</option>
+              <option value="none">Standard Attached Hardware Pulls</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="baseSupport">Base Support System</label>
+            <select id="baseSupport">
+              <option value="shared_aluminum_boxbar_foot_frame" selected>Shared Inset Aluminum Foot Frame (100mm)</option>
+              <option value="floor_no_plinth">Direct Floor Standing</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="acpThickness">ACP Panel Thickness (mm)</label>
+            <input type="number" id="acpThickness" value="3" step="0.5" min="2" max="6" title="ACP panel thickness for doors, sides, backs, shelves">
+          </div>
+          <div class="form-group">
+            <label for="baseDoorStyle">Base Cabinet Doors</label>
+            <select id="baseDoorStyle">
+              <option value="solid_acp" selected>Solid ACP Panel Doors (Aluminum Sash Frame)</option>
+              <option value="glass_sash">Glass Sash Doors (Aluminum Frame + Glass)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="topDoorStyle">Top Cabinet Doors</label>
+            <select id="topDoorStyle">
+              <option value="glass_sash" selected>Glass Sash Doors (Aluminum Frame + Glass)</option>
+              <option value="solid_acp">Solid ACP Panel Doors (Aluminum Sash Frame)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="tallUnitStyle">Tall Tower Configuration</label>
+            <select id="tallUnitStyle">
+              <option value="double_oven" selected>Double Oven (Oven + Microwave slots)</option>
+              <option value="single_oven">Single Oven (Oven slot + Cupboards)</option>
+              <option value="glass_shelves">Glass Pantry (Sash Doors + ACP Shelves)</option>
+              <option value="glass_racks">Glass Pantry (Sash Doors + Pull-out Racks)</option>
+              <option value="solid_pantry">Solid Pantry (ACP Panel Doors + ACP Shelves)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="openRackMaxWidth">Open Rack Max Width (mm)</label>
+            <input type="number" id="openRackMaxWidth" value="350" step="50" min="150" max="600">
+          </div>
+        </div>
+      </div>
+
+      <div class="card" style="border: 1px solid rgba(56, 189, 248, 0.3); background: rgba(56, 189, 248, 0.04);">
+        <div class="card-title" style="color: #38bdf8;">
+          <span>3. Extrusion & Profile Measurements (mm)</span>
+          <span style="font-size: 10px; color: #94a3b8; font-weight: normal;">Live Technical Metrics</span>
+        </div>
+        <div class="form-grid-4">
+          <div class="form-group">
+            <label for="measBoxBarWidth">BoxBar Width (mm)</label>
+            <input type="number" id="measBoxBarWidth" value="25.4" step="0.1">
+          </div>
+          <div class="form-group">
+            <label for="measBoxBarDepth">BoxBar Depth (mm)</label>
+            <input type="number" id="measBoxBarDepth" value="25.4" step="0.1">
+          </div>
+          <div class="form-group">
+            <label for="measBoxBarWall">Wall Thick (mm)</label>
+            <input type="number" id="measBoxBarWall" value="1.2" step="0.1">
+          </div>
+          <div class="form-group">
+            <label for="measSashWidth">Sash Width (mm)</label>
+            <input type="number" id="measSashWidth" value="45.0" step="0.5">
+          </div>
+          <div class="form-group">
+            <label for="measSashThick">Sash Thick (mm)</label>
+            <input type="number" id="measSashThick" value="19.0" step="0.5">
+          </div>
+          <div class="form-group">
+            <label for="measGolaDepth">Gola Depth (mm)</label>
+            <input type="number" id="measGolaDepth" value="27.2" step="0.5">
+          </div>
+          <div class="form-group">
+            <label for="measGolaHeight">Gola Height (mm)</label>
+            <input type="number" id="measGolaHeight" value="56.5" step="0.5">
+          </div>
+          <div class="form-group">
+            <label for="measPlinthHeight">Plinth Height (mm)</label>
+            <input type="number" id="measPlinthHeight" value="100.0" step="5">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 4: Wall-by-Wall Modular Design & Components -->
+    <div class="tab-pane" id="tab-modules">
+      <div class="step-banner">
+        <div class="step-banner-title"><span>Step 4 of 6:</span> Modular Design & Component Selection</div>
+        <div class="step-banner-desc">Add tall towers, oven bays, drawer stacks, cookers and sinks wall-by-wall</div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">
+          <span>Active Wall Module Assignment</span>
+          <div class="wall-selector-tabs" id="wallSelectGroup">
+            <button type="button" class="wall-btn active" data-wall="A">Wall A (Main)</button>
+            <button type="button" class="wall-btn" data-wall="B">Wall B (Return)</button>
+            <button type="button" class="wall-btn" data-wall="C">Wall C</button>
+            <button type="button" class="wall-btn" data-wall="Island">Island</button>
+          </div>
+        </div>
+
+        <!-- Quick Add Component Presets Toolbar -->
+        <div class="quick-add-bar">
+          <span style="font-size: 10px; font-weight: 700; color: #38bdf8; align-self: center; margin-right: 4px;">Quick Add:</span>
+          <button type="button" class="btn-quick-add" onclick="quickAddModule('tall_oven', 600)">+ 🗼 Tall Tower (600)</button>
+          <button type="button" class="btn-quick-add" onclick="quickAddModule('drawers', 600, 3)">+ 🗄️ 3-Drawers (600)</button>
+          <button type="button" class="btn-quick-add" onclick="quickAddModule('drawers', 800, 2)">+ 🗄️ 2-Pans (800)</button>
+          <button type="button" class="btn-quick-add" onclick="quickAddModule('cooker', 600)">+ 🍳 Cooker Hob (600)</button>
+          <button type="button" class="btn-quick-add" onclick="quickAddModule('sink', 600)">+ 🚰 Sink Basin (600)</button>
+          <button type="button" class="btn-quick-add" onclick="quickAddModule('door', 600)">+ 🚪 2-Door Base (600)</button>
+          <button type="button" class="btn-quick-add" onclick="quickAddModule('blind_corner', 1075)">+ 📐 Corner Blind</button>
+          <button type="button" class="btn-quick-add" onclick="quickAddModule('open_rack', 300)">+ 🔲 Open Rack (300)</button>
+        </div>
+
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+          <div style="font-size: 11px; color: var(--text-secondary);">
+            Click any module card below to edit details or move position:
+          </div>
+          <div id="lblWallSpanStatus" style="font-size: 10.5px; font-weight: 700; color: #38bdf8; background: rgba(56,189,248,0.1); padding: 3px 8px; border-radius: 4px; border: 1px solid rgba(56,189,248,0.25);">
+            Modules Total: 0 mm
+          </div>
+        </div>
+
+        <!-- Box Visual Strip -->
+        <div class="box-layout-strip" id="boxStripContainer"></div>
+
+        <div style="display: flex; gap: 6px; margin-top: 8px;">
+          <button type="button" class="btn btn-secondary" id="btnAddBox">+ Add Unit</button>
+          <button type="button" class="btn btn-secondary" onclick="moveSelectedBox(-1)">⬅️ Move Left</button>
+          <button type="button" class="btn btn-secondary" onclick="moveSelectedBox(1)">Move Right ➡️</button>
+          <button type="button" class="btn btn-secondary" id="btnAutoFitWall" style="background: rgba(56, 189, 248, 0.15); border-color: #38bdf8; color: #38bdf8;">⚡ Auto-Fit Wall</button>
+          <button type="button" class="btn btn-danger" id="btnRemoveBox">- Remove</button>
+        </div>
+
+        <!-- Per-Box Granular Attributes Form -->
+        <div class="box-editor-panel" id="boxEditorPanel">
+          <div style="font-size: 11.5px; font-weight: 700; color: #38bdf8; margin-bottom: 6px;" id="lblSelectedBoxTitle">
+            Configure Selected Box
+          </div>
+          <div class="form-grid-3">
+            <div class="form-group">
+              <label for="boxType">Module Function</label>
+              <select id="boxType">
+                <option value="drawers">Drawer Stack (Cutlery/Pans)</option>
+                <option value="cooker">Cooktop / Hob Unit</option>
+                <option value="sink">Sink / Wash Basin Unit</option>
+                <option value="door">Standard Storage Doors</option>
+                <option value="blind_corner">Blind Corner Unit</option>
+                <option value="tall_oven">Tall Oven / Pantry Tower</option>
+                <option value="open_rack">Open Display Rack</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="boxWidth">Module Width (mm)</label>
+              <input type="number" id="boxWidth" value="600" step="50" min="150" max="1200">
+            </div>
+            <div class="form-group">
+              <label for="boxDoorInfill">Front / Door Style</label>
+              <select id="boxDoorInfill">
+                <option value="glass">Glazed Translucent Glass</option>
+                <option value="acp">Solid White / Dark ACP</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="boxDrawersCount">Drawer Count (if stack)</label>
+              <select id="boxDrawersCount">
+                <option value="3" selected>3 Drawers</option>
+                <option value="2">2 Drawers</option>
+                <option value="4">4 Drawers</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="boxHasOverhead">Top Overhead Unit</label>
+              <select id="boxHasOverhead">
+                <option value="yes" selected>Matching Wall Overhead Unit</option>
+                <option value="hood">6-inch Raised Hood Bay</option>
+                <option value="open_rack">Open Sash Display Box</option>
+                <option value="none">No Overhead (Clear / Window)</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="boxHandle">Handle Position</label>
+              <select id="boxHandle">
+                <option value="top">Top 45° Finger Lip</option>
+                <option value="side">Side Vertical Mitered Pull</option>
+                <option value="gola">Continuous Gola Channel</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 5: 3D Previews & Viewport Inspection -->
+    <div class="tab-pane" id="tab-previews">
+      <div class="step-banner">
+        <div class="step-banner-title"><span>Step 5 of 6:</span> 3D Multi-Angle Previews & Viewport</div>
+        <div class="step-banner-desc">Inspect front elevation, return wall, top plan, and 3D isometric views</div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">
+          <span>Multi-Angle Snapshots</span>
+          <button class="btn btn-secondary" onclick="request3DPreviews()" style="padding: 4px 8px; font-size: 10px; color: #38bdf8; border-color: #38bdf8;">
+            📸 Refresh Viewport Previews
+          </button>
+        </div>
+
+        <div class="preview-shots-grid">
+          <!-- Front Elevation -->
+          <div class="preview-shot-card">
+            <div class="preview-shot-header">
+              <span>Wall A Front Elevation</span>
+              <span style="font-size: 9px; color: #94a3b8;">Ortho</span>
+            </div>
+            <div class="preview-shot-img-wrap" id="wrapFront">
+              <div class="preview-placeholder-text">Click "Generate 3D" or "Refresh" to view live model snapshot</div>
+            </div>
+          </div>
+
+          <!-- Return Elevation -->
+          <div class="preview-shot-card">
+            <div class="preview-shot-header">
+              <span>Wall B Return Elevation</span>
+              <span style="font-size: 9px; color: #94a3b8;">Ortho</span>
+            </div>
+            <div class="preview-shot-img-wrap" id="wrapReturn">
+              <div class="preview-placeholder-text">Click "Generate 3D" or "Refresh" to view live model snapshot</div>
+            </div>
+          </div>
+
+          <!-- Top Plan -->
+          <div class="preview-shot-card">
+            <div class="preview-shot-header">
+              <span>Top Overhead Plan</span>
+              <span style="font-size: 9px; color: #94a3b8;">Top View</span>
+            </div>
+            <div class="preview-shot-img-wrap" id="wrapTop">
+              <div class="preview-placeholder-text">Click "Generate 3D" or "Refresh" to view live model snapshot</div>
+            </div>
+          </div>
+
+          <!-- 3D Isometric -->
+          <div class="preview-shot-card">
+            <div class="preview-shot-header">
+              <span>3D Isometric Overview</span>
+              <span style="font-size: 9px; color: #94a3b8;">Perspective</span>
+            </div>
+            <div class="preview-shot-img-wrap" id="wrapIso">
+              <div class="preview-placeholder-text">Click "Generate 3D" or "Refresh" to view live model snapshot</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 6: BOM & Estimator -->
+    <div class="tab-pane" id="tab-bom">
+      <div class="step-banner">
+        <div class="step-banner-title"><span>Step 6 of 6:</span> Bill of Materials & Workshop Report</div>
+        <div class="step-banner-desc">Review itemized 1D cut-list, panel nesting, pricing and quotation</div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">1D Aluminum Extrusions & 2D Panels (Estimated BOM)</div>
+        <div id="bomBarsContainer" style="display: flex; flex-direction: column; gap: 6px; font-size: 11.5px;">
+          <div style="display: flex; justify-content: space-between; padding: 6px 10px; background: rgba(255,255,255,0.03); border-radius: 6px; border-left: 3px solid #38bdf8;">
+            <span>Matte Black Box-Bars (6400mm/21ft):</span>
+            <strong id="bomCarcaseCount">-</strong>
+          </div>
+          <div style="display: flex; justify-content: space-between; padding: 6px 10px; background: rgba(255,255,255,0.03); border-radius: 6px; border-left: 3px solid #f59e0b;">
+            <span>Gloss Door Sash Profiles (6400mm/21ft):</span>
+            <strong id="bomSashCount">-</strong>
+          </div>
+          <div style="display: flex; justify-content: space-between; padding: 6px 10px; background: rgba(255,255,255,0.03); border-radius: 6px; border-left: 3px solid #10b981;">
+            <span>Continuous Gola Rails (6400mm/21ft):</span>
+            <strong id="bomGolaCount">-</strong>
+          </div>
+          <div style="display: flex; justify-content: space-between; padding: 6px 10px; background: rgba(255,255,255,0.03); border-radius: 6px; border-left: 3px solid #60a5fa;">
+            <span>White ACP 3mm Sheets (2.44×1.22):</span>
+            <strong id="bomAcpSheets">-</strong>
+          </div>
+          <div style="display: flex; justify-content: space-between; padding: 6px 10px; background: rgba(255,255,255,0.03); border-radius: 6px; border-left: 3px solid #34d399;">
+            <span>35mm Soft-Close Hinges:</span>
+            <strong id="bomHinges">-</strong>
+          </div>
+        </div>
+      </div>
+
+      <!-- Live Editable Material Unit Rates Matrix -->
+      <div class="card" style="border: 1px solid rgba(56, 189, 248, 0.3); background: rgba(56, 189, 248, 0.04);">
+        <div class="card-title" style="color: #38bdf8; display: flex; justify-content: space-between; align-items: center;">
+          <span>✏️ Material Unit Rates & Cost Estimator</span>
+          <span style="font-size: 10px; color: #94a3b8; font-weight: normal;">Live LKR Rates</span>
+        </div>
+        <div class="form-grid-3" style="gap: 6px; font-size: 10.5px;">
+          <div class="form-group">
+            <label for="plannerRateBoxBar">BoxBar (6400mm bar)</label>
+            <input type="number" id="plannerRateBoxBar" value="7200" step="100" oninput="recalcPlannerBOM()">
+          </div>
+          <div class="form-group">
+            <label for="plannerRateSash">Door Sash (6400mm bar)</label>
+            <input type="number" id="plannerRateSash" value="9800" step="100" oninput="recalcPlannerBOM()">
+          </div>
+          <div class="form-group">
+            <label for="plannerRateAcp">ACP Sheet (2.44x1.22)</label>
+            <input type="number" id="plannerRateAcp" value="13500" step="100" oninput="recalcPlannerBOM()">
+          </div>
+          <div class="form-group">
+            <label for="plannerRateGranite">Granite (/sq.ft)</label>
+            <input type="number" id="plannerRateGranite" value="3200" step="100" oninput="recalcPlannerBOM()">
+          </div>
+          <div class="form-group">
+            <label for="plannerRateTile">Tile (/sq.ft)</label>
+            <input type="number" id="plannerRateTile" value="1100" step="50" oninput="recalcPlannerBOM()">
+          </div>
+          <div class="form-group">
+            <label for="plannerRateLabor">Fabrication (/ft)</label>
+            <input type="number" id="plannerRateLabor" value="2800" step="100" oninput="recalcPlannerBOM()">
+          </div>
+        </div>
+
+        <!-- Live Cost Preview -->
+        <div style="margin-top: 8px; padding: 6px 10px; background: rgba(15, 23, 42, 0.6); border-radius: 6px; border: 1px solid rgba(255,255,255,0.08); font-size: 10.5px;">
+          <div style="display: flex; justify-content: space-between; margin-bottom: 2px;">
+            <span style="color: #94a3b8;">Est. Base Production Cost:</span>
+            <strong id="lblPlannerBaseCost" style="font-family: 'JetBrains Mono', monospace; color: #cbd5e1;">LKR 0</strong>
+          </div>
+          <div style="display: flex; justify-content: space-between; margin-bottom: 2px; color: #38bdf8;">
+            <span>Profit Margin (<span id="lblPlannerMarkupPct">35%</span>):</span>
+            <strong id="lblPlannerMarkupVal" style="font-family: 'JetBrains Mono', monospace;">+ LKR 0</strong>
+          </div>
+          <div style="display: flex; justify-content: space-between; font-size: 12px; font-weight: 800; color: #34d399; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 4px; margin-top: 3px;">
+            <span>TOTAL ESTIMATE:</span>
+            <span id="lblPlannerGrandTotal" style="font-family: 'JetBrains Mono', monospace;">LKR 0</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" style="border: 1px solid rgba(16, 185, 129, 0.4); background: rgba(16, 185, 129, 0.04);">
+        <div class="card-title" style="color: #34d399;">💎 Customer Quotation & Markup Settings</div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="quoteClientName">Client / Customer Name</label>
+            <input type="text" id="quoteClientName" value="Valued Customer" placeholder="e.g. Mr. & Mrs. Perera">
+          </div>
+          <div class="form-group">
+            <label for="quoteProjectName">Project Title / Address</label>
+            <input type="text" id="quoteProjectName" value="Luxury All-Aluminum Modular Kitchen" placeholder="e.g. Colombo Residence">
+          </div>
+          <div class="form-group">
+            <label for="quoteMarkupPct">Commercial Profit Markup (%)</label>
+            <input type="number" id="quoteMarkupPct" value="35" min="0" max="300" step="5" oninput="recalcPlannerBOM()">
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top: 8px;">
+        <button class="btn btn-primary" id="btnExportPdf" style="width: 100%; background: linear-gradient(135deg, #059669, #10b981); color: white;">
+          <span>📄 Open Presentation, Itemized BOM & Workshop Pack</span>
+        </button>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Footer Actions with Wizard Navigation -->
+  <footer>
+    <div style="display: flex; align-items: center; gap: 8px;">
+      <button class="btn btn-secondary" id="btnPrevStep" onclick="navigateStep(-1)" disabled>⬅️ Back</button>
+      <button class="btn btn-secondary" id="btnNextStep" onclick="navigateStep(1)">Next ➡️</button>
+      <div class="complexity-pill">
+        <strong id="lblComplexityReq" style="color: #38bdf8; font-size: 10px;">2 Tokens</strong>
+      </div>
+      <button class="btn btn-secondary" id="btnReset" style="font-size: 10px; padding: 6px 10px;">Reset</button>
+      <span id="statusIndicator" style="font-size: 11px; font-weight: 700; color: #38bdf8;"></span>
+    </div>
+    <button class="btn btn-primary" id="btnGenerate">
+      <span>🚀 Generate 3D Kitchen</span>
+    </button>
+  </footer>
+  </div>
+  </div>
+
+  <script>
+    // Tab switching & Wizard controller
+    const tabs = document.querySelectorAll('.nav-tab');
+    const panes = document.querySelectorAll('.tab-pane');
+    let currentStep = 1;
+
+    function goToStep(stepNumber) {
+      if (stepNumber < 1) stepNumber = 1;
+      if (stepNumber > 6) stepNumber = 6;
+      currentStep = stepNumber;
+
+      tabs.forEach(t => {
+        const s = parseInt(t.dataset.step);
+        t.classList.toggle('active', s === currentStep);
+        t.classList.toggle('completed', s < currentStep);
+      });
+
+      panes.forEach((p, idx) => {
+        p.classList.toggle('active', idx + 1 === currentStep);
+      });
+
+      const btnPrev = document.getElementById('btnPrevStep');
+      const btnNext = document.getElementById('btnNextStep');
+      if (btnPrev) btnPrev.disabled = (currentStep === 1);
+      if (btnNext) btnNext.disabled = (currentStep === 6);
+
+      renderPreview();
+      if (currentStep === 5) {
+        request3DPreviews();
+      }
+    }
+
+    function navigateStep(direction) {
+      goToStep(currentStep + direction);
+    }
+
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        goToStep(parseInt(tab.dataset.step) || 1);
+      });
+    });
+
+    // Layout Archetype Selector
+    let currentLayout = 'L_SHAPE';
+    function selectLayoutArchetype(layoutKey) {
+      currentLayout = layoutKey;
+      document.querySelectorAll('.layout-card').forEach(card => {
+        card.classList.toggle('selected', card.dataset.layout === layoutKey);
+      });
+
+      const wallBInput = document.getElementById('wallB');
+      const wallCInput = document.getElementById('wallC');
+      const islandInput = document.getElementById('islandLength');
+      const wallAInput = document.getElementById('wallA');
+      const advisoryEl = document.getElementById('aisleAdvisory');
+      const aisleTextEl = document.getElementById('aisleText');
+
+      if (layoutKey === 'LINEAR') {
+        wallBInput.value = 0; wallBInput.disabled = true;
+        wallCInput.value = 0; wallCInput.disabled = true;
+        islandInput.value = 0; islandInput.disabled = true;
+        wallModules['B'] = []; wallModules['C'] = []; wallModules['Island'] = [];
+        if (advisoryEl) advisoryEl.style.display = 'none';
+      } else if (layoutKey === 'L_SHAPE') {
+        if (parseFloat(wallBInput.value) <= 0) wallBInput.value = 2379;
+        wallBInput.disabled = false;
+        wallCInput.value = 0; wallCInput.disabled = true;
+        islandInput.value = 0; islandInput.disabled = true;
+        wallModules['C'] = []; wallModules['Island'] = [];
+        if (!wallModules['B'] || wallModules['B'].length === 0) autoFitWallFor('B');
+        if (advisoryEl) advisoryEl.style.display = 'none';
+      } else if (layoutKey === 'U_SHAPE') {
+        if (parseFloat(wallBInput.value) <= 0) wallBInput.value = 2379;
+        if (parseFloat(wallCInput.value) <= 0) wallCInput.value = 2000;
+        wallBInput.disabled = false;
+        wallCInput.disabled = false;
+        islandInput.value = 0; islandInput.disabled = true;
+        wallModules['Island'] = [];
+        if (!wallModules['B'] || wallModules['B'].length === 0) autoFitWallFor('B');
+        if (!wallModules['C'] || wallModules['C'].length === 0) autoFitWallFor('C');
+        if (advisoryEl) advisoryEl.style.display = 'none';
+      } else if (layoutKey === 'L_ISLAND' || layoutKey === 'ISLAND') {
+        currentLayout = 'L_ISLAND';
+        if (parseFloat(wallBInput.value) <= 0) wallBInput.value = 2400;
+        wallBInput.disabled = false;
+        wallCInput.value = 0; wallCInput.disabled = true;
+        wallModules['C'] = [];
+        islandInput.disabled = false;
+        if (parseFloat(islandInput.value) <= 0) islandInput.value = 1800;
+        if (!wallModules['B'] || wallModules['B'].length === 0) autoFitWallFor('B');
+        if (!wallModules['Island'] || wallModules['Island'].length === 0) autoFitWallFor('Island');
+        if (advisoryEl) advisoryEl.style.display = 'none';
+      } else if (layoutKey === 'U_ISLAND') {
+        if (parseFloat(wallAInput.value) < 3600) wallAInput.value = 3800;
+        if (parseFloat(wallBInput.value) <= 0) wallBInput.value = 2800;
+        if (parseFloat(wallCInput.value) <= 0) wallCInput.value = 2800;
+        wallBInput.disabled = false;
+        wallCInput.disabled = false;
+        islandInput.disabled = false;
+        if (parseFloat(islandInput.value) <= 0) islandInput.value = 1600;
+        if (!wallModules['B'] || wallModules['B'].length === 0) autoFitWallFor('B');
+        if (!wallModules['C'] || wallModules['C'].length === 0) autoFitWallFor('C');
+        if (!wallModules['Island'] || wallModules['Island'].length === 0) autoFitWallFor('Island');
+        
+        // Compute aisle clearance
+        const wa = parseFloat(wallAInput.value) || 3800;
+        const clearanceEach = (wa - 1200 - 600) / 2;
+        if (advisoryEl && aisleTextEl) {
+          advisoryEl.style.display = 'block';
+          if (clearanceEach >= 900) {
+            advisoryEl.style.background = 'rgba(16, 185, 129, 0.15)';
+            advisoryEl.style.borderColor = 'rgba(16, 185, 129, 0.35)';
+            advisoryEl.style.color = '#34d399';
+            aisleTextEl.innerHTML = `Spacious <strong>${clearanceEach.toFixed(0)} mm</strong> on both sides (Adequate ≥ 900mm aisle clearance).`;
+          } else {
+            advisoryEl.style.background = 'rgba(245, 158, 11, 0.15)';
+            advisoryEl.style.borderColor = 'rgba(245, 158, 11, 0.35)';
+            advisoryEl.style.color = '#fbbf24';
+            aisleTextEl.innerHTML = `Narrow <strong>${clearanceEach.toFixed(0)} mm</strong> (< 900mm). Wall A adjusted to 3800mm recommended.`;
+          }
+        }
+      } else if (layoutKey === 'U_BAR_BULKHEAD') {
+        if (parseFloat(wallBInput.value) <= 0) wallBInput.value = 2400;
+        if (parseFloat(wallCInput.value) <= 0) wallCInput.value = 2200;
+        wallBInput.disabled = false;
+        wallCInput.disabled = false;
+        islandInput.value = 0; islandInput.disabled = true;
+        wallModules['Island'] = [];
+        if (!wallModules['B'] || wallModules['B'].length === 0) autoFitWallFor('B');
+        if (!wallModules['C'] || wallModules['C'].length === 0) autoFitWallFor('C');
+        if (advisoryEl) {
+          advisoryEl.style.display = 'block';
+          advisoryEl.style.background = 'rgba(56, 189, 248, 0.15)';
+          advisoryEl.style.borderColor = 'rgba(56, 189, 248, 0.35)';
+          advisoryEl.style.color = '#38bdf8';
+          aisleTextEl.innerHTML = `🍸 <strong>Wall C:</strong> 300mm Breakfast Bar Overhang | 🏛️ <strong>Ceiling:</strong> Full Top Bulkhead Soffit enabled.`;
+        }
+      }
+
+      autoFitWallFor('A');
+      if (layoutKey !== 'LINEAR') autoFitWallFor('B');
+      if (layoutKey.includes('U_')) autoFitWallFor('C');
+      if (layoutKey.includes('ISLAND')) autoFitWallFor('Island');
+      renderBoxStrip();
+      renderPreview();
+    }
+
+    // Project Openings Array State
+    const projectOpenings = [];
+
+    function renderOpeningsList() {
+      const container = document.getElementById('openingsListContainer');
+      if (projectOpenings.length === 0) {
+        container.innerHTML = '<div style="font-size: 11px; color: #64748b; text-align: center; padding: 10px;">No openings configured. Click "+ Add Opening" to define.</div>';
+        return;
+      }
+
+      container.innerHTML = '';
+      projectOpenings.forEach((op, idx) => {
+        const div = document.createElement('div');
+        div.style.display = 'flex';
+        div.style.justifyContent = 'space-between';
+        div.style.alignItems = 'center';
+        div.style.padding = '8px 12px';
+        div.style.background = 'rgba(255, 255, 255, 0.05)';
+        div.style.borderRadius = '6px';
+        div.style.border = '1px solid rgba(255, 255, 255, 0.1)';
+
+        const typeIcon = op.type === 'window' ? '🪟' : (op.type === 'door' ? '🚪' : '🧱');
+        const hLabel = op.type === 'window' ? 'Sill' : 'Height';
+        
+        div.innerHTML = `
+          <div style="display: flex; flex-direction: column; gap: 2px;">
+            <div style="font-size: 11px; font-weight: 700; color: #38bdf8;">
+              ${typeIcon} ${op.type.toUpperCase()} on Wall ${op.wall}
+            </div>
+            <div style="font-size: 10px; color: #94a3b8;">
+              Offset: ${op.offset}mm | Width: ${op.width}mm | ${hLabel}: ${op.height}mm
+            </div>
+          </div>
+          <div style="display: flex; gap: 4px;">
+            <button class="btn btn-secondary" style="padding: 4px 8px; font-size: 10px;" onclick="editOpening(${idx})">Edit</button>
+            <button class="btn btn-danger" style="padding: 4px 8px; font-size: 10px;" onclick="removeOpening(${idx})">Remove</button>
+          </div>
+        `;
+        container.appendChild(div);
+      });
+      renderPreview();
+    }
+
+    function addOpening() {
+      const wall = document.getElementById('opWall').value;
+      const type = document.getElementById('opType').value;
+      const offset = parseFloat(document.getElementById('opOffset').value) || 0;
+      const width = parseFloat(document.getElementById('opWidth').value) || 900;
+      const height = parseFloat(document.getElementById('opHeight').value) || 1050;
+
+      projectOpenings.push({ wall, type, offset, width, height });
+      renderOpeningsList();
+    }
+
+    function removeOpening(idx) {
+      projectOpenings.splice(idx, 1);
+      renderOpeningsList();
+    }
+
+    function editOpening(idx) {
+      const op = projectOpenings[idx];
+      document.getElementById('opWall').value = op.wall;
+      document.getElementById('opType').value = op.type;
+      document.getElementById('opOffset').value = op.offset;
+      document.getElementById('opWidth').value = op.width;
+      document.getElementById('opHeight').value = op.height;
+      projectOpenings.splice(idx, 1);
+      renderOpeningsList();
+    }
+
+    // Wall-by-Wall Modules State
+    let activeWall = 'A';
+    const wallModules = {
+      'A': [
+        { type: 'drawers', width: 600, drawer_count: 3, infill: 'acp', overhead: 'yes', handle: 'top' },
+        { type: 'cooker', width: 600, infill: 'acp', overhead: 'hood', handle: 'top' },
+        { type: 'blind_corner', width: 1288, infill: 'acp', overhead: 'yes', handle: 'top' }
+      ],
+      'B': [
+        { type: 'sink', width: 600, infill: 'glass', overhead: 'yes', handle: 'top' },
+        { type: 'door', width: 554, infill: 'glass', overhead: 'yes', handle: 'top' },
+        { type: 'tall_oven', width: 600, infill: 'glass', overhead: 'none', handle: 'side' }
+      ],
+      'C': [],
+      'Island': []
+    };
+
+    let selectedBoxIndex = 0;
+
+    // Wall Tabs Selector
+    document.querySelectorAll('.wall-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.wall-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        activeWall = btn.dataset.wall;
+        selectedBoxIndex = 0;
+        renderBoxStrip();
+        renderPreview();
+      });
+    });
+
+    function getTargetWallSpan(wallKey) {
+      const hasCornerOnB = (wallModules['B'] || []).some(b => b.type === 'blind_corner');
+      const hasCornerOnA = (wallModules['A'] || []).some(b => b.type === 'blind_corner');
+      const wallA = parseFloat(document.getElementById('wallA').value) || 2488;
+      const wallB = parseFloat(document.getElementById('wallB').value) || 2379;
+      const wallC = parseFloat(document.getElementById('wallC').value) || 0;
+
+      if (wallKey === 'A') {
+        return (hasCornerOnB && !hasCornerOnA) ? Math.max(0, wallA - 625) : wallA;
+      }
+      if (wallKey === 'B') {
+        return (hasCornerOnB) ? wallB : Math.max(0, wallB - 625);
+      }
+      if (wallKey === 'C') return Math.max(0, wallC - 625);
+      if (wallKey === 'Island') return parseFloat(document.getElementById('islandLength').value) || 0;
+      return 0;
+    }
+
+    function updateWallSpanBadge() {
+      const list = wallModules[activeWall] || [];
+      const totalModW = list.reduce((sum, b) => sum + (parseFloat(b.width) || 0), 0);
+      const targetSpan = getTargetWallSpan(activeWall);
+      const badge = document.getElementById('lblWallSpanStatus');
+      if (!badge) return;
+
+      const diff = targetSpan - totalModW;
+      if (Math.abs(diff) <= 10) {
+        badge.style.color = '#34d399';
+        badge.style.borderColor = 'rgba(52, 211, 153, 0.4)';
+        badge.innerText = `Wall ${activeWall}: ${totalModW}mm / ${targetSpan}mm (Full Fit ✓)`;
+      } else if (diff > 0) {
+        badge.style.color = '#f59e0b';
+        badge.style.borderColor = 'rgba(245, 158, 11, 0.4)';
+        badge.innerText = `Wall ${activeWall}: ${totalModW}mm / ${targetSpan}mm (${diff}mm open)`;
+      } else {
+        badge.style.color = '#f87171';
+        badge.style.borderColor = 'rgba(248, 113, 113, 0.4)';
+        badge.innerText = `Wall ${activeWall}: ${totalModW}mm / ${targetSpan}mm (${Math.abs(diff)}mm over)`;
+      }
+    }
+
+    function renderBoxStrip() {
+      const container = document.getElementById('boxStripContainer');
+      container.innerHTML = '';
+      const list = wallModules[activeWall] || [];
+
+      list.forEach((box, idx) => {
+        const item = document.createElement('div');
+        item.className = `box-card-item ${idx === selectedBoxIndex ? 'selected' : ''}`;
+        
+        let typeName = box.type.toUpperCase();
+        if (box.type === 'drawers') typeName = `${box.drawer_count || 3} DRAWERS`;
+        if (box.type === 'tall_oven') typeName = 'TALL TOWER';
+        if (box.type === 'blind_corner') typeName = 'CORNER BLIND';
+
+        item.innerHTML = `
+          <div class="box-card-badge">Bay ${idx + 1}</div>
+          <div class="box-card-name">${typeName}</div>
+          <div class="box-card-dim">${box.width} mm</div>
+        `;
+
+        item.addEventListener('click', () => {
+          selectedBoxIndex = idx;
+          renderBoxStrip();
+          populateBoxEditor();
+        });
+
+        container.appendChild(item);
+      });
+
+      updateWallSpanBadge();
+      populateBoxEditor();
+    }
+
+    function populateBoxEditor() {
+      const list = wallModules[activeWall] || [];
+      const box = list[selectedBoxIndex];
+      const panel = document.getElementById('boxEditorPanel');
+      if (!box) {
+        panel.style.display = 'none';
+        return;
+      }
+      panel.style.display = 'block';
+
+      document.getElementById('lblSelectedBoxTitle').innerText = `Configure Wall ${activeWall} — Box #${selectedBoxIndex + 1} (${box.type.toUpperCase()})`;
+      document.getElementById('boxType').value = box.type;
+      document.getElementById('boxWidth').value = box.width;
+      document.getElementById('boxDoorInfill').value = box.infill || 'glass';
+      document.getElementById('boxDrawersCount').value = box.drawer_count || 3;
+      document.getElementById('boxHasOverhead').value = box.overhead || 'yes';
+      document.getElementById('boxHandle').value = box.handle || 'top';
+    }
+
+    // Save changes when user edits any field in Box Editor
+    ['boxType', 'boxWidth', 'boxDoorInfill', 'boxDrawersCount', 'boxHasOverhead', 'boxHandle'].forEach(id => {
+      document.getElementById(id).addEventListener('change', () => {
+        const list = wallModules[activeWall] || [];
+        const box = list[selectedBoxIndex];
+        if (!box) return;
+
+        const oldWidth = box.width;
+
+        box.type = document.getElementById('boxType').value;
+        box.width = parseFloat(document.getElementById('boxWidth').value) || 600;
+        box.infill = document.getElementById('boxDoorInfill').value;
+        box.drawer_count = parseInt(document.getElementById('boxDrawersCount').value) || 3;
+        box.overhead = document.getElementById('boxHasOverhead').value;
+        box.handle = document.getElementById('boxHandle').value;
+
+        // Mark as user edited
+        box.user_edited = true;
+
+        // If width changed, check for gap/overflow and ask to auto-fill
+        if (id === 'boxWidth' && Math.abs(oldWidth - box.width) > 1.0) {
+          const targetSpan = getTargetWallSpan(activeWall);
+          const currentSum = list.reduce((s, b) => s + (parseFloat(b.width) || 0), 0);
+          const diff = targetSpan - currentSum;
+          if (Math.abs(diff) > 5) {
+            const autofill = confirm(`A gap/overflow of ${Math.round(diff)}mm has been created. Would you like to auto-fill the remaining space?`);
+            if (autofill) {
+              // Get non-edited candidates
+              let nonEdited = list.filter(b => !b.user_edited);
+              if (nonEdited.length === 0) {
+                const useAll = confirm("All boxes are manually edited. Would you like to distribute the gap among all boxes instead?");
+                if (useAll) nonEdited = list;
+              }
+
+              if (nonEdited.length > 0) {
+                let candidates = [];
+                nonEdited.forEach(b => {
+                  if (b.type === 'cooker' || b.overhead === 'hood') {
+                    const keepHood = confirm(`Module "${b.type}" at width ${b.width}mm is a Cooker/Hood. Do you want to KEEP/SKIP it at 600mm?`);
+                    if (!keepHood) {
+                      candidates.push(b);
+                    }
+                  } else {
+                    candidates.push(b);
+                  }
+                });
+
+                if (candidates.length > 0) {
+                  const share = diff / candidates.length;
+                  let allocated = 0;
+                  candidates.forEach((b, idx) => {
+                    const delta = (idx === candidates.length - 1) ? (diff - allocated) : share;
+                    allocated += delta;
+                    b.width = Math.max(150, Math.round(b.width + delta));
+                  });
+                } else {
+                  alert("No resizable candidates left. Gap/overflow remains.");
+                }
+              }
+            }
+          }
+        }
+
+        renderBoxStrip();
+        renderPreview();
+      });
+    });
+
+    // Quick Add Module helper
+    function quickAddModule(type, width, drawerCount = 3) {
+      if (!wallModules[activeWall]) wallModules[activeWall] = [];
+      wallModules[activeWall].push({
+        type: type,
+        width: width,
+        drawer_count: drawerCount,
+        infill: (type === 'drawers' || type === 'cooker' || type === 'blind_corner') ? 'acp' : 'glass',
+        overhead: (type === 'cooker') ? 'hood' : ((type === 'tall_oven') ? 'none' : 'yes'),
+        handle: (type === 'tall_oven') ? 'side' : 'top'
+      });
+      selectedBoxIndex = wallModules[activeWall].length - 1;
+      renderBoxStrip();
+      renderPreview();
+    }
+
+    function moveSelectedBox(dir) {
+      const list = wallModules[activeWall] || [];
+      if (!list || list.length < 2) return;
+      const targetIdx = selectedBoxIndex + dir;
+      if (targetIdx < 0 || targetIdx >= list.length) return;
+
+      const temp = list[selectedBoxIndex];
+      list[selectedBoxIndex] = list[targetIdx];
+      list[targetIdx] = temp;
+      selectedBoxIndex = targetIdx;
+
+      renderBoxStrip();
+      renderPreview();
+    }
+
+    // Add and Remove Box
+    document.getElementById('btnAddBox').addEventListener('click', () => {
+      quickAddModule('door', 600);
+    });
+
+    document.getElementById('btnRemoveBox').addEventListener('click', () => {
+      if (wallModules[activeWall] && wallModules[activeWall].length > 0) {
+        wallModules[activeWall].splice(selectedBoxIndex, 1);
+        selectedBoxIndex = Math.max(0, selectedBoxIndex - 1);
+        renderBoxStrip();
+        renderPreview();
+      }
+    });
+
+    // Auto-Fit to Wall Length Logic
+    function autoFitWallFor(wallKey) {
+      const wallA = parseFloat(document.getElementById('wallA')?.value) || 2488;
+      const wallB = parseFloat(document.getElementById('wallB')?.value) || 2379;
+
+      if (wallKey === 'A') {
+        const targetSpan = wallA;
+        const fixedFront = 1200; // 600 drawers + 600 cooker
+        const remA = targetSpan - fixedFront;
+
+        if (wallB > 0 && currentLayout !== 'LINEAR') {
+          if (remA >= 1075 + 450) {
+            const cornerW = 1075;
+            const midSpan = remA - cornerW;
+            const bayCount = Math.max(1, Math.round(midSpan / 650));
+            const perBay = Math.round(midSpan / bayCount);
+
+            const list = [
+              { type: 'drawers', width: 600, drawer_count: 3, infill: 'acp', overhead: 'yes', handle: 'top' },
+              { type: 'cooker', width: 600, infill: 'acp', overhead: 'hood', handle: 'top' }
+            ];
+            let allocated = 0;
+            for (let i = 0; i < bayCount; i++) {
+              const w = (i === bayCount - 1) ? (midSpan - allocated) : perBay;
+              allocated += w;
+              list.push({ type: 'door', width: w, infill: 'glass', overhead: 'yes', handle: 'top' });
+            }
+            list.push({ type: 'blind_corner', width: cornerW, infill: 'acp', overhead: 'yes', handle: 'top' });
+            wallModules['A'] = list;
+          } else {
+            const cornerW = Math.max(1075, Math.round(remA));
+            wallModules['A'] = [
+              { type: 'drawers', width: 600, drawer_count: 3, infill: 'acp', overhead: 'yes', handle: 'top' },
+              { type: 'cooker', width: 600, infill: 'acp', overhead: 'hood', handle: 'top' },
+              { type: 'blind_corner', width: cornerW, infill: 'acp', overhead: 'yes', handle: 'top' }
+            ];
+          }
+        } else {
+          // Single Straight Wall A Run
+          if (remA >= 450) {
+            const bayCount = Math.max(1, Math.round(remA / 650));
+            const perBay = Math.round(remA / bayCount);
+            const list = [
+              { type: 'drawers', width: 600, drawer_count: 3, infill: 'acp', overhead: 'yes', handle: 'top' },
+              { type: 'cooker', width: 600, infill: 'acp', overhead: 'hood', handle: 'top' }
+            ];
+            let allocated = 0;
+            for (let i = 0; i < bayCount; i++) {
+              const w = (i === bayCount - 1) ? (remA - allocated) : perBay;
+              allocated += w;
+              const modType = (i === 0) ? 'sink' : 'door';
+              list.push({ type: modType, width: w, infill: 'glass', overhead: 'yes', handle: 'top' });
+            }
+            wallModules['A'] = list;
+          } else {
+            wallModules['A'] = [
+              { type: 'drawers', width: 600, drawer_count: 3, infill: 'acp', overhead: 'yes', handle: 'top' },
+              { type: 'cooker', width: Math.round(targetSpan - 600), infill: 'acp', overhead: 'hood', handle: 'top' }
+            ];
+          }
+        }
+      } else if (wallKey === 'B') {
+        if (wallB <= 0 || currentLayout === 'LINEAR') {
+          wallModules['B'] = [];
+          return;
+        }
+        const availB = Math.max(0, wallB - 625);
+        if (availB >= 1650) {
+          const tallW = 600;
+          const remBase = availB - tallW;
+          const sinkW = (remBase > 2000) ? 800 : 600;
+          const storageW = remBase - sinkW;
+
+          const bayCount = Math.max(1, Math.round(storageW / 650));
+          const perBay = Math.round(storageW / bayCount);
+          const list = [
+            { type: 'sink', width: sinkW, infill: 'glass', overhead: 'yes', handle: 'top' }
+          ];
+
+          let allocated = 0;
+          for (let i = 0; i < bayCount; i++) {
+            const w = (i === bayCount - 1) ? (storageW - allocated) : perBay;
+            allocated += w;
+            const modType = (i === 0 && bayCount > 1) ? 'drawers' : 'door';
+            list.push({
+              type: modType,
+              width: w,
+              drawer_count: 3,
+              infill: 'glass',
+              overhead: 'yes',
+              handle: 'top'
+            });
+          }
+          list.push({ type: 'tall_oven', width: tallW, infill: 'glass', overhead: 'none', handle: 'side' });
+          wallModules['B'] = list;
+        } else if (availB >= 1150) {
+          const tallW = 600;
+          const sinkW = availB - tallW;
+          wallModules['B'] = [
+            { type: 'sink', width: Math.round(sinkW), infill: 'glass', overhead: 'yes', handle: 'top' },
+            { type: 'tall_oven', width: tallW, infill: 'glass', overhead: 'none', handle: 'side' }
+          ];
+        } else {
+          wallModules['B'] = [
+            { type: 'sink', width: Math.round(availB), infill: 'glass', overhead: 'yes', handle: 'top' }
+          ];
+        }
+      } else if (wallKey === 'C') {
+        const wallC = parseFloat(document.getElementById('wallC')?.value) || 0;
+        if (wallC <= 0 || currentLayout !== 'U_SHAPE') {
+          wallModules['C'] = [];
+          return;
+        }
+        const availC = Math.max(0, wallC - 625);
+        if (availC >= 1200) {
+          const bayCount = Math.max(1, Math.round(availC / 600));
+          const perBay = Math.round(availC / bayCount);
+          const list = [];
+          let allocated = 0;
+          for (let i = 0; i < bayCount; i++) {
+            const w = (i === bayCount - 1) ? (availC - allocated) : perBay;
+            allocated += w;
+            const modType = (i === 0) ? 'drawers' : 'door';
+            list.push({
+              type: modType,
+              width: w,
+              drawer_count: 3,
+              infill: 'glass',
+              overhead: 'yes',
+              handle: 'top'
+            });
+          }
+          wallModules['C'] = list;
+        } else {
+          wallModules['C'] = [
+            { type: 'door', width: Math.round(availC), infill: 'glass', overhead: 'yes', handle: 'top' }
+          ];
+        }
+      } else if (wallKey === 'Island') {
+        const islLen = parseFloat(document.getElementById('islandLength')?.value) || 0;
+        if (islLen <= 0 || !currentLayout.includes('ISLAND')) {
+          wallModules['Island'] = [];
+          return;
+        }
+        const bayCount = Math.max(1, Math.round(islLen / 600));
+        const perBay = Math.round(islLen / bayCount);
+        const list = [];
+        let allocated = 0;
+        for (let i = 0; i < bayCount; i++) {
+          const w = (i === bayCount - 1) ? (islLen - allocated) : perBay;
+          allocated += w;
+          const modType = (i === 0) ? 'drawers' : ((i === 1) ? 'door' : 'open_rack');
+          list.push({
+            type: modType,
+            width: w,
+            drawer_count: 3,
+            infill: 'glass',
+            overhead: 'none',
+            handle: 'top'
+          });
+        }
+        wallModules['Island'] = list;
+      }
+    }
+
+    function scaleWallToTarget(wallKey) {
+      const targetSpan = getTargetWallSpan(wallKey);
+      if (targetSpan <= 100) return;
+      let list = wallModules[wallKey];
+      if (!list || list.length === 0) {
+        autoFitWallFor(wallKey);
+        return;
+      }
+
+      // Check current sum
+      const curSum = list.reduce((s, b) => s + (parseFloat(b.width) || 0), 0);
+      const diff = targetSpan - curSum;
+      if (Math.abs(diff) < 2.0) return; // Already fits
+
+      // Identify non-user-edited boxes
+      let nonEdited = list.filter(b => !b.user_edited);
+      if (nonEdited.length === 0) {
+        nonEdited = list;
+      }
+
+      let candidates = [];
+      nonEdited.forEach(b => {
+        if (b.type === 'cooker' || b.overhead === 'hood') {
+          const keepHood = confirm(`Module "${b.type}" is a Cooker/Hood. Do you want to KEEP/SKIP it at 600mm?`);
+          if (!keepHood) {
+            candidates.push(b);
+          }
+        } else {
+          candidates.push(b);
+        }
+      });
+
+      if (candidates.length > 0) {
+        const share = diff / candidates.length;
+        let allocated = 0;
+        candidates.forEach((b, idx) => {
+          const delta = (idx === candidates.length - 1) ? (diff - allocated) : share;
+          allocated += delta;
+          b.width = Math.max(150, Math.round(b.width + delta));
+        });
+      } else {
+        alert("All modules are locked or cooker units were skipped. Cannot auto-fill.");
+      }
+    }
+
+    document.getElementById('btnAutoFitWall').addEventListener('click', () => {
+      autoFitWallFor(activeWall);
+      selectedBoxIndex = 0;
+      renderBoxStrip();
+      renderPreview();
+    });
+
+    // 2D Preview Canvas
+    const canvas = document.getElementById('floorplanCanvas');
+    const ctx = canvas ? canvas.getContext('2d') : null;
+
+    function resizeCanvas() {
+      if (!canvas || !ctx) return;
+      const parentW = canvas.parentElement ? canvas.parentElement.clientWidth : 0;
+      canvas.width = Math.max(420, parentW - 28);
+      canvas.height = 160;
+      renderPreview();
+    }
+
+    window.addEventListener('resize', resizeCanvas);
+
+    function renderPreview() {
+      if (!canvas || !ctx || canvas.width <= 0) return;
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      const wallA = parseFloat(document.getElementById('wallA')?.value) || 2488;
+      const wallB = parseFloat(document.getElementById('wallB')?.value) || 2379;
+      const wallC = parseFloat(document.getElementById('wallC')?.value) || 0;
+      const islLen = parseFloat(document.getElementById('islandLength')?.value) || 0;
+      // Openings are now drawn from projectOpenings array instead of static fields
+
+      const maxDim = Math.max(wallA, wallB, wallC, islLen, 3000);
+      const scale = Math.min((canvas.width - 60) / maxDim, (canvas.height - 40) / maxDim);
+
+      ctx.save();
+      ctx.translate(25, canvas.height - 20);
+
+      // Draw Wall A (Main Run along X)
+      ctx.strokeStyle = '#94a3b8';
+      ctx.lineWidth = 4;
+      ctx.beginPath();
+      ctx.moveTo(0, 0);
+      ctx.lineTo(wallA * scale, 0);
+      ctx.stroke();
+
+      // Draw Wall B (Return Run along -Y on Right)
+      if (wallB > 0 && currentLayout !== 'LINEAR') {
+        ctx.beginPath();
+        ctx.moveTo(wallA * scale, 0);
+        ctx.lineTo(wallA * scale, -wallB * scale);
+        ctx.stroke();
+      }
+
+      // Draw Wall C (Return Run along -Y on Left for U-Shape)
+      if (wallC > 0 && currentLayout === 'U_SHAPE') {
+        ctx.beginPath();
+        ctx.moveTo(0, 0);
+        ctx.lineTo(0, -wallC * scale);
+        ctx.stroke();
+      }
+
+      // Draw Configured Openings (Windows, Doors, Obstacles)
+      projectOpenings.forEach(op => {
+        ctx.strokeStyle = op.type === 'window' ? '#38bdf8' : (op.type === 'door' ? '#f59e0b' : '#ef4444');
+        ctx.lineWidth = 6;
+        ctx.beginPath();
+        if (op.wall === 'A') {
+          ctx.moveTo(op.offset * scale, 0);
+          ctx.lineTo((op.offset + op.width) * scale, 0);
+        } else if (op.wall === 'B' && wallB > 0 && currentLayout !== 'LINEAR') {
+          ctx.moveTo(wallA * scale, -op.offset * scale);
+          ctx.lineTo(wallA * scale, (-op.offset - op.width) * scale);
+        } else if (op.wall === 'C' && wallC > 0 && currentLayout === 'U_SHAPE') {
+          ctx.moveTo(0, -op.offset * scale);
+          ctx.lineTo(0, (-op.offset - op.width) * scale);
+        }
+        ctx.stroke();
+      });
+
+      // Draw Wall A Boxes visually along X
+      let curX = 0;
+      (wallModules['A'] || []).forEach((b, i) => {
+        const bw = (parseFloat(b.width) || 600) * scale;
+        const bd = 600 * scale;
+        ctx.fillStyle = (activeWall === 'A' && i === selectedBoxIndex) ? 'rgba(56, 189, 248, 0.45)' : 'rgba(59, 130, 246, 0.2)';
+        ctx.strokeStyle = '#38bdf8';
+        ctx.lineWidth = 1;
+        ctx.fillRect(curX, -bd, bw, bd);
+        ctx.strokeRect(curX, -bd, bw, bd);
+
+        ctx.fillStyle = '#f8fafc';
+        ctx.font = '8px sans-serif';
+        const label = (b.type || '').substring(0, 4).toUpperCase();
+        ctx.fillText(label, curX + 2, -bd + 12);
+        curX += bw;
+      });
+
+      // Draw Wall B Boxes visually along -Y (Right)
+      if (wallB > 0 && currentLayout !== 'LINEAR') {
+        const hasCornerOnA = (wallModules['A'] || []).some(b => b.type === 'blind_corner');
+        let curY = hasCornerOnA ? 600 * scale : 0;
+        (wallModules['B'] || []).forEach((b, i) => {
+          const bw = (parseFloat(b.width) || 600) * scale;
+          const bd = 600 * scale;
+          ctx.fillStyle = (activeWall === 'B' && i === selectedBoxIndex) ? 'rgba(56, 189, 248, 0.45)' : 'rgba(6, 182, 212, 0.2)';
+          ctx.strokeStyle = '#06b6d4';
+          ctx.lineWidth = 1;
+          ctx.fillRect(wallA * scale - bd, -curY - bw, bd, bw);
+          ctx.strokeRect(wallA * scale - bd, -curY - bw, bd, bw);
+
+          ctx.fillStyle = '#f8fafc';
+          ctx.font = '8px sans-serif';
+          const label = (b.type || '').substring(0, 4).toUpperCase();
+          ctx.fillText(label, wallA * scale - bd + 2, -curY - bw + 12);
+          curY += bw;
+        });
+      }
+
+      // Draw Wall C Boxes visually along -Y (Left)
+      if (wallC > 0 && currentLayout === 'U_SHAPE') {
+        let curY_c = 600 * scale;
+        (wallModules['C'] || []).forEach((b, i) => {
+          const bw = (parseFloat(b.width) || 600) * scale;
+          const bd = 600 * scale;
+          ctx.fillStyle = (activeWall === 'C' && i === selectedBoxIndex) ? 'rgba(56, 189, 248, 0.45)' : 'rgba(16, 185, 129, 0.2)';
+          ctx.strokeStyle = '#10b981';
+          ctx.lineWidth = 1;
+          ctx.fillRect(0, -curY_c - bw, bd, bw);
+          ctx.strokeRect(0, -curY_c - bw, bd, bw);
+
+          ctx.fillStyle = '#f8fafc';
+          ctx.font = '8px sans-serif';
+          const label = (b.type || '').substring(0, 4).toUpperCase();
+          ctx.fillText(label, 2, -curY_c - bw + 12);
+          curY_c += bw;
+        });
+      }
+
+      // Draw Island Boxes visually (Centered)
+      if (islLen > 0 && currentLayout.includes('ISLAND')) {
+        const isl_dist_y = (Math.max(wallB, 800) + 900) * scale;
+        let curX_isl = Math.max(0, (wallA * scale - islLen * scale) / 2);
+        (wallModules['Island'] || []).forEach((b, i) => {
+          const bw = (parseFloat(b.width) || 600) * scale;
+          const bd = 600 * scale;
+          ctx.fillStyle = (activeWall === 'Island' && i === selectedBoxIndex) ? 'rgba(56, 189, 248, 0.45)' : 'rgba(245, 158, 11, 0.2)';
+          ctx.strokeStyle = '#f59e0b';
+          ctx.lineWidth = 1;
+          ctx.fillRect(curX_isl, -isl_dist_y, bw, bd);
+          ctx.strokeRect(curX_isl, -isl_dist_y, bw, bd);
+
+          ctx.fillStyle = '#f8fafc';
+          ctx.font = '8px sans-serif';
+          const label = (b.type || '').substring(0, 4).toUpperCase();
+          ctx.fillText(label, curX_isl + 2, -isl_dist_y + 12);
+          curX_isl += bw;
+        });
+      }
+
+      ctx.restore();
+    }
+
+    function triggerFullRefresh() {
+      autoFitWallFor('A');
+      if (currentLayout !== 'LINEAR') autoFitWallFor('B');
+      if (currentLayout === 'U_SHAPE') autoFitWallFor('C');
+      if (currentLayout.includes('ISLAND')) autoFitWallFor('Island');
+      resizeCanvas();
+      renderBoxStrip();
+      updateComplexityBadge();
+    }
+
+    setTimeout(triggerFullRefresh, 50);
+    setTimeout(triggerFullRefresh, 250);
+
+    // Wall dimension inputs automatically stretch cabinets
+    ['wallA', 'wallB', 'wallC', 'islandLength'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) {
+        el.addEventListener('input', () => {
+          if (id === 'wallA') autoFitWallFor('A');
+          if (id === 'wallB' && currentLayout !== 'LINEAR') autoFitWallFor('B');
+          if (id === 'wallC' && currentLayout === 'U_SHAPE') autoFitWallFor('C');
+          if (id === 'islandLength' && currentLayout.includes('ISLAND')) autoFitWallFor('Island');
+          renderBoxStrip();
+          renderPreview();
+        });
+      }
+    });
+
+    // Form inputs trigger live redraw
+    document.querySelectorAll('input, select').forEach(el => {
+      el.addEventListener('input', () => {
+        renderPreview();
+        updateWallSpanBadge();
+        updateComplexityBadge();
+      });
+      el.addEventListener('change', () => {
+        renderPreview();
+        updateWallSpanBadge();
+        updateComplexityBadge();
+      });
+    });
+
+    // Reset button
+    document.getElementById('btnReset').addEventListener('click', () => {
+      document.getElementById('wallA').value = 2488;
+      document.getElementById('wallB').value = 2379;
+      if (document.getElementById('wallC')) document.getElementById('wallC').value = 0;
+      document.getElementById('ceilingHeight').value = 2743;
+      selectLayoutArchetype('L_SHAPE');
+      goToStep(1);
+    });
+
+    // 3D Preview Request Handler
+    function request3DPreviews() {
+      if (window.sketchup !== undefined && window.sketchup.get3DPreviews) {
+        window.sketchup.get3DPreviews();
+      }
+    }
+
+    window.on3DPreviewsReady = function(images) {
+      if (!images) return;
+      const setImg = (id, b64) => {
+        const wrap = document.getElementById(id);
+        if (wrap && b64 && b64.length > 50) {
+          wrap.innerHTML = `<img src="${b64}" alt="3D View" />`;
+        }
+      };
+      if (images.front) setImg('wrapFront', images.front);
+      if (images.return_view) setImg('wrapReturn', images.return_view);
+      if (images.top) setImg('wrapTop', images.top);
+      if (images.iso) setImg('wrapIso', images.iso);
+    };
+
+    // Generate Button Action
+    document.getElementById('btnGenerate').addEventListener('click', () => {
+      scaleWallToTarget('A');
+      if (currentLayout !== 'LINEAR') scaleWallToTarget('B');
+      if (currentLayout.includes('U_')) scaleWallToTarget('C');
+      if (currentLayout.includes('ISLAND')) scaleWallToTarget('Island');
+
+      const isBulkhead = (currentLayout === 'U_BAR_BULKHEAD');
+      const isBar = (currentLayout === 'U_BAR_BULKHEAD');
+
+      const payload = {
+        room: {
+          layout_type: currentLayout,
+          wall_a_mm: parseFloat(document.getElementById('wallA')?.value) || 2488,
+          wall_b_mm: (currentLayout === 'LINEAR') ? 0 : (parseFloat(document.getElementById('wallB')?.value) || 2379),
+          wall_c_mm: (currentLayout.includes('U_')) ? (parseFloat(document.getElementById('wallC')?.value) || 0) : 0,
+          island_length_mm: (currentLayout.includes('ISLAND')) ? (parseFloat(document.getElementById('islandLength')?.value) || 0) : 0,
+          ceiling_height_mm: parseFloat(document.getElementById('ceilingHeight')?.value) || 2743,
+          base_height_mm: parseFloat(document.getElementById('baseHeight')?.value) || 870,
+          top_z_mm: parseFloat(document.getElementById('topZ')?.value) || 1500,
+          top_height_mm: parseFloat(document.getElementById('topHeight')?.value) || 720,
+          tall_height_mm: parseFloat(document.getElementById('tallHeight')?.value) || 2123
+        },
+        openings_list: projectOpenings,
+        project_settings: {
+          layout_archetype: currentLayout,
+          has_top_bulkhead: isBulkhead,
+          has_bar_counter: isBar,
+          construction_logic: document.querySelector('input[name="kitchenType"]:checked')?.value || 'FULL_ALU_FRAME',
+          carcase_bar: document.getElementById('cfgCarcaseBar')?.value || 'boxbar_25',
+          door_sash: document.getElementById('cfgDoorSash')?.value || 'sash_45_finger',
+          gola_mode: document.getElementById('golaMode')?.value || 'finger_pull',
+          base_support: document.getElementById('baseSupport')?.value || 'shared_aluminum_boxbar_foot_frame',
+          acp_thickness_mm: parseFloat(document.getElementById('acpThickness')?.value) || 3,
+          base_door_style: document.getElementById('baseDoorStyle')?.value || 'solid_acp',
+          top_door_style: document.getElementById('topDoorStyle')?.value || 'glass_sash',
+          tall_unit_style: document.getElementById('tallUnitStyle')?.value || 'double_oven',
+          open_rack_max_width_mm: parseFloat(document.getElementById('openRackMaxWidth')?.value) || 350,
+          profile_measurements: {
+            boxbar_width: parseFloat(document.getElementById('measBoxBarWidth')?.value) || 25.4,
+            boxbar_depth: parseFloat(document.getElementById('measBoxBarDepth')?.value) || 25.4,
+            boxbar_wall: parseFloat(document.getElementById('measBoxBarWall')?.value) || 1.2,
+            sash_width: parseFloat(document.getElementById('measSashWidth')?.value) || 45.0,
+            sash_thick: parseFloat(document.getElementById('measSashThick')?.value) || 19.0,
+            gola_depth: parseFloat(document.getElementById('measGolaDepth')?.value) || 27.2,
+            gola_height: parseFloat(document.getElementById('measGolaHeight')?.value) || 56.5,
+            plinth_height: parseFloat(document.getElementById('measPlinthHeight')?.value) || 100.0
+          }
+        },
+        style: {
+          kitchen_type: document.querySelector('input[name="kitchenType"]:checked')?.value || 'FULL_ALU_FRAME',
+          gola_mode: document.getElementById('golaMode')?.value || 'finger_pull',
+          base_support: document.getElementById('baseSupport')?.value || 'shared_aluminum_boxbar_foot_frame'
+        },
+        custom_wall_modules: wallModules
+      };
+
+      const statusEl = document.getElementById('statusIndicator');
+      if (statusEl) {
+        statusEl.innerText = 'Generating 3D...';
+        statusEl.style.color = '#38bdf8';
+      }
+
+      const btn = document.getElementById('btnGenerate');
+      const origHtml = btn.innerHTML;
+      btn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" style="vertical-align: middle; margin-right: 8px;"><path fill="currentColor" d="M12,1A11,11,0,1,0,23,12,11,11,0,0,0,12,1Zm0,19a8,8,0,1,1,8-8A8,8,0,0,1,12,20Z" opacity=".25"/><path fill="currentColor" d="M10.14,1.16a11,11,0,0,0-9,8.92A1.59,1.59,0,0,0,2.46,12,1.52,1.52,0,0,0,4.11,10.7a8,8,0,0,1,6.66-6.61A1.42,1.42,0,0,0,12,2.69h0A1.57,1.57,0,0,0,10.14,1.16Z"><animateTransform attributeName="transform" type="rotate" dur="0.75s" values="0 12 12;360 12 12" repeatCount="indefinite"/></path></svg> Processing...`;
+      btn.disabled = true;
+      window._restoreBtnGenerate = () => {
+        btn.innerHTML = origHtml;
+        btn.disabled = false;
+      };
+
+      setTimeout(() => {
+        if (window.sketchup !== undefined) {
+          window.sketchup.buildKitchen(JSON.stringify(payload));
+        } else {
+          console.log('SketchUp Payload:', payload);
+          alert('Payload ready for SketchUp: ' + JSON.stringify(payload, null, 2));
+          if (window._restoreBtnGenerate) window._restoreBtnGenerate();
+        }
+      }, 50);
+    });
+
+    // Export Workshop PDF Button
+    document.getElementById('btnExportPdf').addEventListener('click', () => {
+      scaleWallToTarget('A');
+      if (currentLayout !== 'LINEAR') scaleWallToTarget('B');
+      if (currentLayout.includes('U_')) scaleWallToTarget('C');
+      if (currentLayout.includes('ISLAND')) scaleWallToTarget('Island');
+
+      const isBulkhead = (currentLayout === 'U_BAR_BULKHEAD');
+      const isBar = (currentLayout === 'U_BAR_BULKHEAD');
+
+      const payload = {
+        room: {
+          layout_type: currentLayout,
+          wall_a_mm: parseFloat(document.getElementById('wallA')?.value) || 2488,
+          wall_b_mm: (currentLayout === 'LINEAR') ? 0 : (parseFloat(document.getElementById('wallB')?.value) || 2379),
+          wall_c_mm: (currentLayout.includes('U_')) ? (parseFloat(document.getElementById('wallC')?.value) || 0) : 0,
+          island_length_mm: (currentLayout.includes('ISLAND')) ? (parseFloat(document.getElementById('islandLength')?.value) || 0) : 0,
+          ceiling_height_mm: parseFloat(document.getElementById('ceilingHeight')?.value) || 2743,
+          base_height_mm: parseFloat(document.getElementById('baseHeight')?.value) || 870,
+          top_z_mm: parseFloat(document.getElementById('topZ')?.value) || 1500,
+          top_height_mm: parseFloat(document.getElementById('topHeight')?.value) || 720,
+          tall_height_mm: parseFloat(document.getElementById('tallHeight')?.value) || 2123
+        },
+        project_settings: {
+          layout_archetype: currentLayout,
+          has_top_bulkhead: isBulkhead,
+          has_bar_counter: isBar,
+          construction_logic: document.querySelector('input[name="kitchenType"]:checked')?.value || 'FULL_ALU_FRAME',
+          gola_mode: document.getElementById('golaMode')?.value || 'finger_pull',
+          acp_thickness_mm: parseFloat(document.getElementById('acpThickness')?.value) || 3,
+          base_door_style: document.getElementById('baseDoorStyle')?.value || 'solid_acp',
+          top_door_style: document.getElementById('topDoorStyle')?.value || 'glass_sash',
+          tall_unit_style: document.getElementById('tallUnitStyle')?.value || 'double_oven',
+          open_rack_max_width_mm: parseFloat(document.getElementById('openRackMaxWidth')?.value) || 350
+        },
+        style: {
+          kitchen_type: document.querySelector('input[name="kitchenType"]:checked')?.value || 'FULL_ALU_FRAME',
+          gola_mode: document.getElementById('golaMode')?.value || 'finger_pull',
+          base_support: document.getElementById('baseSupport')?.value || 'shared_aluminum_boxbar_foot_frame'
+        },
+        quote: {
+          client_name: document.getElementById('quoteClientName')?.value || 'Valued Customer',
+          project_name: document.getElementById('quoteProjectName')?.value || 'Luxury All-Aluminum Modular Kitchen',
+          markup_pct: parseFloat(document.getElementById('quoteMarkupPct')?.value) || 35.0,
+          custom_rates: {
+            boxBar: parseFloat(document.getElementById('plannerRateBoxBar')?.value) || 7200,
+            sash: parseFloat(document.getElementById('plannerRateSash')?.value) || 9800,
+            acp: parseFloat(document.getElementById('plannerRateAcp')?.value) || 13500,
+            granite: parseFloat(document.getElementById('plannerRateGranite')?.value) || 3200,
+            tile: parseFloat(document.getElementById('plannerRateTile')?.value) || 1100,
+            labor: parseFloat(document.getElementById('plannerRateLabor')?.value) || 2800
+          }
+        },
+        custom_wall_modules: wallModules
+      };
+
+      const btn = document.getElementById('btnExportPdf');
+      const origHtml = btn.innerHTML;
+      btn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" style="vertical-align: middle; margin-right: 8px;"><path fill="currentColor" d="M12,1A11,11,0,1,0,23,12,11,11,0,0,0,12,1Zm0,19a8,8,0,1,1,8-8A8,8,0,0,1,12,20Z" opacity=".25"/><path fill="currentColor" d="M10.14,1.16a11,11,0,0,0-9,8.92A1.59,1.59,0,0,0,2.46,12,1.52,1.52,0,0,0,4.11,10.7a8,8,0,0,1,6.66-6.61A1.42,1.42,0,0,0,12,2.69h0A1.57,1.57,0,0,0,10.14,1.16Z"><animateTransform attributeName="transform" type="rotate" dur="0.75s" values="0 12 12;360 12 12" repeatCount="indefinite"/></path></svg> Exporting...`;
+      btn.disabled = true;
+      window._restoreBtnExport = () => {
+        btn.innerHTML = origHtml;
+        btn.disabled = false;
+      };
+
+      setTimeout(() => {
+        if (window.sketchup !== undefined) {
+          window.sketchup.exportWorkshopPack(JSON.stringify(payload));
+          setTimeout(() => { if (window._restoreBtnExport) window._restoreBtnExport(); }, 2000); // Hacky restore since no ruby callback is defined
+        } else {
+          alert('Exporting Workshop Report for: ' + JSON.stringify(payload, null, 2));
+          if (window._restoreBtnExport) window._restoreBtnExport();
+        }
+      }, 50);
+    });
+
+    let lastBomData = null;
+
+    function recalcPlannerBOM() {
+      const wa = parseFloat(document.getElementById('wallA')?.value) || 2488;
+      const wb = (currentLayout === 'LINEAR') ? 0 : (parseFloat(document.getElementById('wallB')?.value) || 2379);
+      const baseFt = (wa + wb) / 304.8;
+      const topFt = baseFt;
+      
+      let tallCount = 0;
+      let drwCount = 0;
+      Object.values(wallModules).forEach(list => {
+        list.forEach(m => {
+          if (m.type === 'tall_oven' || m.type === 'tall_pantry') tallCount++;
+          if (m.type === 'drawers') drwCount += (m.drawer_count || 3);
+        });
+      });
+      drwCount = drwCount || 3;
+      const totalLinFt = baseFt + topFt + (tallCount * 7.0);
+
+      const n = (lastBomData && lastBomData.nesting) || {};
+      const boxBars = (n.boxbar_matte_black_6m_bars && n.boxbar_matte_black_6m_bars.total_bars > 0) ? n.boxbar_matte_black_6m_bars.total_bars : 6;
+      const sashBars = (n.sash_gloss_6m_bars && n.sash_gloss_6m_bars.total_bars > 0) ? n.sash_gloss_6m_bars.total_bars : 4;
+      const acpSheets = (n.acp_2440x1220_sheets_est > 0) ? n.acp_2440x1220_sheets_est : 3;
+      const graniteSqft = baseFt * 2.0;
+      const tileSqft = baseFt * 2.0;
+
+      const rBox = parseFloat(document.getElementById('plannerRateBoxBar')?.value) || 7200;
+      const rSash = parseFloat(document.getElementById('plannerRateSash')?.value) || 9800;
+      const rAcp = parseFloat(document.getElementById('plannerRateAcp')?.value) || 13500;
+      const rGranite = parseFloat(document.getElementById('plannerRateGranite')?.value) || 3200;
+      const rTile = parseFloat(document.getElementById('plannerRateTile')?.value) || 1100;
+      const rLabor = parseFloat(document.getElementById('plannerRateLabor')?.value) || 2800;
+      const markup = parseFloat(document.getElementById('quoteMarkupPct')?.value) || 35.0;
+
+      const costMaterials = (boxBars * rBox) + (sashBars * rSash) + (acpSheets * rAcp) + (graniteSqft * rGranite) + (tileSqft * rTile);
+      const costLabor = totalLinFt * rLabor;
+      const costHingesAndElec = (16 * 950) + (drwCount * 4200) + (topFt * 1350);
+      const baseCost = costMaterials + costLabor + costHingesAndElec;
+      const markupVal = baseCost * (markup / 100.0);
+      const grandTotal = baseCost + markupVal;
+
+      const fmt = v => 'LKR ' + Math.round(v).toLocaleString('en-US');
+      const setT = (id, txt) => { const el = document.getElementById(id); if (el) el.innerText = txt; };
+
+      setT('lblPlannerBaseCost', fmt(baseCost));
+      setT('lblPlannerMarkupPct', `${markup}%`);
+      setT('lblPlannerMarkupVal', `+ ${fmt(markupVal)}`);
+      setT('lblPlannerGrandTotal', fmt(grandTotal));
+    }
+
+    // Callback from SketchUp Ruby
+    window.onKitchenGenerated = function(status, message, bomData) {
+      if (window._restoreBtnGenerate) {
+        window._restoreBtnGenerate();
+      }
+
+      const el = document.getElementById('statusIndicator');
+      if (status === 'success') {
+        if (el) {
+          el.innerText = 'Completed ✓';
+          el.style.color = '#34d399';
+        }
+
+
+        lastBomData = bomData;
+
+        if (bomData && bomData.nesting) {
+          const n = bomData.nesting;
+          const setT = (id, txt) => { const node = document.getElementById(id); if (node) node.innerText = txt; };
+          if (n.boxbar_matte_black_6m_bars) setT('bomCarcaseCount', `${n.boxbar_matte_black_6m_bars.total_bars} bars (${n.boxbar_matte_black_6m_bars.total_net_length_m} m)`);
+          if (n.sash_gloss_6m_bars) setT('bomSashCount', `${n.sash_gloss_6m_bars.total_bars} bars (${n.sash_gloss_6m_bars.total_net_length_m} m)`);
+          if (n.gola_6m_bars) setT('bomGolaCount', `${n.gola_6m_bars.total_bars} bars (${n.gola_6m_bars.total_net_length_m} m)`);
+          if (n.acp_2440x1220_sheets_est !== undefined) setT('bomAcpSheets', `${n.acp_2440x1220_sheets_est} sheets (${n.total_acp_sqm || 0} m²)`);
+          if (bomData.hardware) setT('bomHinges', `${bomData.hardware.hinges || 0} pcs`);
+
+          recalcPlannerBOM();
+        }
+
+        // Auto transition to 3D Previews tab upon completion
+        goToStep(5);
+      } else {
+        if (el) {
+          el.innerText = message || 'Generation Failed';
+          el.style.color = '#ef4444';
+        }
+      }
+    };
+
+    // Dynamic Complexity Token Estimator
+    function updateComplexityBadge() {
+      const wa = parseFloat(document.getElementById('wallA')?.value) || 2488;
+      const wb = (currentLayout === 'LINEAR') ? 0 : (parseFloat(document.getElementById('wallB')?.value) || 1379);
+      const linFt = (wa + wb) / 304.8;
+      
+      let tallCount = 0;
+      Object.values(wallModules).forEach(list => {
+        list.forEach(m => {
+          if (m.type === 'tall_oven' || m.type === 'tall_pantry') tallCount++;
+        });
+      });
+
+      let text = '1 Token';
+      if (linFt <= 14 && tallCount === 0) {
+        text = '1 Token (Compact Run)';
+      } else if (linFt <= 26 || tallCount === 1) {
+        text = '2 Tokens (Advanced Run)';
+      } else {
+        text = '3 Tokens (Multi-Tower Complex)';
+      }
+
+      const el = document.getElementById('lblComplexityReq');
+      if (el) el.innerText = text;
+    }
+
+    function triggerLogout() {
+      if (confirm('Are you sure you want to sign out of this Cabinex AI session?')) {
+        if (window.sketchup !== undefined) {
+          window.sketchup.doLogout();
+        } else {
+          alert('Session signed out.');
+        }
+      }
+    }
+
+    window.setUserContext = function(email, tokenBalance) {
+      if (email) {
+        const uEl = document.getElementById('lblUserEmail');
+        if (uEl) uEl.innerText = email;
+      }
+      if (tokenBalance !== undefined && tokenBalance !== null) {
+        const tEl = document.getElementById('lblTokenBalance');
+        if (tEl) tEl.innerText = tokenBalance;
+      }
+      updateComplexityBadge();
+    };
+
+    updateComplexityBadge();
+  </script>
+</body>
+</html>

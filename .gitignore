@@ -1,0 +1,28 @@
+# --- runtime / dependency dirs ---
+node_modules/
+.next/
+dist/
+build/
+__pycache__/
+*.pyc
+
+# --- large external reference assets (not source) ---
+PDFs/
+references/*.pdf
+references/
+*.rbz
+*.zip
+
+# --- generated reports / temp ---
+cabinex_model_report.json
+cabinex_model_report.txt
+cabinex_parts_direction.json
+cabinex_parts_direction.txt
+catalog_coverage_report.md
+Cabinetrix_*.html
+
+# --- OS / editor ---
+Thumbs.db
+Desktop.ini
+.DS_Store
+*.log
