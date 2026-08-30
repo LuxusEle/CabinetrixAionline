@@ -3,21 +3,17 @@
 # File: gemini/cabinetrix_layout_matrix.rb
 #
 # Production Standard:
-#   • REAL 3D ARCHITECTURAL ROOM FORMULATIONS:
-#     - All cabinet front faces point STRICTLY INTO THE INTERIOR WORKSPACE OF THE KITCHEN.
-#     - Layout A: True I-Shape (Straight Single Wall 4200mm)
-#     - Layout B: True L-Shape (90° Perpendicular Return Wall with LeMans II Corner)
-#     - Layout C: True U-Shape (3-Sided Room with Dual Corners & Peninsula Return)
-#     - Layout D: Luxury Galley with Freestanding Central Island & Overhead Gantry
+#   • Gola Finger-Pull Ergonomics:
+#     - Upper Drawer Front top sits at Z=657.5mm (3.5mm reveal below Top L-Gola)
+#     - Lower Drawer Front top sits at Z=327.0mm (3.0mm reveal below Mid C-Gola)
+#     - Deep 26mm finger-grip cavities behind both front edges for effortless handleless pull.
+#   • All 4 Room Layouts configured with inward-facing orientations.
 # ==============================================================================
 require 'sketchup.rb'
 require_relative 'cabinetrix_box_engine'
 require_relative 'cabinetrix_collision_engine'
 
 module CabinetrixLayoutMatrix
-  # ----------------------------------------------------------------------------
-  # 1. 20 PARAMETRIC CABINET BOX DEFINITIONS
-  # ----------------------------------------------------------------------------
   MODULE_CATALOG = {
     # Base Cabinets (860mm datum with 100mm plinth + 720mm carcase)
     "B_GOLA_2D_900" => {
@@ -192,9 +188,6 @@ module CabinetrixLayoutMatrix
     }
   }
 
-  # ----------------------------------------------------------------------------
-  # 2. REAL 3D MULTI-ZONE KITCHEN LAYOUT FORMULATIONS
-  # ----------------------------------------------------------------------------
   LAYOUTS = {
     # --------------------------------------------------------------------------
     # Layout A: True I-Shape (Straight Single Wall 4200mm)
@@ -295,10 +288,7 @@ module CabinetrixLayoutMatrix
     }
   }
 
-  # ----------------------------------------------------------------------------
-  # 3. BUILDER HELPER METHOD WITH INTEGRATED BENCHTOPS & PLINTHS
-  # ----------------------------------------------------------------------------
-  def self.build_layout(parent_ents, layout_key, origin_x = 0.0, origin_y = 0.0, mats = {}, mode = :hybrid)
+  def self.build_layout(parent_ents, layout_key, origin_x = 0.0, origin_y = 0.0, mats = {}, mode = :closed)
     layout = LAYOUTS[layout_key]
     return nil unless layout
 
