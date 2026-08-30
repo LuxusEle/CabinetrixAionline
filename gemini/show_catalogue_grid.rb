@@ -12,6 +12,7 @@ require 'sketchup.rb'
 
 _dir = File.dirname(__FILE__)
 load File.join(_dir, 'catalogue.rb')
+load File.join(_dir, 'catalogue_pdf_extensions.rb')
 load File.join(_dir, 'cabinetrix_collision_engine.rb')
 load File.join(_dir, 'cabinetrix_box_engine.rb')
 

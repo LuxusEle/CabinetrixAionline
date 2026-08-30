@@ -437,5 +437,6 @@ module CabinetrixCatalogue
   })
 end
 
-require_relative 'catalogue_pdf_extensions'
+_pdf_ext = File.join(File.dirname(__FILE__), 'catalogue_pdf_extensions.rb')
+load _pdf_ext if File.exist?(_pdf_ext)
 
