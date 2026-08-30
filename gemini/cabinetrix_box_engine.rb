@@ -556,9 +556,22 @@ module CabinetrixBoxEngine
     by = 0.0.mm
     bz = 0.0.mm
 
-    width  = params[:width] || 600.mm
-    height = params[:height] || (type.to_s.start_with?('tall') ? TALL_CARCASE_H : (type.to_s.start_with?('wall') || type.to_s.start_with?('open') ? WALL_CARCASE_H : (type.to_s.start_with?('top_bulkhead') ? 360.mm : BASE_CARCASE_H)))
-    depth  = params[:depth]  || (type.to_s.start_with?('tall') ? TALL_DEPTH : (type.to_s.start_with?('wall') || type.to_s.start_with?('open') || type.to_s.start_with?('top_bulkhead') ? WALL_DEPTH : BASE_DEPTH))
+    # Resolve from Catalogue Stencil if type is a template ID or string
+    template = CabinetrixCatalogue.get(type) if defined?(CabinetrixCatalogue)
+    if template
+      actual_type = template[:engine_type] || type.to_sym
+      t_w = template.dig(:dimensions, :w) || template.dig(:dimensions, :w, :default)
+      t_h = template.dig(:dimensions, :h) || template.dig(:dimensions, :h, :default)
+      t_d = template.dig(:dimensions, :d) || template.dig(:dimensions, :d, :default)
+      width  = params[:width]  || (t_w ? t_w.mm : nil)
+      height = params[:height] || (t_h ? t_h.mm : nil)
+      depth  = params[:depth]  || (t_d ? t_d.mm : nil)
+      type   = actual_type
+    end
+
+    width  ||= params[:width] || 600.mm
+    height ||= params[:height] || (type.to_s.start_with?('tall') ? TALL_CARCASE_H : (type.to_s.start_with?('wall') || type.to_s.start_with?('open') ? WALL_CARCASE_H : (type.to_s.start_with?('top_bulkhead') ? 360.mm : BASE_CARCASE_H)))
+    depth  ||= params[:depth]  || (type.to_s.start_with?('tall') ? TALL_DEPTH : (type.to_s.start_with?('wall') || type.to_s.start_with?('open') || type.to_s.start_with?('top_bulkhead') ? WALL_DEPTH : BASE_DEPTH))
     mode   = params[:mode]   || :closed
     front_mat = params[:front_mat] || mats[:front_dark]
     include_gola = (params[:include_gola] != false)

@@ -1,0 +1,1330 @@
+[
+  {
+    "id": "K-BAS-01",
+    "name": "Standard base cabinet",
+    "brand": "METOD",
+    "dims": "200\u00d7600\u00d7800",
+    "desc": "General under-worktop carcass; configure with doors, drawers,",
+    "page": 3
+  },
+  {
+    "id": "K-BAS-02",
+    "name": "Standard base cabinet",
+    "brand": "METOD",
+    "dims": "300\u00d7370\u00d7800",
+    "desc": "General under-worktop carcass; configure with doors, drawers,",
+    "page": 3
+  },
+  {
+    "id": "K-BAS-03",
+    "name": "Standard base cabinet",
+    "brand": "METOD",
+    "dims": "300\u00d7600\u00d7800",
+    "desc": "General under-worktop carcass; configure with doors, drawers,",
+    "page": 3
+  },
+  {
+    "id": "K-BAS-04",
+    "name": "Standard base cabinet",
+    "brand": "METOD",
+    "dims": "400\u00d7370\u00d7800",
+    "desc": "General under-worktop carcass; configure with doors, drawers,",
+    "page": 3
+  },
+  {
+    "id": "K-BAS-05",
+    "name": "Standard base cabinet",
+    "brand": "METOD",
+    "dims": "400\u00d7600\u00d7800",
+    "desc": "General under-worktop carcass; configure with doors, drawers,",
+    "page": 3
+  },
+  {
+    "id": "K-BAS-06",
+    "name": "Standard base cabinet",
+    "brand": "METOD",
+    "dims": "600\u00d7370\u00d7800",
+    "desc": "General under-worktop carcass; configure with doors, drawers,",
+    "page": 3
+  },
+  {
+    "id": "K-BAS-07",
+    "name": "Standard base cabinet",
+    "brand": "METOD",
+    "dims": "600\u00d7600\u00d7800",
+    "desc": "General under-worktop carcass; configure with doors, drawers,",
+    "page": 3
+  },
+  {
+    "id": "K-BAS-08",
+    "name": "Standard base cabinet",
+    "brand": "METOD",
+    "dims": "800\u00d7370\u00d7800",
+    "desc": "General under-worktop carcass; configure with doors, drawers,",
+    "page": 3
+  },
+  {
+    "id": "K-BAS-09",
+    "name": "Standard base cabinet",
+    "brand": "METOD",
+    "dims": "800\u00d7600\u00d7800",
+    "desc": "General under-worktop carcass; configure with doors, drawers,",
+    "page": 3
+  },
+  {
+    "id": "K-BIN-01",
+    "name": "Base cabinet for built-in oven/sink",
+    "brand": "METOD",
+    "dims": "600\u00d7600\u00d7800",
+    "desc": "Service/appliance-ready base carcass for sink or built-in oven.",
+    "page": 3
+  },
+  {
+    "id": "K-BIN-02",
+    "name": "Base cabinet for built-in oven/sink",
+    "brand": "METOD",
+    "dims": "800\u00d7600\u00d7800",
+    "desc": "Service/appliance-ready base carcass for sink or built-in oven.",
+    "page": 3
+  },
+  {
+    "id": "K-BCO-01",
+    "name": "Corner base cabinet",
+    "brand": "METOD",
+    "dims": "1280\u00d7600\u00d7800",
+    "desc": "Corner carcass; functionalize with pull-out or carousel where",
+    "page": 3
+  },
+  {
+    "id": "K-BCO-02",
+    "name": "Corner base cabinet",
+    "brand": "METOD",
+    "dims": "880\u00d7600\u00d7800",
+    "desc": "Corner carcass; functionalize with pull-out or carousel where",
+    "page": 3
+  },
+  {
+    "id": "K-TOP-01",
+    "name": "Top cabinet",
+    "brand": "METOD",
+    "dims": "400\u00d7600\u00d7400",
+    "desc": "Top box above a tall/appliance run.",
+    "page": 3
+  },
+  {
+    "id": "K-TFR-01",
+    "name": "Fridge/freezer top cabinet",
+    "brand": "METOD",
+    "dims": "600\u00d7600\u00d7400",
+    "desc": "Top storage aligned over a 600 mm fridge/freezer bay.",
+    "page": 3
+  },
+  {
+    "id": "K-TFR-02",
+    "name": "Fridge/freezer top cabinet",
+    "brand": "METOD",
+    "dims": "600\u00d7600\u00d7600",
+    "desc": "Top storage aligned over a 600 mm fridge/freezer bay.",
+    "page": 3
+  },
+  {
+    "id": "K-WAL-01",
+    "name": "Standard wall cabinet",
+    "brand": "METOD",
+    "dims": "200\u00d7370\u00d7800",
+    "desc": "Upper-wall storage carcass; door/shelf layout is a separate",
+    "page": 3
+  },
+  {
+    "id": "K-WAL-02",
+    "name": "Standard wall cabinet",
+    "brand": "METOD",
+    "dims": "300\u00d7370\u00d7600",
+    "desc": "Upper-wall storage carcass; door/shelf layout is a separate",
+    "page": 3
+  },
+  {
+    "id": "K-WAL-03",
+    "name": "Standard wall cabinet",
+    "brand": "METOD",
+    "dims": "300\u00d7370\u00d7800",
+    "desc": "Upper-wall storage carcass; door/shelf layout is a separate",
+    "page": 3
+  },
+  {
+    "id": "K-WAL-04",
+    "name": "Standard wall cabinet",
+    "brand": "METOD",
+    "dims": "400\u00d7370\u00d7400",
+    "desc": "Upper-wall storage carcass; door/shelf layout is a separate",
+    "page": 3
+  },
+  {
+    "id": "K-WAL-05",
+    "name": "Standard wall cabinet",
+    "brand": "METOD",
+    "dims": "400\u00d7370\u00d7600",
+    "desc": "Upper-wall storage carcass; door/shelf layout is a separate",
+    "page": 3
+  },
+  {
+    "id": "K-WAL-06",
+    "name": "Standard wall cabinet",
+    "brand": "METOD",
+    "dims": "400\u00d7370\u00d7800",
+    "desc": "Upper-wall storage carcass; door/shelf layout is a separate",
+    "page": 3
+  },
+  {
+    "id": "K-WAL-07",
+    "name": "Standard wall cabinet",
+    "brand": "METOD",
+    "dims": "400\u00d7370\u00d71000",
+    "desc": "Upper-wall storage carcass; door/shelf layout is a separate",
+    "page": 3
+  },
+  {
+    "id": "K-WAL-08",
+    "name": "Standard wall cabinet",
+    "brand": "METOD",
+    "dims": "600\u00d7370\u00d7400",
+    "desc": "Upper-wall storage carcass; door/shelf layout is a separate",
+    "page": 4
+  },
+  {
+    "id": "K-WAL-09",
+    "name": "Standard wall cabinet",
+    "brand": "METOD",
+    "dims": "600\u00d7370\u00d7600",
+    "desc": "Upper-wall storage carcass; door/shelf layout is a separate",
+    "page": 4
+  },
+  {
+    "id": "K-WAL-10",
+    "name": "Standard wall cabinet",
+    "brand": "METOD",
+    "dims": "600\u00d7370\u00d7800",
+    "desc": "Upper-wall storage carcass; door/shelf layout is a separate",
+    "page": 4
+  },
+  {
+    "id": "K-WAL-11",
+    "name": "Standard wall cabinet",
+    "brand": "METOD",
+    "dims": "600\u00d7370\u00d71000",
+    "desc": "Upper-wall storage carcass; door/shelf layout is a separate",
+    "page": 4
+  },
+  {
+    "id": "K-WAL-12",
+    "name": "Standard wall cabinet",
+    "brand": "METOD",
+    "dims": "800\u00d7370\u00d7400",
+    "desc": "Upper-wall storage carcass; door/shelf layout is a separate",
+    "page": 4
+  },
+  {
+    "id": "K-WAL-13",
+    "name": "Standard wall cabinet",
+    "brand": "METOD",
+    "dims": "800\u00d7370\u00d7600",
+    "desc": "Upper-wall storage carcass; door/shelf layout is a separate",
+    "page": 4
+  },
+  {
+    "id": "K-WAL-14",
+    "name": "Standard wall cabinet",
+    "brand": "METOD",
+    "dims": "800\u00d7370\u00d7800",
+    "desc": "Upper-wall storage carcass; door/shelf layout is a separate",
+    "page": 4
+  },
+  {
+    "id": "K-WAL-15",
+    "name": "Standard wall cabinet",
+    "brand": "METOD",
+    "dims": "800\u00d7370\u00d71000",
+    "desc": "Upper-wall storage carcass; door/shelf layout is a separate",
+    "page": 4
+  },
+  {
+    "id": "K-HOD-01",
+    "name": "Wall cabinet for built-in extractor hood",
+    "brand": "METOD",
+    "dims": "600\u00d7370\u00d7600",
+    "desc": "Upper carcass engineered around a concealed extractor hood.",
+    "page": 4
+  },
+  {
+    "id": "K-HOD-02",
+    "name": "Wall cabinet for built-in extractor hood",
+    "brand": "METOD",
+    "dims": "600\u00d7370\u00d7800",
+    "desc": "Upper carcass engineered around a concealed extractor hood.",
+    "page": 4
+  },
+  {
+    "id": "K-HOD-03",
+    "name": "Wall cabinet for built-in extractor hood",
+    "brand": "METOD",
+    "dims": "600\u00d7370\u00d71000",
+    "desc": "Upper carcass engineered around a concealed extractor hood.",
+    "page": 4
+  },
+  {
+    "id": "K-HOD-04",
+    "name": "Wall cabinet for built-in extractor hood",
+    "brand": "METOD",
+    "dims": "800\u00d7370\u00d7600",
+    "desc": "Upper carcass engineered around a concealed extractor hood.",
+    "page": 4
+  },
+  {
+    "id": "K-HOD-05",
+    "name": "Wall cabinet for built-in extractor hood",
+    "brand": "METOD",
+    "dims": "800\u00d7370\u00d7800",
+    "desc": "Upper carcass engineered around a concealed extractor hood.",
+    "page": 4
+  },
+  {
+    "id": "K-HOD-06",
+    "name": "Wall cabinet for built-in extractor hood",
+    "brand": "METOD",
+    "dims": "800\u00d7370\u00d71000",
+    "desc": "Upper carcass engineered around a concealed extractor hood.",
+    "page": 4
+  },
+  {
+    "id": "K-WCO-01",
+    "name": "Corner wall cabinet",
+    "brand": "METOD",
+    "dims": "680\u00d7680\u00d7600",
+    "desc": "Upper corner carcass. Overview page 9 uses 67.5\u00d767.5 cm; product",
+    "page": 4
+  },
+  {
+    "id": "K-WCO-02",
+    "name": "Corner wall cabinet",
+    "brand": "METOD",
+    "dims": "680\u00d7680\u00d7800",
+    "desc": "Upper corner carcass. Overview page 9 uses 67.5\u00d767.5 cm; product",
+    "page": 4
+  },
+  {
+    "id": "K-WCO-03",
+    "name": "Corner wall cabinet",
+    "brand": "METOD",
+    "dims": "680\u00d7680\u00d71000",
+    "desc": "Upper corner carcass. Overview page 9 uses 67.5\u00d767.5 cm; product",
+    "page": 4
+  },
+  {
+    "id": "K-HBI-01",
+    "name": "High cabinet for fridge/oven",
+    "brand": "METOD",
+    "dims": "600\u00d7600\u00d71400",
+    "desc": "Tall appliance housing; 200/220 cm variants are explicitly ventilated.",
+    "page": 4
+  },
+  {
+    "id": "K-HBI-02",
+    "name": "High cabinet for fridge/oven",
+    "brand": "METOD",
+    "dims": "600\u00d7600\u00d72000",
+    "desc": "Tall appliance housing; 200/220 cm variants are explicitly ventilated.",
+    "page": 4
+  },
+  {
+    "id": "K-HBI-03",
+    "name": "High cabinet for fridge/oven",
+    "brand": "METOD",
+    "dims": "600\u00d7600\u00d72200",
+    "desc": "Tall appliance housing; 200/220 cm variants are explicitly ventilated.",
+    "page": 4
+  },
+  {
+    "id": "K-HIG-01",
+    "name": "Standard high cabinet",
+    "brand": "METOD",
+    "dims": "400\u00d7370\u00d72000",
+    "desc": "Tall storage carcass; supports shelves, drawers, larder or cleaning",
+    "page": 4
+  },
+  {
+    "id": "K-HIG-02",
+    "name": "Standard high cabinet",
+    "brand": "METOD",
+    "dims": "400\u00d7600\u00d72000",
+    "desc": "Tall storage carcass; supports shelves, drawers, larder or cleaning",
+    "page": 4
+  },
+  {
+    "id": "K-HIG-03",
+    "name": "Standard high cabinet",
+    "brand": "METOD",
+    "dims": "400\u00d7600\u00d72200",
+    "desc": "Tall storage carcass; supports shelves, drawers, larder or cleaning",
+    "page": 4
+  },
+  {
+    "id": "K-HIG-04",
+    "name": "Standard high cabinet",
+    "brand": "METOD",
+    "dims": "600\u00d7370\u00d72000",
+    "desc": "Tall storage carcass; supports shelves, drawers, larder or cleaning",
+    "page": 4
+  },
+  {
+    "id": "K-HIG-05",
+    "name": "Standard high cabinet",
+    "brand": "METOD",
+    "dims": "600\u00d7600\u00d72000",
+    "desc": "Tall storage carcass; supports shelves, drawers, larder or cleaning",
+    "page": 4
+  },
+  {
+    "id": "K-HIG-06",
+    "name": "Standard high cabinet",
+    "brand": "METOD",
+    "dims": "600\u00d7600\u00d72200",
+    "desc": "Tall storage carcass; supports shelves, drawers, larder or cleaning",
+    "page": 4
+  },
+  {
+    "id": "K-HIG-07",
+    "name": "Standard high cabinet",
+    "brand": "METOD",
+    "dims": "800\u00d7370\u00d72000",
+    "desc": "Tall storage carcass; supports shelves, drawers, larder or cleaning",
+    "page": 4
+  },
+  {
+    "id": "O-TOR-01",
+    "name": "Open cabinet frame",
+    "brand": "TORNVIKEN",
+    "dims": "200\u00d7370\u00d7400",
+    "desc": "Narrow open display/storage module.",
+    "page": 5
+  },
+  {
+    "id": "O-TOR-02",
+    "name": "Open cabinet frame",
+    "brand": "TORNVIKEN",
+    "dims": "200\u00d7370\u00d7600",
+    "desc": "Narrow open display/storage module.",
+    "page": 5
+  },
+  {
+    "id": "O-TOR-03",
+    "name": "Open cabinet frame",
+    "brand": "TORNVIKEN",
+    "dims": "200\u00d7370\u00d7800",
+    "desc": "Narrow open display/storage module.",
+    "page": 5
+  },
+  {
+    "id": "O-VAD-01",
+    "name": "Open storage frame",
+    "brand": "VADHOLMA",
+    "dims": "200\u00d7370\u00d7400",
+    "desc": "Narrow open display/storage module.",
+    "page": 5
+  },
+  {
+    "id": "O-VAD-02",
+    "name": "Open storage frame",
+    "brand": "VADHOLMA",
+    "dims": "200\u00d7370\u00d7600",
+    "desc": "Narrow open display/storage module.",
+    "page": 5
+  },
+  {
+    "id": "O-VAD-03",
+    "name": "Open storage frame",
+    "brand": "VADHOLMA",
+    "dims": "200\u00d7370\u00d7800",
+    "desc": "Narrow open display/storage module.",
+    "page": 5
+  },
+  {
+    "id": "O-VDR-01",
+    "name": "Drawer unit",
+    "brand": "VADHOLMA",
+    "dims": "400\u00d7370\u00d7400",
+    "desc": "Open-series drawer module.",
+    "page": 5
+  },
+  {
+    "id": "O-TWI-01",
+    "name": "Wine-shelf module",
+    "brand": "TORNVIKEN",
+    "dims": "400\u00d7370\u00d7400",
+    "desc": "Open wine-storage box.",
+    "page": 5
+  },
+  {
+    "id": "O-VWI-01",
+    "name": "Wine-shelf module",
+    "brand": "VADHOLMA",
+    "dims": "400\u00d7370\u00d7400",
+    "desc": "Open wine-storage box.",
+    "page": 5
+  },
+  {
+    "id": "O-EW15-01",
+    "name": "Wall frame with shelves, 150 mm deep",
+    "brand": "ENHET",
+    "dims": "400\u00d7150\u00d7750",
+    "desc": "Shallow open wall frame.",
+    "page": 5
+  },
+  {
+    "id": "O-EW15-02",
+    "name": "Wall frame with shelves, 150 mm deep",
+    "brand": "ENHET",
+    "dims": "600\u00d7150\u00d7750",
+    "desc": "Shallow open wall frame.",
+    "page": 5
+  },
+  {
+    "id": "O-EW30-01",
+    "name": "Wall frame with shelves, 300 mm deep",
+    "brand": "ENHET",
+    "dims": "400\u00d7300\u00d7750",
+    "desc": "Open wall frame.",
+    "page": 5
+  },
+  {
+    "id": "O-EW30-02",
+    "name": "Wall frame with shelves, 300 mm deep",
+    "brand": "ENHET",
+    "dims": "600\u00d7300\u00d7750",
+    "desc": "Open wall frame.",
+    "page": 5
+  },
+  {
+    "id": "O-EHI-01",
+    "name": "High frame with shelves",
+    "brand": "ENHET",
+    "dims": "300\u00d7300\u00d71800",
+    "desc": "Tall open shelving frame.",
+    "page": 5
+  },
+  {
+    "id": "O-EHI-02",
+    "name": "High frame with shelves",
+    "brand": "ENHET",
+    "dims": "600\u00d7300\u00d71800",
+    "desc": "Tall open shelving frame.",
+    "page": 5
+  },
+  {
+    "id": "O-EBA-01",
+    "name": "Base frame with shelves",
+    "brand": "ENHET",
+    "dims": "400\u00d7600\u00d7750",
+    "desc": "Open base shelving frame.",
+    "page": 5
+  },
+  {
+    "id": "O-EBA-02",
+    "name": "Base frame with shelves",
+    "brand": "ENHET",
+    "dims": "600\u00d7600\u00d7750",
+    "desc": "Open base shelving frame.",
+    "page": 5
+  },
+  {
+    "id": "O-TIT-01",
+    "name": "Tambour appliance storage",
+    "brand": "TITTEBO",
+    "dims": "600\u00d7300\u00d7\u2014",
+    "desc": "Small-appliance storage with tambour front; height not stated in the",
+    "page": 5
+  },
+  {
+    "id": "W-PAX-01",
+    "name": "Wardrobe frame",
+    "brand": "PAX",
+    "dims": "500\u00d7350\u00d72010",
+    "desc": "Primary wardrobe carcass. 50/100 cm frame: hinged-door compatible;",
+    "page": 6
+  },
+  {
+    "id": "W-PAX-02",
+    "name": "Wardrobe frame",
+    "brand": "PAX",
+    "dims": "750\u00d7350\u00d72010",
+    "desc": "Primary wardrobe carcass. 75 cm frame: sliding-door or open solution",
+    "page": 6
+  },
+  {
+    "id": "W-PAX-03",
+    "name": "Wardrobe frame",
+    "brand": "PAX",
+    "dims": "1000\u00d7350\u00d72010",
+    "desc": "Primary wardrobe carcass. 50/100 cm frame: hinged-door compatible;",
+    "page": 6
+  },
+  {
+    "id": "W-PAX-04",
+    "name": "Wardrobe frame",
+    "brand": "PAX",
+    "dims": "500\u00d7580\u00d72010",
+    "desc": "Primary wardrobe carcass. 50/100 cm frame: hinged-door compatible;",
+    "page": 6
+  },
+  {
+    "id": "W-PAX-05",
+    "name": "Wardrobe frame",
+    "brand": "PAX",
+    "dims": "750\u00d7580\u00d72010",
+    "desc": "Primary wardrobe carcass. 75 cm frame: sliding-door or open solution",
+    "page": 6
+  },
+  {
+    "id": "W-PAX-06",
+    "name": "Wardrobe frame",
+    "brand": "PAX",
+    "dims": "1000\u00d7580\u00d72010",
+    "desc": "Primary wardrobe carcass. 50/100 cm frame: hinged-door compatible;",
+    "page": 6
+  },
+  {
+    "id": "W-PAX-07",
+    "name": "Wardrobe frame",
+    "brand": "PAX",
+    "dims": "500\u00d7350\u00d72360",
+    "desc": "Primary wardrobe carcass. 50/100 cm frame: hinged-door compatible;",
+    "page": 6
+  },
+  {
+    "id": "W-PAX-08",
+    "name": "Wardrobe frame",
+    "brand": "PAX",
+    "dims": "750\u00d7350\u00d72360",
+    "desc": "Primary wardrobe carcass. 75 cm frame: sliding-door or open solution",
+    "page": 6
+  },
+  {
+    "id": "W-PAX-09",
+    "name": "Wardrobe frame",
+    "brand": "PAX",
+    "dims": "1000\u00d7350\u00d72360",
+    "desc": "Primary wardrobe carcass. 50/100 cm frame: hinged-door compatible;",
+    "page": 6
+  },
+  {
+    "id": "W-PAX-10",
+    "name": "Wardrobe frame",
+    "brand": "PAX",
+    "dims": "500\u00d7580\u00d72360",
+    "desc": "Primary wardrobe carcass. 50/100 cm frame: hinged-door compatible;",
+    "page": 6
+  },
+  {
+    "id": "W-PAX-11",
+    "name": "Wardrobe frame",
+    "brand": "PAX",
+    "dims": "750\u00d7580\u00d72360",
+    "desc": "Primary wardrobe carcass. 75 cm frame: sliding-door or open solution",
+    "page": 6
+  },
+  {
+    "id": "W-PAX-12",
+    "name": "Wardrobe frame",
+    "brand": "PAX",
+    "dims": "1000\u00d7580\u00d72360",
+    "desc": "Primary wardrobe carcass. 50/100 cm frame: hinged-door compatible;",
+    "page": 6
+  },
+  {
+    "id": "W-COR-01",
+    "name": "Corner add-on frame",
+    "brand": "PAX",
+    "dims": "530\u00d7350\u00d72010",
+    "desc": "Corner wardrobe add-on; source states four adjustable shelves are",
+    "page": 6
+  },
+  {
+    "id": "W-COR-02",
+    "name": "Corner add-on frame",
+    "brand": "PAX",
+    "dims": "530\u00d7580\u00d72010",
+    "desc": "Corner wardrobe add-on; source states four adjustable shelves are",
+    "page": 6
+  },
+  {
+    "id": "W-COR-03",
+    "name": "Corner add-on frame",
+    "brand": "PAX",
+    "dims": "530\u00d7350\u00d72360",
+    "desc": "Corner wardrobe add-on; source states four adjustable shelves are",
+    "page": 6
+  },
+  {
+    "id": "W-COR-04",
+    "name": "Corner add-on frame",
+    "brand": "PAX",
+    "dims": "530\u00d7580\u00d72360",
+    "desc": "Corner wardrobe add-on; source states four adjustable shelves are",
+    "page": 6
+  },
+  {
+    "id": "F-MET-01",
+    "name": "Base cabinet \u2014 drawers + inner",
+    "brand": "drawer",
+    "dims": "METOD preset",
+    "desc": "Inherited",
+    "page": 7
+  },
+  {
+    "id": "F-MET-02",
+    "name": "Wall cabinet \u2014 door + shelf",
+    "brand": "METOD preset",
+    "dims": "Inherited",
+    "desc": "Wall carcass, hinged front and shelf package.",
+    "page": 7
+  },
+  {
+    "id": "F-MET-03",
+    "name": "High cabinet \u2014 drawers + inner",
+    "brand": "drawers + shelves",
+    "dims": "METOD preset",
+    "desc": "Inherited",
+    "page": 7
+  },
+  {
+    "id": "F-MET-04",
+    "name": "Base cabinet \u2014 drawers + waste",
+    "brand": "sorting",
+    "dims": "METOD preset",
+    "desc": "Inherited",
+    "page": 7
+  },
+  {
+    "id": "F-MET-05",
+    "name": "Corner base \u2014 pull-out fitting",
+    "brand": "METOD preset",
+    "dims": "Inherited",
+    "desc": "Blind-corner access preset.",
+    "page": 7
+  },
+  {
+    "id": "F-MET-06",
+    "name": "Corner base \u2014 carousel",
+    "brand": "METOD preset",
+    "dims": "Inherited",
+    "desc": "Corner carousel access preset.",
+    "page": 7
+  },
+  {
+    "id": "F-MET-07",
+    "name": "High cabinet \u2014 cleaning interior",
+    "brand": "METOD preset",
+    "dims": "Inherited",
+    "desc": "Tall cleaning-equipment preset.",
+    "page": 7
+  },
+  {
+    "id": "F-MET-08",
+    "name": "High cabinet \u2014 pull-out larder",
+    "brand": "METOD preset",
+    "dims": "Inherited",
+    "desc": "Tall pantry pull-out preset.",
+    "page": 7
+  },
+  {
+    "id": "F-MET-09",
+    "name": "Seating-area cabinet assembly",
+    "brand": "METOD preset",
+    "dims": "Inherited",
+    "desc": "Multi-box low run supporting a bench/worktop; treat as an assembly,",
+    "page": 7
+  },
+  {
+    "id": "I-DIV-01",
+    "name": "Frame divider \u2014 type A",
+    "brand": "KOMPLEMENT",
+    "dims": "fits 1000\u00d7580; H815",
+    "desc": "Splits a wide frame; accepts 500 mm organizers.",
+    "page": 8
+  },
+  {
+    "id": "I-DIV-02",
+    "name": "Frame divider \u2014 type B",
+    "brand": "KOMPLEMENT",
+    "dims": "fits 750/1000\u00d7580;",
+    "desc": "H815",
+    "page": 8
+  },
+  {
+    "id": "I-SHL-01",
+    "name": "Shelf",
+    "brand": "KOMPLEMENT",
+    "dims": "500\u00d7350\u00d7\u2014",
+    "desc": "Fixed/adjustable shelf insert.",
+    "page": 8
+  },
+  {
+    "id": "I-SHL-02",
+    "name": "Shelf",
+    "brand": "KOMPLEMENT",
+    "dims": "750\u00d7350\u00d7\u2014",
+    "desc": "Fixed/adjustable shelf insert.",
+    "page": 8
+  },
+  {
+    "id": "I-SHL-03",
+    "name": "Shelf",
+    "brand": "KOMPLEMENT",
+    "dims": "1000\u00d7350\u00d7\u2014",
+    "desc": "Fixed/adjustable shelf insert.",
+    "page": 8
+  },
+  {
+    "id": "I-SHL-04",
+    "name": "Shelf",
+    "brand": "KOMPLEMENT",
+    "dims": "500\u00d7580\u00d7\u2014",
+    "desc": "Fixed/adjustable shelf insert.",
+    "page": 8
+  },
+  {
+    "id": "I-SHL-05",
+    "name": "Shelf",
+    "brand": "KOMPLEMENT",
+    "dims": "750\u00d7580\u00d7\u2014",
+    "desc": "Fixed/adjustable shelf insert.",
+    "page": 8
+  },
+  {
+    "id": "I-SHL-06",
+    "name": "Shelf",
+    "brand": "KOMPLEMENT",
+    "dims": "1000\u00d7580\u00d7\u2014",
+    "desc": "Fixed/adjustable shelf insert.",
+    "page": 8
+  },
+  {
+    "id": "I-GSH-01",
+    "name": "Glass shelf",
+    "brand": "KOMPLEMENT",
+    "dims": "500\u00d7580\u00d7\u2014",
+    "desc": "Transparent shelf insert for deep frame.",
+    "page": 8
+  },
+  {
+    "id": "I-GSH-02",
+    "name": "Glass shelf",
+    "brand": "KOMPLEMENT",
+    "dims": "750\u00d7580\u00d7\u2014",
+    "desc": "Transparent shelf insert for deep frame.",
+    "page": 8
+  },
+  {
+    "id": "I-GSH-03",
+    "name": "Glass shelf",
+    "brand": "KOMPLEMENT",
+    "dims": "1000\u00d7580\u00d7\u2014",
+    "desc": "Transparent shelf insert for deep frame.",
+    "page": 8
+  },
+  {
+    "id": "I-TRY-01",
+    "name": "Pull-out tray",
+    "brand": "KOMPLEMENT",
+    "dims": "500\u00d7350\u00d7\u2014",
+    "desc": "Pull-out platform; deep variants accept accessory inserts/shoe racks.",
+    "page": 8
+  },
+  {
+    "id": "I-TRY-02",
+    "name": "Pull-out tray",
+    "brand": "KOMPLEMENT",
+    "dims": "750\u00d7350\u00d7\u2014",
+    "desc": "Pull-out platform; deep variants accept accessory inserts/shoe racks.",
+    "page": 8
+  },
+  {
+    "id": "I-TRY-03",
+    "name": "Pull-out tray",
+    "brand": "KOMPLEMENT",
+    "dims": "1000\u00d7350\u00d7\u2014",
+    "desc": "Pull-out platform; deep variants accept accessory inserts/shoe racks.",
+    "page": 8
+  },
+  {
+    "id": "I-TRY-04",
+    "name": "Pull-out tray",
+    "brand": "KOMPLEMENT",
+    "dims": "500\u00d7580\u00d7\u2014",
+    "desc": "Pull-out platform; deep variants accept accessory inserts/shoe racks.",
+    "page": 8
+  },
+  {
+    "id": "I-TRY-05",
+    "name": "Pull-out tray",
+    "brand": "KOMPLEMENT",
+    "dims": "750\u00d7580\u00d7\u2014",
+    "desc": "Pull-out platform; deep variants accept accessory inserts/shoe racks.",
+    "page": 8
+  },
+  {
+    "id": "I-TRY-06",
+    "name": "Pull-out tray",
+    "brand": "KOMPLEMENT",
+    "dims": "1000\u00d7580\u00d7\u2014",
+    "desc": "Pull-out platform; deep variants accept accessory inserts/shoe racks.",
+    "page": 8
+  },
+  {
+    "id": "I-RAI-01",
+    "name": "Clothes rail",
+    "brand": "KOMPLEMENT",
+    "dims": "500\u00d7350\u00d7\u2014",
+    "desc": "Hanging rail matched to frame width/depth.",
+    "page": 8
+  },
+  {
+    "id": "I-RAI-02",
+    "name": "Clothes rail",
+    "brand": "KOMPLEMENT",
+    "dims": "750\u00d7350\u00d7\u2014",
+    "desc": "Hanging rail matched to frame width/depth.",
+    "page": 8
+  },
+  {
+    "id": "I-RAI-03",
+    "name": "Clothes rail",
+    "brand": "KOMPLEMENT",
+    "dims": "1000\u00d7350\u00d7\u2014",
+    "desc": "Hanging rail matched to frame width/depth.",
+    "page": 8
+  },
+  {
+    "id": "I-RAI-04",
+    "name": "Clothes rail",
+    "brand": "KOMPLEMENT",
+    "dims": "500\u00d7580\u00d7\u2014",
+    "desc": "Hanging rail matched to frame width/depth.",
+    "page": 8
+  },
+  {
+    "id": "I-RAI-05",
+    "name": "Clothes rail",
+    "brand": "KOMPLEMENT",
+    "dims": "750\u00d7580\u00d7\u2014",
+    "desc": "Hanging rail matched to frame width/depth.",
+    "page": 8
+  },
+  {
+    "id": "I-RAI-06",
+    "name": "Clothes rail",
+    "brand": "KOMPLEMENT",
+    "dims": "1000\u00d7580\u00d7\u2014",
+    "desc": "Hanging rail matched to frame width/depth.",
+    "page": 8
+  },
+  {
+    "id": "I-DRW-01",
+    "name": "Drawer",
+    "brand": "KOMPLEMENT",
+    "dims": "500\u00d7350\u00d7\u2014",
+    "desc": "Internal wardrobe drawer.",
+    "page": 8
+  },
+  {
+    "id": "I-DRW-02",
+    "name": "Drawer",
+    "brand": "KOMPLEMENT",
+    "dims": "750\u00d7350\u00d7\u2014",
+    "desc": "Internal wardrobe drawer.",
+    "page": 8
+  },
+  {
+    "id": "I-DRW-03",
+    "name": "Drawer",
+    "brand": "KOMPLEMENT",
+    "dims": "1000\u00d7350\u00d7\u2014",
+    "desc": "Internal wardrobe drawer.",
+    "page": 8
+  },
+  {
+    "id": "I-DRW-04",
+    "name": "Drawer",
+    "brand": "KOMPLEMENT",
+    "dims": "500\u00d7580\u00d7\u2014",
+    "desc": "Internal wardrobe drawer.",
+    "page": 8
+  },
+  {
+    "id": "I-DRW-05",
+    "name": "Drawer",
+    "brand": "KOMPLEMENT",
+    "dims": "750\u00d7580\u00d7\u2014",
+    "desc": "Internal wardrobe drawer.",
+    "page": 8
+  },
+  {
+    "id": "I-DRW-06",
+    "name": "Drawer",
+    "brand": "KOMPLEMENT",
+    "dims": "1000\u00d7580\u00d7\u2014",
+    "desc": "Internal wardrobe drawer.",
+    "page": 8
+  },
+  {
+    "id": "I-GDR-01",
+    "name": "Drawer with glass front",
+    "brand": "KOMPLEMENT",
+    "dims": "500\u00d7580\u00d7\u2014",
+    "desc": "Deep internal drawer with glass front.",
+    "page": 8
+  },
+  {
+    "id": "I-GDR-02",
+    "name": "Drawer with glass front",
+    "brand": "KOMPLEMENT",
+    "dims": "750\u00d7580\u00d7\u2014",
+    "desc": "Deep internal drawer with glass front.",
+    "page": 8
+  },
+  {
+    "id": "I-GDR-03",
+    "name": "Drawer with glass front",
+    "brand": "KOMPLEMENT",
+    "dims": "1000\u00d7580\u00d7\u2014",
+    "desc": "Deep internal drawer with glass front.",
+    "page": 9
+  },
+  {
+    "id": "I-MES-01",
+    "name": "Mesh basket",
+    "brand": "KOMPLEMENT",
+    "dims": "500\u00d7350\u00d7\u2014",
+    "desc": "Ventilated pull-out basket; requires matching rail.",
+    "page": 9
+  },
+  {
+    "id": "I-MES-02",
+    "name": "Mesh basket",
+    "brand": "KOMPLEMENT",
+    "dims": "750\u00d7350\u00d7\u2014",
+    "desc": "Ventilated pull-out basket; requires matching rail.",
+    "page": 9
+  },
+  {
+    "id": "I-MES-03",
+    "name": "Mesh basket",
+    "brand": "KOMPLEMENT",
+    "dims": "1000\u00d7350\u00d7\u2014",
+    "desc": "Ventilated pull-out basket; requires matching rail.",
+    "page": 9
+  },
+  {
+    "id": "I-MES-04",
+    "name": "Mesh basket",
+    "brand": "KOMPLEMENT",
+    "dims": "500\u00d7580\u00d7\u2014",
+    "desc": "Ventilated pull-out basket; requires matching rail.",
+    "page": 9
+  },
+  {
+    "id": "I-MES-05",
+    "name": "Mesh basket",
+    "brand": "KOMPLEMENT",
+    "dims": "750\u00d7580\u00d7\u2014",
+    "desc": "Ventilated pull-out basket; requires matching rail.",
+    "page": 9
+  },
+  {
+    "id": "I-MES-06",
+    "name": "Mesh basket",
+    "brand": "KOMPLEMENT",
+    "dims": "1000\u00d7580\u00d7\u2014",
+    "desc": "Ventilated pull-out basket; requires matching rail.",
+    "page": 9
+  },
+  {
+    "id": "I-BRL-01",
+    "name": "Pull-out rail for basket",
+    "brand": "KOMPLEMENT",
+    "dims": "\u2014\u00d7350\u00d7\u2014",
+    "desc": "Two-pack rail dependency for mesh basket.",
+    "page": 9
+  },
+  {
+    "id": "I-BRL-02",
+    "name": "Pull-out rail for basket",
+    "brand": "KOMPLEMENT",
+    "dims": "\u2014\u00d7580\u00d7\u2014",
+    "desc": "Two-pack rail dependency for mesh basket.",
+    "page": 9
+  },
+  {
+    "id": "I-SSH-01",
+    "name": "Shoe shelf",
+    "brand": "KOMPLEMENT",
+    "dims": "500\u00d7350\u00d7\u2014",
+    "desc": "Sloped/open shoe shelf for shallow frame.",
+    "page": 9
+  },
+  {
+    "id": "I-SSH-02",
+    "name": "Shoe shelf",
+    "brand": "KOMPLEMENT",
+    "dims": "750\u00d7350\u00d7\u2014",
+    "desc": "Sloped/open shoe shelf for shallow frame.",
+    "page": 9
+  },
+  {
+    "id": "I-SSH-03",
+    "name": "Shoe shelf",
+    "brand": "KOMPLEMENT",
+    "dims": "1000\u00d7350\u00d7\u2014",
+    "desc": "Sloped/open shoe shelf for shallow frame.",
+    "page": 9
+  },
+  {
+    "id": "I-PSH-01",
+    "name": "Pull-out shoe shelf",
+    "brand": "KOMPLEMENT",
+    "dims": "500\u00d7580\u00d7\u2014",
+    "desc": "Pull-out shoe shelf for deep frame.",
+    "page": 9
+  },
+  {
+    "id": "I-PSH-02",
+    "name": "Pull-out shoe shelf",
+    "brand": "KOMPLEMENT",
+    "dims": "750\u00d7580\u00d7\u2014",
+    "desc": "Pull-out shoe shelf for deep frame.",
+    "page": 9
+  },
+  {
+    "id": "I-PSH-03",
+    "name": "Pull-out shoe shelf",
+    "brand": "KOMPLEMENT",
+    "dims": "1000\u00d7580\u00d7\u2014",
+    "desc": "Pull-out shoe shelf for deep frame.",
+    "page": 9
+  },
+  {
+    "id": "I-PIN-01",
+    "name": "Insert for pull-out tray",
+    "brand": "KOMPLEMENT",
+    "dims": "150\u00d7530\u00d7\u2014",
+    "desc": "Compartment/jewellery insert; 25 cm width has two different internal",
+    "page": 9
+  },
+  {
+    "id": "I-PIN-02",
+    "name": "Insert for pull-out tray",
+    "brand": "KOMPLEMENT",
+    "dims": "250\u00d7530\u00d7\u2014",
+    "desc": "Compartment/jewellery insert; 25 cm width has two different internal",
+    "page": 9
+  },
+  {
+    "id": "I-PIN-03",
+    "name": "Insert for pull-out tray",
+    "brand": "KOMPLEMENT",
+    "dims": "250\u00d7530\u00d7\u2014",
+    "desc": "Compartment/jewellery insert; 25 cm width has two different internal",
+    "page": 9
+  },
+  {
+    "id": "I-PIN-04",
+    "name": "Insert for pull-out tray",
+    "brand": "KOMPLEMENT",
+    "dims": "400\u00d7530\u00d7\u2014",
+    "desc": "Compartment/jewellery insert; 25 cm width has two different internal",
+    "page": 9
+  },
+  {
+    "id": "I-BOX-01",
+    "name": "Organizer box",
+    "brand": "KOMPLEMENT",
+    "dims": "150\u00d7265\u00d7120",
+    "desc": "Loose organizer box.",
+    "page": 9
+  },
+  {
+    "id": "I-BOX-02",
+    "name": "Organizer box",
+    "brand": "KOMPLEMENT",
+    "dims": "250\u00d7270\u00d7120",
+    "desc": "Loose organizer box.",
+    "page": 9
+  },
+  {
+    "id": "I-TDV-01",
+    "name": "Divider for pull-out tray",
+    "brand": "KOMPLEMENT",
+    "dims": "500\u00d7350\u00d7\u2014",
+    "desc": "Felt tray divider matched to pull-out-tray size.",
+    "page": 9
+  },
+  {
+    "id": "I-TDV-02",
+    "name": "Divider for pull-out tray",
+    "brand": "KOMPLEMENT",
+    "dims": "750\u00d7350\u00d7\u2014",
+    "desc": "Felt tray divider matched to pull-out-tray size.",
+    "page": 9
+  },
+  {
+    "id": "I-TDV-03",
+    "name": "Divider for pull-out tray",
+    "brand": "KOMPLEMENT",
+    "dims": "1000\u00d7350\u00d7\u2014",
+    "desc": "Felt tray divider matched to pull-out-tray size.",
+    "page": 9
+  },
+  {
+    "id": "I-TDV-04",
+    "name": "Divider for pull-out tray",
+    "brand": "KOMPLEMENT",
+    "dims": "500\u00d7580\u00d7\u2014",
+    "desc": "Felt tray divider matched to pull-out-tray size.",
+    "page": 9
+  },
+  {
+    "id": "I-TDV-05",
+    "name": "Divider for pull-out tray",
+    "brand": "KOMPLEMENT",
+    "dims": "750\u00d7580\u00d7\u2014",
+    "desc": "Felt tray divider matched to pull-out-tray size.",
+    "page": 9
+  },
+  {
+    "id": "I-TDV-06",
+    "name": "Divider for pull-out tray",
+    "brand": "KOMPLEMENT",
+    "dims": "1000\u00d7580\u00d7\u2014",
+    "desc": "Felt tray divider matched to pull-out-tray size.",
+    "page": 9
+  },
+  {
+    "id": "I-TSI-01",
+    "name": "Shoe insert for pull-out tray",
+    "brand": "KOMPLEMENT",
+    "dims": "500\u00d7350\u00d7\u2014",
+    "desc": "Shoe insert placed on a shallow pull-out tray.",
+    "page": 9
+  },
+  {
+    "id": "I-TSI-02",
+    "name": "Shoe insert for pull-out tray",
+    "brand": "KOMPLEMENT",
+    "dims": "750\u00d7350\u00d7\u2014",
+    "desc": "Shoe insert placed on a shallow pull-out tray.",
+    "page": 9
+  },
+  {
+    "id": "I-TSI-03",
+    "name": "Shoe insert for pull-out tray",
+    "brand": "KOMPLEMENT",
+    "dims": "1000\u00d7350\u00d7\u2014",
+    "desc": "Shoe insert placed on a shallow pull-out tray.",
+    "page": 9
+  },
+  {
+    "id": "I-MAT-01",
+    "name": "Cut-to-size drawer mat",
+    "brand": "KOMPLEMENT",
+    "dims": "900\u00d7530\u00d7\u2014",
+    "desc": "Non-slip mat; accessory rather than rigid module, included for",
+    "page": 9
+  },
+  {
+    "id": "I-MAT-02",
+    "name": "Cut-to-size drawer mat",
+    "brand": "KOMPLEMENT",
+    "dims": "900\u00d7300\u00d7\u2014",
+    "desc": "Non-slip mat; accessory rather than rigid module, included for",
+    "page": 9
+  },
+  {
+    "id": "G-CAR-01",
+    "name": "Frameless floor cabinet with hinged",
+    "brand": "door",
+    "dims": "Generic",
+    "desc": "Parametric",
+    "page": 10
+  },
+  {
+    "id": "G-CAR-02",
+    "name": "Floor carcass \u2014 standard rail",
+    "brand": "orientation",
+    "dims": "Generic",
+    "desc": "Parametric",
+    "page": 10
+  },
+  {
+    "id": "G-CAR-03",
+    "name": "Sink/hob floor carcass \u2014 front rail on",
+    "brand": "edge",
+    "dims": "Generic",
+    "desc": "Parametric",
+    "page": 10
+  },
+  {
+    "id": "G-CAR-04",
+    "name": "L-shaped corner base unit",
+    "brand": "Generic",
+    "dims": "Parametric",
+    "desc": "Two-direction corner carcase with two backs and two front rails.",
+    "page": 10
+  },
+  {
+    "id": "G-APP-01",
+    "name": "Under-bench built-in oven bay",
+    "brand": "Generic",
+    "dims": "Appliance-defined",
+    "desc": "Base-run appliance module; ventilation and clearances come from",
+    "page": 10
+  },
+  {
+    "id": "G-APP-02",
+    "name": "Full-height built-in oven unit",
+    "brand": "Generic",
+    "dims": "Appliance-defined",
+    "desc": "Tall appliance housing; ventilation and clearances come from",
+    "page": 10
+  },
+  {
+    "id": "G-HOD-01",
+    "name": "Slide-out rangehood wall cabinet",
+    "brand": "Generic",
+    "dims": "Appliance-defined",
+    "desc": "Wall box encloses slide-out hood and allows doors to close over the",
+    "page": 10
+  },
+  {
+    "id": "G-HOD-02",
+    "name": "Swing-out / hide-a-hood cabinet",
+    "brand": "Generic",
+    "dims": "Appliance-defined",
+    "desc": "Door-operated concealed rangehood cabinet.",
+    "page": 10
+  },
+  {
+    "id": "G-SNK-01",
+    "name": "Sink cabinet with service holes",
+    "brand": "Generic",
+    "dims": "Parametric",
+    "desc": "Sink base stores plumbing/power connections and routes dishwasher",
+    "page": 10
+  },
+  {
+    "id": "G-VOID-01",
+    "name": "Dishwasher appliance void",
+    "brand": "Generic",
+    "dims": "Appliance-defined",
+    "desc": "Planned empty module beside sink; source calls for at least 5 mm",
+    "page": 10
+  }
+]

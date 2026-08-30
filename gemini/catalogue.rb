@@ -436,3 +436,6 @@ module CabinetrixCatalogue
     }
   })
 end
+
+require_relative 'catalogue_pdf_extensions'
+
