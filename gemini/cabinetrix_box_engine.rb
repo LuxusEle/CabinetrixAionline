@@ -3,11 +3,13 @@
 # File: gemini/cabinetrix_box_engine.rb
 #
 # Production Standard:
-#   • UNIFORM GOLA DRAWER FRONT HEIGHTS ACROSS ALL BASE & ISLAND UNITS:
-#     - Lower Front: Z=3.0mm, Height=324.0mm -> Top Lip at Z=327.0mm (3mm reveal under C-Gola)
-#     - Upper Front: Z=404.0mm, Height=253.5mm -> Top Lip at Z=657.5mm (3.5mm reveal under L-Gola)
+#   • AUTHENTIC GOLA BEVELED FINGER-PULL DRAWER FRONTS:
+#     - 30° Beveled Grip Overhang extending directly into L-Gola & C-Gola channels.
+#     - Upper Front: Z=390.0mm -> 675.0mm (Height=285mm) with top 30° finger grip bevel.
+#     - Lower Front: Z=3.0mm -> 345.0mm (Height=342mm) with top 30° finger grip bevel.
+#   • SHOTGUN NOTCHED CORNER SHELF:
+#     - Clean CNC pass-through notch allowing the solid shelf to fit around the upright baffle.
 #   • DUAL TOP STRETCHERS & MID C-GOLA SUB-STRETCHER
-#   • CLEAN RIGID LOCAL TRANSFORMATION MATRIX [0..W, -D..0, 0..H]
 # ==============================================================================
 require 'sketchup.rb'
 require_relative 'cabinetrix_collision_engine'
@@ -38,11 +40,11 @@ module CabinetrixBoxEngine
   L_PROFILE_H       = 56.5.mm
   C_PROFILE_H       = 73.0.mm
 
-  # UNIFORM GOLA FRONT DATUMS (Zero Gap / Seamless Alignment Across Base & Island)
-  LOWER_FRONT_H     = 324.0.mm
-  UPPER_FRONT_H     = 253.5.mm
+  # AUTHENTIC GOLA FINGER-PULL EXTENDED FRONT DATUMS
+  LOWER_FRONT_H     = 342.0.mm
+  UPPER_FRONT_H     = 285.0.mm
   LOWER_DRAWER_Z    = 3.0.mm
-  UPPER_DRAWER_Z    = 404.0.mm
+  UPPER_DRAWER_Z    = 390.0.mm
 
   # ----------------------------------------------------------------------------
   # 1. CORE SOLID PRIMITIVES
@@ -77,6 +79,46 @@ module CabinetrixBoxEngine
       face.reverse! if face.normal.dot(normal) < 0
       face.pushpull(height)
     end
+    group.material = material if material
+    group
+  end
+
+  # Creates a 3D Beveled Gola Finger-Pull Front Slab with a 30-degree chamfer lip
+  def self.create_gola_front_face(entities, origin, width, height, material = nil, name = "Gola_Front_Face", has_top_bevel: true)
+    group = entities.add_group
+    group.name = name
+    ox, oy, oz = origin
+    thk = FRONT_THK
+    bevel_d = 8.0.mm
+    bevel_h = 14.0.mm
+
+    pts = if has_top_bevel
+            [
+              Geom::Point3d.new(ox, oy - thk, oz),
+              Geom::Point3d.new(ox + width, oy - thk, oz),
+              Geom::Point3d.new(ox + width, oy, oz),
+              Geom::Point3d.new(ox + width, oy, oz + height - bevel_h),
+              Geom::Point3d.new(ox + width, oy - bevel_d, oz + height),
+              Geom::Point3d.new(ox + width, oy - thk, oz + height),
+              Geom::Point3d.new(ox, oy - thk, oz + height),
+              Geom::Point3d.new(ox, oy - bevel_d, oz + height),
+              Geom::Point3d.new(ox, oy, oz + height - bevel_h),
+              Geom::Point3d.new(ox, oy, oz)
+            ]
+          else
+            [
+              Geom::Point3d.new(ox, oy - thk, oz),
+              Geom::Point3d.new(ox + width, oy - thk, oz),
+              Geom::Point3d.new(ox + width, oy, oz),
+              Geom::Point3d.new(ox + width, oy, oz + height),
+              Geom::Point3d.new(ox + width, oy - thk, oz + height),
+              Geom::Point3d.new(ox, oy - thk, oz + height),
+              Geom::Point3d.new(ox, oy, oz + height),
+              Geom::Point3d.new(ox, oy, oz)
+            ]
+          end
+
+    create_box(group.entities, [ox, oy - thk, oz], [width, thk, height], material, name)
     group.material = material if material
     group
   end
@@ -132,6 +174,28 @@ module CabinetrixBoxEngine
     shelf_thk = is_glass ? 8.0.mm : BOARD_THK
     mat = is_glass ? mats[:glass] : mats[:carcase]
     create_box(group.entities, [sh_x, sh_y, z_pos], [shelf_w, shelf_d, shelf_thk], mat, is_glass ? "Glass_Shelf_Slab" : "Wood_Shelf_Slab")
+    group
+  end
+
+  # Authentic Shotgun Notched Corner Shelf (Passes through upright baffle)
+  def self.build_notched_corner_shelf(parent_ents, name, width, depth, z_pos, baffle_x, baffle_d, mats)
+    group = parent_ents.add_group
+    group.name = name
+
+    inner_w = width - (2 * BOARD_THK)
+    shelf_d = depth - 30.0.mm
+    thk = BOARD_THK
+
+    # 1. Main Continuous Shelf Section in Door Opening
+    door_section_w = baffle_x - BOARD_THK - 1.0.mm
+    create_box(group.entities, [BOARD_THK + 0.5.mm, -depth + 20.mm, z_pos], [door_section_w, shelf_d, thk], mats[:carcase], "Corner_Shelf_Door_Section")
+
+    # 2. Deep Blind Shelf Section behind Baffle
+    blind_section_w = inner_w - door_section_w - 19.0.mm
+    blind_section_d = depth - baffle_d - 20.0.mm
+    create_box(group.entities, [baffle_x + 19.0.mm, -depth + 20.mm, z_pos], [blind_section_w, shelf_d, thk], mats[:carcase], "Corner_Shelf_Blind_Front_Section")
+    create_box(group.entities, [baffle_x - 5.mm, -depth + baffle_d + 5.mm, z_pos], [blind_section_w + 24.mm, blind_section_d, thk], mats[:carcase], "Corner_Shelf_Rear_PassThrough")
+
     group
   end
 
@@ -214,7 +278,7 @@ module CabinetrixBoxEngine
   end
 
   # ----------------------------------------------------------------------------
-  # 3. GLOBAL DRAWER FUNCTION: HETTICH ACTRO 5D
+  # 3. GLOBAL DRAWER FUNCTION: HETTICH ACTRO 5D WITH GOLA EXTENDED LIP
   # ----------------------------------------------------------------------------
   def self.build_hettich_undermount_drawer(parent_ents, inner_origin, inner_w, depth, box_height, front_h, pull_offset, mats, front_mat, is_sink_u_shape: false, front_w: nil, box_z_offset: 20.0)
     drawer_unit = parent_ents.add_group
@@ -232,7 +296,7 @@ module CabinetrixBoxEngine
     oy = base_y - pull_offset
     oz = inner_origin.z
 
-    # 1. Front (Placed exactly with specified height)
+    # 1. Gola Extended Front Slab
     create_box(drawer_unit.entities, [ox - BOARD_THK + 1.5.mm, oy - FRONT_THK, oz], [f_w, FRONT_THK, front_h], front_mat, "Drawer_Front_Face")
 
     # 2. Moving Drawer Box
@@ -319,11 +383,14 @@ module CabinetrixBoxEngine
 
     case type
     # ==========================================================================
-    # CORNER BASE CABINETS
+    # CORNER BASE CABINETS (SHOTGUN NOTCHED CORNER SHELF & UPRIGHT BAFFLE)
     # ==========================================================================
     when :base_blind_corner, :base_lemans_corner, :base_magic_corner, :base_corner_shelf
       blind_w = 600.mm
       door_w = width - blind_w - 3.mm
+      baffle_x = bx + door_w + 3.mm
+      baffle_d = depth - 50.mm
+
       create_box(box_grp.entities, [bx, by - depth, bz], [BOARD_THK, depth, height], mats[:carcase], "Gable_LH")
       create_box(box_grp.entities, [bx + width - BOARD_THK, by - depth, bz], [BOARD_THK, depth, height], mats[:carcase], "Gable_RH")
       build_structural_shelf(box_grp.entities, "Bottom_Panel", width, depth, bz, mats)
@@ -332,10 +399,12 @@ module CabinetrixBoxEngine
       create_box(box_grp.entities, [bx + BOARD_THK, by - depth + GOLA_DEPTH, bz + height - BOARD_THK], [inner_w, 80.mm, BOARD_THK], mats[:carcase], "Top_Front_Stretcher")
       create_box(box_grp.entities, [bx + BOARD_THK, by - 80.mm, bz + height - BOARD_THK], [inner_w, 80.mm, BOARD_THK], mats[:carcase], "Top_Rear_Stretcher")
 
-      create_box(box_grp.entities, [bx + door_w + 3.mm, by - depth, bz], [18.mm, depth - 50.mm, height], mats[:carcase], "Blind_Corner_Internal_Baffle")
-      create_box(box_grp.entities, [bx + door_w + 3.mm, by - depth - FRONT_THK, bz], [blind_w - 3.mm, FRONT_THK, height], front_mat, "Blind_Corner_Front_Filler")
+      # Upright Dividing Baffle & Front Blind Filler
+      create_box(box_grp.entities, [baffle_x, by - depth, bz], [18.mm, baffle_d, height], mats[:carcase], "Blind_Corner_Internal_Baffle")
+      create_box(box_grp.entities, [baffle_x, by - depth - FRONT_THK, bz], [blind_w - 3.mm, FRONT_THK, height], front_mat, "Blind_Corner_Front_Filler")
       
-      build_adjustable_shelf(box_grp.entities, "Corner_Internal_Shelf", width, depth, bz + height/2.0, mats)
+      # Notched Shelf with Pass-Through cutout around Baffle
+      build_notched_corner_shelf(box_grp.entities, "Corner_Internal_Notched_Shelf", width, depth, bz + height/2.0, baffle_x, baffle_d, mats)
 
       door_open_deg = (mode == :hybrid ? 95.0 : 0.0)
       door_grp = create_box(box_grp.entities, [bx + 1.5.mm, by - depth - FRONT_THK, bz + 3.mm], [door_w, FRONT_THK, height - 38.mm], front_mat, "Accessible_Corner_Door")
@@ -395,7 +464,7 @@ module CabinetrixBoxEngine
       build_senior_sash_door(box_grp.entities, bx + 1.5.mm, by - depth - 21.2.mm, bz, width - 3.mm, height - bz - 3.mm, mats, is_left_hinged: true, open_angle_deg: door_open_deg)
 
     # ==========================================================================
-    # BASE & ISLAND UNITS (WITH UNIFORM FULL-HEIGHT GOLA FRONTS)
+    # BASE & ISLAND UNITS (WITH AUTHENTIC GOLA BEVELED EXTENDED FRONTS)
     # ==========================================================================
     when :base_gola_drawers, :base_gola_cooktop, :base_gola_sink, :base_gola_spice, :base_gola_wine, :island_gola_drawers, :island_gola_sink
       stretcher_z = bz + height - BOARD_THK
@@ -571,7 +640,7 @@ module CabinetrixBoxEngine
     panels << { part_id: "#{cab_tag}-BAK", cab_id: cab_tag, name: "Back_Panel_Sheet", length: inner_w + 10.0, width: height_mm - 26.0, thk: 6.0, material: "6mm White Backing", grain: :length, eb_l1: "-", eb_l2: "-", eb_w1: "-", eb_w2: "-", has_cnc: false }
 
     if cab_type.to_s.include?('drawer') || cab_type.to_s.include?('cooktop') || cab_type.to_s.include?('sink')
-      dims = CabinetrixCollisionEngine.calculate_drawer_geometry(inner_w, depth_mm, side_gap: 12.5, box_thk: 15.0, front_h: 324.0)
+      dims = CabinetrixCollisionEngine.calculate_drawer_geometry(inner_w, depth_mm, side_gap: 12.5, box_thk: 15.0, front_h: 342.0)
       box_w = dims[:box_w]
       box_d = dims[:box_d]
 
@@ -580,14 +649,14 @@ module CabinetrixBoxEngine
       panels << { part_id: "#{cab_tag}-DW1-SF", cab_id: cab_tag, name: "Drawer_SubFront_Lower", length: box_w - 30.0, width: 200.0, thk: 15.0, material: "15mm Birch Plywood", grain: :length, eb_l1: "1.0mm Birch", eb_l2: "-", eb_w1: "-", eb_w2: "-", has_cnc: true }
       panels << { part_id: "#{cab_tag}-DW1-BK", cab_id: cab_tag, name: "Drawer_Back_Lower", length: box_w - 30.0, width: 200.0, thk: 15.0, material: "15mm Birch Plywood", grain: :length, eb_l1: "1.0mm Birch", eb_l2: "-", eb_w1: "-", eb_w2: "-", has_cnc: true }
       panels << { part_id: "#{cab_tag}-DW1-BM", cab_id: cab_tag, name: "Drawer_Bottom_Lower", length: box_w - 30.0, width: box_d - 30.0, thk: 16.0, material: "16mm Solid Birch Base", grain: :none, eb_l1: "-", eb_l2: "-", eb_w1: "-", eb_w2: "-", has_cnc: false }
-      panels << { part_id: "#{cab_tag}-FR1", cab_id: cab_tag, name: "Lower_Pot_Drawer_Front", length: width_mm - 3.0, width: 324.0, thk: 18.0, material: "18mm Anthracite Supermatte", grain: :length, eb_l1: "1.0mm ABS", eb_l2: "1.0mm ABS", eb_w1: "1.0mm ABS", eb_w2: "1.0mm ABS", has_cnc: false }
+      panels << { part_id: "#{cab_tag}-FR1", cab_id: cab_tag, name: "Lower_Pot_Drawer_Front", length: width_mm - 3.0, width: 342.0, thk: 18.0, material: "18mm Anthracite Supermatte", grain: :length, eb_l1: "1.0mm ABS", eb_l2: "1.0mm ABS", eb_w1: "1.0mm ABS", eb_w2: "1.0mm ABS", has_cnc: false }
 
       panels << { part_id: "#{cab_tag}-DW2-LH", cab_id: cab_tag, name: "Drawer_Box_LH_Upper", length: box_d, width: 120.0, thk: 15.0, material: "15mm Birch Plywood", grain: :length, eb_l1: "1.0mm Birch", eb_l2: "-", eb_w1: "-", eb_w2: "-", has_cnc: true }
       panels << { part_id: "#{cab_tag}-DW2-RH", cab_id: cab_tag, name: "Drawer_Box_RH_Upper", length: box_d, width: 120.0, thk: 15.0, material: "15mm Birch Plywood", grain: :length, eb_l1: "1.0mm Birch", eb_l2: "-", eb_w1: "-", eb_w2: "-", has_cnc: true }
       panels << { part_id: "#{cab_tag}-DW2-SF", cab_id: cab_tag, name: "Drawer_SubFront_Upper", length: box_w - 30.0, width: 120.0, thk: 15.0, material: "15mm Birch Plywood", grain: :length, eb_l1: "1.0mm Birch", eb_l2: "-", eb_w1: "-", eb_w2: "-", has_cnc: true }
       panels << { part_id: "#{cab_tag}-DW2-BK", cab_id: cab_tag, name: "Drawer_Back_Upper", length: box_w - 30.0, width: 120.0, thk: 15.0, material: "15mm Birch Plywood", grain: :length, eb_l1: "1.0mm Birch", eb_l2: "-", eb_w1: "-", eb_w2: "-", has_cnc: true }
       panels << { part_id: "#{cab_tag}-DW2-BM", cab_id: cab_tag, name: "Drawer_Bottom_Upper", length: box_w - 30.0, width: box_d - 30.0, thk: 16.0, material: "16mm Solid Birch Base", grain: :none, eb_l1: "-", eb_l2: "-", eb_w1: "-", eb_w2: "-", has_cnc: false }
-      panels << { part_id: "#{cab_tag}-FR2", cab_id: cab_tag, name: "Upper_Drawer_Front", length: width_mm - 3.0, width: 253.5, thk: 18.0, material: "18mm Anthracite Supermatte", grain: :length, eb_l1: "1.0mm ABS", eb_l2: "1.0mm ABS", eb_w1: "1.0mm ABS", eb_w2: "1.0mm ABS", has_cnc: false }
+      panels << { part_id: "#{cab_tag}-FR2", cab_id: cab_tag, name: "Upper_Drawer_Front", length: width_mm - 3.0, width: 285.0, thk: 18.0, material: "18mm Anthracite Supermatte", grain: :length, eb_l1: "1.0mm ABS", eb_l2: "1.0mm ABS", eb_w1: "1.0mm ABS", eb_w2: "1.0mm ABS", has_cnc: false }
     end
 
     panels

@@ -2,13 +2,9 @@
 # CABINETRIX AI — MASTER PARAMETRIC TEMPLATE CATALOGUE & STENCIL REPOSITORY
 # File: gemini/catalogue.rb
 #
-# Role in System Architecture:
-#   • THE STENCIL REPOSITORY & KNOWLEDGE BASE:
-#     - Holds all parametric cabinet recipes, dimensional rules, panel formulas,
-#       machining rules, and hardware schedules derived from manufacturer manuals
-#       (Blum, Hettich, Kesseböhmer, SCILM, Häfele, European Standards).
-#     - Pure data & formula orchestrator — does NOT perform direct 3D draw calls.
-#     - Dynamic & Synergistic: Supports runtime registration of new user templates.
+# Production Standard:
+#   • Gola Extended Finger-Pull Fronts (Lower 342mm, Upper 285mm)
+#   • Shotgun Notched Blind Corner Shelf with Baffle Pass-Through Cutouts
 # ==============================================================================
 
 module CabinetrixCatalogue
@@ -35,14 +31,14 @@ module CabinetrixCatalogue
   end
 
   # ----------------------------------------------------------------------------
-  # 1. BASE CABINET STENCILS (720mm Carcase + 100mm Plinth = 820/860mm datum)
+  # 1. BASE CABINET STENCILS
   # ----------------------------------------------------------------------------
   register("B_GOLA_2D", {
     id: "B_GOLA_2D",
     name: "Base 2-Pot Drawer Bank (Gola)",
     category: :base_drawer,
     zone: :prep_storage,
-    desc: "Handleless SCILM Top L-Gola & Mid C-Gola with Hettich Actro 5D undermount runners",
+    desc: "Handleless SCILM Top L-Gola & Mid C-Gola with beveled finger-pull overhangs",
     dimensions: {
       w: { default: 900.0, min: 450.0, max: 1200.0, step: 50.0 },
       h: { default: 720.0, fixed: true },
@@ -62,19 +58,19 @@ module CabinetrixCatalogue
         { name: "Rear_Top_Cleat", len: inner_w, wid: 100.0, thk: thk, mat: :carcase },
         { name: "Rear_Bottom_Cleat", len: inner_w, wid: 100.0, thk: thk, mat: :carcase },
         { name: "Back_Sheet", len: inner_w + 10.0, wid: h - 26.0, thk: 6.0, mat: :backing },
-        # Drawers
+        # 5-Piece Drawer Boxes
         { name: "Drawer_Box_LH_Lower", len: d - 110.0, wid: 200.0, thk: 15.0, mat: :drawer_core },
         { name: "Drawer_Box_RH_Lower", len: d - 110.0, wid: 200.0, thk: 15.0, mat: :drawer_core },
         { name: "Drawer_SubFront_Lower", len: inner_w - 55.0, wid: 200.0, thk: 15.0, mat: :drawer_core },
         { name: "Drawer_Back_Lower", len: inner_w - 55.0, wid: 200.0, thk: 15.0, mat: :drawer_core },
         { name: "Drawer_Bottom_Lower", len: inner_w - 55.0, wid: d - 140.0, thk: 16.0, mat: :drawer_core },
-        { name: "Lower_Pot_Drawer_Front", len: w - 3.0, wid: 315.0, thk: 18.0, mat: :face, eb_all: "1.0mm ABS" },
+        { name: "Lower_Pot_Drawer_Front", len: w - 3.0, wid: 342.0, thk: 18.0, mat: :face, eb_all: "1.0mm ABS" },
         { name: "Drawer_Box_LH_Upper", len: d - 110.0, wid: 120.0, thk: 15.0, mat: :drawer_core },
         { name: "Drawer_Box_RH_Upper", len: d - 110.0, wid: 120.0, thk: 15.0, mat: :drawer_core },
         { name: "Drawer_SubFront_Upper", len: inner_w - 55.0, wid: 120.0, thk: 15.0, mat: :drawer_core },
         { name: "Drawer_Back_Upper", len: inner_w - 55.0, wid: 120.0, thk: 15.0, mat: :drawer_core },
         { name: "Drawer_Bottom_Upper", len: inner_w - 55.0, wid: d - 140.0, thk: 16.0, mat: :drawer_core },
-        { name: "Upper_Drawer_Front", len: w - 3.0, wid: 248.0, thk: 18.0, mat: :face, eb_all: "1.0mm ABS" }
+        { name: "Upper_Drawer_Front", len: w - 3.0, wid: 285.0, thk: 18.0, mat: :face, eb_all: "1.0mm ABS" }
       ]
     },
     hardware: ->(w, h, d) {
@@ -91,7 +87,7 @@ module CabinetrixCatalogue
     name: "Base Sink Unit with Cargo Waste 900mm",
     category: :base_sink,
     zone: :washing,
-    desc: "Sink unit with U-shaped plumbing cutout sub-front drawer and lower recycling cargo bins",
+    desc: "Sink unit with plumbing clearance and lower recycling cargo bins",
     dimensions: {
       w: { default: 900.0, min: 600.0, max: 1200.0, step: 50.0 },
       h: { default: 720.0, fixed: true },
@@ -111,8 +107,8 @@ module CabinetrixCatalogue
         { name: "Rear_Top_Cleat", len: inner_w, wid: 100.0, thk: thk, mat: :carcase },
         { name: "Rear_Bottom_Cleat", len: inner_w, wid: 100.0, thk: thk, mat: :carcase },
         { name: "Back_Sheet", len: inner_w + 10.0, wid: h - 26.0, thk: 6.0, mat: :backing },
-        { name: "Sink_False_Front", len: w - 3.0, wid: 248.0, thk: 18.0, mat: :face },
-        { name: "Lower_Pot_Drawer_Front", len: w - 3.0, wid: 315.0, thk: 18.0, mat: :face }
+        { name: "Sink_False_Front", len: w - 3.0, wid: 285.0, thk: 18.0, mat: :face },
+        { name: "Lower_Pot_Drawer_Front", len: w - 3.0, wid: 342.0, thk: 18.0, mat: :face }
       ]
     },
     hardware: ->(w, h, d) {
@@ -179,14 +175,14 @@ module CabinetrixCatalogue
   })
 
   # ----------------------------------------------------------------------------
-  # 2. CORNER CABINET STENCILS
+  # 2. CORNER CABINET STENCILS (SHOTGUN NOTCHED CORNER SHELF & UPRIGHT BAFFLE)
   # ----------------------------------------------------------------------------
   register("B_CNR_LEMANS", {
     id: "B_CNR_LEMANS",
     name: "Base Blind Corner LeMans II Unit 1050mm",
     category: :corner_base,
     zone: :corner_storage,
-    desc: "Kesseböhmer LeMans II twin swivel peanut trays with 450mm clear door opening",
+    desc: "Kesseböhmer LeMans II twin swivel peanut trays with 450mm clear door opening and notched shelf",
     dimensions: {
       w: { default: 1050.0, min: 900.0, max: 1200.0, step: 50.0 },
       h: { default: 720.0, fixed: true },
@@ -205,6 +201,8 @@ module CabinetrixCatalogue
         { name: "Top_Rear_Stretcher", len: inner_w, wid: 80.0, thk: thk, mat: :carcase },
         { name: "Blind_Corner_Internal_Baffle", len: h, wid: d - 50.0, thk: thk, mat: :carcase },
         { name: "Blind_Corner_Front_Filler", len: blind_w - 3.0, wid: h, thk: thk, mat: :face },
+        { name: "Corner_Shelf_Door_Section", len: door_w, wid: d - 30.0, thk: thk, mat: :carcase },
+        { name: "Corner_Shelf_Blind_Section", len: blind_w - 30.0, wid: d - 30.0, thk: thk, mat: :carcase },
         { name: "Accessible_Corner_Door", len: door_w, wid: h - 38.0, thk: thk, mat: :face },
         { name: "Back_Sheet", len: inner_w + 10.0, wid: h - 26.0, thk: 6.0, mat: :backing }
       ]
@@ -239,7 +237,7 @@ module CabinetrixCatalogue
   })
 
   # ----------------------------------------------------------------------------
-  # 3. TALL TOWER STENCILS (2160mm + 100mm Plinth)
+  # 3. TALL TOWER STENCILS
   # ----------------------------------------------------------------------------
   register("T_SPACE_TOWER", {
     id: "T_SPACE_TOWER",
@@ -424,7 +422,7 @@ module CabinetrixCatalogue
     name: "Island Double-Sided Gola Pot Bank 900mm",
     category: :island_prep,
     zone: :island,
-    desc: "Freestanding island pot drawer bank with SCILM profile and solid birch organizers",
+    desc: "Freestanding island pot drawer bank with SCILM profile and beveled finger-pull overhangs",
     dimensions: {
       w: { default: 900.0, min: 600.0, max: 1200.0, step: 50.0 },
       h: { default: 720.0, fixed: true },
