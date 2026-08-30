@@ -9,11 +9,12 @@
 #   • GLOBAL DRAWER HARDWARE FUNCTION:
 #     - Pure Hardware Formula: Drawer Box Width = Internal Width - (2 * Side Gap)
 #     - Uses CabinetrixCollisionEngine.calculate_drawer_geometry(inner_w, depth, side_gap: 12.5)
-#   • ZERO-COLLISION GOLA DRAWER GEOMETRY (SCILM / Hettich / Blum Standards):
-#     - Lower Drawer: Front Z = bz + 12mm, H = 315mm (Top: bz + 327mm, 3mm reveal below C-Gola at bz + 330mm)
-#     - Mid C-Gola: Cutout Z = 330mm to 403.5mm, fixed with SCILM clips directly to gable notches (NO colliding mid-stretchers)
-#     - Upper Drawer: Front Z = bz + 409.5mm, H = 248mm (Top: bz + 657.5mm, 3.5mm reveal below L-Gola at bz + 661mm)
-#     - Upper Drawer Box: Height = 120mm on Hettich Actro 5D undermount slides (100% zero collision)
+#   • FULL KITCHEN, WARDROBE, BULKHEAD & OPEN RACK SUITE:
+#     - Base Gola (Drawers, Sink, Cooktop, Spice, Wine, Magic Corner, LeMans, L-Corner)
+#     - Tall Towers (Space Tower, Double Oven, Pantry)
+#     - Wall Units (AVENTOS HF Lift, Glass Display, Hood)
+#     - Top Bulkheads (Ceiling Infill, Flap Lift, Tall Tower Bulkheads)
+#     - Open Architectural Racks (Matte Black Aluminum Frame, Wine X-Grid, Island Gantry)
 # ==============================================================================
 require 'sketchup.rb'
 require_relative 'cabinetrix_collision_engine'
@@ -469,8 +470,8 @@ module CabinetrixBoxEngine
     facing_dir = location[:facing_dir] || :front
 
     width  = params[:width] || 600.mm
-    height = params[:height] || (type.to_s.start_with?('tall') ? TALL_CARCASE_H : (type.to_s.start_with?('wall') ? WALL_CARCASE_H : BASE_CARCASE_H))
-    depth  = params[:depth]  || (type.to_s.start_with?('tall') ? TALL_DEPTH : (type.to_s.start_with?('wall') ? WALL_DEPTH : BASE_DEPTH))
+    height = params[:height] || (type.to_s.start_with?('tall') ? TALL_CARCASE_H : (type.to_s.start_with?('wall') || type.to_s.start_with?('open') ? WALL_CARCASE_H : (type.to_s.start_with?('top_bulkhead') ? 360.mm : BASE_CARCASE_H)))
+    depth  = params[:depth]  || (type.to_s.start_with?('tall') ? TALL_DEPTH : (type.to_s.start_with?('wall') || type.to_s.start_with?('open') || type.to_s.start_with?('top_bulkhead') ? WALL_DEPTH : BASE_DEPTH))
     mode   = params[:mode]   || :hybrid
     front_mat = params[:front_mat] || mats[:front_dark]
     include_gola = (params[:include_gola] != false)
@@ -480,7 +481,7 @@ module CabinetrixBoxEngine
     # ==========================================================================
     # CORNERS
     # ==========================================================================
-    when :base_blind_corner, :base_lemans_corner
+    when :base_blind_corner, :base_lemans_corner, :base_magic_corner
       blind_w = 600.mm
       door_w = width - blind_w - 3.mm
       create_box(box_grp.entities, [bx, by - depth, bz], [BOARD_THK, depth, height], mats[:carcase], "Gable_LH")
@@ -491,21 +492,34 @@ module CabinetrixBoxEngine
       create_box(box_grp.entities, [bx + door_w + 3.mm, by - depth, bz], [18.mm, depth - 50.mm, height], mats[:carcase], "Blind_Corner_Internal_Baffle")
       create_box(box_grp.entities, [bx + door_w + 3.mm, by - depth - FRONT_THK, bz], [blind_w - 3.mm, FRONT_THK, height], front_mat, "Blind_Corner_Front_Filler")
       
-      # Accessible door (Swung open 95° in hybrid mode so LeMans trays can extend without clash)
+      # Accessible door (Swung open 95° in hybrid mode so LeMans/Magic Corner trays can extend without clash)
       door_open_deg = (mode == :hybrid ? 95.0 : 0.0)
       door_grp = create_box(box_grp.entities, [bx + 1.5.mm, by - depth - FRONT_THK, bz + 3.mm], [door_w, FRONT_THK, height - 38.mm], front_mat, "Accessible_Corner_Door")
       if door_open_deg > 0
         door_grp.transform!(Geom::Transformation.rotation(Geom::Point3d.new(bx + 1.5.mm, by - depth - FRONT_THK, bz), Geom::Vector3d.new(0, 0, 1), -door_open_deg.degrees))
       end
 
-      # LeMans II Swivel Trays (Extend out ONLY when door is open)
-      tray_pull = (mode == :hybrid ? 350.mm : 0.mm)
-      [bz + 150.mm, bz + 450.mm].each_with_index do |tz, tidx|
-        tray = box_grp.entities.add_group
-        tray.name = "LeMans_Swivel_Tray_#{tidx+1}"
-        create_box(tray.entities, [bx + 40.mm, by - depth + 50.mm - (tidx==0 ? tray_pull : 0.mm), tz], [door_w + 180.mm, depth - 100.mm, 20.mm], mats[:carcase], "Peanut_Tray_Base")
-        create_cylinder(tray.entities, Geom::Point3d.new(bx + 40.mm + door_w, by - depth + 80.mm, tz), Geom::Vector3d.new(0, 0, 1), 18.mm, 250.mm, mats[:steel], 16)
-        create_box(tray.entities, [bx + 35.mm, by - depth + 45.mm - (tidx==0 ? tray_pull : 0.mm), tz + 20.mm], [door_w + 190.mm, depth - 90.mm, 40.mm], mats[:steel], "Chrome_Gallery_Rail")
+      if type == :base_magic_corner
+        # Kesseböhmer Magic Corner Articulated Pullout Baskets
+        tray_pull = (mode == :hybrid ? 380.mm : 0.mm)
+        frame = box_grp.entities.add_group
+        frame.name = "Magic_Corner_Articulated_Frame"
+        create_box(frame.entities, [bx + 20.mm, by - depth + 60.mm - tray_pull, bz + 50.mm], [door_w - 40.mm, depth - 120.mm, 25.mm], mats[:steel], "Front_Pullout_Frame")
+        create_box(frame.entities, [bx + 30.mm, by - depth + 70.mm - tray_pull, bz + 80.mm], [door_w - 60.mm, depth - 140.mm, 180.mm], mats[:steel], "Chrome_Front_Basket_1")
+        create_box(frame.entities, [bx + 30.mm, by - depth + 70.mm - tray_pull, bz + 380.mm], [door_w - 60.mm, depth - 140.mm, 180.mm], mats[:steel], "Chrome_Front_Basket_2")
+        # Rear sliding storage baskets
+        create_box(frame.entities, [bx + door_w + 30.mm, by - depth + 80.mm, bz + 80.mm], [blind_w - 80.mm, depth - 160.mm, 180.mm], mats[:steel], "Rear_Slide_Basket_1")
+        create_box(frame.entities, [bx + door_w + 30.mm, by - depth + 80.mm, bz + 380.mm], [blind_w - 80.mm, depth - 160.mm, 180.mm], mats[:steel], "Rear_Slide_Basket_2")
+      else
+        # LeMans II Swivel Trays (Extend out ONLY when door is open)
+        tray_pull = (mode == :hybrid ? 350.mm : 0.mm)
+        [bz + 150.mm, bz + 450.mm].each_with_index do |tz, tidx|
+          tray = box_grp.entities.add_group
+          tray.name = "LeMans_Swivel_Tray_#{tidx+1}"
+          create_box(tray.entities, [bx + 40.mm, by - depth + 50.mm - (tidx==0 ? tray_pull : 0.mm), tz], [door_w + 180.mm, depth - 100.mm, 20.mm], mats[:carcase], "Peanut_Tray_Base")
+          create_cylinder(tray.entities, Geom::Point3d.new(bx + 40.mm + door_w, by - depth + 80.mm, tz), Geom::Vector3d.new(0, 0, 1), 18.mm, 250.mm, mats[:steel], 16)
+          create_box(tray.entities, [bx + 35.mm, by - depth + 45.mm - (tidx==0 ? tray_pull : 0.mm), tz + 20.mm], [door_w + 190.mm, depth - 90.mm, 40.mm], mats[:steel], "Chrome_Gallery_Rail")
+        end
       end
 
     when :base_l_corner_easy_reach
@@ -557,8 +571,6 @@ module CabinetrixBoxEngine
       build_structural_shelf(box_grp.entities, "Roof_Panel", bx, width, depth, height - BOARD_THK, mats, cam_normal: Geom::Vector3d.new(0, 0, -1), full_depth_to_wall: true, y_origin: by)
       build_shotgun_grooved_back(box_grp.entities, name, bx, width, bz, height, mats, has_mid_cleat: true, mid_cleat_z: 1200.mm, y_origin: by)
 
-      # Space Tower Rule: 5 internal drawers below 1200mm datum
-      # Internal pullout is only pulled out if the door is opened!
       drawer_pull = (mode == :hybrid ? 300.mm : 0.mm)
       [bz + 20.mm, bz + 230.mm, bz + 440.mm, bz + 650.mm, bz + 860.mm].each_with_index do |dz, i|
         pull_dist = (i == 1) ? drawer_pull : 0.mm
@@ -569,7 +581,6 @@ module CabinetrixBoxEngine
       build_adjustable_shelf(box_grp.entities, "Adjustable_Shelf_1", bx, width, depth, 1200.mm + BOARD_THK + 250.mm, mats, y_origin: by)
       build_adjustable_shelf(box_grp.entities, "Adjustable_Shelf_2", bx, width, depth, 1200.mm + BOARD_THK + 550.mm, mats, y_origin: by)
       
-      # Door opens 95° in hybrid demo mode to let internal drawers glide out with zero collision
       door_open_deg = (mode == :hybrid ? 95.0 : 0.0)
       build_senior_sash_door(box_grp.entities, bx + 1.5.mm, by - depth - 21.2.mm, bz, width - 3.mm, height - bz - 3.mm, mats, is_left_hinged: true, open_angle_deg: door_open_deg)
 
@@ -703,6 +714,68 @@ module CabinetrixBoxEngine
 
       hood_door_h = height - 160.mm - 3.mm
       create_box(box_grp.entities, [bx + 1.5.mm, by - depth - FRONT_THK, bz + 160.mm + 3.mm], [width - 3.mm, FRONT_THK, hood_door_h], front_mat, "Upper_Hood_Door")
+
+    # ==========================================================================
+    # TOP BULKHEAD & CEILING-HEIGHT INFILL UNITS (FOR 2400mm - 2700mm CEILINGS)
+    # ==========================================================================
+    when :top_bulkhead_flap, :deep_top_bulkhead
+      bulkhead_h = params[:height] || 360.mm
+      create_box(box_grp.entities, [bx, by - depth, bz], [BOARD_THK, depth, bulkhead_h], mats[:carcase], "Gable_LH")
+      create_box(box_grp.entities, [bx + width - BOARD_THK, by - depth, bz], [BOARD_THK, depth, bulkhead_h], mats[:carcase], "Gable_RH")
+      build_structural_shelf(box_grp.entities, "Top_Panel", bx, width, depth, bz + bulkhead_h - BOARD_THK, mats, cam_normal: Geom::Vector3d.new(0, 0, -1), full_depth_to_wall: true, y_origin: by)
+      build_structural_shelf(box_grp.entities, "Bottom_Panel", bx, width, depth, bz, mats, y_origin: by)
+      build_shotgun_grooved_back(box_grp.entities, name, bx, width, bz, bz + bulkhead_h, mats, y_origin: by)
+
+      # Push-to-open flap stay lift (Blum AVENTOS HK-top / TIP-ON)
+      create_box(box_grp.entities, [bx + BOARD_THK + 2.mm, by - 120.mm, bz + bulkhead_h - 120.mm], [30.mm, 100.mm, 100.mm], mats[:steel], "Aventos_HK_Mechanism_LH")
+      create_box(box_grp.entities, [bx + width - BOARD_THK - 32.mm, by - 120.mm, bz + bulkhead_h - 120.mm], [30.mm, 100.mm, 100.mm], mats[:steel], "Aventos_HK_Mechanism_RH")
+      create_box(box_grp.entities, [bx + 1.5.mm, by - depth - FRONT_THK, bz + 1.5.mm], [width - 3.mm, FRONT_THK, bulkhead_h - 3.mm], front_mat, "Bulkhead_Flap_Door")
+
+    # ==========================================================================
+    # ARCHITECTURAL OPEN RACKS & DISPLAY MODULES
+    # ==========================================================================
+    when :open_rack_metal
+      # Matte Black 20x20mm Aluminum Extruded Framing + European Oak Box Infill
+      metal_mat = mats[:gola]
+      oak_mat   = mats[:wood]
+      frame_t   = 20.mm
+
+      # 4 Outer Corner Metal Uprights
+      create_box(box_grp.entities, [bx, by - depth, bz], [frame_t, frame_t, height], metal_mat, "Metal_Upright_FL")
+      create_box(box_grp.entities, [bx + width - frame_t, by - depth, bz], [frame_t, frame_t, height], metal_mat, "Metal_Upright_FR")
+      create_box(box_grp.entities, [bx, by - frame_t, bz], [frame_t, frame_t, height], metal_mat, "Metal_Upright_RL")
+      create_box(box_grp.entities, [bx + width - frame_t, by - frame_t, bz], [frame_t, frame_t, height], metal_mat, "Metal_Upright_RR")
+
+      # Horizontal Cross Bars at Top, Mid, Bottom
+      [bz, bz + height/2.0 - frame_t/2.0, bz + height - frame_t].each_with_index do |rz, idx|
+        create_box(box_grp.entities, [bx + frame_t, by - depth, rz], [width - 2*frame_t, frame_t, frame_t], metal_mat, "Cross_Bar_Front_#{idx+1}")
+        create_box(box_grp.entities, [bx + frame_t, by - frame_t, rz], [width - 2*frame_t, frame_t, frame_t], metal_mat, "Cross_Bar_Rear_#{idx+1}")
+        create_box(box_grp.entities, [bx, by - depth + frame_t, rz], [frame_t, depth - 2*frame_t, frame_t], metal_mat, "Cross_Bar_Left_#{idx+1}")
+        create_box(box_grp.entities, [bx + width - frame_t, by - depth + frame_t, rz], [frame_t, depth - 2*frame_t, frame_t], metal_mat, "Cross_Bar_Right_#{idx+1}")
+      end
+
+      # 2 Solid European Oak Floating Display Box Inserts
+      create_box(box_grp.entities, [bx + 25.mm, by - depth + 25.mm, bz + 20.mm], [width - 50.mm, depth - 50.mm, 18.mm], oak_mat, "Oak_Display_Shelf_Lower")
+      create_box(box_grp.entities, [bx + 25.mm, by - depth + 25.mm, bz + height/2.0 + 10.mm], [width - 50.mm, depth - 50.mm, 18.mm], oak_mat, "Oak_Display_Shelf_Upper")
+
+    when :open_wine_grid
+      create_box(box_grp.entities, [bx, by - depth, bz], [BOARD_THK, depth, height], mats[:carcase], "Gable_LH")
+      create_box(box_grp.entities, [bx + width - BOARD_THK, by - depth, bz], [BOARD_THK, depth, height], mats[:carcase], "Gable_RH")
+      build_structural_shelf(box_grp.entities, "Top_Panel", bx, width, depth, bz + height - BOARD_THK, mats, cam_normal: Geom::Vector3d.new(0, 0, -1), full_depth_to_wall: true, y_origin: by)
+      build_structural_shelf(box_grp.entities, "Bottom_Panel", bx, width, depth, bz, mats, y_origin: by)
+      build_shotgun_grooved_back(box_grp.entities, name, bx, width, bz, bz + height, mats, y_origin: by)
+
+      # 4x3 Cross-Divided Wine Bottle Compartments (Holds 12 - 16 standard 750ml bottles)
+      num_cols = 3
+      col_w = inner_w / num_cols
+      (1...num_cols).each do |c|
+        create_box(box_grp.entities, [bx + BOARD_THK + (c * col_w) - 6.mm, by - depth + 20.mm, bz + BOARD_THK], [12.mm, depth - 30.mm, height - 2*BOARD_THK], mats[:wood], "Wine_Divider_V#{c}")
+      end
+      num_rows = 4
+      row_h = (height - 2*BOARD_THK) / num_rows
+      (1...num_rows).each do |r|
+        create_box(box_grp.entities, [bx + BOARD_THK, by - depth + 20.mm, bz + BOARD_THK + (r * row_h) - 6.mm], [inner_w, depth - 30.mm, 12.mm], mats[:wood], "Wine_Divider_H#{r}")
+      end
     end
 
     box_grp

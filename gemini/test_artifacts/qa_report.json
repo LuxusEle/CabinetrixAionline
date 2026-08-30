@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-08-30 05:23:36 +0530",
+  "timestamp": "2026-08-30 05:26:50 +0530",
   "tested_modules_count": 8,
   "units": [
     {
@@ -2981,8 +2981,8 @@
       "name": "QA_Base_LeMans_1050W",
       "path": "QA_Base_LeMans_1050W",
       "min": [
-        1700.0,
-        -578.0,
+        1662.5,
+        -1024.9,
         100.0
       ],
       "max": [
@@ -2990,8 +2990,8 @@
         0.0,
         820.0
       ],
-      "width": 1050.0,
-      "depth": 578.0,
+      "width": 1087.5,
+      "depth": 1024.9,
       "height": 720.0,
       "children": [
         {
@@ -3672,17 +3672,17 @@
           "name": "Accessible_Corner_Door",
           "path": "QA_Base_LeMans_1050W > Accessible_Corner_Door",
           "min": [
-            1701.5,
-            -578.0,
+            1662.5,
+            -1024.9,
             103.0
           ],
           "max": [
-            2148.5,
-            -560.0,
+            1719.4,
+            -578.0,
             785.0
           ],
-          "width": 447.0,
-          "depth": 18.0,
+          "width": 56.9,
+          "depth": 446.9,
           "height": 682.0,
           "children": [
 
@@ -3693,12 +3693,12 @@
           "path": "QA_Base_LeMans_1050W > LeMans_Swivel_Tray_1",
           "min": [
             1735.0,
-            -515.0,
+            -865.0,
             250.0
           ],
           "max": [
             2372.0,
-            -45.0,
+            -395.0,
             500.0
           ],
           "width": 637.0,
@@ -3710,12 +3710,12 @@
               "path": "QA_Base_LeMans_1050W > LeMans_Swivel_Tray_1 > Peanut_Tray_Base",
               "min": [
                 1740.0,
-                -510.0,
+                -860.0,
                 250.0
               ],
               "max": [
                 2367.0,
-                -50.0,
+                -400.0,
                 270.0
               ],
               "width": 627.0,
@@ -3750,12 +3750,12 @@
               "path": "QA_Base_LeMans_1050W > LeMans_Swivel_Tray_1 > Chrome_Gallery_Rail",
               "min": [
                 1735.0,
-                -515.0,
+                -865.0,
                 270.0
               ],
               "max": [
                 2372.0,
-                -45.0,
+                -395.0,
                 310.0
               ],
               "width": 637.0,
@@ -6587,8 +6587,8 @@
       "name": "QA_Tall_SpaceTower_600W",
       "path": "QA_Tall_SpaceTower_600W",
       "min": [
-        3550.0,
-        -918.0,
+        3499.5,
+        -1217.8,
         0.0
       ],
       "max": [
@@ -6596,8 +6596,8 @@
         0.0,
         2160.0
       ],
-      "width": 600.0,
-      "depth": 918.0,
+      "width": 650.5,
+      "depth": 1217.8,
       "height": 2160.0,
       "children": [
         {
@@ -9721,17 +9721,17 @@
           "name": "Alu_Sash_Door_597x2057",
           "path": "QA_Tall_SpaceTower_600W > Alu_Sash_Door_597x2057",
           "min": [
-            3551.5,
-            -621.2,
+            3499.5,
+            -1217.8,
             100.0
           ],
           "max": [
-            4148.5,
-            -600.0,
+            3572.6,
+            -621.2,
             2157.0
           ],
-          "width": 597.0,
-          "depth": 21.2,
+          "width": 73.2,
+          "depth": 596.6,
           "height": 2057.0,
           "children": [
             {
@@ -11288,17 +11288,17 @@
       "name": "QA_Wardrobe_Combo_900W",
       "path": "QA_Wardrobe_Combo_900W",
       "min": [
-        5150.0,
-        -860.0,
+        5112.5,
+        -1069.3,
         0.0
       ],
       "max": [
-        6050.0,
+        6087.5,
         0.0,
         2160.0
       ],
-      "width": 900.0,
-      "depth": 860.0,
+      "width": 975.1,
+      "depth": 1069.3,
       "height": 2160.0,
       "children": [
         {
@@ -14479,17 +14479,17 @@
           "name": "Alu_Sash_Door_448x2057",
           "path": "QA_Wardrobe_Combo_900W > Alu_Sash_Door_448x2057",
           "min": [
-            5151.5,
-            -621.2,
+            5112.5,
+            -1069.3,
             100.0
           ],
           "max": [
-            5599.5,
-            -600.0,
+            5172.6,
+            -621.2,
             2157.0
           ],
-          "width": 448.0,
-          "depth": 21.2,
+          "width": 60.2,
+          "depth": 448.1,
           "height": 2057.0,
           "children": [
             {
@@ -14598,17 +14598,17 @@
           "name": "Alu_Sash_Door_448x2057",
           "path": "QA_Wardrobe_Combo_900W > Alu_Sash_Door_448x2057",
           "min": [
-            5600.5,
-            -621.2,
+            6027.4,
+            -1069.3,
             100.0
           ],
           "max": [
-            6048.5,
-            -600.0,
+            6087.5,
+            -621.2,
             2157.0
           ],
-          "width": 448.0,
-          "depth": 21.2,
+          "width": 60.2,
+          "depth": 448.1,
           "height": 2057.0,
           "children": [
             {
@@ -14719,17 +14719,17 @@
       "name": "QA_Wardrobe_Shoes_900W",
       "path": "QA_Wardrobe_Shoes_900W",
       "min": [
-        6150.0,
-        -621.2,
+        6112.5,
+        -1069.3,
         0.0
       ],
       "max": [
-        7050.0,
+        7087.5,
         0.0,
         2160.0
       ],
-      "width": 900.0,
-      "depth": 621.2,
+      "width": 975.1,
+      "depth": 1069.3,
       "height": 2160.0,
       "children": [
         {
@@ -17329,17 +17329,17 @@
           "name": "Alu_Sash_Door_448x2057",
           "path": "QA_Wardrobe_Shoes_900W > Alu_Sash_Door_448x2057",
           "min": [
-            6151.5,
-            -621.2,
+            6112.5,
+            -1069.3,
             100.0
           ],
           "max": [
-            6599.5,
-            -600.0,
+            6172.6,
+            -621.2,
             2157.0
           ],
-          "width": 448.0,
-          "depth": 21.2,
+          "width": 60.2,
+          "depth": 448.1,
           "height": 2057.0,
           "children": [
             {
@@ -17448,17 +17448,17 @@
           "name": "Alu_Sash_Door_448x2057",
           "path": "QA_Wardrobe_Shoes_900W > Alu_Sash_Door_448x2057",
           "min": [
-            6600.5,
-            -621.2,
+            7027.4,
+            -1069.3,
             100.0
           ],
           "max": [
-            7048.5,
-            -600.0,
+            7087.5,
+            -621.2,
             2157.0
           ],
-          "width": 448.0,
-          "depth": 21.2,
+          "width": 60.2,
+          "depth": 448.1,
           "height": 2057.0,
           "children": [
             {
