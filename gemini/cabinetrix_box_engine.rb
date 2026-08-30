@@ -1,16 +1,18 @@
 # ==============================================================================
-# CABINETRIX AI — UNIVERSAL PARAMETRIC BOX ENGINE (GEMINI MODULE)
-# Pure Function API: CabinetrixBoxEngine.create_cabinet(parent_ents, type, params, location, mats)
+# CABINETRIX AI — UNIVERSAL PARAMETRIC BOX ENGINE (GEMINI PRODUCTION STANDARD)
+# File: gemini/cabinetrix_box_engine.rb
 #
 # Production Standard:
-#   • 3D ROOM SPATIAL ROTATION & ORIENTATION:
-#     - Supports location[:rotation_deg] (0°, 90°, 180°, 270°) for true L-Shape, U-Shape, Galley & Island runs.
-#   • KINEMATIC DOOR-PENETRATION COLLISION RULE:
-#     - Senior sash doors swing open (95°) when internal drawers are extended in hybrid mode.
-#   • GLOBAL DRAWER HARDWARE FUNCTION:
-#     - Drawer Box Width = Internal Width - (2 * Side Gap)
-#   • FULL KITCHEN, WARDROBE, BULKHEAD & OPEN RACK SUITE:
-#     - Base Gola, Tall Towers, Wall Units, Top Bulkheads, Open Metal Racks, Islands & Peninsulas.
+#   • LOCAL COORDINATE MATRICES:
+#     - Every cabinet is constructed at local origin [0, 0, 0] with [X: 0..W, Y: -D..0, Z: 0..H]
+#     - Position & 3D Spatial Rotation (0°, 90°, 180°, 270°) are applied as a single rigid group transformation (tr_pos * tr_rot).
+#   • DUAL TOP STRETCHERS ON ALL BASE UNITS:
+#     - Top_Front_Stretcher (80mm x 18mm)
+#     - Top_Rear_Stretcher (80mm x 18mm)
+#     - Mid_C_Gola_Under_Stretcher (60mm x 18mm under C-Gola profile)
+#     - Rear Top & Bottom Vertical Cleats (100mm x 18mm)
+#   • COMPLETE PANEL & HARDWARE SPECIFICATION API:
+#     - Returns all physical boards (Gables, Bottoms, Tops, Stretchers, Cleats, Backs, Drawers, Fronts, Shelves)
 # ==============================================================================
 require 'sketchup.rb'
 require_relative 'cabinetrix_collision_engine'
@@ -31,7 +33,7 @@ module CabinetrixBoxEngine
   TALL_DEPTH        = 600.0.mm
   BASE_DATUM_Z      = (PLINTH_HEIGHT + BASE_CARCASE_H)
 
-  # SCILM Catalog Dimensions & Notches
+  # SCILM Gola Catalog Profile Dimensions
   GOLA_DEPTH        = 26.0.mm
   L_GOLA_H          = 59.0.mm
   C_GOLA_H          = 73.5.mm
@@ -41,7 +43,7 @@ module CabinetrixBoxEngine
   L_PROFILE_H       = 56.5.mm
   C_PROFILE_H       = 73.0.mm
 
-  # Zero-Collision Production Front Dimensions
+  # Zero-Collision Front Dimensions
   LOWER_FRONT_H     = 315.0.mm
   UPPER_FRONT_H     = 248.0.mm
   LOWER_DRAWER_Z    = 12.0.mm
@@ -237,7 +239,7 @@ module CabinetrixBoxEngine
   end
 
   # ----------------------------------------------------------------------------
-  # 2. SCILM GOLA PROFILES (AUTHENTIC CATALOG CONTOUR)
+  # 2. SCILM GOLA PROFILES
   # ----------------------------------------------------------------------------
   def self.build_gola_profile(parent_ents, profile_type, length, origin, mats, facing_dir: :front)
     group = parent_ents.add_group
@@ -294,8 +296,7 @@ module CabinetrixBoxEngine
   end
 
   # ----------------------------------------------------------------------------
-  # 3. GLOBAL DRAWER FUNCTION: HETTICH ACTRO 5D UNDERMOUNT DRAWER SYSTEM
-  # Formula: Drawer Box Width = Internal Width - (2 * Side Gap)
+  # 3. GLOBAL DRAWER FUNCTION
   # ----------------------------------------------------------------------------
   def self.build_hettich_undermount_drawer(parent_ents, inner_origin, inner_w, depth, box_height, front_h, pull_offset, mats, front_mat, dir_y: -1, is_sink_u_shape: false, front_w: nil)
     drawer_unit = parent_ents.add_group
@@ -313,14 +314,14 @@ module CabinetrixBoxEngine
     oy = base_y + (dir_y * pull_offset)
     oz = inner_origin.z
 
-    # 1. Decorative Drawer Front
+    # 1. Decorative Front
     if dir_y == -1
       create_box(drawer_unit.entities, [ox - BOARD_THK + 1.5.mm, oy - FRONT_THK, oz], [f_w, FRONT_THK, front_h], front_mat, "Drawer_Front_Face")
     else
       create_box(drawer_unit.entities, [ox - BOARD_THK + 1.5.mm, oy, oz], [f_w, FRONT_THK, front_h], front_mat, "Island_Drawer_Front_Face")
     end
 
-    # 2. Moving Drawer Box Structure (Glides forward with pull_offset)
+    # 2. Moving Drawer Box
     box_ox = ox + 12.5.mm
     box_oz = oz + 15.0.mm
 
@@ -376,7 +377,7 @@ module CabinetrixBoxEngine
   end
 
   # ----------------------------------------------------------------------------
-  # 4. 45° SASH FRAME WITH KINEMATIC DOOR OPENING ANGLE
+  # 4. SASH DOORS
   # ----------------------------------------------------------------------------
   def self.create_senior_sash_bar(parent_ents, bar_length, alu_mat, hole_mat, is_hinged = false)
     group = parent_ents.add_group
@@ -453,17 +454,17 @@ module CabinetrixBoxEngine
   end
 
   # ----------------------------------------------------------------------------
-  # 5. UNIVERSAL BOX CREATION API (WITH ZERO-COLLISION ENVELOPES)
+  # 5. UNIVERSAL BOX CREATION IN CLEAN LOCAL COORDINATES [0, 0, 0]
   # ----------------------------------------------------------------------------
   def self.create_cabinet(parent_ents, type, params, location, mats)
     name = params[:name] || "Cabinet_#{type.to_s.upcase}"
     box_grp = parent_ents.add_group
     box_grp.name = name
 
-    bx = location[:x] || 0.mm
-    by = location[:y] || 0.mm
-    bz = location[:z] || PLINTH_HEIGHT
-    facing_dir = location[:facing_dir] || :front
+    # Local coordinates: Origin is [0, 0, 0]
+    bx = 0.0.mm
+    by = 0.0.mm
+    bz = 0.0.mm
 
     width  = params[:width] || 600.mm
     height = params[:height] || (type.to_s.start_with?('tall') ? TALL_CARCASE_H : (type.to_s.start_with?('wall') || type.to_s.start_with?('open') ? WALL_CARCASE_H : (type.to_s.start_with?('top_bulkhead') ? 360.mm : BASE_CARCASE_H)))
@@ -484,6 +485,10 @@ module CabinetrixBoxEngine
       create_box(box_grp.entities, [bx + width - BOARD_THK, by - depth, bz], [BOARD_THK, depth, height], mats[:carcase], "Gable_RH")
       build_structural_shelf(box_grp.entities, "Bottom_Panel", bx, width, depth, bz, mats, y_origin: by)
       build_shotgun_grooved_back(box_grp.entities, name, bx, width, bz, bz + height, mats, y_origin: by)
+
+      # 2 TOP STRETCHERS FOR CORNER
+      create_box(box_grp.entities, [bx + BOARD_THK, by - depth + GOLA_DEPTH, bz + height - BOARD_THK], [inner_w, 80.mm, BOARD_THK], mats[:carcase], "Top_Front_Stretcher")
+      create_box(box_grp.entities, [bx + BOARD_THK, by - 80.mm, bz + height - BOARD_THK], [inner_w, 80.mm, BOARD_THK], mats[:carcase], "Top_Rear_Stretcher")
 
       create_box(box_grp.entities, [bx + door_w + 3.mm, by - depth, bz], [18.mm, depth - 50.mm, height], mats[:carcase], "Blind_Corner_Internal_Baffle")
       create_box(box_grp.entities, [bx + door_w + 3.mm, by - depth - FRONT_THK, bz], [blind_w - 3.mm, FRONT_THK, height], front_mat, "Blind_Corner_Front_Filler")
@@ -514,26 +519,6 @@ module CabinetrixBoxEngine
         end
       end
 
-    when :base_l_corner_easy_reach
-      corner_w = 900.mm
-      create_box(box_grp.entities, [bx, by - depth, bz], [BOARD_THK, depth, height], mats[:carcase], "Gable_LH")
-      create_box(box_grp.entities, [bx + corner_w - BOARD_THK, by - corner_w, bz], [BOARD_THK, corner_w, height], mats[:carcase], "Gable_RH")
-      l_bottom = box_grp.entities.add_face([
-        Geom::Point3d.new(bx, by, bz),
-        Geom::Point3d.new(bx + corner_w, by, bz),
-        Geom::Point3d.new(bx + corner_w, by - corner_w, bz),
-        Geom::Point3d.new(bx + corner_w - depth, by - corner_w, bz),
-        Geom::Point3d.new(bx + corner_w - depth, by - depth, bz),
-        Geom::Point3d.new(bx, by - depth, bz)
-      ])
-      l_bottom.pushpull(BOARD_THK) if l_bottom
-      center_pt = Geom::Point3d.new(bx + corner_w - depth/2.0, by - corner_w + depth/2.0, bz + 100.mm)
-      create_cylinder(box_grp.entities, center_pt, Geom::Vector3d.new(0, 0, 1), 380.mm, 18.mm, mats[:wood], 32)
-      create_cylinder(box_grp.entities, Geom::Point3d.new(center_pt.x, center_pt.y, bz + 400.mm), Geom::Vector3d.new(0, 0, 1), 380.mm, 18.mm, mats[:wood], 32)
-      create_cylinder(box_grp.entities, Geom::Point3d.new(center_pt.x, center_pt.y, bz), Geom::Vector3d.new(0, 0, 1), 16.mm, height, mats[:steel], 16)
-      create_box(box_grp.entities, [bx + BOARD_THK, by - depth - FRONT_THK, bz + 3.mm], [corner_w - depth - 20.mm, FRONT_THK, height - 38.mm], front_mat, "BiFold_Door_Wing_1")
-      create_box(box_grp.entities, [bx + corner_w - depth - FRONT_THK, by - corner_w + BOARD_THK, bz + 3.mm], [FRONT_THK, corner_w - depth - 20.mm, height - 38.mm], front_mat, "BiFold_Door_Wing_2")
-
     # ==========================================================================
     # TALL TOWERS
     # ==========================================================================
@@ -541,17 +526,17 @@ module CabinetrixBoxEngine
       create_box(box_grp.entities, [bx, by - depth, 0], [BOARD_THK, depth, height], mats[:carcase], "Gable_LH")
       create_box(box_grp.entities, [bx + width - BOARD_THK, by - depth, 0], [BOARD_THK, depth, height], mats[:carcase], "Gable_RH")
       build_structural_shelf(box_grp.entities, "Bottom_Panel", bx, width, depth, bz, mats, y_origin: by)
-      build_structural_shelf(box_grp.entities, "Structural_Base_Datum_Shelf", bx, width, depth, BASE_DATUM_Z, mats, y_origin: by)
-      build_structural_shelf(box_grp.entities, "Upper_Appliance_Shelf", bx, width, depth, BASE_DATUM_Z + 885.mm, mats, y_origin: by)
+      build_structural_shelf(box_grp.entities, "Structural_Base_Datum_Shelf", bx, width, depth, BASE_DATUM_Z - PLINTH_HEIGHT, mats, y_origin: by)
+      build_structural_shelf(box_grp.entities, "Upper_Appliance_Shelf", bx, width, depth, BASE_DATUM_Z - PLINTH_HEIGHT + 885.mm, mats, y_origin: by)
       build_structural_shelf(box_grp.entities, "Roof_Panel", bx, width, depth, height - BOARD_THK, mats, cam_normal: Geom::Vector3d.new(0, 0, -1), full_depth_to_wall: true, y_origin: by)
-      build_shotgun_grooved_back(box_grp.entities, name, bx, width, bz, height, mats, has_mid_cleat: true, mid_cleat_z: BASE_DATUM_Z, y_origin: by)
+      build_shotgun_grooved_back(box_grp.entities, name, bx, width, bz, height, mats, has_mid_cleat: true, mid_cleat_z: BASE_DATUM_Z - PLINTH_HEIGHT, y_origin: by)
 
-      oven = create_box(box_grp.entities, [bx + BOARD_THK + 5.mm, by - depth - 20.mm, BASE_DATUM_Z + BOARD_THK + 5.mm], [inner_w - 10.mm, depth - 20.mm, 875.mm], mats[:steel], "Double_Oven_Appliance")
-      create_box(oven.entities, [bx + BOARD_THK + 15.mm, by - depth - 25.mm, BASE_DATUM_Z + 25.mm], [inner_w - 30.mm, 5.mm, 410.mm], mats[:glass], "Oven_Lower_Glass")
-      create_box(oven.entities, [bx + BOARD_THK + 15.mm, by - depth - 25.mm, BASE_DATUM_Z + 465.mm], [inner_w - 30.mm, 5.mm, 410.mm], mats[:glass], "Oven_Upper_Glass")
+      oven = create_box(box_grp.entities, [bx + BOARD_THK + 5.mm, by - depth - 20.mm, BASE_DATUM_Z - PLINTH_HEIGHT + BOARD_THK + 5.mm], [inner_w - 10.mm, depth - 20.mm, 875.mm], mats[:steel], "Double_Oven_Appliance")
+      create_box(oven.entities, [bx + BOARD_THK + 15.mm, by - depth - 25.mm, BASE_DATUM_Z - PLINTH_HEIGHT + 25.mm], [inner_w - 30.mm, 5.mm, 410.mm], mats[:glass], "Oven_Lower_Glass")
+      create_box(oven.entities, [bx + BOARD_THK + 15.mm, by - depth - 25.mm, BASE_DATUM_Z - PLINTH_HEIGHT + 465.mm], [inner_w - 30.mm, 5.mm, 410.mm], mats[:glass], "Oven_Upper_Glass")
 
-      upper_door_h = height - (BASE_DATUM_Z + 885.mm + BOARD_THK) - 6.mm
-      create_box(box_grp.entities, [bx + 1.5.mm, by - depth - FRONT_THK, BASE_DATUM_Z + 885.mm + BOARD_THK + 3.mm], [width - 3.mm, FRONT_THK, upper_door_h], front_mat, "Upper_Cupboard_Door")
+      upper_door_h = height - (BASE_DATUM_Z - PLINTH_HEIGHT + 885.mm + BOARD_THK) - 6.mm
+      create_box(box_grp.entities, [bx + 1.5.mm, by - depth - FRONT_THK, BASE_DATUM_Z - PLINTH_HEIGHT + 885.mm + BOARD_THK + 3.mm], [width - 3.mm, FRONT_THK, upper_door_h], front_mat, "Upper_Cupboard_Door")
       build_hettich_undermount_drawer(box_grp.entities, Geom::Point3d.new(bx + BOARD_THK, by - depth, bz + 12.mm), inner_w, depth, 200.mm, 355.mm, 0.mm, mats, front_mat, dir_y: -1)
       build_hettich_undermount_drawer(box_grp.entities, Geom::Point3d.new(bx + BOARD_THK, by - depth, bz + 380.mm), inner_w, depth, 200.mm, 335.mm, (mode == :hybrid ? 250.mm : 0.mm), mats, front_mat, dir_y: -1)
 
@@ -577,88 +562,59 @@ module CabinetrixBoxEngine
       build_senior_sash_door(box_grp.entities, bx + 1.5.mm, by - depth - 21.2.mm, bz, width - 3.mm, height - bz - 3.mm, mats, is_left_hinged: true, open_angle_deg: door_open_deg)
 
     # ==========================================================================
-    # BASE & ISLAND GOLA UNITS (ZERO-COLLISION CLEARANCE RULES)
+    # BASE & ISLAND GOLA UNITS (WITH 2 TOP STRETCHERS + 1 MID UNDER STRETCHER)
     # ==========================================================================
     when :base_gola_drawers, :base_gola_cooktop, :base_gola_sink, :base_gola_spice, :base_gola_wine, :island_gola_drawers, :island_gola_sink
       stretcher_z = bz + height - BOARD_THK
       front_w = width - 3.mm
-      is_front = (facing_dir == :front)
-      front_y = is_front ? (by - depth) : by
-      rear_y  = is_front ? by : (by - depth)
+      front_y = by - depth
+      rear_y  = by
 
-      if is_front
-        create_machined_gola_gable(box_grp.entities, bx, depth, bz, height, mats[:carcase], "Gable_LH", facing_dir: :front)
-        create_machined_gola_gable(box_grp.entities, bx + width - BOARD_THK, depth, bz, height, mats[:carcase], "Gable_RH", facing_dir: :front)
-        build_structural_shelf(box_grp.entities, "Bottom_Panel", bx, width, depth, bz, mats, y_origin: by)
-        build_shotgun_grooved_back(box_grp.entities, name, bx, width, bz, bz + height, mats, y_origin: by)
+      create_machined_gola_gable(box_grp.entities, bx, depth, bz, height, mats[:carcase], "Gable_LH", facing_dir: :front)
+      create_machined_gola_gable(box_grp.entities, bx + width - BOARD_THK, depth, bz, height, mats[:carcase], "Gable_RH", facing_dir: :front)
+      build_structural_shelf(box_grp.entities, "Bottom_Panel", bx, width, depth, bz, mats, y_origin: by)
+      build_shotgun_grooved_back(box_grp.entities, name, bx, width, bz, bz + height, mats, y_origin: by)
 
-        front_sub_y = -depth + GOLA_DEPTH
-        create_box(box_grp.entities, [bx + BOARD_THK, front_sub_y, stretcher_z], [inner_w, 80.mm, BOARD_THK], mats[:carcase], "Top_Front_Gola_Stretcher")
-        build_minifix_joint(box_grp.entities, Geom::Point3d.new(bx + BOARD_THK, front_sub_y + 40.mm, stretcher_z + BOARD_THK/2.0), Geom::Vector3d.new(1, 0, 0), mats, cam_normal: Geom::Vector3d.new(0, 0, -1), bounds_y: [front_sub_y, front_sub_y + 80.mm])
-        build_minifix_joint(box_grp.entities, Geom::Point3d.new(bx + width - BOARD_THK, front_sub_y + 40.mm, stretcher_z + BOARD_THK/2.0), Geom::Vector3d.new(-1, 0, 0), mats, cam_normal: Geom::Vector3d.new(0, 0, -1), bounds_y: [front_sub_y, front_sub_y + 80.mm])
+      # 1. TOP FRONT STRETCHER (Behind L-Gola)
+      front_sub_y = -depth + GOLA_DEPTH
+      create_box(box_grp.entities, [bx + BOARD_THK, front_sub_y, stretcher_z], [inner_w, 80.mm, BOARD_THK], mats[:carcase], "Top_Front_Gola_Stretcher")
+      build_minifix_joint(box_grp.entities, Geom::Point3d.new(bx + BOARD_THK, front_sub_y + 40.mm, stretcher_z + BOARD_THK/2.0), Geom::Vector3d.new(1, 0, 0), mats, cam_normal: Geom::Vector3d.new(0, 0, -1), bounds_y: [front_sub_y, front_sub_y + 80.mm])
+      build_minifix_joint(box_grp.entities, Geom::Point3d.new(bx + width - BOARD_THK, front_sub_y + 40.mm, stretcher_z + BOARD_THK/2.0), Geom::Vector3d.new(-1, 0, 0), mats, cam_normal: Geom::Vector3d.new(0, 0, -1), bounds_y: [front_sub_y, front_sub_y + 80.mm])
 
-        mid_sub_z = bz + C_GOLA_Z0 - BOARD_THK
-        create_box(box_grp.entities, [bx + BOARD_THK, front_sub_y, mid_sub_z], [inner_w, 60.mm, BOARD_THK], mats[:carcase], "Mid_C_Gola_Under_Stretcher")
-        build_minifix_joint(box_grp.entities, Geom::Point3d.new(bx + BOARD_THK, front_sub_y + 30.mm, mid_sub_z + BOARD_THK/2.0), Geom::Vector3d.new(1, 0, 0), mats, cam_normal: Geom::Vector3d.new(0, 0, -1), bounds_y: [front_sub_y, front_sub_y + 60.mm])
-        build_minifix_joint(box_grp.entities, Geom::Point3d.new(bx + width - BOARD_THK, front_sub_y + 30.mm, mid_sub_z + BOARD_THK/2.0), Geom::Vector3d.new(-1, 0, 0), mats, cam_normal: Geom::Vector3d.new(0, 0, -1), bounds_y: [front_sub_y, front_sub_y + 60.mm])
+      # 2. TOP REAR STRETCHER (Structural Countertop Support)
+      rear_stretcher_y = by - 80.mm
+      create_box(box_grp.entities, [bx + BOARD_THK, rear_stretcher_y, stretcher_z], [inner_w, 80.mm, BOARD_THK], mats[:carcase], "Top_Rear_Gola_Stretcher")
+      build_minifix_joint(box_grp.entities, Geom::Point3d.new(bx + BOARD_THK, rear_stretcher_y + 40.mm, stretcher_z + BOARD_THK/2.0), Geom::Vector3d.new(1, 0, 0), mats, cam_normal: Geom::Vector3d.new(0, 0, -1), bounds_y: [rear_stretcher_y, rear_stretcher_y + 80.mm])
+      build_minifix_joint(box_grp.entities, Geom::Point3d.new(bx + width - BOARD_THK, rear_stretcher_y + 40.mm, stretcher_z + BOARD_THK/2.0), Geom::Vector3d.new(-1, 0, 0), mats, cam_normal: Geom::Vector3d.new(0, 0, -1), bounds_y: [rear_stretcher_y, rear_stretcher_y + 80.mm])
 
-        if include_gola
-          build_gola_profile(box_grp.entities, :l, width, Geom::Point3d.new(bx, -depth + GOLA_DEPTH, bz + height - L_GOLA_H), mats, facing_dir: :front)
-          build_gola_profile(box_grp.entities, :c, width, Geom::Point3d.new(bx, -depth + GOLA_DEPTH, bz + C_GOLA_Z0), mats, facing_dir: :front)
-        end
-      else
-        create_machined_gola_gable(box_grp.entities, bx, [front_y, rear_y], bz, height, mats[:carcase], "Gable_LH", facing_dir: :aisle)
-        create_machined_gola_gable(box_grp.entities, bx + width - BOARD_THK, [front_y, rear_y], bz, height, mats[:carcase], "Gable_RH", facing_dir: :aisle)
+      # 3. MID C-GOLA SUB-STRETCHER
+      mid_sub_z = bz + C_GOLA_Z0 - BOARD_THK
+      create_box(box_grp.entities, [bx + BOARD_THK, front_sub_y, mid_sub_z], [inner_w, 60.mm, BOARD_THK], mats[:carcase], "Mid_C_Gola_Under_Stretcher")
+      build_minifix_joint(box_grp.entities, Geom::Point3d.new(bx + BOARD_THK, front_sub_y + 30.mm, mid_sub_z + BOARD_THK/2.0), Geom::Vector3d.new(1, 0, 0), mats, cam_normal: Geom::Vector3d.new(0, 0, -1), bounds_y: [front_sub_y, front_sub_y + 60.mm])
+      build_minifix_joint(box_grp.entities, Geom::Point3d.new(bx + width - BOARD_THK, front_sub_y + 30.mm, mid_sub_z + BOARD_THK/2.0), Geom::Vector3d.new(-1, 0, 0), mats, cam_normal: Geom::Vector3d.new(0, 0, -1), bounds_y: [front_sub_y, front_sub_y + 60.mm])
 
-        create_box(box_grp.entities, [bx + BOARD_THK, rear_y, bz], [inner_w, depth, BOARD_THK], mats[:carcase], "Bottom_Panel")
-        build_minifix_joint(box_grp.entities, Geom::Point3d.new(bx + BOARD_THK, rear_y + 70.mm, bz + BOARD_THK/2.0), Geom::Vector3d.new(1, 0, 0), mats, bounds_y: [rear_y, front_y])
-        build_minifix_joint(box_grp.entities, Geom::Point3d.new(bx + BOARD_THK, front_y - 70.mm, bz + BOARD_THK/2.0), Geom::Vector3d.new(1, 0, 0), mats, bounds_y: [rear_y, front_y])
-        build_minifix_joint(box_grp.entities, Geom::Point3d.new(bx + width - BOARD_THK, rear_y + 70.mm, bz + BOARD_THK/2.0), Geom::Vector3d.new(-1, 0, 0), mats, bounds_y: [rear_y, front_y])
-        build_minifix_joint(box_grp.entities, Geom::Point3d.new(bx + width - BOARD_THK, front_y - 70.mm, bz + BOARD_THK/2.0), Geom::Vector3d.new(-1, 0, 0), mats, bounds_y: [rear_y, front_y])
-
-        create_box(box_grp.entities, [bx + BOARD_THK, rear_y, bz + height - 100.mm], [inner_w, BOARD_THK, 100.mm], mats[:carcase], "Top_Rear_Vertical_Cleat")
-        create_box(box_grp.entities, [bx + BOARD_THK, rear_y, bz + BOARD_THK], [inner_w, BOARD_THK, 100.mm], mats[:carcase], "Bottom_Rear_Vertical_Cleat")
-        create_box(box_grp.entities, [bx + BOARD_THK, rear_y + BOARD_THK, bz + BOARD_THK], [inner_w, BACK_THK, height - 2*BOARD_THK], mats[:carcase], "Back_Sheet")
-
-        front_sub_y = front_y - GOLA_DEPTH - 80.mm
-        create_box(box_grp.entities, [bx + BOARD_THK, front_sub_y, stretcher_z], [inner_w, 80.mm, BOARD_THK], mats[:carcase], "Top_Front_Gola_Stretcher")
-        build_minifix_joint(box_grp.entities, Geom::Point3d.new(bx + BOARD_THK, front_sub_y + 40.mm, stretcher_z + BOARD_THK/2.0), Geom::Vector3d.new(1, 0, 0), mats, cam_normal: Geom::Vector3d.new(0, 0, -1), bounds_y: [front_sub_y, front_sub_y + 80.mm])
-        build_minifix_joint(box_grp.entities, Geom::Point3d.new(bx + width - BOARD_THK, front_sub_y + 40.mm, stretcher_z + BOARD_THK/2.0), Geom::Vector3d.new(-1, 0, 0), mats, cam_normal: Geom::Vector3d.new(0, 0, -1), bounds_y: [front_sub_y, front_sub_y + 80.mm])
-
-        mid_sub_y = front_y - GOLA_DEPTH - 60.mm
-        mid_sub_z = bz + C_GOLA_Z0 - BOARD_THK
-        create_box(box_grp.entities, [bx + BOARD_THK, mid_sub_y, mid_sub_z], [inner_w, 60.mm, BOARD_THK], mats[:carcase], "Mid_C_Gola_Under_Stretcher")
-        build_minifix_joint(box_grp.entities, Geom::Point3d.new(bx + BOARD_THK, mid_sub_y + 30.mm, mid_sub_z + BOARD_THK/2.0), Geom::Vector3d.new(1, 0, 0), mats, cam_normal: Geom::Vector3d.new(0, 0, -1), bounds_y: [mid_sub_y, mid_sub_y + 60.mm])
-        build_minifix_joint(box_grp.entities, Geom::Point3d.new(bx + width - BOARD_THK, mid_sub_y + 30.mm, mid_sub_z + BOARD_THK/2.0), Geom::Vector3d.new(-1, 0, 0), mats, cam_normal: Geom::Vector3d.new(0, 0, -1), bounds_y: [mid_sub_y, mid_sub_y + 60.mm])
-
-        if include_gola
-          build_gola_profile(box_grp.entities, :l, width, Geom::Point3d.new(bx, front_y - GOLA_DEPTH, bz + height - L_GOLA_H), mats, facing_dir: :aisle)
-          build_gola_profile(box_grp.entities, :c, width, Geom::Point3d.new(bx, front_y - GOLA_DEPTH, bz + C_GOLA_Z0), mats, facing_dir: :aisle)
-        end
+      if include_gola
+        build_gola_profile(box_grp.entities, :l, width, Geom::Point3d.new(bx, -depth + GOLA_DEPTH, bz + height - L_GOLA_H), mats, facing_dir: :front)
+        build_gola_profile(box_grp.entities, :c, width, Geom::Point3d.new(bx, -depth + GOLA_DEPTH, bz + C_GOLA_Z0), mats, facing_dir: :front)
       end
 
-      dir_sign = is_front ? -1 : +1
       pull_offset_lower = (mode == :hybrid ? 280.mm : 0.mm)
       pull_offset_upper = (mode == :hybrid ? 180.mm : 0.mm)
 
       case type
       when :base_gola_drawers, :island_gola_drawers
-        build_hettich_undermount_drawer(box_grp.entities, Geom::Point3d.new(bx + BOARD_THK, front_y, bz + LOWER_DRAWER_Z), inner_w, depth, 200.mm, LOWER_FRONT_H, pull_offset_lower, mats, front_mat, dir_y: dir_sign)
-        build_hettich_undermount_drawer(box_grp.entities, Geom::Point3d.new(bx + BOARD_THK, front_y, bz + UPPER_DRAWER_Z), inner_w, depth, 120.mm, UPPER_FRONT_H, pull_offset_upper, mats, front_mat, dir_y: dir_sign)
+        build_hettich_undermount_drawer(box_grp.entities, Geom::Point3d.new(bx + BOARD_THK, front_y, bz + LOWER_DRAWER_Z), inner_w, depth, 200.mm, LOWER_FRONT_H, pull_offset_lower, mats, front_mat, dir_y: -1)
+        build_hettich_undermount_drawer(box_grp.entities, Geom::Point3d.new(bx + BOARD_THK, front_y, bz + UPPER_DRAWER_Z), inner_w, depth, 120.mm, UPPER_FRONT_H, pull_offset_upper, mats, front_mat, dir_y: -1)
 
       when :base_gola_cooktop
         build_hettich_undermount_drawer(box_grp.entities, Geom::Point3d.new(bx + BOARD_THK, front_y, bz + LOWER_DRAWER_Z), inner_w, depth, 200.mm, LOWER_FRONT_H, (mode == :hybrid ? 320.mm : 0.mm), mats, front_mat, dir_y: -1)
         build_hettich_undermount_drawer(box_grp.entities, Geom::Point3d.new(bx + BOARD_THK, front_y, bz + UPPER_DRAWER_Z), inner_w, depth, 120.mm, UPPER_FRONT_H, (mode == :hybrid ? 200.mm : 0.mm), mats, front_mat, dir_y: -1)
 
       when :base_gola_sink, :island_gola_sink
-        if is_front
-          create_box(box_grp.entities, [bx + 1.5.mm, front_y - FRONT_THK, bz + UPPER_DRAWER_Z], [front_w, FRONT_THK, UPPER_FRONT_H], front_mat, "Sink_False_Front")
-        else
-          create_box(box_grp.entities, [bx + 1.5.mm, front_y, bz + UPPER_DRAWER_Z], [front_w, FRONT_THK, UPPER_FRONT_H], front_mat, "Sink_False_Front")
-        end
-        build_hettich_undermount_drawer(box_grp.entities, Geom::Point3d.new(bx + BOARD_THK, front_y, bz + LOWER_DRAWER_Z), inner_w, depth, 200.mm, LOWER_FRONT_H, (mode == :hybrid ? 300.mm : 0.mm), mats, front_mat, dir_y: dir_sign)
-        create_box(box_grp.entities, [bx + 30.mm, front_y + dir_sign * 250.mm, bz + 30.mm], [240.mm, 200.mm, 280.mm], mats[:cam], "Cargo_Waste_Bin_1")
-        create_box(box_grp.entities, [bx + width - 270.mm, front_y + dir_sign * 250.mm, bz + 30.mm], [240.mm, 200.mm, 280.mm], mats[:gola], "Cargo_Waste_Bin_2")
+        create_box(box_grp.entities, [bx + 1.5.mm, front_y - FRONT_THK, bz + UPPER_DRAWER_Z], [front_w, FRONT_THK, UPPER_FRONT_H], front_mat, "Sink_False_Front")
+        build_hettich_undermount_drawer(box_grp.entities, Geom::Point3d.new(bx + BOARD_THK, front_y, bz + LOWER_DRAWER_Z), inner_w, depth, 200.mm, LOWER_FRONT_H, (mode == :hybrid ? 300.mm : 0.mm), mats, front_mat, dir_y: -1)
+        create_box(box_grp.entities, [bx + 30.mm, front_y + 250.mm, bz + 30.mm], [240.mm, 200.mm, 280.mm], mats[:cam], "Cargo_Waste_Bin_1")
+        create_box(box_grp.entities, [bx + width - 270.mm, front_y + 250.mm, bz + 30.mm], [240.mm, 200.mm, 280.mm], mats[:gola], "Cargo_Waste_Bin_2")
 
       when :base_gola_spice
         create_box(box_grp.entities, [bx + 1.5.mm, front_y - FRONT_THK, bz + 3.mm], [front_w, FRONT_THK, height - 38.mm], front_mat, "Spice_Pullout_Front")
@@ -670,7 +626,7 @@ module CabinetrixBoxEngine
       end
 
     # ==========================================================================
-    # WALL UNITS (AVENTOS LIFT / EXTRACTOR HOOD / GLASS SASH)
+    # WALL UNITS
     # ==========================================================================
     when :wall_glass_display, :wall_lift_aventos
       create_box(box_grp.entities, [bx, by - depth, bz], [BOARD_THK, depth, height], mats[:carcase], "Gable_LH")
@@ -708,7 +664,7 @@ module CabinetrixBoxEngine
       create_box(box_grp.entities, [bx + 1.5.mm, by - depth - FRONT_THK, bz + 160.mm + 3.mm], [width - 3.mm, FRONT_THK, hood_door_h], front_mat, "Upper_Hood_Door")
 
     # ==========================================================================
-    # TOP BULKHEAD & CEILING-HEIGHT INFILL UNITS (FOR 2400mm - 2700mm CEILINGS)
+    # TOP BULKHEAD UNITS
     # ==========================================================================
     when :top_bulkhead_flap, :deep_top_bulkhead
       bulkhead_h = params[:height] || 360.mm
@@ -723,7 +679,7 @@ module CabinetrixBoxEngine
       create_box(box_grp.entities, [bx + 1.5.mm, by - depth - FRONT_THK, bz + 1.5.mm], [width - 3.mm, FRONT_THK, bulkhead_h - 3.mm], front_mat, "Bulkhead_Flap_Door")
 
     # ==========================================================================
-    # ARCHITECTURAL OPEN RACKS & DISPLAY MODULES
+    # ARCHITECTURAL OPEN RACKS
     # ==========================================================================
     when :open_rack_metal
       metal_mat = mats[:gola]
@@ -764,14 +720,85 @@ module CabinetrixBoxEngine
       end
     end
 
-    # 3D Space Rotation (if applicable)
+    # --------------------------------------------------------------------------
+    # 6. APPLY RIGID 3D TRANSFORMATION (ROTATION THEN TRANSLATION)
+    # --------------------------------------------------------------------------
     rot_deg = location[:rotation_deg] || params[:rotation_deg] || 0.0
-    if rot_deg != 0.0
-      rot_pt = Geom::Point3d.new(bx, by, bz)
-      rot_tr = Geom::Transformation.rotation(rot_pt, Geom::Vector3d.new(0, 0, 1), rot_deg.degrees)
-      box_grp.transform!(rot_tr)
-    end
+    tr_rot = Geom::Transformation.rotation(Geom::Point3d.new(0, 0, 0), Geom::Vector3d.new(0, 0, 1), rot_deg.degrees)
+    tr_pos = Geom::Transformation.translation(Geom::Vector3d.new(location[:x] || 0.mm, location[:y] || 0.mm, location[:z] || PLINTH_HEIGHT))
+    box_grp.transform!(tr_pos * tr_rot)
 
     box_grp
+  end
+
+  # ----------------------------------------------------------------------------
+  # 7. COMPLETE PHYSICAL BOARDS EXTRACTION API
+  # ----------------------------------------------------------------------------
+  def self.extract_panels_for_cabinet(cab_type, width_mm, height_mm, depth_mm, cab_tag)
+    thk = 18.0
+    inner_w = width_mm - 2*thk
+    panels = []
+
+    # 1. Gables (LH & RH)
+    panels << { part_id: "#{cab_tag}-GLH", cab_id: cab_tag, name: "Gable_LH", length: height_mm, width: depth_mm, thk: thk, material: "18mm White MFC", grain: :length, eb_l1: "1.0mm ABS", eb_l2: "-", eb_w1: "0.4mm", eb_w2: "0.4mm", has_cnc: true }
+    panels << { part_id: "#{cab_tag}-GRH", cab_id: cab_tag, name: "Gable_RH", length: height_mm, width: depth_mm, thk: thk, material: "18mm White MFC", grain: :length, eb_l1: "1.0mm ABS", eb_l2: "-", eb_w1: "0.4mm", eb_w2: "0.4mm", has_cnc: true }
+
+    # 2. Bottom Shelf
+    panels << { part_id: "#{cab_tag}-BOT", cab_id: cab_tag, name: "Bottom_Panel", length: inner_w, width: depth_mm, thk: thk, material: "18mm White MFC", grain: :none, eb_l1: "1.0mm ABS", eb_l2: "-", eb_w1: "-", eb_w2: "-", has_cnc: true }
+
+    # 3. Top Stretcher Structure or Top Roof Panel
+    if cab_type.to_s.start_with?('base') || cab_type.to_s.start_with?('island')
+      panels << { part_id: "#{cab_tag}-STR-F", cab_id: cab_tag, name: "Top_Front_Stretcher", length: inner_w, width: 80.0, thk: thk, material: "18mm White MFC", grain: :length, eb_l1: "0.4mm", eb_l2: "-", eb_w1: "-", eb_w2: "-", has_cnc: true }
+      panels << { part_id: "#{cab_tag}-STR-R", cab_id: cab_tag, name: "Top_Rear_Stretcher", length: inner_w, width: 80.0, thk: thk, material: "18mm White MFC", grain: :length, eb_l1: "0.4mm", eb_l2: "-", eb_w1: "-", eb_w2: "-", has_cnc: true }
+      panels << { part_id: "#{cab_tag}-STR-M", cab_id: cab_tag, name: "Mid_C_Gola_Stretcher", length: inner_w, width: 60.0, thk: thk, material: "18mm White MFC", grain: :length, eb_l1: "0.4mm", eb_l2: "-", eb_w1: "-", eb_w2: "-", has_cnc: true }
+    else
+      panels << { part_id: "#{cab_tag}-TOP", cab_id: cab_tag, name: "Roof_Panel", length: inner_w, width: depth_mm, thk: thk, material: "18mm White MFC", grain: :none, eb_l1: "1.0mm ABS", eb_l2: "-", eb_w1: "-", eb_w2: "-", has_cnc: true }
+    end
+
+    # 4. Rear Cleats (Top & Bottom)
+    panels << { part_id: "#{cab_tag}-CLT-T", cab_id: cab_tag, name: "Rear_Top_Cleat", length: inner_w, width: 100.0, thk: thk, material: "18mm White MFC", grain: :length, eb_l1: "-", eb_l2: "-", eb_w1: "-", eb_w2: "-", has_cnc: false }
+    panels << { part_id: "#{cab_tag}-CLT-B", cab_id: cab_tag, name: "Rear_Bottom_Cleat", length: inner_w, width: 100.0, thk: thk, material: "18mm White MFC", grain: :length, eb_l1: "-", eb_l2: "-", eb_w1: "-", eb_w2: "-", has_cnc: false }
+
+    # 5. Backing Board (6mm)
+    panels << { part_id: "#{cab_tag}-BAK", cab_id: cab_tag, name: "Back_Panel_Sheet", length: inner_w + 10.0, width: height_mm - 26.0, thk: 6.0, material: "6mm White Backing", grain: :length, eb_l1: "-", eb_l2: "-", eb_w1: "-", eb_w2: "-", has_cnc: false }
+
+    # 6. Drawers & Fronts Breakdown (Complete 5-piece boxes)
+    if cab_type.to_s.include?('drawer') || cab_type.to_s.include?('cooktop') || cab_type.to_s.include?('sink')
+      dims = CabinetrixCollisionEngine.calculate_drawer_geometry(inner_w, depth_mm, side_gap: 12.5, box_thk: 15.0, front_h: 315.0)
+      box_w = dims[:box_w]
+      box_d = dims[:box_d]
+
+      # Lower Deep Drawer Box (5 panels)
+      panels << { part_id: "#{cab_tag}-DW1-LH", cab_id: cab_tag, name: "Drawer_Box_LH_Lower", length: box_d, width: 200.0, thk: 15.0, material: "15mm Birch Plywood", grain: :length, eb_l1: "1.0mm Birch", eb_l2: "-", eb_w1: "-", eb_w2: "-", has_cnc: true }
+      panels << { part_id: "#{cab_tag}-DW1-RH", cab_id: cab_tag, name: "Drawer_Box_RH_Lower", length: box_d, width: 200.0, thk: 15.0, material: "15mm Birch Plywood", grain: :length, eb_l1: "1.0mm Birch", eb_l2: "-", eb_w1: "-", eb_w2: "-", has_cnc: true }
+      panels << { part_id: "#{cab_tag}-DW1-SF", cab_id: cab_tag, name: "Drawer_SubFront_Lower", length: box_w - 30.0, width: 200.0, thk: 15.0, material: "15mm Birch Plywood", grain: :length, eb_l1: "1.0mm Birch", eb_l2: "-", eb_w1: "-", eb_w2: "-", has_cnc: true }
+      panels << { part_id: "#{cab_tag}-DW1-BK", cab_id: cab_tag, name: "Drawer_Back_Lower", length: box_w - 30.0, width: 200.0, thk: 15.0, material: "15mm Birch Plywood", grain: :length, eb_l1: "1.0mm Birch", eb_l2: "-", eb_w1: "-", eb_w2: "-", has_cnc: true }
+      panels << { part_id: "#{cab_tag}-DW1-BM", cab_id: cab_tag, name: "Drawer_Bottom_Lower", length: box_w - 30.0, width: box_d - 30.0, thk: 16.0, material: "16mm Solid Birch Base", grain: :none, eb_l1: "-", eb_l2: "-", eb_w1: "-", eb_w2: "-", has_cnc: false }
+      panels << { part_id: "#{cab_tag}-FR1", cab_id: cab_tag, name: "Lower_Pot_Drawer_Front", length: width_mm - 3.0, width: 315.0, thk: 18.0, material: "18mm Anthracite Supermatte", grain: :length, eb_l1: "1.0mm ABS", eb_l2: "1.0mm ABS", eb_w1: "1.0mm ABS", eb_w2: "1.0mm ABS", has_cnc: false }
+
+      # Upper Cutlery / Sub Drawer Box (5 panels)
+      panels << { part_id: "#{cab_tag}-DW2-LH", cab_id: cab_tag, name: "Drawer_Box_LH_Upper", length: box_d, width: 120.0, thk: 15.0, material: "15mm Birch Plywood", grain: :length, eb_l1: "1.0mm Birch", eb_l2: "-", eb_w1: "-", eb_w2: "-", has_cnc: true }
+      panels << { part_id: "#{cab_tag}-DW2-RH", cab_id: cab_tag, name: "Drawer_Box_RH_Upper", length: box_d, width: 120.0, thk: 15.0, material: "15mm Birch Plywood", grain: :length, eb_l1: "1.0mm Birch", eb_l2: "-", eb_w1: "-", eb_w2: "-", has_cnc: true }
+      panels << { part_id: "#{cab_tag}-DW2-SF", cab_id: cab_tag, name: "Drawer_SubFront_Upper", length: box_w - 30.0, width: 120.0, thk: 15.0, material: "15mm Birch Plywood", grain: :length, eb_l1: "1.0mm Birch", eb_l2: "-", eb_w1: "-", eb_w2: "-", has_cnc: true }
+      panels << { part_id: "#{cab_tag}-DW2-BK", cab_id: cab_tag, name: "Drawer_Back_Upper", length: box_w - 30.0, width: 120.0, thk: 15.0, material: "15mm Birch Plywood", grain: :length, eb_l1: "1.0mm Birch", eb_l2: "-", eb_w1: "-", eb_w2: "-", has_cnc: true }
+      panels << { part_id: "#{cab_tag}-DW2-BM", cab_id: cab_tag, name: "Drawer_Bottom_Upper", length: box_w - 30.0, width: box_d - 30.0, thk: 16.0, material: "16mm Solid Birch Base", grain: :none, eb_l1: "-", eb_l2: "-", eb_w1: "-", eb_w2: "-", has_cnc: false }
+      panels << { part_id: "#{cab_tag}-FR2", cab_id: cab_tag, name: "Upper_Drawer_Front", length: width_mm - 3.0, width: 248.0, thk: 18.0, material: "18mm Anthracite Supermatte", grain: :length, eb_l1: "1.0mm ABS", eb_l2: "1.0mm ABS", eb_w1: "1.0mm ABS", eb_w2: "1.0mm ABS", has_cnc: false }
+    elsif cab_type.to_s.include?('pantry') || cab_type.to_s.include?('tower')
+      # 5 Internal Drawers for Space Tower
+      5.times do |i|
+        panels << { part_id: "#{cab_tag}-TWD#{i+1}-LH", cab_id: cab_tag, name: "Internal_Drawer_LH_#{i+1}", length: depth_mm - 110.0, width: 140.0, thk: 15.0, material: "15mm Birch Plywood", grain: :length, eb_l1: "1.0mm Birch", eb_l2: "-", eb_w1: "-", eb_w2: "-", has_cnc: true }
+        panels << { part_id: "#{cab_tag}-TWD#{i+1}-RH", cab_id: cab_tag, name: "Internal_Drawer_RH_#{i+1}", length: depth_mm - 110.0, width: 140.0, thk: 15.0, material: "15mm Birch Plywood", grain: :length, eb_l1: "1.0mm Birch", eb_l2: "-", eb_w1: "-", eb_w2: "-", has_cnc: true }
+        panels << { part_id: "#{cab_tag}-TWD#{i+1}-SF", cab_id: cab_tag, name: "Internal_SubFront_#{i+1}", length: inner_w - 30.0, width: 140.0, thk: 15.0, material: "15mm Birch Plywood", grain: :length, eb_l1: "1.0mm Birch", eb_l2: "-", eb_w1: "-", eb_w2: "-", has_cnc: true }
+        panels << { part_id: "#{cab_tag}-TWD#{i+1}-BK", cab_id: cab_tag, name: "Internal_Back_#{i+1}", length: inner_w - 30.0, width: 140.0, thk: 15.0, material: "15mm Birch Plywood", grain: :length, eb_l1: "1.0mm Birch", eb_l2: "-", eb_w1: "-", eb_w2: "-", has_cnc: true }
+      end
+      panels << { part_id: "#{cab_tag}-SH1", cab_id: cab_tag, name: "Adjustable_Shelf_Upper_1", length: inner_w - 1.0, width: depth_mm - 40.0, thk: 18.0, material: "18mm White MFC", grain: :length, eb_l1: "1.0mm ABS", eb_l2: "-", eb_w1: "-", eb_w2: "-", has_cnc: true }
+      panels << { part_id: "#{cab_tag}-SH2", cab_id: cab_tag, name: "Adjustable_Shelf_Upper_2", length: inner_w - 1.0, width: depth_mm - 40.0, thk: 18.0, material: "18mm White MFC", grain: :length, eb_l1: "1.0mm ABS", eb_l2: "-", eb_w1: "-", eb_w2: "-", has_cnc: true }
+      panels << { part_id: "#{cab_tag}-DOOR", cab_id: cab_tag, name: "Full_Height_Pantry_Door", length: width_mm - 3.0, width: height_mm - 100.0, thk: 18.0, material: "18mm Anthracite Supermatte", grain: :length, eb_l1: "1.0mm ABS", eb_l2: "1.0mm ABS", eb_w1: "1.0mm ABS", eb_w2: "1.0mm ABS", has_cnc: false }
+    elsif cab_type.to_s.include?('wall') || cab_type.to_s.include?('bulkhead')
+      panels << { part_id: "#{cab_tag}-SH1", cab_id: cab_tag, name: "Wall_Shelf_1", length: inner_w - 1.0, width: depth_mm - 40.0, thk: 18.0, material: "18mm White MFC", grain: :length, eb_l1: "1.0mm ABS", eb_l2: "-", eb_w1: "-", eb_w2: "-", has_cnc: true }
+      panels << { part_id: "#{cab_tag}-FR", cab_id: cab_tag, name: "Wall_Front_Door", length: width_mm - 3.0, width: height_mm - 3.0, thk: 18.0, material: "18mm Anthracite Supermatte", grain: :length, eb_l1: "1.0mm ABS", eb_l2: "1.0mm ABS", eb_w1: "1.0mm ABS", eb_w2: "1.0mm ABS", has_cnc: false }
+    end
+
+    panels
   end
 end
