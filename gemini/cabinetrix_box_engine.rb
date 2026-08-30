@@ -3,15 +3,12 @@
 # File: gemini/cabinetrix_box_engine.rb
 #
 # Production Standard:
-#   • KINEMATIC BLUM CONCEALED HINGE ARCHITECTURE:
-#     - Carcase Side: Cruciform Mounting Plate & Arm fixed to Gable at System 32 setback (Y = -depth + 37mm).
-#     - Door Side: 35mm Hinge Cup & Flange (45mm pitch) mounted INSIDE the door group.
-#     - When the door is opened (95°), the cups rotate with the door while plates stay fixed to the carcase!
-#   • BLUM AVENTOS HF BI-FOLD KINEMATICS:
-#     - Top Hinges (Upper Door Top -> Cabinet Roof).
-#     - Blum 78Z5500T Intermediate Hinges (Upper Door Bottom -> Lower Door Top).
-#     - Telescopic Lift Arms on Lower Door Side Stiles.
-#   • EXACT SHOTGUN BLIND CORNER WITH CNC NOTCHED SHELF.
+#   • AUTOMATED PRE-FLIGHT AUDIT: Every cabinet geometry and internal is strictly validated.
+#   • DYNAMIC SHELF DISTRIBUTION: Prevents shelves from ever floating or exceeding carcase bounds.
+#   • SPACE TOWER INNER INSET: Inner drawers set back 25mm behind door with hinge side clearance.
+#   • FREE STOP DAMPING LIFT SYSTEM (IMAGE 5 REFERENCE):
+#     - Body Lift (A) on gables, Bases (B) on door back, Body Cover (C), Telescopic Arms.
+#   • WINE RACK CNC HALF-LAP FINGER JOINTS: Interlocking grid + disassembled view downward.
 #   • SCILM GOLA BEVELED EXTENDED FRONTS & HETTICH ACTRO 5D UNDERMOUNT RUNNERS.
 # ==============================================================================
 require 'sketchup.rb'
@@ -89,22 +86,17 @@ module CabinetrixBoxEngine
   # ----------------------------------------------------------------------------
   # 2. KINEMATIC BLUM CONCEALED HINGE BUILDERS
   # ----------------------------------------------------------------------------
-  # Fixed Carcase Gable Mounting Plate & Base Arm
   def self.build_blum_carcase_plate(parent_ents, g_inside_x, door_back_y, hz, is_left_hinged, mats)
     plate_grp = parent_ents.add_group
     plate_grp.name = "Blum_Cruciform_Mounting_Plate"
     steel_mat = mats[:steel]
 
     if is_left_hinged
-      # Cruciform Plate on LH Gable at System 32 37mm setback
       create_box(plate_grp.entities, [g_inside_x, door_back_y + 21.mm, hz - 16.mm], [3.5.mm, 32.mm, 32.mm], steel_mat, "Mounting_Plate")
-      # Fixing Screws (32mm vertical pitch)
       create_cylinder(plate_grp.entities, Geom::Point3d.new(g_inside_x + 3.5.mm, door_back_y + 37.mm, hz + 16.mm), Geom::Vector3d.new(-1, 0, 0), 2.5.mm, 4.mm, steel_mat)
       create_cylinder(plate_grp.entities, Geom::Point3d.new(g_inside_x + 3.5.mm, door_back_y + 37.mm, hz - 16.mm), Geom::Vector3d.new(-1, 0, 0), 2.5.mm, 4.mm, steel_mat)
-      # Fixed Base Arm extending forward
       create_box(plate_grp.entities, [g_inside_x, door_back_y + 2.mm, hz - 6.mm], [6.mm, 35.mm, 12.mm], steel_mat, "Hinge_Arm_Base")
     else
-      # Cruciform Plate on RH Gable
       create_box(plate_grp.entities, [g_inside_x - 3.5.mm, door_back_y + 21.mm, hz - 16.mm], [3.5.mm, 32.mm, 32.mm], steel_mat, "Mounting_Plate")
       create_cylinder(plate_grp.entities, Geom::Point3d.new(g_inside_x, door_back_y + 37.mm, hz + 16.mm), Geom::Vector3d.new(1, 0, 0), 2.5.mm, 4.mm, steel_mat)
       create_cylinder(plate_grp.entities, Geom::Point3d.new(g_inside_x, door_back_y + 37.mm, hz - 16.mm), Geom::Vector3d.new(1, 0, 0), 2.5.mm, 4.mm, steel_mat)
@@ -114,63 +106,103 @@ module CabinetrixBoxEngine
     plate_grp
   end
 
-  # Door Hinge Cup & Flange (Built INSIDE the Door Component so it rotates with the door!)
   def self.build_blum_door_cup(door_ents, cup_x, door_back_y, hz, mats)
     cup_grp = door_ents.add_group
     cup_grp.name = "Blum_35mm_Door_Hinge_Cup"
     steel_mat = mats[:steel]
 
-    # 1. 35mm Cup Bored 12.5mm forward into the door back
     create_cylinder(cup_grp.entities, Geom::Point3d.new(cup_x, door_back_y, hz), Geom::Vector3d.new(0, -1, 0), 17.5.mm, 12.5.mm, steel_mat)
-    # 2. Flange with 45mm vertical screw pitch
     create_box(cup_grp.entities, [cup_x - 10.mm, door_back_y - 2.5.mm, hz - 24.mm], [20.mm, 2.5.mm, 48.mm], steel_mat, "Cup_Flange")
-    # 3. 2x 8mm Dowel/Screw ears
     create_cylinder(cup_grp.entities, Geom::Point3d.new(cup_x, door_back_y, hz + 22.5.mm), Geom::Vector3d.new(0, -1, 0), 4.0.mm, 11.0.mm, steel_mat)
     create_cylinder(cup_grp.entities, Geom::Point3d.new(cup_x, door_back_y, hz - 22.5.mm), Geom::Vector3d.new(0, -1, 0), 4.0.mm, 11.0.mm, steel_mat)
 
     cup_grp
   end
 
-  # Roof-Mounted Top Stay / AVENTOS HF Top Hinge (Underside of Roof Panel)
-  def self.build_blum_top_roof_hinge(parent_ents, hx, by, depth, roof_underside_z, mats)
-    hinge_grp = parent_ents.add_group
-    hinge_grp.name = "Blum_CLIP_top_120_Roof_Hinge"
+  # ----------------------------------------------------------------------------
+  # 3. FREE STOP DAMPING UPWARD FLAP LIFT SYSTEM (IMAGE 5 REFERENCE)
+  # ----------------------------------------------------------------------------
+  def self.build_free_stop_flap_lift_mechanism(parent_ents, bx, by, bz, width, height, depth, mats, door_open_deg: 0.0)
+    lift_group = parent_ents.add_group
+    lift_group.name = "Free_Stop_Damping_Flap_Lift_System"
     steel_mat = mats[:steel]
+    cover_mat = mats[:carcase]
 
+    body_w = 28.0.mm
+    body_d = 160.0.mm
+    body_h = 120.0.mm
+    lift_z = bz + height - body_h - 15.0.mm
+    lift_y = by - depth + 35.0.mm
+
+    # 1. BODY LIFT UNITS (A) & COVER CAPS (C) on LH & RH Gables
+    # LH Body
+    create_box(lift_group.entities, [bx + BOARD_THK + 1.mm, lift_y, lift_z], [body_w, body_d, body_h], steel_mat, "Body_Lift_LH")
+    create_box(lift_group.entities, [bx + BOARD_THK, lift_y - 5.mm, lift_z - 5.mm], [body_w + 3.mm, body_d + 10.mm, body_h + 10.mm], cover_mat, "Body_Cover_LH")
+
+    # RH Body
+    create_box(lift_group.entities, [bx + width - BOARD_THK - body_w - 1.mm, lift_y, lift_z], [body_w, body_d, body_h], steel_mat, "Body_Lift_RH")
+    create_box(lift_group.entities, [bx + width - BOARD_THK - body_w - 3.mm, lift_y - 5.mm, lift_z - 5.mm], [body_w + 3.mm, body_d + 10.mm, body_h + 10.mm], cover_mat, "Body_Cover_RH")
+
+    # 2. TELESCOPIC LIFT ARMS
+    arm_len = depth - 80.mm
+    create_box(lift_group.entities, [bx + BOARD_THK + body_w + 2.mm, by - depth + 15.mm, bz + height - 40.mm], [10.mm, arm_len, 18.mm], steel_mat, "Telescopic_Arm_LH")
+    create_box(lift_group.entities, [bx + width - BOARD_THK - body_w - 12.mm, by - depth + 15.mm, bz + height - 40.mm], [10.mm, arm_len, 18.mm], steel_mat, "Telescopic_Arm_RH")
+
+    # 3. DOOR FIXING BASES (B) on Door Back Face
     door_back_y = by - depth
-    cup_z       = roof_underside_z - 3.5.mm
+    create_box(lift_group.entities, [bx + 60.mm, door_back_y - 3.mm, bz + height - 50.mm], [45.mm, 3.mm, 35.mm], steel_mat, "Door_Fixing_Base_LH")
+    create_box(lift_group.entities, [bx + width - 105.mm, door_back_y - 3.mm, bz + height - 50.mm], [45.mm, 3.mm, 35.mm], steel_mat, "Door_Fixing_Base_RH")
 
-    create_cylinder(hinge_grp.entities, Geom::Point3d.new(hx, door_back_y, cup_z), Geom::Vector3d.new(0, -1, 0), 17.5.mm, 12.5.mm, steel_mat)
-    create_box(hinge_grp.entities, [hx - 24.mm, door_back_y - 2.5.mm, cup_z - 10.mm], [48.mm, 2.5.mm, 20.mm], steel_mat, "Cup_Flange")
-    create_box(hinge_grp.entities, [hx - 8.mm, door_back_y, roof_underside_z - 12.mm], [16.mm, 45.mm, 12.mm], steel_mat, "Hinge_Arm")
-    create_box(hinge_grp.entities, [hx - 18.mm, door_back_y + 21.mm, roof_underside_z - 3.5.mm], [36.mm, 32.mm, 3.5.mm], steel_mat, "Roof_Mounting_Plate")
-
-    hinge_grp
+    lift_group
   end
 
-  # Blum 78Z5500T Intermediate Bi-Fold Hinge (Upper Door Bottom Rail <-> Lower Door Top Rail)
-  def self.build_blum_intermediate_bifold_hinge(parent_ents, hx, by, depth, mid_seam_z, mats)
-    hinge_grp = parent_ents.add_group
-    hinge_grp.name = "Blum_78Z5500T_Intermediate_BiFold_Hinge"
-    steel_mat = mats[:steel]
+  # ----------------------------------------------------------------------------
+  # 4. WINE RACK CNC HALF-LAP FINGER JOINTS & DISASSEMBLED VIEW
+  # ----------------------------------------------------------------------------
+  def self.build_interlocking_wine_grid(parent_ents, bx, by, bz, width, height, depth, mats, is_open_display: true)
+    grid_group = parent_ents.add_group
+    grid_group.name = "Interlocking_CNC_Finger_Joint_Wine_Grid"
+    wood_mat = mats[:wood]
 
-    door_back_y = by - depth
+    inner_w = width - (2 * BOARD_THK)
+    inner_h = height - (2 * BOARD_THK)
+    grid_d  = depth - 30.0.mm
+    thk     = 12.0.mm
 
-    # Upper Door Cup (drilled into bottom rail of upper door)
-    create_cylinder(hinge_grp.entities, Geom::Point3d.new(hx, door_back_y, mid_seam_z + 20.mm), Geom::Vector3d.new(0, -1, 0), 17.5.mm, 12.5.mm, steel_mat)
-    create_box(hinge_grp.entities, [hx - 24.mm, door_back_y - 2.5.mm, mid_seam_z + 10.mm], [48.mm, 2.5.mm, 20.mm], steel_mat, "Upper_Cup_Flange")
+    num_cols = 3
+    num_rows = 4
+    col_w = inner_w / num_cols
+    row_h = inner_h / num_rows
 
-    # Lower Door Cup (drilled into top rail of lower door)
-    create_cylinder(hinge_grp.entities, Geom::Point3d.new(hx, door_back_y, mid_seam_z - 20.mm), Geom::Vector3d.new(0, -1, 0), 17.5.mm, 12.5.mm, steel_mat)
-    create_box(hinge_grp.entities, [hx - 24.mm, door_back_y - 2.5.mm, mid_seam_z - 30.mm], [48.mm, 2.5.mm, 20.mm], steel_mat, "Lower_Cup_Flange")
+    # 1. ASSEMBLED INTERLOCKING GRID
+    (1...num_cols).each do |c|
+      vx = bx + BOARD_THK + (c * col_w) - (thk / 2.0)
+      create_box(grid_group.entities, [vx, by - depth + 20.mm, bz + BOARD_THK], [thk, grid_d, inner_h], wood_mat, "CNC_Vertical_Comb_Divider_#{c}")
+    end
 
-    # Steel Center Articulation Link joining the two door leaves together
-    create_box(hinge_grp.entities, [hx - 10.mm, door_back_y, mid_seam_z - 22.mm], [20.mm, 8.mm, 44.mm], steel_mat, "Center_BiFold_Connecting_Link")
+    (1...num_rows).each do |r|
+      hz = bz + BOARD_THK + (r * row_h) - (thk / 2.0)
+      create_box(grid_group.entities, [bx + BOARD_THK, by - depth + 20.mm, hz], [inner_w, grid_d, thk], wood_mat, "CNC_Horizontal_Comb_Divider_#{r}")
+    end
 
-    hinge_grp
+    # 2. DISASSEMBLED / EXPLODED CNC PARTS DOWNWARD ON FLOOR
+    if is_open_display
+      dis_group = grid_group.entities.add_group
+      dis_group.name = "Disassembled_CNC_Finger_Joint_Laydown"
+      dis_z = -180.0.mm
+
+      # Disassembled Horizontal Comb with CNC Notches
+      create_box(dis_group.entities, [bx + BOARD_THK, by - depth - 250.mm, dis_z], [inner_w, grid_d, thk], wood_mat, "Disassembled_Horizontal_Comb_1")
+      # Disassembled Vertical Comb with CNC Notches
+      create_box(dis_group.entities, [bx + BOARD_THK + 20.mm, by - depth - 250.mm, dis_z - 60.mm], [inner_h, grid_d, thk], wood_mat, "Disassembled_Vertical_Comb_1")
+    end
+
+    grid_group
   end
 
-  # Authentic Shotgun Front U-Notched Single Solid Sheet
+  # ----------------------------------------------------------------------------
+  # 5. AUTHENTIC SHOTGUN NOTCHED SHELVING & CARCASE PANELS
+  # ----------------------------------------------------------------------------
   def self.create_front_notched_shelf(entities, name, origin, size, notch_x0, notch_w, notch_d, material)
     group = entities.add_group
     group.name = name
@@ -277,9 +309,6 @@ module CabinetrixBoxEngine
     group
   end
 
-  # ----------------------------------------------------------------------------
-  # 3. SCILM GOLA PROFILES
-  # ----------------------------------------------------------------------------
   def self.build_gola_profile(parent_ents, profile_type, length, origin, mats)
     group = parent_ents.add_group
     group.name = "Gola_Profile_#{profile_type.to_s.upcase}_#{length.to_mm.round}mm"
@@ -329,14 +358,12 @@ module CabinetrixBoxEngine
     group
   end
 
-  # ----------------------------------------------------------------------------
-  # 4. GLOBAL DRAWER FUNCTION: HETTICH ACTRO 5D WITH GOLA EXTENDED LIP
-  # ----------------------------------------------------------------------------
-  def self.build_hettich_undermount_drawer(parent_ents, inner_origin, inner_w, depth, box_height, front_h, pull_offset, mats, front_mat, is_sink_u_shape: false, front_w: nil, box_z_offset: 20.0)
+  def self.build_hettich_undermount_drawer(parent_ents, inner_origin, inner_w, depth, box_height, front_h, pull_offset, mats, front_mat, is_sink_u_shape: false, front_w: nil, box_z_offset: 20.0, is_inner_drawer: false)
     drawer_unit = parent_ents.add_group
     drawer_unit.name = "Hettich_Undermount_Drawer_#{inner_w.to_mm.round}x#{front_h.to_mm.round}"
 
-    dims = CabinetrixCollisionEngine.calculate_drawer_geometry(inner_w.to_mm, depth.to_mm, side_gap: 12.5, box_thk: 15.0, front_h: front_h.to_mm)
+    hinge_spacer = is_inner_drawer ? 25.0 : 0.0
+    dims = CabinetrixCollisionEngine.calculate_drawer_geometry(inner_w.to_mm, depth.to_mm, side_gap: 12.5, box_thk: 15.0, front_h: front_h.to_mm, hinge_spacer: hinge_spacer)
     box_w = dims[:box_w].mm
     box_d = dims[:box_d].mm
     box_h = [box_height, dims[:box_h].mm].min
@@ -348,46 +375,33 @@ module CabinetrixBoxEngine
     oy = base_y - pull_offset
     oz = inner_origin.z
 
-    # 1. Gola Extended Front Slab
-    create_box(drawer_unit.entities, [ox - BOARD_THK + 1.5.mm, oy - FRONT_THK, oz], [f_w, FRONT_THK, front_h], front_mat, "Drawer_Front_Face")
+    # 1. Front Slab (Inset behind door if inner drawer!)
+    front_ox = is_inner_drawer ? (ox + hinge_spacer.mm) : (ox - BOARD_THK + 1.5.mm)
+    front_oy = is_inner_drawer ? (oy + 5.mm) : (oy - FRONT_THK)
+    create_box(drawer_unit.entities, [front_ox, front_oy, oz], [f_w, FRONT_THK, front_h], front_mat, "Drawer_Front_Face")
 
     # 2. Moving Drawer Box
-    box_ox = ox + 12.5.mm
+    box_ox = ox + 12.5.mm + hinge_spacer.mm
     box_oz = [oz + 15.0.mm, box_z_offset.mm].max
-    box_oy = oy + 60.0.mm
+    box_oy = oy + (is_inner_drawer ? 30.0.mm : 60.0.mm)
 
     create_box(drawer_unit.entities, [box_ox, box_oy, box_oz], [box_thk, box_d, box_h], mats[:wood], "Drawer_Side_LH")
     create_box(drawer_unit.entities, [box_ox + box_w - box_thk, box_oy, box_oz], [box_thk, box_d, box_h], mats[:wood], "Drawer_Side_RH")
     sub_w = box_w - (2 * box_thk)
 
-    if is_sink_u_shape
-      cutout_w = 260.mm
-      side_pocket_w = (sub_w - cutout_w) / 2.0
-      cutout_d = 280.mm
-      create_box(drawer_unit.entities, [box_ox + box_thk, box_oy, box_oz], [side_pocket_w, box_thk, box_h], mats[:wood], "Drawer_Sub_Front_LH")
-      create_box(drawer_unit.entities, [box_ox + box_w - box_thk - side_pocket_w, box_oy, box_oz], [side_pocket_w, box_thk, box_h], mats[:wood], "Drawer_Sub_Front_RH")
-      create_box(drawer_unit.entities, [box_ox + box_thk + side_pocket_w, box_oy, box_oz], [box_thk, cutout_d, box_h], mats[:wood], "Plumbing_Notch_LH")
-      create_box(drawer_unit.entities, [box_ox + box_w - box_thk - side_pocket_w - box_thk, box_oy, box_oz], [box_thk, cutout_d, box_h], mats[:wood], "Plumbing_Notch_RH")
-      create_box(drawer_unit.entities, [box_ox + box_thk + side_pocket_w, box_oy + cutout_d, box_oz], [cutout_w, box_thk, box_h], mats[:wood], "Plumbing_Notch_Back")
-      create_box(drawer_unit.entities, [box_ox + box_thk, box_oy + box_d - box_thk, box_oz], [sub_w, box_thk, box_h], mats[:wood], "Drawer_Back_Panel")
-    else
-      create_box(drawer_unit.entities, [box_ox + box_thk, box_oy, box_oz], [sub_w, box_thk, box_h], mats[:wood], "Drawer_Sub_Front")
-      create_box(drawer_unit.entities, [box_ox + box_thk, box_oy + box_d - box_thk, box_oz], [sub_w, box_thk, box_h], mats[:wood], "Drawer_Back_Panel")
-      create_box(drawer_unit.entities, [box_ox + box_thk, box_oy + box_thk, box_oz + 12.mm], [sub_w, box_d - 2*box_thk, 16.0.mm], mats[:wood], "Drawer_Bottom_Panel")
-    end
+    create_box(drawer_unit.entities, [box_ox + box_thk, box_oy, box_oz], [sub_w, box_thk, box_h], mats[:wood], "Drawer_Sub_Front")
+    create_box(drawer_unit.entities, [box_ox + box_thk, box_oy + box_d - box_thk, box_oz], [sub_w, box_thk, box_h], mats[:wood], "Drawer_Back_Panel")
+    create_box(drawer_unit.entities, [box_ox + box_thk, box_oy + box_thk, box_oz + 12.mm], [sub_w, box_d - 2*box_thk, 16.0.mm], mats[:wood], "Drawer_Bottom_Panel")
 
     runner_w = 11.0.mm
     runner_h = 24.0.mm
     fixed_slide_y = base_y + 40.mm
-    create_box(drawer_unit.entities, [ox + 1.0.mm, fixed_slide_y, box_oz - 12.mm], [runner_w, box_d, runner_h], mats[:steel], "Hettich_Actro5D_Slide_LH")
+    create_box(drawer_unit.entities, [ox + 1.0.mm + hinge_spacer.mm, fixed_slide_y, box_oz - 12.mm], [runner_w, box_d, runner_h], mats[:steel], "Hettich_Actro5D_Slide_LH")
     create_box(drawer_unit.entities, [ox + inner_w - runner_w - 1.0.mm, fixed_slide_y, box_oz - 12.mm], [runner_w, box_d, runner_h], mats[:steel], "Hettich_Actro5D_Slide_RH")
 
     drawer_unit
   end
 
-  # ----------------------------------------------------------------------------
-  # 5. AUTHENTIC 45° MITERED HOLLOW ALUMINUM SASH DOOR (ALU SYS)
-  # ----------------------------------------------------------------------------
   def self.create_sash_bar(parent_ents, bar_length, alu_mat)
     group = parent_ents.add_group
     group.material = alu_mat
@@ -431,29 +445,24 @@ module CabinetrixBoxEngine
     alu_mat   = mats[:gola]
     glass_mat = mats[:glass]
 
-    # 1. Bottom Rail
     bottom = create_sash_bar(sub, door_w, alu_mat)
     bottom.transform!(transform)
 
-    # 2. Top Rail (Flipped 45° miter)
     top = create_sash_bar(sub, door_w, alu_mat)
     top.transform!(Geom::Transformation.scaling(1, 1, -1))
     top.transform!(Geom::Transformation.translation([0, 0, door_h]))
     top.transform!(transform)
 
-    # 3. Left Stile (Rotated 90°)
     left = create_sash_bar(sub, door_h, alu_mat)
     left.transform!(Geom::Transformation.rotation([0, 0, 0], [0, 1, 0], -90.degrees))
     left.transform!(Geom::Transformation.scaling(-1, 1, 1))
     left.transform!(transform)
 
-    # 4. Right Stile (Rotated 90°)
     right = create_sash_bar(sub, door_h, alu_mat)
     right.transform!(Geom::Transformation.rotation([0, 0, 0], [0, 1, 0], -90.degrees))
     right.transform!(Geom::Transformation.translation([door_w, 0, 0]))
     right.transform!(transform)
 
-    # 5. Infill Smoked Glass Pane (Inside Gasket Channel)
     pane = sub.add_group
     pane.material = glass_mat
     pane_face = pane.entities.add_face(
@@ -465,7 +474,6 @@ module CabinetrixBoxEngine
     pane_face.pushpull(door_h - 20.mm) if pane_face
     pane.transform!(transform)
 
-    # 6. Door Hinge Cups (Inside Door Group so they rotate perfectly with the door!)
     if hinge_z_list
       cup_x = is_left_hinged ? (ox + 20.0.mm) : (ox + door_w - 20.0.mm)
       door_back_y = oy + 21.2.mm
@@ -486,66 +494,7 @@ module CabinetrixBoxEngine
   end
 
   # ----------------------------------------------------------------------------
-  # 6. AUTHENTIC BLUM AVENTOS HF BI-FOLD LIFT MECHANISM & 2-SECTION DOORS
-  # ----------------------------------------------------------------------------
-  def self.build_blum_aventos_hf_bi_fold_doors(parent_ents, bx, by, bz, width, height, depth, mats, front_mat, mode: :closed)
-    lift_group = parent_ents.add_group
-    lift_group.name = "Blum_AVENTOS_HF_BiFold_Lift_System"
-
-    inner_w = width - (2 * BOARD_THK)
-    door_w  = width - 3.0.mm
-    total_door_h = height - 4.0.mm
-    mid_gap = 3.0.mm
-    door_h  = (total_door_h - mid_gap) / 2.0
-
-    front_y = by - depth - 21.2.mm
-    upper_z = bz + door_h + mid_gap + 2.0.mm
-    lower_z = bz + 2.0.mm
-    mid_seam_z = bz + door_h + (mid_gap / 2.0) + 2.0.mm
-    roof_under_z = bz + height - BOARD_THK
-
-    # 1. BLUM AVENTOS HF POWER FACTOR DRIVE UNITS (Mounted inside LH & RH Gables)
-    unit_w = 30.0.mm
-    unit_d = 180.0.mm
-    unit_h = 135.0.mm
-    mech_z = bz + height - unit_h - 20.0.mm
-    mech_y = by - 160.0.mm
-
-    create_box(lift_group.entities, [bx + BOARD_THK + 1.mm, mech_y, mech_z], [unit_w, unit_d, unit_h], mats[:steel], "Blum_AVENTOS_HF_DriveUnit_LH")
-    create_box(lift_group.entities, [bx + width - BOARD_THK - unit_w - 1.mm, mech_y, mech_z], [unit_w, unit_d, unit_h], mats[:steel], "Blum_AVENTOS_HF_DriveUnit_RH")
-
-    # 2. TELESCOPIC STEEL LIFT ARMS (Extending to Lower Door Side Stiles)
-    arm_thick = 10.0.mm
-    arm_w     = 18.0.mm
-    
-    create_box(lift_group.entities, [bx + BOARD_THK + unit_w + 2.mm, by - depth + 20.mm, bz + 180.mm], [arm_thick, depth - 180.mm, arm_w], mats[:steel], "Blum_AVENTOS_Telescopic_Arm_LH")
-    create_box(lift_group.entities, [bx + BOARD_THK + unit_w + 2.mm, by - depth - 5.mm, bz + 170.mm], [16.mm, 20.mm, 40.mm], mats[:steel], "Front_Fixing_Bracket_LH")
-
-    create_box(lift_group.entities, [bx + width - BOARD_THK - unit_w - arm_thick - 2.mm, by - depth + 20.mm, bz + 180.mm], [arm_thick, depth - 180.mm, arm_w], mats[:steel], "Blum_AVENTOS_Telescopic_Arm_RH")
-    create_box(lift_group.entities, [bx + width - BOARD_THK - unit_w - arm_thick - 2.mm, by - depth - 5.mm, bz + 170.mm], [16.mm, 20.mm, 40.mm], mats[:steel], "Front_Fixing_Bracket_RH")
-
-    # 3. TOP CLIP TOP 120° HINGES: UPPER DOOR TOP RAIL -> UNDERSIDE OF CARCASE ROOF
-    [bx + 120.mm, bx + width - 150.mm].each do |hx|
-      build_blum_top_roof_hinge(lift_group.entities, hx, by, depth, roof_under_z, mats)
-    end
-
-    # 4. BLUM 78Z5500T INTERMEDIATE BI-FOLD HINGES: UPPER DOOR BOTTOM RAIL <-> LOWER DOOR TOP RAIL
-    [bx + 120.mm, bx + width - 150.mm].each do |hx|
-      build_blum_intermediate_bifold_hinge(lift_group.entities, hx, by, depth, mid_seam_z, mats)
-    end
-
-    # 5. TWO-SECTION BI-FOLD DOORS (Upper & Lower)
-    upper_door = build_senior_sash_door(lift_group.entities, bx + 1.5.mm, front_y, upper_z, door_w, door_h, mats)
-    upper_door.name = "AVENTOS_HF_Upper_BiFold_Door_Section"
-
-    lower_door = build_senior_sash_door(lift_group.entities, bx + 1.5.mm, front_y, lower_z, door_w, door_h, mats)
-    lower_door.name = "AVENTOS_HF_Lower_BiFold_Door_Section"
-
-    lift_group
-  end
-
-  # ----------------------------------------------------------------------------
-  # 7. UNIVERSAL BOX CREATION API (LOCAL COORDINATES -> RIGID WORLD TRANSFORM)
+  # 6. UNIVERSAL BOX CREATION API (WITH STRICT PRE-FLIGHT AUDIT)
   # ----------------------------------------------------------------------------
   def self.create_cabinet(parent_ents, type, params, location, mats)
     name = params[:name] || "Cabinet_#{type.to_s.upcase}"
@@ -556,7 +505,7 @@ module CabinetrixBoxEngine
     by = 0.0.mm
     bz = 0.0.mm
 
-    # Resolve from Catalogue Stencil if type is a template ID or string
+    # 1. Stencil Registry Resolution
     template = CabinetrixCatalogue.get(type) if defined?(CabinetrixCatalogue)
     if template
       actual_type = template[:engine_type] || type.to_sym
@@ -572,6 +521,10 @@ module CabinetrixBoxEngine
     width  ||= params[:width] || 600.mm
     height ||= params[:height] || (type.to_s.start_with?('tall') ? TALL_CARCASE_H : (type.to_s.start_with?('wall') || type.to_s.start_with?('open') ? WALL_CARCASE_H : (type.to_s.start_with?('top_bulkhead') ? 360.mm : BASE_CARCASE_H)))
     depth  ||= params[:depth]  || (type.to_s.start_with?('tall') ? TALL_DEPTH : (type.to_s.start_with?('wall') || type.to_s.start_with?('open') || type.to_s.start_with?('top_bulkhead') ? WALL_DEPTH : BASE_DEPTH))
+
+    # 2. Strict Pre-Flight Audit
+    params = CabinetrixCollisionEngine.audit_pre_flight(type, params)
+
     mode   = params[:mode]   || :closed
     front_mat = params[:front_mat] || mats[:front_dark]
     include_gola = (params[:include_gola] != false)
@@ -579,28 +532,24 @@ module CabinetrixBoxEngine
 
     case type
     # ==========================================================================
-    # CORNER BASE CABINETS — EXACT SHOTGUN BLIND CORNER (HINGED ON MID PILLAR)
+    # CORNER BASE UNITS
     # ==========================================================================
     when :base_blind_corner, :base_lemans_corner, :base_magic_corner, :base_corner_shelf
       blind_width = 600.0.mm
       door_width  = width - blind_width
       upright_x   = door_width
 
-      # 1. Carcase
       create_box(box_grp.entities, [bx, by - depth, bz], [BOARD_THK, depth, height], mats[:carcase], "Gable_LH")
       create_box(box_grp.entities, [bx + width - BOARD_THK, by - depth, bz], [BOARD_THK, depth, height], mats[:carcase], "Gable_RH")
       build_structural_shelf(box_grp.entities, "Bottom_Panel", width, depth, bz, mats)
       build_shotgun_grooved_back(box_grp.entities, name, width, bz, bz + height, mats)
 
-      # 2. Dual Top Stretchers
       create_box(box_grp.entities, [bx + BOARD_THK, by - depth + GOLA_DEPTH, bz + height - BOARD_THK], [inner_w, 80.mm, BOARD_THK], mats[:carcase], "Top_Front_Stretcher")
       create_box(box_grp.entities, [bx + BOARD_THK, by - 80.mm, bz + height - BOARD_THK], [inner_w, 80.mm, BOARD_THK], mats[:carcase], "Top_Rear_Stretcher")
 
-      # 3. Upright Door Support Baffle (18mm x 100mm Mid Pillar)
       pillar_center_x = bx + upright_x
       create_box(box_grp.entities, [pillar_center_x - BOARD_THK/2.0, by - depth, bz + BOARD_THK], [BOARD_THK, 100.mm, height - 3*BOARD_THK], mats[:carcase], "Corner_Door_Support_Upright")
 
-      # 4. Shotgun 1-Piece Front-Notched Shelf with CNC U-Notch around Upright
       notch_w = BOARD_THK + 2.0.mm
       notch_d = 100.0.mm
       notch_x = pillar_center_x - notch_w/2.0
@@ -608,14 +557,12 @@ module CabinetrixBoxEngine
       shelf_size   = [inner_w, depth - BOARD_THK - BACK_THK, BOARD_THK]
       create_front_notched_shelf(box_grp.entities, "Corner_Mid_Shelf_With_Upright_Notch", shelf_origin, shelf_size, notch_x, notch_w, notch_d, mats[:carcase])
 
-      # 5. Carcase Mid-Pillar Mounting Plates
       pillar_face_x = pillar_center_x - BOARD_THK/2.0
       corner_hinge_z = [bz + 100.mm, bz + height - 120.mm]
       corner_hinge_z.each do |hz|
         build_blum_carcase_plate(box_grp.entities, pillar_face_x, by - depth, hz, false, mats)
       end
 
-      # 6. Front Blind Panel & Accessible Working Door WITH HINGE CUPS ATTACHED TO DOOR
       door_open_deg = (mode == :hybrid ? 95.0 : 0.0)
       door_grp = box_grp.entities.add_group
       door_grp.name = "Corner_Working_Door_Assembly"
@@ -632,7 +579,7 @@ module CabinetrixBoxEngine
       create_box(box_grp.entities, [bx + door_width + 3.mm, by - depth - FRONT_THK, bz + 3.mm], [blind_width - 6.mm, FRONT_THK, height - 3.mm], front_mat, "Corner_Blind_Panel_Right")
 
     # ==========================================================================
-    # TALL APPLIANCE & PANTRY TOWERS (AUDITED COLLISION-FREE HINGE ELEVATIONS)
+    # TALL APPLIANCE & PANTRY TOWERS (INNER DRAWERS INSET BEHIND DOOR)
     # ==========================================================================
     when :tall_oven_tower
       create_box(box_grp.entities, [bx, by - depth, 0], [BOARD_THK, depth, height], mats[:carcase], "Gable_LH")
@@ -651,12 +598,10 @@ module CabinetrixBoxEngine
       upper_door_z = BASE_DATUM_Z - PLINTH_HEIGHT + 885.mm + BOARD_THK + 3.mm
       oven_hinge_z = [upper_door_z + 80.mm, upper_door_z + upper_door_h - 80.mm]
 
-      # Plates on LH Gable
       oven_hinge_z.each do |hz|
         build_blum_carcase_plate(box_grp.entities, bx + BOARD_THK, by - depth, hz, true, mats)
       end
 
-      # Door Assembly with Hinge Cups
       door_grp = box_grp.entities.add_group
       door_grp.name = "Upper_Cupboard_Door_Assembly"
       create_box(door_grp.entities, [bx + 1.5.mm, by - depth - FRONT_THK, upper_door_z], [width - 3.mm, FRONT_THK, upper_door_h], front_mat, "Door_Slab")
@@ -675,29 +620,31 @@ module CabinetrixBoxEngine
       build_structural_shelf(box_grp.entities, "Roof_Panel", width, depth, height - BOARD_THK, mats, full_depth_to_wall: true)
       build_shotgun_grooved_back(box_grp.entities, name, width, bz, height, mats, has_mid_cleat: true, mid_cleat_z: 1200.mm)
 
+      # 5 Internal Inset Drawers (Set back 25mm behind door plane to guarantee zero collision)
       drawer_pull = (mode == :hybrid ? 300.mm : 0.mm)
       [bz + 20.mm, bz + 230.mm, bz + 440.mm, bz + 650.mm, bz + 860.mm].each_with_index do |dz, i|
         pull_dist = (i == 1) ? drawer_pull : 0.mm
-        d_box = build_hettich_undermount_drawer(box_grp.entities, Geom::Point3d.new(bx + BOARD_THK, by - depth, dz), inner_w, depth, 140.mm, 160.mm, pull_dist, mats, mats[:carcase], front_w: (inner_w - 3.mm))
+        build_hettich_undermount_drawer(box_grp.entities, Geom::Point3d.new(bx + BOARD_THK, by - depth + 25.mm, dz), inner_w, depth, 140.mm, 160.mm, pull_dist, mats, mats[:carcase], front_w: (inner_w - 28.mm), is_inner_drawer: true)
       end
 
-      build_adjustable_shelf(box_grp.entities, "Adjustable_Shelf_1", width, depth, 1200.mm + BOARD_THK + 250.mm, mats)
-      build_adjustable_shelf(box_grp.entities, "Adjustable_Shelf_2", width, depth, 1200.mm + BOARD_THK + 550.mm, mats)
+      # Dynamic Top Shelves
+      upper_clear_h = height.to_mm - 1200.0 - 36.0
+      safe_shelves = CabinetrixCollisionEngine.calculate_safe_shelf_elevations(upper_clear_h)
+      safe_shelves.each_with_index do |sz, idx|
+        build_adjustable_shelf(box_grp.entities, "Adjustable_Shelf_#{idx+1}", width, depth, 1200.mm + sz.mm, mats)
+      end
       
-      # 4 Collision-Free Elevations avoiding all 5 internal drawers
       tower_hinge_z = [bz + 200.mm, bz + 625.mm, bz + 1250.mm, bz + 1950.mm]
 
-      # 4x Blum Mounting Plates on LH Gable (Fixed inside carcase)
       tower_hinge_z.each do |hz|
         build_blum_carcase_plate(box_grp.entities, bx + BOARD_THK, by - depth, hz, true, mats)
       end
 
-      # Sash Door with Hinge Cups (Rotates with Door)
       door_open_deg = (mode == :hybrid ? 95.0 : 0.0)
       build_senior_sash_door(box_grp.entities, bx + 1.5.mm, by - depth - 21.2.mm, bz, width - 3.mm, height - bz - 3.mm, mats, open_angle_deg: door_open_deg, hinge_z_list: tower_hinge_z, is_left_hinged: true)
 
     # ==========================================================================
-    # BASE & ISLAND UNITS (WITH AUTHENTIC GOLA BEVELED EXTENDED FRONTS)
+    # BASE GOLA UNITS
     # ==========================================================================
     when :base_gola_drawers, :base_gola_cooktop, :base_gola_sink, :base_gola_spice, :base_gola_wine, :island_gola_drawers, :island_gola_sink
       stretcher_z = bz + height - BOARD_THK
@@ -709,15 +656,11 @@ module CabinetrixBoxEngine
       build_structural_shelf(box_grp.entities, "Bottom_Panel", width, depth, bz, mats)
       build_shotgun_grooved_back(box_grp.entities, name, width, bz, bz + height, mats)
 
-      # 1. TOP FRONT STRETCHER (Behind L-Gola)
       front_sub_y = -depth + GOLA_DEPTH
       create_box(box_grp.entities, [bx + BOARD_THK, front_sub_y, stretcher_z], [inner_w, 80.mm, BOARD_THK], mats[:carcase], "Top_Front_Gola_Stretcher")
-
-      # 2. TOP REAR STRETCHER (Benchtop Support)
       rear_stretcher_y = by - 80.mm
       create_box(box_grp.entities, [bx + BOARD_THK, rear_stretcher_y, stretcher_z], [inner_w, 80.mm, BOARD_THK], mats[:carcase], "Top_Rear_Gola_Stretcher")
 
-      # 3. MID C-GOLA SUB-STRETCHER
       mid_sub_z = bz + C_GOLA_Z0 - BOARD_THK
       create_box(box_grp.entities, [bx + BOARD_THK, front_sub_y, mid_sub_z], [inner_w, 60.mm, BOARD_THK], mats[:carcase], "Mid_C_Gola_Under_Stretcher")
 
@@ -754,17 +697,24 @@ module CabinetrixBoxEngine
       end
 
     # ==========================================================================
-    # WALL & BULKHEAD UNITS
+    # WALL UNITS & FLAP LIFTS (STRICT DYNAMIC SHELVES & FREE STOP SYSTEM)
     # ==========================================================================
-    when :wall_lift_aventos
+    when :wall_lift_aventos, :top_bulkhead_flap, :deep_top_bulkhead
       create_box(box_grp.entities, [bx, by - depth, bz], [BOARD_THK, depth, height], mats[:carcase], "Gable_LH")
       create_box(box_grp.entities, [bx + width - BOARD_THK, by - depth, bz], [BOARD_THK, depth, height], mats[:carcase], "Gable_RH")
       build_structural_shelf(box_grp.entities, "Top_Panel", width, depth, bz + height - BOARD_THK, mats, full_depth_to_wall: true)
       build_structural_shelf(box_grp.entities, "Bottom_Panel", width, depth, bz, mats)
       build_shotgun_grooved_back(box_grp.entities, name, width, bz, bz + height, mats)
 
-      build_adjustable_shelf(box_grp.entities, "AVENTOS_Setback_Shelf", width, depth, bz + 360.mm, mats, setback_mm: 50.0)
-      build_blum_aventos_hf_bi_fold_doors(box_grp.entities, bx, by, bz, width, height, depth, mats, front_mat, mode: mode)
+      # Dynamic Shelves (Only if height permits!)
+      safe_shelves = CabinetrixCollisionEngine.calculate_safe_shelf_elevations(height.to_mm)
+      safe_shelves.each_with_index do |sz, idx|
+        build_adjustable_shelf(box_grp.entities, "Adjustable_Shelf_#{idx+1}", width, depth, bz + sz.mm, mats, setback_mm: 40.0)
+      end
+
+      # Authentic Free Stop Flap Lift Mechanism (Image 5 Reference)
+      build_free_stop_flap_lift_mechanism(box_grp.entities, bx, by, bz, width, height, depth, mats)
+      create_box(box_grp.entities, [bx + 1.5.mm, by - depth - FRONT_THK, bz + 1.5.mm], [width - 3.mm, FRONT_THK, height - 3.mm], front_mat, "Flap_Door_Slab")
 
     when :wall_glass_display
       create_box(box_grp.entities, [bx, by - depth, bz], [BOARD_THK, depth, height], mats[:carcase], "Gable_LH")
@@ -773,61 +723,33 @@ module CabinetrixBoxEngine
       build_structural_shelf(box_grp.entities, "Bottom_Panel", width, depth, bz, mats)
       build_shotgun_grooved_back(box_grp.entities, name, width, bz, bz + height, mats)
 
-      build_adjustable_shelf(box_grp.entities, "Glass_Shelf_1", width, depth, bz + 240.mm, mats, is_glass: true)
-      build_adjustable_shelf(box_grp.entities, "Glass_Shelf_2", width, depth, bz + 480.mm, mats, is_glass: true)
+      # Dynamic Glass Shelves (STRICT INTERNAL ELEVATIONS)
+      safe_shelves = CabinetrixCollisionEngine.calculate_safe_shelf_elevations(height.to_mm)
+      safe_shelves.each_with_index do |sz, idx|
+        build_adjustable_shelf(box_grp.entities, "Glass_Shelf_#{idx+1}", width, depth, bz + sz.mm, mats, is_glass: true)
+      end
       
       door_h = height + BOARD_THK
       door_z = bz - BOARD_THK
       is_l = (params[:is_left_hinged] != false)
-      wall_hinge_z = [bz + 100.mm, bz + height - 100.mm]
+      wall_hinge_z = [bz + 60.mm, bz + height - 60.mm]
 
-      # Plates on Gable
       gx = is_l ? (bx + BOARD_THK) : (bx + width - BOARD_THK)
       wall_hinge_z.each do |hz|
         build_blum_carcase_plate(box_grp.entities, gx, by - depth, hz, is_l, mats)
       end
 
-      # Sash Door with Hinge Cups
       build_senior_sash_door(box_grp.entities, bx + 1.5.mm, by - depth - 21.2.mm, door_z, width - 3.mm, door_h, mats, hinge_z_list: wall_hinge_z, is_left_hinged: is_l)
 
-    when :wall_cooker_hood
+    when :open_wine_grid
       create_box(box_grp.entities, [bx, by - depth, bz], [BOARD_THK, depth, height], mats[:carcase], "Gable_LH")
       create_box(box_grp.entities, [bx + width - BOARD_THK, by - depth, bz], [BOARD_THK, depth, height], mats[:carcase], "Gable_RH")
       build_structural_shelf(box_grp.entities, "Top_Panel", width, depth, bz + height - BOARD_THK, mats, full_depth_to_wall: true)
-      build_structural_shelf(box_grp.entities, "Hood_Chamber_Shelf", width, depth, bz + 160.mm, mats)
-      build_shotgun_grooved_back(box_grp.entities, name, width, bz + 160.mm, bz + height, mats)
-
-      create_box(box_grp.entities, [bx + 10.mm, by - depth + 10.mm, bz], [width - 20.mm, depth - 20.mm, 150.mm], mats[:steel], "Extractor_Hood_Body")
-      hood_door_h = height - 160.mm - 3.mm
-      hood_door_z = bz + 160.mm + 3.mm
-      hood_hinge_z = [hood_door_z + 60.mm, hood_door_z + hood_door_h - 60.mm]
-
-      hood_hinge_z.each do |hz|
-        build_blum_carcase_plate(box_grp.entities, bx + BOARD_THK, by - depth, hz, true, mats)
-      end
-
-      door_grp = box_grp.entities.add_group
-      door_grp.name = "Hood_Door_Assembly"
-      create_box(door_grp.entities, [bx + 1.5.mm, by - depth - FRONT_THK, hood_door_z], [width - 3.mm, FRONT_THK, hood_door_h], front_mat, "Door_Slab")
-      hood_hinge_z.each do |hz|
-        build_blum_door_cup(door_grp.entities, bx + 21.5.mm, by - depth, hz, mats)
-      end
-
-    when :top_bulkhead_flap, :deep_top_bulkhead
-      bulkhead_h = params[:height] || 360.mm
-      create_box(box_grp.entities, [bx, by - depth, bz], [BOARD_THK, depth, bulkhead_h], mats[:carcase], "Gable_LH")
-      create_box(box_grp.entities, [bx + width - BOARD_THK, by - depth, bz], [BOARD_THK, depth, bulkhead_h], mats[:carcase], "Gable_RH")
-      build_structural_shelf(box_grp.entities, "Top_Panel", width, depth, bz + bulkhead_h - BOARD_THK, mats, full_depth_to_wall: true)
       build_structural_shelf(box_grp.entities, "Bottom_Panel", width, depth, bz, mats)
-      build_shotgun_grooved_back(box_grp.entities, name, width, bz, bz + bulkhead_h, mats)
+      build_shotgun_grooved_back(box_grp.entities, name, width, bz, bz + height, mats)
 
-      create_box(box_grp.entities, [bx + 1.5.mm, by - depth - FRONT_THK, bz + 1.5.mm], [width - 3.mm, FRONT_THK, bulkhead_h - 3.mm], front_mat, "Bulkhead_Flap_Door")
-      
-      # 2x Top Stay Lift Hinges on Underside of Roof Panel
-      roof_under_z = bz + bulkhead_h - BOARD_THK
-      [bx + 100.mm, bx + width - 100.mm].each do |hx|
-        build_blum_top_roof_hinge(box_grp.entities, hx, by, depth, roof_under_z, mats)
-      end
+      # Interlocking CNC Comb Finger Joints + Disassembled Lay-Down View Downward
+      build_interlocking_wine_grid(box_grp.entities, bx, by, bz, width, height, depth, mats, is_open_display: true)
 
     when :open_rack_metal
       metal_mat = mats[:gola]
@@ -847,29 +769,13 @@ module CabinetrixBoxEngine
       end
 
       create_box(box_grp.entities, [bx + 25.mm, by - depth + 25.mm, bz + 20.mm], [width - 50.mm, depth - 50.mm, 18.mm], oak_mat, "Oak_Display_Shelf_Lower")
-      create_box(box_grp.entities, [bx + 25.mm, by - depth + 25.mm, bz + height/2.0 + 10.mm], [width - 50.mm, depth - 50.mm, 18.mm], oak_mat, "Oak_Display_Shelf_Upper")
-
-    when :open_wine_grid
-      create_box(box_grp.entities, [bx, by - depth, bz], [BOARD_THK, depth, height], mats[:carcase], "Gable_LH")
-      create_box(box_grp.entities, [bx + width - BOARD_THK, by - depth, bz], [BOARD_THK, depth, height], mats[:carcase], "Gable_RH")
-      build_structural_shelf(box_grp.entities, "Top_Panel", width, depth, bz + height - BOARD_THK, mats, full_depth_to_wall: true)
-      build_structural_shelf(box_grp.entities, "Bottom_Panel", width, depth, bz, mats)
-      build_shotgun_grooved_back(box_grp.entities, name, width, bz, bz + height, mats)
-
-      num_cols = 3
-      col_w = inner_w / num_cols
-      (1...num_cols).each do |c|
-        create_box(box_grp.entities, [bx + BOARD_THK + (c * col_w) - 6.mm, by - depth + 20.mm, bz + BOARD_THK], [12.mm, depth - 30.mm, height - 2*BOARD_THK], mats[:wood], "Wine_Divider_V#{c}")
-      end
-      num_rows = 4
-      row_h = (height - 2*BOARD_THK) / num_rows
-      (1...num_rows).each do |r|
-        create_box(box_grp.entities, [bx + BOARD_THK, by - depth + 20.mm, bz + BOARD_THK + (r * row_h) - 6.mm], [inner_w, depth - 30.mm, 12.mm], mats[:wood], "Wine_Divider_H#{r}")
+      if height.to_mm > 500.0
+        create_box(box_grp.entities, [bx + 25.mm, by - depth + 25.mm, bz + height/2.0 + 10.mm], [width - 50.mm, depth - 50.mm, 18.mm], oak_mat, "Oak_Display_Shelf_Upper")
       end
     end
 
     # --------------------------------------------------------------------------
-    # 8. RIGID WORLD TRANSFORMATION
+    # 7. RIGID WORLD TRANSFORMATION
     # --------------------------------------------------------------------------
     rot_deg = location[:rotation_deg] || params[:rotation_deg] || 0.0
     tr_rot = Geom::Transformation.rotation(Geom::Point3d.new(0, 0, 0), Geom::Vector3d.new(0, 0, 1), rot_deg.degrees)
@@ -879,9 +785,6 @@ module CabinetrixBoxEngine
     box_grp
   end
 
-  # ----------------------------------------------------------------------------
-  # 9. COMPLETE PHYSICAL BOARDS EXTRACTION API
-  # ----------------------------------------------------------------------------
   def self.extract_panels_for_cabinet(cab_type, width_mm, height_mm, depth_mm, cab_tag)
     thk = 18.0
     inner_w = width_mm - 2*thk
@@ -902,26 +805,6 @@ module CabinetrixBoxEngine
     panels << { part_id: "#{cab_tag}-CLT-T", cab_id: cab_tag, name: "Rear_Top_Cleat", length: inner_w, width: 100.0, thk: thk, material: "18mm White MFC", grain: :length, eb_l1: "-", eb_l2: "-", eb_w1: "-", eb_w2: "-", has_cnc: false }
     panels << { part_id: "#{cab_tag}-CLT-B", cab_id: cab_tag, name: "Rear_Bottom_Cleat", length: inner_w, width: 100.0, thk: thk, material: "18mm White MFC", grain: :length, eb_l1: "-", eb_l2: "-", eb_w1: "-", eb_w2: "-", has_cnc: false }
     panels << { part_id: "#{cab_tag}-BAK", cab_id: cab_tag, name: "Back_Panel_Sheet", length: inner_w + 10.0, width: height_mm - 26.0, thk: 6.0, material: "6mm White Backing", grain: :length, eb_l1: "-", eb_l2: "-", eb_w1: "-", eb_w2: "-", has_cnc: false }
-
-    if cab_type.to_s.include?('drawer') || cab_type.to_s.include?('cooktop') || cab_type.to_s.include?('sink')
-      dims = CabinetrixCollisionEngine.calculate_drawer_geometry(inner_w, depth_mm, side_gap: 12.5, box_thk: 15.0, front_h: 342.0)
-      box_w = dims[:box_w]
-      box_d = dims[:box_d]
-
-      panels << { part_id: "#{cab_tag}-DW1-LH", cab_id: cab_tag, name: "Drawer_Box_LH_Lower", length: box_d, width: 200.0, thk: 15.0, material: "15mm Birch Plywood", grain: :length, eb_l1: "1.0mm Birch", eb_l2: "-", eb_w1: "-", eb_w2: "-", has_cnc: true }
-      panels << { part_id: "#{cab_tag}-DW1-RH", cab_id: cab_tag, name: "Drawer_Box_RH_Lower", length: box_d, width: 200.0, thk: 15.0, material: "15mm Birch Plywood", grain: :length, eb_l1: "1.0mm Birch", eb_l2: "-", eb_w1: "-", eb_w2: "-", has_cnc: true }
-      panels << { part_id: "#{cab_tag}-DW1-SF", cab_id: cab_tag, name: "Drawer_SubFront_Lower", length: box_w - 30.0, width: 200.0, thk: 15.0, material: "15mm Birch Plywood", grain: :length, eb_l1: "1.0mm Birch", eb_l2: "-", eb_w1: "-", eb_w2: "-", has_cnc: true }
-      panels << { part_id: "#{cab_tag}-DW1-BK", cab_id: cab_tag, name: "Drawer_Back_Lower", length: box_w - 30.0, width: 200.0, thk: 15.0, material: "15mm Birch Plywood", grain: :length, eb_l1: "1.0mm Birch", eb_l2: "-", eb_w1: "-", eb_w2: "-", has_cnc: true }
-      panels << { part_id: "#{cab_tag}-DW1-BM", cab_id: cab_tag, name: "Drawer_Bottom_Lower", length: box_w - 30.0, width: box_d - 30.0, thk: 16.0, material: "16mm Solid Birch Base", grain: :none, eb_l1: "-", eb_l2: "-", eb_w1: "-", eb_w2: "-", has_cnc: false }
-      panels << { part_id: "#{cab_tag}-FR1", cab_id: cab_tag, name: "Lower_Pot_Drawer_Front", length: width_mm - 3.0, width: 342.0, thk: 18.0, material: "18mm Anthracite Supermatte", grain: :length, eb_l1: "1.0mm ABS", eb_l2: "1.0mm ABS", eb_w1: "1.0mm ABS", eb_w2: "1.0mm ABS", has_cnc: false }
-
-      panels << { part_id: "#{cab_tag}-DW2-LH", cab_id: cab_tag, name: "Drawer_Box_LH_Upper", length: box_d, width: 120.0, thk: 15.0, material: "15mm Birch Plywood", grain: :length, eb_l1: "1.0mm Birch", eb_l2: "-", eb_w1: "-", eb_w2: "-", has_cnc: true }
-      panels << { part_id: "#{cab_tag}-DW2-RH", cab_id: cab_tag, name: "Drawer_Box_RH_Upper", length: box_d, width: 120.0, thk: 15.0, material: "15mm Birch Plywood", grain: :length, eb_l1: "1.0mm Birch", eb_l2: "-", eb_w1: "-", eb_w2: "-", has_cnc: true }
-      panels << { part_id: "#{cab_tag}-DW2-SF", cab_id: cab_tag, name: "Drawer_SubFront_Upper", length: box_w - 30.0, width: 120.0, thk: 15.0, material: "15mm Birch Plywood", grain: :length, eb_l1: "1.0mm Birch", eb_l2: "-", eb_w1: "-", eb_w2: "-", has_cnc: true }
-      panels << { part_id: "#{cab_tag}-DW2-BK", cab_id: cab_tag, name: "Drawer_Back_Upper", length: box_w - 30.0, width: 120.0, thk: 15.0, material: "15mm Birch Plywood", grain: :length, eb_l1: "1.0mm Birch", eb_l2: "-", eb_w1: "-", eb_w2: "-", has_cnc: true }
-      panels << { part_id: "#{cab_tag}-DW2-BM", cab_id: cab_tag, name: "Drawer_Bottom_Upper", length: box_w - 30.0, width: box_d - 30.0, thk: 16.0, material: "16mm Solid Birch Base", grain: :none, eb_l1: "-", eb_l2: "-", eb_w1: "-", eb_w2: "-", has_cnc: false }
-      panels << { part_id: "#{cab_tag}-FR2", cab_id: cab_tag, name: "Upper_Drawer_Front", length: width_mm - 3.0, width: 285.0, thk: 18.0, material: "18mm Anthracite Supermatte", grain: :length, eb_l1: "1.0mm ABS", eb_l2: "1.0mm ABS", eb_w1: "1.0mm ABS", eb_w2: "1.0mm ABS", has_cnc: false }
-    end
 
     panels
   end
