@@ -82,10 +82,10 @@ module CabinetrixCatalogueGrid
 
     rows = [
       {
-        category: "ROW 1: SIGNATURE PRODUCTION STENCILS (12 SHOWROOM BOXES)",
+        category: "ROW 1: SIGNATURE PRODUCTION STENCILS (HANDLED & GOLA SHOWROOM BOXES)",
         y_offset: 0.0,
         items: [
-          "B_GOLA_2D", "B_GOLA_SINK", "B_GOLA_COOKTOP", "B_GOLA_SPICE",
+          "B_GOLA_2D", "B_HANDLED_2D", "B_HANDLED_3D", "B_GOLA_SINK", "B_GOLA_COOKTOP", "B_GOLA_SPICE",
           "B_CNR_LEMANS", "B_CNR_MAGIC", "T_SPACE_TOWER", "T_OVEN_TOWER",
           "W_LIFT_HF", "W_GLASS_SASH", "BLK_FLAP_HK", "ISL_GOLA_2D"
         ]

@@ -82,6 +82,34 @@ module CabinetrixCatalogue
     }
   })
 
+  register("B_HANDLED_2D", {
+    id: "B_HANDLED_2D",
+    name: "Base 2-Pot Drawer Bank (Handled) 900mm",
+    category: :base_handled_drawer,
+    engine_type: :base_handled_drawers,
+    zone: :prep_storage,
+    desc: "Standard 2-pot drawer bank with full overlay front slabs and contemporary bar handles",
+    dimensions: {
+      w: { default: 900.0, min: 450.0, max: 1200.0, step: 50.0 },
+      h: { default: 720.0, fixed: true },
+      d: { default: 560.0, min: 500.0, max: 650.0, step: 10.0 }
+    }
+  })
+
+  register("B_HANDLED_3D", {
+    id: "B_HANDLED_3D",
+    name: "Base 3-Drawer Bank (Handled) 600mm",
+    category: :base_handled_drawer,
+    engine_type: :base_handled_drawers,
+    zone: :prep_storage,
+    desc: "Standard 3-drawer bank (1 cutlery + 2 pot drawers) with contemporary bar handles",
+    dimensions: {
+      w: { default: 600.0, min: 400.0, max: 900.0, step: 50.0 },
+      h: { default: 720.0, fixed: true },
+      d: { default: 560.0, min: 500.0, max: 650.0, step: 10.0 }
+    }
+  })
+
   register("B_GOLA_SINK", {
     id: "B_GOLA_SINK",
     name: "Base Sink Unit with Cargo Waste 900mm",
