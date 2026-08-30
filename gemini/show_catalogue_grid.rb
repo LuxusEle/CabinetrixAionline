@@ -4,9 +4,10 @@
 #
 # Production Standard:
 #   • Renders ALL 84+ distinct Carcass, Open-Frame & Wardrobe Boxes from Catalog.
-#   • Generous Spacing between Cabinets (1000mm gap between boxes, 2800mm between rows).
+#   • Generous Spacing between Cabinets (1000mm gap between boxes, 3500mm between rows).
 #   • Real Solid 3D Extruded Text Labels on the Floor in front of each box.
 #   • Clean Category Row Headers in Bold 3D Text.
+#   • Fully Closed, Flush Production Mode for Clean Inspection.
 # ==============================================================================
 require 'sketchup.rb'
 
@@ -81,7 +82,7 @@ module CabinetrixCatalogueGrid
 
     rows = [
       {
-        category: "ROW 1: SIGNATURE SHOWROOM STENCILS (12 BOXES)",
+        category: "ROW 1: SIGNATURE PRODUCTION STENCILS (12 SHOWROOM BOXES)",
         y_offset: 0.0,
         items: [
           "B_GOLA_2D", "B_GOLA_SINK", "B_GOLA_COOKTOP", "B_GOLA_SPICE",
@@ -91,7 +92,7 @@ module CabinetrixCatalogueGrid
       },
       {
         category: "ROW 2: KITCHEN BASE CARCASSES (METOD 200..800mm)",
-        y_offset: -3200.0,
+        y_offset: -3500.0,
         items: [
           "K-BAS-01", "K-BAS-02", "K-BAS-03", "K-BAS-04", "K-BAS-05",
           "K-BAS-06", "K-BAS-07", "K-BAS-08", "K-BAS-09",
@@ -100,7 +101,7 @@ module CabinetrixCatalogueGrid
       },
       {
         category: "ROW 3: KITCHEN WALL CABINETS (METOD 200..800mm, H400..1000mm)",
-        y_offset: -6400.0,
+        y_offset: -7000.0,
         items: [
           "K-WAL-01", "K-WAL-02", "K-WAL-03", "K-WAL-04", "K-WAL-05",
           "K-WAL-06", "K-WAL-07", "K-WAL-08", "K-WAL-09", "K-WAL-10",
@@ -110,7 +111,7 @@ module CabinetrixCatalogueGrid
       },
       {
         category: "ROW 4: EXTRACTOR HOODS & TOP BULKHEADS",
-        y_offset: -9600.0,
+        y_offset: -10500.0,
         items: [
           "K-HOD-01", "K-HOD-02", "K-HOD-03", "K-HOD-04", "K-HOD-05", "K-HOD-06",
           "K-TOP-01", "K-TFR-01", "K-TFR-02"
@@ -118,7 +119,7 @@ module CabinetrixCatalogueGrid
       },
       {
         category: "ROW 5: TALL HIGH STORAGE & APPLIANCE TOWERS (METOD H1400..2200mm)",
-        y_offset: -12800.0,
+        y_offset: -14000.0,
         items: [
           "K-HBI-01", "K-HBI-02", "K-HBI-03",
           "K-HIG-01", "K-HIG-02", "K-HIG-03", "K-HIG-04", "K-HIG-05", "K-HIG-06", "K-HIG-07"
@@ -126,7 +127,7 @@ module CabinetrixCatalogueGrid
       },
       {
         category: "ROW 6: OPEN STORAGE & METAL FRAMES (ENHET, TORNVIKEN, VADHOLMA)",
-        y_offset: -16000.0,
+        y_offset: -17500.0,
         items: [
           "O-TOR-01", "O-TOR-02", "O-TOR-03",
           "O-VAD-01", "O-VAD-02", "O-VAD-03",
@@ -137,7 +138,7 @@ module CabinetrixCatalogueGrid
       },
       {
         category: "ROW 7: PAX WARDROBE FRAMES & CORNER ADD-ONS (PAX H2010..2360mm)",
-        y_offset: -19200.0,
+        y_offset: -21000.0,
         items: [
           "W-PAX-01", "W-PAX-02", "W-PAX-03", "W-PAX-04", "W-PAX-05", "W-PAX-06",
           "W-PAX-07", "W-PAX-08", "W-PAX-09", "W-PAX-10", "W-PAX-11", "W-PAX-12",
@@ -187,7 +188,7 @@ module CabinetrixCatalogueGrid
                    else :base_gola_drawers
                    end
 
-        # 1. Build 3D Cabinet Box
+        # 1. Build 3D Cabinet Box (Strictly Closed Mode for Exhibition)
         CabinetrixBoxEngine.create_cabinet(grid_root.entities, box_type, box_params, loc, mats)
 
         # 2. Add Crisp 3D Floor Text Badges in Front of Box
@@ -206,7 +207,7 @@ module CabinetrixCatalogueGrid
         add_3d_label(grid_root.entities, label_line3, Geom::Point3d.new(b_x.mm, (b_y - 160.0).mm, 0.mm), 32.0, 5.0, mats[:text_gold])
 
         puts "   [RENDERED] #{tmpl_id} at X=#{x_cursor.to_i}mm, Y=#{row[:y_offset].to_i}mm (#{w.to_i}x#{h.to_i}x#{d.to_i}mm)"
-        x_cursor += (w + 950.0) # 950mm wide clear spacing between boxes
+        x_cursor += (w + 1000.0) # 1000mm wide clear spacing between boxes
       end
     end
 
