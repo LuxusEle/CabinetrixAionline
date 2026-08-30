@@ -3,17 +3,14 @@
 # File: gemini/cabinetrix_box_engine.rb
 #
 # Production Standard:
-#   • AUTHENTIC 45° MITERED HOLLOW ALUMINUM SASH DOOR SKILL (ALU SYS):
-#     - Exact 45x21.2mm hollow aluminum extrusion profile with authentic 45° miter joints.
-#     - Precision glass infill channel with smoked glass pane.
-#     - 35mm concealed hinge cup bores.
-#   • EXACT SHOTGUN BLIND CORNER IMPLEMENTATION:
-#     - Full carcase with dual top stretchers & grooved back.
-#     - Upright corner door support baffle (18mm x 100mm).
-#     - 1-Piece solid front-notched mid shelf with CNC pass-through U-notch around upright.
-#   • AUTHENTIC GOLA BEVELED FINGER-PULL EXTENDED FRONTS:
-#     - Lower Front: Z=3.0mm -> 345.0mm (Height=342mm)
-#     - Upper Front: Z=390.0mm -> 675.0mm (Height=285mm)
+#   • AUTHENTIC BLUM AVENTOS HF BI-FOLD LIFT MECHANISM & TWO-SECTION DOORS:
+#     - Horizontal 2-section bi-fold split (Upper Door + Lower Door with 3mm reveal).
+#     - Blum AVENTOS HF Power Factor Drive Units (LH & RH).
+#     - Telescopic Steel Lift Arms with front fixing brackets connecting lower door.
+#     - Intermediate bi-fold hinges & top CLIP top 120° hinges.
+#   • AUTHENTIC 45° MITERED HOLLOW ALUMINUM SASH DOOR SKILL (ALU SYS).
+#   • EXACT SHOTGUN BLIND CORNER IMPLEMENTATION.
+#   • AUTHENTIC GOLA BEVELED FINGER-PULL EXTENDED FRONTS.
 # ==============================================================================
 require 'sketchup.rb'
 require_relative 'cabinetrix_collision_engine'
@@ -404,7 +401,66 @@ module CabinetrixBoxEngine
   end
 
   # ----------------------------------------------------------------------------
-  # 5. UNIVERSAL BOX CREATION API (LOCAL COORDINATES -> RIGID WORLD TRANSFORM)
+  # 5. AUTHENTIC BLUM AVENTOS HF BI-FOLD LIFT MECHANISM & 2-SECTION DOORS
+  # ----------------------------------------------------------------------------
+  def self.build_blum_aventos_hf_bi_fold_doors(parent_ents, bx, by, bz, width, height, depth, mats, front_mat, mode: :closed)
+    lift_group = parent_ents.add_group
+    lift_group.name = "Blum_AVENTOS_HF_BiFold_Lift_System"
+
+    inner_w = width - (2 * BOARD_THK)
+    door_w  = width - 3.0.mm
+    total_door_h = height - 4.0.mm
+    mid_gap = 3.0.mm
+    door_h  = (total_door_h - mid_gap) / 2.0 # 356.5mm each
+
+    front_y = by - depth - 21.2.mm
+
+    # 1. BLUM AVENTOS HF POWER FACTOR DRIVE UNITS (Inside LH & RH Gables)
+    unit_w = 30.0.mm
+    unit_d = 180.0.mm
+    unit_h = 135.0.mm
+    mech_z = bz + height - unit_h - 20.0.mm
+    mech_y = by - 160.0.mm
+
+    # LH Power Factor Drive Unit
+    create_box(lift_group.entities, [bx + BOARD_THK + 1.mm, mech_y, mech_z], [unit_w, unit_d, unit_h], mats[:steel], "Blum_AVENTOS_HF_DriveUnit_LH")
+    # RH Power Factor Drive Unit
+    create_box(lift_group.entities, [bx + width - BOARD_THK - unit_w - 1.mm, mech_y, mech_z], [unit_w, unit_d, unit_h], mats[:steel], "Blum_AVENTOS_HF_DriveUnit_RH")
+
+    # 2. TELESCOPIC STEEL LIFT ARMS (LH & RH)
+    arm_thick = 10.0.mm
+    arm_w     = 18.0.mm
+    arm_len   = 280.0.mm
+    
+    # LH Telescopic Lift Arm (Connecting Drive Unit to Lower Bi-Fold Door Bracket)
+    create_box(lift_group.entities, [bx + BOARD_THK + unit_w + 2.mm, by - depth + 20.mm, bz + 180.mm], [arm_thick, depth - 180.mm, arm_w], mats[:steel], "Blum_AVENTOS_Telescopic_Arm_LH")
+    create_box(lift_group.entities, [bx + BOARD_THK + unit_w + 2.mm, by - depth - 5.mm, bz + 170.mm], [16.mm, 20.mm, 40.mm], mats[:steel], "Front_Fixing_Bracket_LH")
+
+    # RH Telescopic Lift Arm
+    create_box(lift_group.entities, [bx + width - BOARD_THK - unit_w - arm_thick - 2.mm, by - depth + 20.mm, bz + 180.mm], [arm_thick, depth - 180.mm, arm_w], mats[:steel], "Blum_AVENTOS_Telescopic_Arm_RH")
+    create_box(lift_group.entities, [bx + width - BOARD_THK - unit_w - arm_thick - 2.mm, by - depth - 5.mm, bz + 170.mm], [16.mm, 20.mm, 40.mm], mats[:steel], "Front_Fixing_Bracket_RH")
+
+    # 3. INTERMEDIATE BI-FOLD HINGES (At the horizontal seam between upper & lower doors)
+    [bx + 120.mm, bx + width - 150.mm].each_with_index do |hx, h_idx|
+      create_box(lift_group.entities, [hx, by - depth - 5.mm, bz + door_h + 1.5.mm - 15.mm], [30.mm, 15.mm, 30.mm], mats[:steel], "Blum_Intermediate_Hinge_#{h_idx+1}")
+      create_box(lift_group.entities, [hx, by - depth - 5.mm, bz + height - 20.mm], [30.mm, 15.mm, 20.mm], mats[:steel], "Blum_CLIP_Top_120_Hinge_#{h_idx+1}")
+    end
+
+    # 4. TWO-SECTION BI-FOLD DOORS (Upper Section + Lower Section)
+    upper_z = bz + door_h + mid_gap + 2.0.mm
+    lower_z = bz + 2.0.mm
+
+    upper_door = build_senior_sash_door(lift_group.entities, bx + 1.5.mm, front_y, upper_z, door_w, door_h, mats, is_left_hinged: false)
+    upper_door.name = "AVENTOS_HF_Upper_BiFold_Door_Section"
+
+    lower_door = build_senior_sash_door(lift_group.entities, bx + 1.5.mm, front_y, lower_z, door_w, door_h, mats, is_left_hinged: false)
+    lower_door.name = "AVENTOS_HF_Lower_BiFold_Door_Section"
+
+    lift_group
+  end
+
+  # ----------------------------------------------------------------------------
+  # 6. UNIVERSAL BOX CREATION API (LOCAL COORDINATES -> RIGID WORLD TRANSFORM)
   # ----------------------------------------------------------------------------
   def self.create_cabinet(parent_ents, type, params, location, mats)
     name = params[:name] || "Cabinet_#{type.to_s.upcase}"
@@ -562,31 +618,33 @@ module CabinetrixBoxEngine
     # ==========================================================================
     # WALL & BULKHEAD UNITS
     # ==========================================================================
-    when :wall_glass_display, :wall_lift_aventos
+    when :wall_lift_aventos
       create_box(box_grp.entities, [bx, by - depth, bz], [BOARD_THK, depth, height], mats[:carcase], "Gable_LH")
       create_box(box_grp.entities, [bx + width - BOARD_THK, by - depth, bz], [BOARD_THK, depth, height], mats[:carcase], "Gable_RH")
       build_structural_shelf(box_grp.entities, "Top_Panel", width, depth, bz + height - BOARD_THK, mats, full_depth_to_wall: true)
       build_structural_shelf(box_grp.entities, "Bottom_Panel", width, depth, bz, mats)
       build_shotgun_grooved_back(box_grp.entities, name, width, bz, bz + height, mats)
 
-      if type == :wall_lift_aventos
-        create_box(box_grp.entities, [bx + BOARD_THK + 2.mm, by - 160.mm, bz + height - 160.mm], [35.mm, 150.mm, 150.mm], mats[:steel], "Aventos_HF_Mechanism_LH")
-        create_box(box_grp.entities, [bx + width - BOARD_THK - 37.mm, by - 160.mm, bz + height - 160.mm], [35.mm, 150.mm, 150.mm], mats[:steel], "Aventos_HF_Mechanism_RH")
-        build_adjustable_shelf(box_grp.entities, "Lift_Setback_Shelf", width, depth, bz + 360.mm, mats, setback_mm: 50.0)
-        
-        door_h = height + BOARD_THK
-        door_z = bz - BOARD_THK
-        is_left = params[:is_left_hinged] != false
-        build_senior_sash_door(box_grp.entities, bx + 1.5.mm, by - depth - 21.2.mm, door_z, width - 3.mm, door_h, mats, is_left_hinged: is_left)
-      else
-        build_adjustable_shelf(box_grp.entities, "Glass_Shelf_1", width, depth, bz + 240.mm, mats, is_glass: true)
-        build_adjustable_shelf(box_grp.entities, "Glass_Shelf_2", width, depth, bz + 480.mm, mats, is_glass: true)
-        
-        door_h = height + BOARD_THK
-        door_z = bz - BOARD_THK
-        is_left = params[:is_left_hinged] != false
-        build_senior_sash_door(box_grp.entities, bx + 1.5.mm, by - depth - 21.2.mm, door_z, width - 3.mm, door_h, mats, is_left_hinged: is_left)
-      end
+      # 50mm Setback Shelf to clear telescopic lift arms
+      build_adjustable_shelf(box_grp.entities, "AVENTOS_Setback_Shelf", width, depth, bz + 360.mm, mats, setback_mm: 50.0)
+
+      # AUTHENTIC BLUM AVENTOS HF BI-FOLD LIFT MECHANISM & DUAL HORIZONTAL DOORS
+      build_blum_aventos_hf_bi_fold_doors(box_grp.entities, bx, by, bz, width, height, depth, mats, front_mat, mode: mode)
+
+    when :wall_glass_display
+      create_box(box_grp.entities, [bx, by - depth, bz], [BOARD_THK, depth, height], mats[:carcase], "Gable_LH")
+      create_box(box_grp.entities, [bx + width - BOARD_THK, by - depth, bz], [BOARD_THK, depth, height], mats[:carcase], "Gable_RH")
+      build_structural_shelf(box_grp.entities, "Top_Panel", width, depth, bz + height - BOARD_THK, mats, full_depth_to_wall: true)
+      build_structural_shelf(box_grp.entities, "Bottom_Panel", width, depth, bz, mats)
+      build_shotgun_grooved_back(box_grp.entities, name, width, bz, bz + height, mats)
+
+      build_adjustable_shelf(box_grp.entities, "Glass_Shelf_1", width, depth, bz + 240.mm, mats, is_glass: true)
+      build_adjustable_shelf(box_grp.entities, "Glass_Shelf_2", width, depth, bz + 480.mm, mats, is_glass: true)
+      
+      door_h = height + BOARD_THK
+      door_z = bz - BOARD_THK
+      is_left = params[:is_left_hinged] != false
+      build_senior_sash_door(box_grp.entities, bx + 1.5.mm, by - depth - 21.2.mm, door_z, width - 3.mm, door_h, mats, is_left_hinged: is_left)
 
     when :wall_cooker_hood
       create_box(box_grp.entities, [bx, by - depth, bz], [BOARD_THK, depth, height], mats[:carcase], "Gable_LH")
@@ -649,7 +707,7 @@ module CabinetrixBoxEngine
     end
 
     # --------------------------------------------------------------------------
-    # 6. RIGID WORLD TRANSFORMATION
+    # 7. RIGID WORLD TRANSFORMATION
     # --------------------------------------------------------------------------
     rot_deg = location[:rotation_deg] || params[:rotation_deg] || 0.0
     tr_rot = Geom::Transformation.rotation(Geom::Point3d.new(0, 0, 0), Geom::Vector3d.new(0, 0, 1), rot_deg.degrees)
@@ -660,7 +718,7 @@ module CabinetrixBoxEngine
   end
 
   # ----------------------------------------------------------------------------
-  # 7. COMPLETE PHYSICAL BOARDS EXTRACTION API
+  # 8. COMPLETE PHYSICAL BOARDS EXTRACTION API
   # ----------------------------------------------------------------------------
   def self.extract_panels_for_cabinet(cab_type, width_mm, height_mm, depth_mm, cab_tag)
     thk = 18.0
