@@ -3,13 +3,14 @@
 # File: gemini/cabinetrix_box_engine.rb
 #
 # Production Standard:
-#   • AUTHENTIC 3D BLUM CLIP TOP CONCEALED HINGES ON ALL SLAB & SASH DOORS:
-#     - 35mm hinge cups, nickel steel hinge arms, and cruciform carcase mounting plates.
-#     - Applied to Accessible Corner Doors, Tall Oven Tower Cupboard Doors, Bulkhead Flaps, and Pantry Doors.
-#   • AUTHENTIC BI-FOLD HINGE LOGIC FOR AVENTOS HF:
-#     - Hinges on TOP horizontal rails, telescopic arms on side stiles.
-#   • AUTHENTIC 45° MITERED HOLLOW ALUMINUM SASH DOOR SKILL (ALU SYS).
-#   • EXACT SHOTGUN BLIND CORNER IMPLEMENTATION.
+#   • AUTHENTIC BLUM 71T950A / 78Z550AT ALUMINUM FRAME HINGES:
+#     - Mounts strictly on the REAR/INSIDE channel of the 45x21.2mm aluminum sash bar.
+#     - ZERO penetration through the outer mitered aluminum skin or glass pane!
+#     - Fully concealed from front/top view, connecting to carcase roof/gable mounting plates.
+#   • AUTHENTIC BLUM CLIP TOP 35mm CONCEALED HINGES FOR SLAB DOORS:
+#     - Bored 12.5mm into the REAR face of the slab door (Blind corner on mid-pillar, tall towers at collision-free heights).
+#   • BLUM AVENTOS HF BI-FOLD LIFT MECHANISM (Drive Units + Telescopic Arms).
+#   • EXACT SHOTGUN BLIND CORNER WITH NOTCHED SHELF.
 #   • AUTHENTIC GOLA BEVELED FINGER-PULL EXTENDED FRONTS.
 # ==============================================================================
 require 'sketchup.rb'
@@ -85,33 +86,55 @@ module CabinetrixBoxEngine
   end
 
   # ----------------------------------------------------------------------------
-  # 2. AUTHENTIC 3D BLUM CLIP TOP CONCEALED HINGE BUILDER
+  # 2. AUTHENTIC 3D BLUM CONCEALED HINGE BUILDER (TIMBER & ALU FRAMES)
   # ----------------------------------------------------------------------------
-  def self.build_blum_concealed_hinge(parent_ents, cup_center_pt, is_left_hinged, mats, is_horizontal_top: false)
+  def self.build_blum_concealed_hinge(parent_ents, fixing_pt, is_left_hinged, mats, is_horizontal_top: false, is_alu_frame: false)
     hinge_grp = parent_ents.add_group
-    hinge_grp.name = "Blum_CLIP_top_BLUMOTION_Hinge"
+    hinge_grp.name = is_alu_frame ? "Blum_71T950A_Alu_Frame_Hinge" : "Blum_CLIP_top_BLUMOTION_Hinge"
 
-    cx, cy, cz = cup_center_pt.x, cup_center_pt.y, cup_center_pt.z
+    cx, cy, cz = fixing_pt.x, fixing_pt.y, fixing_pt.z
     steel_mat  = mats[:steel]
 
-    if is_horizontal_top
-      # Top Flap Hinge (Rotated horizontally)
-      create_cylinder(hinge_grp.entities, Geom::Point3d.new(cx, cy, cz), Geom::Vector3d.new(0, 0, 1), 17.5.mm, 12.5.mm, steel_mat)
-      create_box(hinge_grp.entities, [cx - 10.mm, cy, cz + 2.mm], [20.mm, 45.mm, 15.mm], steel_mat, "Hinge_Arm")
-      create_box(hinge_grp.entities, [cx - 18.mm, cy + 30.mm, cz + 14.mm], [36.mm, 25.mm, 4.mm], steel_mat, "Mounting_Plate")
+    if is_alu_frame
+      # ========================================================================
+      # BLUM 71T950A / 78Z550AT FOR NARROW ALUMINUM FRAMES
+      # Screws strictly to REAR face of Aluminum Bar (Inside Cabinet - ZERO Front Penetration)
+      # ========================================================================
+      if is_horizontal_top
+        # Top Horizontal Aluminum Rail Hinge (AVENTOS HF Top & Intermediate)
+        # 1. Flat Aluminum Fixing Bracket mounted to rear of profile web
+        create_box(hinge_grp.entities, [cx - 16.mm, cy, cz - 12.mm], [32.mm, 3.5.mm, 24.mm], steel_mat, "Alu_Frame_Fixing_Bracket")
+        # 2. Articulated Hinge Arm extending back to Cabinet Roof
+        create_box(hinge_grp.entities, [cx - 8.mm, cy + 3.5.mm, cz - 6.mm], [16.mm, 42.mm, 12.mm], steel_mat, "Hinge_Arm")
+        # 3. Horizontal Mounting Plate on Roof Panel
+        create_box(hinge_grp.entities, [cx - 18.mm, cy + 24.mm, cz + 6.mm], [36.mm, 32.mm, 4.mm], steel_mat, "Roof_Mounting_Plate")
+      else
+        # Vertical Stile Aluminum Frame Hinge
+        create_box(hinge_grp.entities, [cx - 12.mm, cy, cz - 16.mm], [24.mm, 3.5.mm, 32.mm], steel_mat, "Alu_Frame_Fixing_Bracket")
+        arm_ox = is_left_hinged ? (cx - 36.mm) : cx
+        create_box(hinge_grp.entities, [arm_ox, cy + 3.5.mm, cz - 6.mm], [36.mm, 36.mm, 12.mm], steel_mat, "Hinge_Arm")
+        plate_ox = is_left_hinged ? (cx - 40.mm) : (cx + 34.mm)
+        create_box(hinge_grp.entities, [plate_ox, cy + 22.mm, cz - 18.mm], [4.mm, 32.mm, 36.mm], steel_mat, "Cruciform_Mounting_Plate")
+      end
     else
-      # Standard Vertical Stile / Slab Door Hinge
-      dir = is_left_hinged ? 1.0 : -1.0
-      # 35mm Cup Boss
-      create_cylinder(hinge_grp.entities, Geom::Point3d.new(cx, cy, cz), Geom::Vector3d.new(0, -1, 0), 17.5.mm, 12.5.mm, steel_mat)
-      # Hinge Cup Flange
-      create_box(hinge_grp.entities, [cx - 10.mm, cy - 2.mm, cz - 25.mm], [20.mm, 3.mm, 50.mm], steel_mat, "Cup_Flange")
-      # Nickel Steel Articulated Hinge Arm
-      arm_ox = is_left_hinged ? cx : (cx - 45.mm)
-      create_box(hinge_grp.entities, [arm_ox, cy, cz - 8.mm], [45.mm, 40.mm, 16.mm], steel_mat, "Hinge_Arm")
-      # Cruciform Mounting Plate on Gable
-      plate_ox = is_left_hinged ? (cx - 5.mm) : (cx - 32.mm)
-      create_box(hinge_grp.entities, [plate_ox, cy + 28.mm, cz - 18.mm], [4.mm, 32.mm, 36.mm], steel_mat, "Cruciform_Mounting_Plate")
+      # ========================================================================
+      # BLUM CLIP TOP FOR TIMBER / MDF SLAB DOORS (35mm Cup Bored on Door Back)
+      # ========================================================================
+      if is_horizontal_top
+        # Top Flap Stay Hinge
+        create_cylinder(hinge_grp.entities, Geom::Point3d.new(cx, cy, cz), Geom::Vector3d.new(0, 1, 0), 17.5.mm, 12.5.mm, steel_mat)
+        create_box(hinge_grp.entities, [cx - 25.mm, cy, cz - 10.mm], [50.mm, 2.5.mm, 20.mm], steel_mat, "Cup_Flange")
+        create_box(hinge_grp.entities, [cx - 10.mm, cy + 12.5.mm, cz - 6.mm], [20.mm, 42.mm, 14.mm], steel_mat, "Hinge_Arm")
+        create_box(hinge_grp.entities, [cx - 18.mm, cy + 30.mm, cz + 6.mm], [36.mm, 32.mm, 4.mm], steel_mat, "Roof_Mounting_Plate")
+      else
+        # Standard Slab Door (Corner Mid Pillar, Tall Oven Tower Cupboard)
+        create_cylinder(hinge_grp.entities, Geom::Point3d.new(cx, cy, cz), Geom::Vector3d.new(0, 1, 0), 17.5.mm, 12.5.mm, steel_mat)
+        create_box(hinge_grp.entities, [cx - 10.mm, cy, cz - 25.mm], [20.mm, 2.5.mm, 50.mm], steel_mat, "Cup_Flange")
+        arm_ox = is_left_hinged ? (cx - 40.mm) : cx
+        create_box(hinge_grp.entities, [arm_ox, cy + 12.5.mm, cz - 8.mm], [40.mm, 35.mm, 16.mm], steel_mat, "Hinge_Arm")
+        plate_ox = is_left_hinged ? (cx - 42.mm) : (cx + 38.mm)
+        create_box(hinge_grp.entities, [plate_ox, cy + 26.mm, cz - 18.mm], [4.mm, 32.mm, 36.mm], steel_mat, "Cruciform_Mounting_Plate")
+      end
     end
 
     hinge_grp
@@ -366,16 +389,6 @@ module CabinetrixBoxEngine
       group.entities.add_face(start_inner[index], end_inner[index], end_inner[nxt], start_inner[nxt])
     end
 
-    if is_hinged && bar_length > 200.mm
-      [100.mm, bar_length - 100.mm].each do |hinge_x|
-        marker = group.entities.add_group
-        marker.material = hole_mat
-        circle = marker.entities.add_circle(Geom::Point3d.new(hinge_x, 21.2.mm, 22.5.mm), Geom::Vector3d.new(0, 1, 0), 17.5.mm, 24)
-        face = marker.entities.add_face(circle)
-        face.pushpull(-13.mm) if face
-      end
-    end
-
     group
   end
 
@@ -389,29 +402,24 @@ module CabinetrixBoxEngine
     glass_mat = mats[:glass]
     hole_mat  = mats[:hole] || mats[:steel]
 
-    hinge_top    = (hinge_pos == :top)
-    hinge_bottom = (hinge_pos == :bottom)
-    hinge_left   = (hinge_pos == :left)
-    hinge_right  = (hinge_pos == :right)
-
     # 1. Bottom Rail
-    bottom = create_sash_bar(sub, door_w, alu_mat, hole_mat, hinge_bottom)
+    bottom = create_sash_bar(sub, door_w, alu_mat, hole_mat, false)
     bottom.transform!(transform)
 
     # 2. Top Rail (Flipped 45° miter)
-    top = create_sash_bar(sub, door_w, alu_mat, hole_mat, hinge_top)
+    top = create_sash_bar(sub, door_w, alu_mat, hole_mat, false)
     top.transform!(Geom::Transformation.scaling(1, 1, -1))
     top.transform!(Geom::Transformation.translation([0, 0, door_h]))
     top.transform!(transform)
 
     # 3. Left Stile (Rotated 90°)
-    left = create_sash_bar(sub, door_h, alu_mat, hole_mat, hinge_left)
+    left = create_sash_bar(sub, door_h, alu_mat, hole_mat, false)
     left.transform!(Geom::Transformation.rotation([0, 0, 0], [0, 1, 0], -90.degrees))
     left.transform!(Geom::Transformation.scaling(-1, 1, 1))
     left.transform!(transform)
 
     # 4. Right Stile (Rotated 90°)
-    right = create_sash_bar(sub, door_h, alu_mat, hole_mat, hinge_right)
+    right = create_sash_bar(sub, door_h, alu_mat, hole_mat, false)
     right.transform!(Geom::Transformation.rotation([0, 0, 0], [0, 1, 0], -90.degrees))
     right.transform!(Geom::Transformation.translation([door_w, 0, 0]))
     right.transform!(transform)
@@ -472,20 +480,22 @@ module CabinetrixBoxEngine
     create_box(lift_group.entities, [bx + width - BOARD_THK - unit_w - arm_thick - 2.mm, by - depth + 20.mm, bz + 180.mm], [arm_thick, depth - 180.mm, arm_w], mats[:steel], "Blum_AVENTOS_Telescopic_Arm_RH")
     create_box(lift_group.entities, [bx + width - BOARD_THK - unit_w - arm_thick - 2.mm, by - depth - 5.mm, bz + 170.mm], [16.mm, 20.mm, 40.mm], mats[:steel], "Front_Fixing_Bracket_RH")
 
-    # 3. INTERMEDIATE BI-FOLD HINGES & TOP CLIP TOP 120° HINGES ON TOP RAILS
+    # 3. BLUM 71T950A ALUMINUM FRAME HINGES (Mounted strictly to rear channel of ALU rail)
     [bx + 120.mm, bx + width - 150.mm].each_with_index do |hx, h_idx|
-      build_blum_concealed_hinge(lift_group.entities, Geom::Point3d.new(hx, by - depth - 2.mm, bz + height - 12.mm), false, mats, is_horizontal_top: true)
-      build_blum_concealed_hinge(lift_group.entities, Geom::Point3d.new(hx, by - depth - 2.mm, bz + door_h + mid_gap), false, mats, is_horizontal_top: true)
+      # Top Hinge connecting Upper ALU Frame to Roof
+      build_blum_concealed_hinge(lift_group.entities, Geom::Point3d.new(hx, by - depth, bz + height - 20.mm), false, mats, is_horizontal_top: true, is_alu_frame: true)
+      # Intermediate Bi-Fold Hinge connecting Upper to Lower ALU Frame
+      build_blum_concealed_hinge(lift_group.entities, Geom::Point3d.new(hx, by - depth, bz + door_h + mid_gap), false, mats, is_horizontal_top: true, is_alu_frame: true)
     end
 
-    # 4. TWO-SECTION BI-FOLD DOORS (Hinges on TOP Rails, NO side stile hinges)
+    # 4. TWO-SECTION BI-FOLD DOORS (Pristine 45° Mitered Aluminum Frames with ZERO Front Penetration)
     upper_z = bz + door_h + mid_gap + 2.0.mm
     lower_z = bz + 2.0.mm
 
-    upper_door = build_senior_sash_door(lift_group.entities, bx + 1.5.mm, front_y, upper_z, door_w, door_h, mats, hinge_pos: :top)
+    upper_door = build_senior_sash_door(lift_group.entities, bx + 1.5.mm, front_y, upper_z, door_w, door_h, mats, hinge_pos: :none)
     upper_door.name = "AVENTOS_HF_Upper_BiFold_Door_Section"
 
-    lower_door = build_senior_sash_door(lift_group.entities, bx + 1.5.mm, front_y, lower_z, door_w, door_h, mats, hinge_pos: :top)
+    lower_door = build_senior_sash_door(lift_group.entities, bx + 1.5.mm, front_y, lower_z, door_w, door_h, mats, hinge_pos: :none)
     lower_door.name = "AVENTOS_HF_Lower_BiFold_Door_Section"
 
     lift_group
@@ -513,7 +523,7 @@ module CabinetrixBoxEngine
 
     case type
     # ==========================================================================
-    # CORNER BASE CABINETS — EXACT SHOTGUN BLIND CORNER IMPLEMENTATION
+    # CORNER BASE CABINETS — EXACT SHOTGUN BLIND CORNER (HINGED ON MID PILLAR)
     # ==========================================================================
     when :base_blind_corner, :base_lemans_corner, :base_magic_corner, :base_corner_shelf
       blind_width = 600.0.mm
@@ -530,7 +540,7 @@ module CabinetrixBoxEngine
       create_box(box_grp.entities, [bx + BOARD_THK, by - depth + GOLA_DEPTH, bz + height - BOARD_THK], [inner_w, 80.mm, BOARD_THK], mats[:carcase], "Top_Front_Stretcher")
       create_box(box_grp.entities, [bx + BOARD_THK, by - 80.mm, bz + height - BOARD_THK], [inner_w, 80.mm, BOARD_THK], mats[:carcase], "Top_Rear_Stretcher")
 
-      # 3. Upright Door Support Baffle (18mm x 100mm)
+      # 3. Upright Door Support Baffle (18mm x 100mm Mid Pillar)
       create_box(box_grp.entities, [bx + upright_x - BOARD_THK/2.0, by - depth, bz + BOARD_THK], [BOARD_THK, 100.mm, height - 3*BOARD_THK], mats[:carcase], "Corner_Door_Support_Upright")
 
       # 4. Shotgun 1-Piece Front-Notched Shelf with CNC U-Notch around Upright
@@ -541,21 +551,21 @@ module CabinetrixBoxEngine
       shelf_size   = [inner_w, depth - BOARD_THK - BACK_THK, BOARD_THK]
       create_front_notched_shelf(box_grp.entities, "Corner_Mid_Shelf_With_Upright_Notch", shelf_origin, shelf_size, notch_x, notch_w, notch_d, mats[:carcase])
 
-      # 5. Front Blind Panel & Accessible Working Door WITH 3D CONCEALED HINGES
+      # 5. Front Blind Panel & Accessible Working Door WITH HINGES MOUNTED ON MID PILLAR
       door_open_deg = (mode == :hybrid ? 95.0 : 0.0)
       door_grp = create_box(box_grp.entities, [bx + 3.mm, by - depth - FRONT_THK, bz + 3.mm], [door_width - 6.mm, FRONT_THK, height - 38.mm], front_mat, "Corner_Working_Door_Left")
       
-      # 3D Blum CLIP top Concealed Hinges on Corner Door
-      build_blum_concealed_hinge(box_grp.entities, Geom::Point3d.new(bx + 25.mm, by - depth - 2.mm, bz + 100.mm), true, mats)
-      build_blum_concealed_hinge(box_grp.entities, Geom::Point3d.new(bx + 25.mm, by - depth - 2.mm, bz + height - 120.mm), true, mats)
+      # 3D Blum CLIP top Concealed Hinges on MID PILLAR (upright baffle)
+      build_blum_concealed_hinge(box_grp.entities, Geom::Point3d.new(bx + upright_x - 22.mm, by - depth - FRONT_THK, bz + 100.mm), false, mats)
+      build_blum_concealed_hinge(box_grp.entities, Geom::Point3d.new(bx + upright_x - 22.mm, by - depth - FRONT_THK, bz + height - 120.mm), false, mats)
 
       if door_open_deg > 0
-        door_grp.transform!(Geom::Transformation.rotation(Geom::Point3d.new(bx + 3.mm, by - depth - FRONT_THK, bz), Geom::Vector3d.new(0, 0, 1), -door_open_deg.degrees))
+        door_grp.transform!(Geom::Transformation.rotation(Geom::Point3d.new(bx + upright_x - 3.mm, by - depth - FRONT_THK, bz), Geom::Vector3d.new(0, 0, 1), door_open_deg.degrees))
       end
       create_box(box_grp.entities, [bx + door_width + 3.mm, by - depth - FRONT_THK, bz + 3.mm], [blind_width - 6.mm, FRONT_THK, height - 3.mm], front_mat, "Corner_Blind_Panel_Right")
 
     # ==========================================================================
-    # TALL APPLIANCE & PANTRY TOWERS
+    # TALL APPLIANCE & PANTRY TOWERS (AUDITED COLLISION-FREE HINGE ELEVATIONS)
     # ==========================================================================
     when :tall_oven_tower
       create_box(box_grp.entities, [bx, by - depth, 0], [BOARD_THK, depth, height], mats[:carcase], "Gable_LH")
@@ -575,8 +585,8 @@ module CabinetrixBoxEngine
       create_box(box_grp.entities, [bx + 1.5.mm, by - depth - FRONT_THK, upper_door_z], [width - 3.mm, FRONT_THK, upper_door_h], front_mat, "Upper_Cupboard_Door")
       
       # 3D Concealed Hinges on Upper Cupboard Door
-      build_blum_concealed_hinge(box_grp.entities, Geom::Point3d.new(bx + 25.mm, by - depth - 2.mm, upper_door_z + 80.mm), true, mats)
-      build_blum_concealed_hinge(box_grp.entities, Geom::Point3d.new(bx + 25.mm, by - depth - 2.mm, upper_door_z + upper_door_h - 80.mm), true, mats)
+      build_blum_concealed_hinge(box_grp.entities, Geom::Point3d.new(bx + 25.mm, by - depth - FRONT_THK, upper_door_z + 80.mm), true, mats)
+      build_blum_concealed_hinge(box_grp.entities, Geom::Point3d.new(bx + 25.mm, by - depth - FRONT_THK, upper_door_z + upper_door_h - 80.mm), true, mats)
 
       build_hettich_undermount_drawer(box_grp.entities, Geom::Point3d.new(bx + BOARD_THK, by - depth, bz + 12.mm), inner_w, depth, 200.mm, 355.mm, 0.mm, mats, front_mat)
       build_hettich_undermount_drawer(box_grp.entities, Geom::Point3d.new(bx + BOARD_THK, by - depth, bz + 380.mm), inner_w, depth, 200.mm, 335.mm, (mode == :hybrid ? 250.mm : 0.mm), mats, front_mat)
@@ -599,11 +609,12 @@ module CabinetrixBoxEngine
       build_adjustable_shelf(box_grp.entities, "Adjustable_Shelf_2", width, depth, 1200.mm + BOARD_THK + 550.mm, mats)
       
       door_open_deg = (mode == :hybrid ? 95.0 : 0.0)
-      build_senior_sash_door(box_grp.entities, bx + 1.5.mm, by - depth - 21.2.mm, bz, width - 3.mm, height - bz - 3.mm, mats, hinge_pos: :left, open_angle_deg: door_open_deg)
+      build_senior_sash_door(box_grp.entities, bx + 1.5.mm, by - depth - 21.2.mm, bz, width - 3.mm, height - bz - 3.mm, mats, hinge_pos: :none, open_angle_deg: door_open_deg)
       
-      # 4x Blum 155° Zero-Protrusion Concealed Hinges on Pantry Gable
-      [bz + 100.mm, bz + 800.mm, bz + 1300.mm, bz + height - 150.mm].each do |hz|
-        build_blum_concealed_hinge(box_grp.entities, Geom::Point3d.new(bx + 25.mm, by - depth - 2.mm, hz), true, mats)
+      # 4x Blum 155° Zero-Protrusion Concealed Hinges at COLLISION-FREE Elevations (Avoiding all 5 Drawers!)
+      # Drawer zones: [20..180], [230..390], [440..600], [650..810], [860..1020]
+      [bz + 200.mm, bz + 625.mm, bz + 1250.mm, bz + 1950.mm].each do |hz|
+        build_blum_concealed_hinge(box_grp.entities, Geom::Point3d.new(bx + 25.mm, by - depth, hz), true, mats, is_alu_frame: true)
       end
 
     # ==========================================================================
@@ -688,14 +699,13 @@ module CabinetrixBoxEngine
       
       door_h = height + BOARD_THK
       door_z = bz - BOARD_THK
-      hinge_p = (params[:is_left_hinged] == false) ? :right : :left
-      build_senior_sash_door(box_grp.entities, bx + 1.5.mm, by - depth - 21.2.mm, door_z, width - 3.mm, door_h, mats, hinge_pos: hinge_p)
+      is_l = (params[:is_left_hinged] != false)
+      build_senior_sash_door(box_grp.entities, bx + 1.5.mm, by - depth - 21.2.mm, door_z, width - 3.mm, door_h, mats, hinge_pos: :none)
       
-      # 3D Concealed Hinges on Wall Gable
-      is_l = (hinge_p == :left)
+      # Blum 71T950A ALU Frame Hinges on Wall Gable
       hinge_x = is_l ? (bx + 25.mm) : (bx + width - 25.mm)
-      build_blum_concealed_hinge(box_grp.entities, Geom::Point3d.new(hinge_x, by - depth - 2.mm, bz + 80.mm), is_l, mats)
-      build_blum_concealed_hinge(box_grp.entities, Geom::Point3d.new(hinge_x, by - depth - 2.mm, bz + height - 80.mm), is_l, mats)
+      build_blum_concealed_hinge(box_grp.entities, Geom::Point3d.new(hinge_x, by - depth, bz + 80.mm), is_l, mats, is_alu_frame: true)
+      build_blum_concealed_hinge(box_grp.entities, Geom::Point3d.new(hinge_x, by - depth, bz + height - 80.mm), is_l, mats, is_alu_frame: true)
 
     when :wall_cooker_hood
       create_box(box_grp.entities, [bx, by - depth, bz], [BOARD_THK, depth, height], mats[:carcase], "Gable_LH")
@@ -710,8 +720,8 @@ module CabinetrixBoxEngine
       create_box(box_grp.entities, [bx + 1.5.mm, by - depth - FRONT_THK, hood_door_z], [width - 3.mm, FRONT_THK, hood_door_h], front_mat, "Upper_Hood_Door")
       
       # 3D Concealed Hinges on Hood Door
-      build_blum_concealed_hinge(box_grp.entities, Geom::Point3d.new(bx + 25.mm, by - depth - 2.mm, hood_door_z + 60.mm), true, mats)
-      build_blum_concealed_hinge(box_grp.entities, Geom::Point3d.new(bx + 25.mm, by - depth - 2.mm, hood_door_z + hood_door_h - 60.mm), true, mats)
+      build_blum_concealed_hinge(box_grp.entities, Geom::Point3d.new(bx + 25.mm, by - depth - FRONT_THK, hood_door_z + 60.mm), true, mats)
+      build_blum_concealed_hinge(box_grp.entities, Geom::Point3d.new(bx + 25.mm, by - depth - FRONT_THK, hood_door_z + hood_door_h - 60.mm), true, mats)
 
     when :top_bulkhead_flap, :deep_top_bulkhead
       bulkhead_h = params[:height] || 360.mm
@@ -725,7 +735,7 @@ module CabinetrixBoxEngine
       
       # 2x Top Stay Lift Hinges on Bulkhead
       [bx + 100.mm, bx + width - 100.mm].each do |hx|
-        build_blum_concealed_hinge(box_grp.entities, Geom::Point3d.new(hx, by - depth - 2.mm, bz + bulkhead_h - 15.mm), false, mats, is_horizontal_top: true)
+        build_blum_concealed_hinge(box_grp.entities, Geom::Point3d.new(hx, by - depth - FRONT_THK, bz + bulkhead_h - 20.mm), false, mats, is_horizontal_top: true)
       end
 
     when :open_rack_metal
