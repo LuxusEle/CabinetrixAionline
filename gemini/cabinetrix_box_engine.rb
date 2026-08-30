@@ -3,11 +3,11 @@
 # File: gemini/cabinetrix_box_engine.rb
 #
 # Production Standard:
-#   • AUTHENTIC BLUM AVENTOS HF BI-FOLD LIFT MECHANISM & TWO-SECTION DOORS:
-#     - Horizontal 2-section bi-fold split (Upper Door + Lower Door with 3mm reveal).
-#     - Blum AVENTOS HF Power Factor Drive Units (LH & RH).
-#     - Telescopic Steel Lift Arms with front fixing brackets connecting lower door.
-#     - Intermediate bi-fold hinges & top CLIP top 120° hinges.
+#   • AUTHENTIC BI-FOLD HINGE LOGIC FOR AVENTOS HF:
+#     - Hinges are located on the TOP/HORIZONTAL rails, NEVER on the side stiles!
+#     - Upper Door: Top horizontal rail has 35mm CLIP top 120° hinge bores connecting to cabinet roof.
+#     - Lower Door: Top horizontal rail has intermediate bi-fold hinge bores connecting to upper door.
+#     - Side stiles are clean with telescopic arm mounting brackets.
 #   • AUTHENTIC 45° MITERED HOLLOW ALUMINUM SASH DOOR SKILL (ALU SYS).
 #   • EXACT SHOTGUN BLIND CORNER IMPLEMENTATION.
 #   • AUTHENTIC GOLA BEVELED FINGER-PULL EXTENDED FRONTS.
@@ -346,7 +346,7 @@ module CabinetrixBoxEngine
     group
   end
 
-  def self.build_senior_sash_door(parent_ents, ox, oy, oz, door_w, door_h, mats, is_left_hinged: true, open_angle_deg: 0.0)
+  def self.build_senior_sash_door(parent_ents, ox, oy, oz, door_w, door_h, mats, hinge_pos: :left, open_angle_deg: 0.0)
     group = parent_ents.add_group
     group.name = "Alu_Sash_Door_#{door_w.to_mm.round}x#{door_h.to_mm.round}"
     sub = group.entities
@@ -356,29 +356,34 @@ module CabinetrixBoxEngine
     glass_mat = mats[:glass]
     hole_mat  = mats[:hole] || mats[:steel]
 
-    # Bottom Rail
-    bottom = create_sash_bar(sub, door_w, alu_mat, hole_mat, false)
+    hinge_top    = (hinge_pos == :top)
+    hinge_bottom = (hinge_pos == :bottom)
+    hinge_left   = (hinge_pos == :left)
+    hinge_right  = (hinge_pos == :right)
+
+    # 1. Bottom Rail
+    bottom = create_sash_bar(sub, door_w, alu_mat, hole_mat, hinge_bottom)
     bottom.transform!(transform)
 
-    # Top Rail (Flipped 45° miter)
-    top = create_sash_bar(sub, door_w, alu_mat, hole_mat, false)
+    # 2. Top Rail (Flipped 45° miter) - Receives 35mm CLIP top hinge holes when hinge_pos == :top!
+    top = create_sash_bar(sub, door_w, alu_mat, hole_mat, hinge_top)
     top.transform!(Geom::Transformation.scaling(1, 1, -1))
     top.transform!(Geom::Transformation.translation([0, 0, door_h]))
     top.transform!(transform)
 
-    # Left Stile (Rotated 90°)
-    left = create_sash_bar(sub, door_h, alu_mat, hole_mat, is_left_hinged)
+    # 3. Left Stile (Rotated 90°)
+    left = create_sash_bar(sub, door_h, alu_mat, hole_mat, hinge_left)
     left.transform!(Geom::Transformation.rotation([0, 0, 0], [0, 1, 0], -90.degrees))
     left.transform!(Geom::Transformation.scaling(-1, 1, 1))
     left.transform!(transform)
 
-    # Right Stile (Rotated 90°)
-    right = create_sash_bar(sub, door_h, alu_mat, hole_mat, !is_left_hinged)
+    # 4. Right Stile (Rotated 90°)
+    right = create_sash_bar(sub, door_h, alu_mat, hole_mat, hinge_right)
     right.transform!(Geom::Transformation.rotation([0, 0, 0], [0, 1, 0], -90.degrees))
     right.transform!(Geom::Transformation.translation([door_w, 0, 0]))
     right.transform!(transform)
 
-    # Infill Smoked Glass Pane (Inside Gasket Channel)
+    # 5. Infill Smoked Glass Pane (Inside Gasket Channel)
     pane = sub.add_group
     pane.material = glass_mat
     pane_face = pane.entities.add_face(
@@ -391,9 +396,8 @@ module CabinetrixBoxEngine
     pane.transform!(transform)
 
     if open_angle_deg != 0.0
-      pivot_pt = is_left_hinged ? Geom::Point3d.new(ox, oy, oz) : Geom::Point3d.new(ox + door_w, oy, oz)
-      rot_angle = is_left_hinged ? -open_angle_deg.degrees : open_angle_deg.degrees
-      rot_tr = Geom::Transformation.rotation(pivot_pt, Geom::Vector3d.new(0, 0, 1), rot_angle)
+      pivot_pt = Geom::Point3d.new(ox, oy, oz + door_h)
+      rot_tr = Geom::Transformation.rotation(pivot_pt, Geom::Vector3d.new(1, 0, 0), -open_angle_deg.degrees)
       group.transform!(rot_tr)
     end
 
@@ -415,45 +419,42 @@ module CabinetrixBoxEngine
 
     front_y = by - depth - 21.2.mm
 
-    # 1. BLUM AVENTOS HF POWER FACTOR DRIVE UNITS (Inside LH & RH Gables)
+    # 1. BLUM AVENTOS HF POWER FACTOR DRIVE UNITS (Mounted inside LH & RH Gables)
     unit_w = 30.0.mm
     unit_d = 180.0.mm
     unit_h = 135.0.mm
     mech_z = bz + height - unit_h - 20.0.mm
     mech_y = by - 160.0.mm
 
-    # LH Power Factor Drive Unit
     create_box(lift_group.entities, [bx + BOARD_THK + 1.mm, mech_y, mech_z], [unit_w, unit_d, unit_h], mats[:steel], "Blum_AVENTOS_HF_DriveUnit_LH")
-    # RH Power Factor Drive Unit
     create_box(lift_group.entities, [bx + width - BOARD_THK - unit_w - 1.mm, mech_y, mech_z], [unit_w, unit_d, unit_h], mats[:steel], "Blum_AVENTOS_HF_DriveUnit_RH")
 
     # 2. TELESCOPIC STEEL LIFT ARMS (LH & RH)
     arm_thick = 10.0.mm
     arm_w     = 18.0.mm
-    arm_len   = 280.0.mm
     
-    # LH Telescopic Lift Arm (Connecting Drive Unit to Lower Bi-Fold Door Bracket)
     create_box(lift_group.entities, [bx + BOARD_THK + unit_w + 2.mm, by - depth + 20.mm, bz + 180.mm], [arm_thick, depth - 180.mm, arm_w], mats[:steel], "Blum_AVENTOS_Telescopic_Arm_LH")
     create_box(lift_group.entities, [bx + BOARD_THK + unit_w + 2.mm, by - depth - 5.mm, bz + 170.mm], [16.mm, 20.mm, 40.mm], mats[:steel], "Front_Fixing_Bracket_LH")
 
-    # RH Telescopic Lift Arm
     create_box(lift_group.entities, [bx + width - BOARD_THK - unit_w - arm_thick - 2.mm, by - depth + 20.mm, bz + 180.mm], [arm_thick, depth - 180.mm, arm_w], mats[:steel], "Blum_AVENTOS_Telescopic_Arm_RH")
     create_box(lift_group.entities, [bx + width - BOARD_THK - unit_w - arm_thick - 2.mm, by - depth - 5.mm, bz + 170.mm], [16.mm, 20.mm, 40.mm], mats[:steel], "Front_Fixing_Bracket_RH")
 
-    # 3. INTERMEDIATE BI-FOLD HINGES (At the horizontal seam between upper & lower doors)
+    # 3. INTERMEDIATE BI-FOLD HINGES & TOP CLIP TOP 120° HINGES ON TOP RAILS
     [bx + 120.mm, bx + width - 150.mm].each_with_index do |hx, h_idx|
       create_box(lift_group.entities, [hx, by - depth - 5.mm, bz + door_h + 1.5.mm - 15.mm], [30.mm, 15.mm, 30.mm], mats[:steel], "Blum_Intermediate_Hinge_#{h_idx+1}")
       create_box(lift_group.entities, [hx, by - depth - 5.mm, bz + height - 20.mm], [30.mm, 15.mm, 20.mm], mats[:steel], "Blum_CLIP_Top_120_Hinge_#{h_idx+1}")
     end
 
-    # 4. TWO-SECTION BI-FOLD DOORS (Upper Section + Lower Section)
+    # 4. TWO-SECTION BI-FOLD DOORS (Hinges on TOP Rails, NO side stile hinges)
     upper_z = bz + door_h + mid_gap + 2.0.mm
     lower_z = bz + 2.0.mm
 
-    upper_door = build_senior_sash_door(lift_group.entities, bx + 1.5.mm, front_y, upper_z, door_w, door_h, mats, is_left_hinged: false)
+    # Upper Door: Top horizontal rail receives 35mm CLIP top 120° hinge bores!
+    upper_door = build_senior_sash_door(lift_group.entities, bx + 1.5.mm, front_y, upper_z, door_w, door_h, mats, hinge_pos: :top)
     upper_door.name = "AVENTOS_HF_Upper_BiFold_Door_Section"
 
-    lower_door = build_senior_sash_door(lift_group.entities, bx + 1.5.mm, front_y, lower_z, door_w, door_h, mats, is_left_hinged: false)
+    # Lower Door: Top horizontal rail receives intermediate bi-fold hinge bores!
+    lower_door = build_senior_sash_door(lift_group.entities, bx + 1.5.mm, front_y, lower_z, door_w, door_h, mats, hinge_pos: :top)
     lower_door.name = "AVENTOS_HF_Lower_BiFold_Door_Section"
 
     lift_group
@@ -556,7 +557,7 @@ module CabinetrixBoxEngine
       build_adjustable_shelf(box_grp.entities, "Adjustable_Shelf_2", width, depth, 1200.mm + BOARD_THK + 550.mm, mats)
       
       door_open_deg = (mode == :hybrid ? 95.0 : 0.0)
-      build_senior_sash_door(box_grp.entities, bx + 1.5.mm, by - depth - 21.2.mm, bz, width - 3.mm, height - bz - 3.mm, mats, is_left_hinged: true, open_angle_deg: door_open_deg)
+      build_senior_sash_door(box_grp.entities, bx + 1.5.mm, by - depth - 21.2.mm, bz, width - 3.mm, height - bz - 3.mm, mats, hinge_pos: :left, open_angle_deg: door_open_deg)
 
     # ==========================================================================
     # BASE & ISLAND UNITS (WITH AUTHENTIC GOLA BEVELED EXTENDED FRONTS)
@@ -643,8 +644,8 @@ module CabinetrixBoxEngine
       
       door_h = height + BOARD_THK
       door_z = bz - BOARD_THK
-      is_left = params[:is_left_hinged] != false
-      build_senior_sash_door(box_grp.entities, bx + 1.5.mm, by - depth - 21.2.mm, door_z, width - 3.mm, door_h, mats, is_left_hinged: is_left)
+      hinge_p = (params[:is_left_hinged] == false) ? :right : :left
+      build_senior_sash_door(box_grp.entities, bx + 1.5.mm, by - depth - 21.2.mm, door_z, width - 3.mm, door_h, mats, hinge_pos: hinge_p)
 
     when :wall_cooker_hood
       create_box(box_grp.entities, [bx, by - depth, bz], [BOARD_THK, depth, height], mats[:carcase], "Gable_LH")
