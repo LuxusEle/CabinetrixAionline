@@ -218,7 +218,3 @@ module CabinetrixCatalogueGrid
     puts "=" * 70 + "\n"
   end
 end
-
-if defined?(Sketchup)
-  CabinetrixCatalogueGrid.render_grid
-end
