@@ -3,11 +3,14 @@
 # File: gemini/cabinetrix_box_engine.rb
 #
 # Production Standard:
+#   • AUTHENTIC 45° MITERED HOLLOW ALUMINUM SASH DOOR SKILL (ALU SYS):
+#     - Exact 45x21.2mm hollow aluminum extrusion profile with authentic 45° miter joints.
+#     - Precision glass infill channel with smoked glass pane.
+#     - 35mm concealed hinge cup bores.
 #   • EXACT SHOTGUN BLIND CORNER IMPLEMENTATION:
 #     - Full carcase with dual top stretchers & grooved back.
 #     - Upright corner door support baffle (18mm x 100mm).
 #     - 1-Piece solid front-notched mid shelf with CNC pass-through U-notch around upright.
-#     - Clean front blind filler panel and working door (Zero clutter, zero duplicate trays).
 #   • AUTHENTIC GOLA BEVELED FINGER-PULL EXTENDED FRONTS:
 #     - Lower Front: Z=3.0mm -> 345.0mm (Height=342mm)
 #     - Upper Front: Z=390.0mm -> 675.0mm (Height=285mm)
@@ -91,17 +94,15 @@ module CabinetrixBoxEngine
     ox, oy, oz = origin
     sw, sd, sthk = size
 
-    # Polygon outline with front U-notch cutout
-    # Front is at oy (most negative Y = -depth), Back is at oy + sd
     pts = [
-      Geom::Point3d.new(ox, oy + sd, oz),                               # Back-Left
-      Geom::Point3d.new(ox + sw, oy + sd, oz),                          # Back-Right
-      Geom::Point3d.new(ox + sw, oy, oz),                               # Front-Right
-      Geom::Point3d.new(notch_x0 + notch_w, oy, oz),                    # Notch-Right-Front
-      Geom::Point3d.new(notch_x0 + notch_w, oy + notch_d, oz),          # Notch-Right-Back
-      Geom::Point3d.new(notch_x0, oy + notch_d, oz),                    # Notch-Left-Back
-      Geom::Point3d.new(notch_x0, oy, oz),                              # Notch-Left-Front
-      Geom::Point3d.new(ox, oy, oz)                                     # Front-Left
+      Geom::Point3d.new(ox, oy + sd, oz),
+      Geom::Point3d.new(ox + sw, oy + sd, oz),
+      Geom::Point3d.new(ox + sw, oy, oz),
+      Geom::Point3d.new(notch_x0 + notch_w, oy, oz),
+      Geom::Point3d.new(notch_x0 + notch_w, oy + notch_d, oz),
+      Geom::Point3d.new(notch_x0, oy + notch_d, oz),
+      Geom::Point3d.new(notch_x0, oy, oz),
+      Geom::Point3d.new(ox, oy, oz)
     ]
 
     face = group.entities.add_face(pts)
@@ -302,22 +303,95 @@ module CabinetrixBoxEngine
   end
 
   # ----------------------------------------------------------------------------
-  # 4. SASH DOORS
+  # 4. AUTHENTIC 45° MITERED HOLLOW ALUMINUM SASH DOOR (ALU SYS)
   # ----------------------------------------------------------------------------
+  def self.create_sash_bar(parent_ents, bar_length, alu_mat, hole_mat, is_hinged = false)
+    group = parent_ents.add_group
+    group.material = alu_mat
+
+    outer = [
+      [21.2, 0], [0, 0], [0, 10], [3.5, 10], [3.5, 8.5],
+      [1.5, 8.5], [1.5, 1.5], [5.0, 1.5], [5.0, 45], [21.2, 45]
+    ].reverse
+    inner = [[6.5, 1.5], [19.7, 1.5], [19.7, 43.5], [6.5, 43.5]].reverse
+
+    start_outer = outer.map { |y, z| Geom::Point3d.new(z.mm, y.mm, z.mm) }
+    end_outer   = outer.map { |y, z| Geom::Point3d.new(bar_length - z.mm, y.mm, z.mm) }
+    start_inner = inner.map { |y, z| Geom::Point3d.new(z.mm, y.mm, z.mm) }
+    end_inner   = inner.map { |y, z| Geom::Point3d.new(bar_length - z.mm, y.mm, z.mm) }
+
+    start_face = group.entities.add_face(start_outer)
+    start_hole = group.entities.add_face(start_inner)
+    start_hole.erase! if start_hole && start_hole.valid?
+    end_face   = group.entities.add_face(end_outer)
+    end_hole   = group.entities.add_face(end_inner)
+    end_hole.erase! if end_hole && end_hole.valid?
+
+    outer.length.times do |index|
+      nxt = (index + 1) % outer.length
+      group.entities.add_face(start_outer[index], start_outer[nxt], end_outer[nxt], end_outer[index])
+    end
+    inner.length.times do |index|
+      nxt = (index + 1) % inner.length
+      group.entities.add_face(start_inner[index], end_inner[index], end_inner[nxt], start_inner[nxt])
+    end
+
+    if is_hinged && bar_length > 200.mm
+      [100.mm, bar_length - 100.mm].each do |hinge_x|
+        marker = group.entities.add_group
+        marker.material = hole_mat
+        circle = marker.entities.add_circle(Geom::Point3d.new(hinge_x, 21.2.mm, 22.5.mm), Geom::Vector3d.new(0, 1, 0), 17.5.mm, 24)
+        face = marker.entities.add_face(circle)
+        face.pushpull(-13.mm) if face
+      end
+    end
+
+    group
+  end
+
   def self.build_senior_sash_door(parent_ents, ox, oy, oz, door_w, door_h, mats, is_left_hinged: true, open_angle_deg: 0.0)
     group = parent_ents.add_group
     group.name = "Alu_Sash_Door_#{door_w.to_mm.round}x#{door_h.to_mm.round}"
     sub = group.entities
     transform = Geom::Transformation.translation([ox, oy, oz])
 
-    frame_w = 45.0.mm
-    frame_t = 21.2.mm
+    alu_mat   = mats[:gola]
+    glass_mat = mats[:glass]
+    hole_mat  = mats[:hole] || mats[:steel]
 
-    create_box(sub, [ox, oy, oz], [door_w, frame_t, frame_w], mats[:gola], "Sash_Rail_Bottom")
-    create_box(sub, [ox, oy, oz + door_h - frame_w], [door_w, frame_t, frame_w], mats[:gola], "Sash_Rail_Top")
-    create_box(sub, [ox, oy, oz + frame_w], [frame_w, frame_t, door_h - 2*frame_w], mats[:gola], "Sash_Stile_LH")
-    create_box(sub, [ox + door_w - frame_w, oy, oz + frame_w], [frame_w, frame_t, door_h - 2*frame_w], mats[:gola], "Sash_Stile_RH")
-    create_box(sub, [ox + frame_w - 5.mm, oy + 8.mm, oz + frame_w - 5.mm], [door_w - 2*frame_w + 10.mm, 4.mm, door_h - 2*frame_w + 10.mm], mats[:glass], "Infill_Glass_Pane")
+    # Bottom Rail
+    bottom = create_sash_bar(sub, door_w, alu_mat, hole_mat, false)
+    bottom.transform!(transform)
+
+    # Top Rail (Flipped 45° miter)
+    top = create_sash_bar(sub, door_w, alu_mat, hole_mat, false)
+    top.transform!(Geom::Transformation.scaling(1, 1, -1))
+    top.transform!(Geom::Transformation.translation([0, 0, door_h]))
+    top.transform!(transform)
+
+    # Left Stile (Rotated 90°)
+    left = create_sash_bar(sub, door_h, alu_mat, hole_mat, is_left_hinged)
+    left.transform!(Geom::Transformation.rotation([0, 0, 0], [0, 1, 0], -90.degrees))
+    left.transform!(Geom::Transformation.scaling(-1, 1, 1))
+    left.transform!(transform)
+
+    # Right Stile (Rotated 90°)
+    right = create_sash_bar(sub, door_h, alu_mat, hole_mat, !is_left_hinged)
+    right.transform!(Geom::Transformation.rotation([0, 0, 0], [0, 1, 0], -90.degrees))
+    right.transform!(Geom::Transformation.translation([door_w, 0, 0]))
+    right.transform!(transform)
+
+    # Infill Smoked Glass Pane (Inside Gasket Channel)
+    pane = sub.add_group
+    pane.material = glass_mat
+    pane_face = pane.entities.add_face(
+      [10.mm, 1.75.mm, 10.mm],
+      [door_w - 10.mm, 1.75.mm, 10.mm],
+      [door_w - 10.mm, 5.75.mm, 10.mm],
+      [10.mm, 5.75.mm, 10.mm]
+    )
+    pane_face.pushpull(door_h - 20.mm) if pane_face
+    pane.transform!(transform)
 
     if open_angle_deg != 0.0
       pivot_pt = is_left_hinged ? Geom::Point3d.new(ox, oy, oz) : Geom::Point3d.new(ox + door_w, oy, oz)
@@ -372,7 +446,7 @@ module CabinetrixBoxEngine
       create_box(box_grp.entities, [bx + upright_x - BOARD_THK/2.0, by - depth, bz + BOARD_THK], [BOARD_THK, 100.mm, height - 3*BOARD_THK], mats[:carcase], "Corner_Door_Support_Upright")
 
       # 4. Shotgun 1-Piece Front-Notched Shelf with CNC U-Notch around Upright
-      notch_w = BOARD_THK + 2.0.mm # 20mm
+      notch_w = BOARD_THK + 2.0.mm
       notch_d = 100.0.mm
       notch_x = bx + upright_x - notch_w/2.0
       shelf_origin = [bx + BOARD_THK, by - depth, bz + height/2.0]
@@ -499,15 +573,20 @@ module CabinetrixBoxEngine
         create_box(box_grp.entities, [bx + BOARD_THK + 2.mm, by - 160.mm, bz + height - 160.mm], [35.mm, 150.mm, 150.mm], mats[:steel], "Aventos_HF_Mechanism_LH")
         create_box(box_grp.entities, [bx + width - BOARD_THK - 37.mm, by - 160.mm, bz + height - 160.mm], [35.mm, 150.mm, 150.mm], mats[:steel], "Aventos_HF_Mechanism_RH")
         build_adjustable_shelf(box_grp.entities, "Lift_Setback_Shelf", width, depth, bz + 360.mm, mats, setback_mm: 50.0)
+        
+        door_h = height + BOARD_THK
+        door_z = bz - BOARD_THK
+        is_left = params[:is_left_hinged] != false
+        build_senior_sash_door(box_grp.entities, bx + 1.5.mm, by - depth - 21.2.mm, door_z, width - 3.mm, door_h, mats, is_left_hinged: is_left)
       else
         build_adjustable_shelf(box_grp.entities, "Glass_Shelf_1", width, depth, bz + 240.mm, mats, is_glass: true)
         build_adjustable_shelf(box_grp.entities, "Glass_Shelf_2", width, depth, bz + 480.mm, mats, is_glass: true)
+        
+        door_h = height + BOARD_THK
+        door_z = bz - BOARD_THK
+        is_left = params[:is_left_hinged] != false
+        build_senior_sash_door(box_grp.entities, bx + 1.5.mm, by - depth - 21.2.mm, door_z, width - 3.mm, door_h, mats, is_left_hinged: is_left)
       end
-
-      door_h = height + BOARD_THK
-      door_z = bz - BOARD_THK
-      is_left = params[:is_left_hinged] != false
-      build_senior_sash_door(box_grp.entities, bx + 1.5.mm, by - depth - 21.2.mm, door_z, width - 3.mm, door_h, mats, is_left_hinged: is_left)
 
     when :wall_cooker_hood
       create_box(box_grp.entities, [bx, by - depth, bz], [BOARD_THK, depth, height], mats[:carcase], "Gable_LH")
