@@ -3,10 +3,10 @@
 # File: gemini/cabinetrix_box_engine.rb
 #
 # Production Standard:
-#   • AUTHENTIC 3D BLUM HINGE FROM "Hinge+simplified.skp":
-#     - Dynamically loads and places the exact user component definition "Hinge+simplified.skp".
-#     - Accurately oriented on the inside face of gables and door backs.
-#     - Clean procedural fallback if running outside SketchUp GUI.
+#   • KINEMATIC BLUM CONCEALED HINGE ARCHITECTURE:
+#     - Carcase Side: Cruciform Mounting Plate & Arm fixed to Gable at System 32 setback (Y = -depth + 37mm).
+#     - Door Side: 35mm Hinge Cup & Flange (45mm pitch) mounted INSIDE the door group.
+#     - When the door is opened (95°), the cups rotate with the door while plates stay fixed to the carcase!
 #   • BLUM AVENTOS HF BI-FOLD KINEMATICS:
 #     - Top Hinges (Upper Door Top -> Cabinet Roof).
 #     - Blum 78Z5500T Intermediate Hinges (Upper Door Bottom -> Lower Door Top).
@@ -49,8 +49,6 @@ module CabinetrixBoxEngine
   LOWER_DRAWER_Z    = 3.0.mm
   UPPER_DRAWER_Z    = 390.0.mm
 
-  @hinge_cdef = nil
-
   # ----------------------------------------------------------------------------
   # 1. CORE SOLID PRIMITIVES
   # ----------------------------------------------------------------------------
@@ -89,90 +87,58 @@ module CabinetrixBoxEngine
   end
 
   # ----------------------------------------------------------------------------
-  # 2. BLUM HINGE LOADER (FROM "Hinge+simplified.skp")
+  # 2. KINEMATIC BLUM CONCEALED HINGE BUILDERS
   # ----------------------------------------------------------------------------
-  def self.get_or_load_hinge_definition(model)
-    return @hinge_cdef if @hinge_cdef && @hinge_cdef.valid?
-    skp_path = File.join(__dir__, 'Hinge+simplified.skp')
-    if File.exist?(skp_path) && defined?(Sketchup)
-      begin
-        @hinge_cdef = model.definitions.find { |d| d.name == "Blum_Hinge_Simplified" }
-        @hinge_cdef ||= model.definitions.load(skp_path)
-        @hinge_cdef.name = "Blum_Hinge_Simplified" if @hinge_cdef
-      rescue => e
-        puts "Notice: Could not load Hinge+simplified.skp: #{e.message}"
-        @hinge_cdef = nil
-      end
-    end
-    @hinge_cdef
-  end
-
-  # ----------------------------------------------------------------------------
-  # 3. AUTHENTIC 3D BLUM CONCEALED HINGE BUILDER
-  # ----------------------------------------------------------------------------
-  def self.build_blum_concealed_hinge(parent_ents, bx, by, depth, hz, is_left_hinged, mats, gable_x: nil)
-    model = Sketchup.active_model if defined?(Sketchup)
-    cdef  = model ? get_or_load_hinge_definition(model) : nil
-
-    door_back_y = by - depth
-    g_inside_x  = gable_x || (is_left_hinged ? (bx + BOARD_THK) : (bx - BOARD_THK))
-    cup_x       = is_left_hinged ? (g_inside_x + 3.5.mm) : (g_inside_x - 3.5.mm)
-
-    if cdef
-      # Use imported Blum Hinge+simplified.skp component
-      pos_pt = Geom::Point3d.new(g_inside_x, door_back_y, hz)
-      tr_pos = Geom::Transformation.translation(pos_pt.to_a)
-      
-      tr = if is_left_hinged
-             tr_pos
-           else
-             tr_pos * Geom::Transformation.scaling(pos_pt, -1, 1, 1)
-           end
-
-      inst = parent_ents.add_instance(cdef, tr)
-      inst.name = "Blum_Hinge_Simplified_Instance"
-      return inst
-    end
-
-    # High-precision Procedural Fallback if SKP not loaded
-    hinge_grp = parent_ents.add_group
-    hinge_grp.name = "Blum_CLIP_top_Concealed_Hinge"
+  # Fixed Carcase Gable Mounting Plate & Base Arm
+  def self.build_blum_carcase_plate(parent_ents, g_inside_x, door_back_y, hz, is_left_hinged, mats)
+    plate_grp = parent_ents.add_group
+    plate_grp.name = "Blum_Cruciform_Mounting_Plate"
     steel_mat = mats[:steel]
 
     if is_left_hinged
-      create_cylinder(hinge_grp.entities, Geom::Point3d.new(cup_x, door_back_y, hz), Geom::Vector3d.new(0, -1, 0), 17.5.mm, 12.5.mm, steel_mat)
-      create_box(hinge_grp.entities, [cup_x - 10.mm, door_back_y - 2.5.mm, hz - 24.mm], [20.mm, 2.5.mm, 48.mm], steel_mat, "Cup_Flange")
-      create_box(hinge_grp.entities, [g_inside_x, door_back_y, hz - 6.mm], [cup_x - g_inside_x + 4.mm, 45.mm, 12.mm], steel_mat, "Hinge_Arm")
-      create_box(hinge_grp.entities, [g_inside_x, door_back_y + 21.mm, hz - 16.mm], [3.5.mm, 32.mm, 32.mm], steel_mat, "Cruciform_Mounting_Plate")
+      # Cruciform Plate on LH Gable at System 32 37mm setback
+      create_box(plate_grp.entities, [g_inside_x, door_back_y + 21.mm, hz - 16.mm], [3.5.mm, 32.mm, 32.mm], steel_mat, "Mounting_Plate")
+      # Fixing Screws (32mm vertical pitch)
+      create_cylinder(plate_grp.entities, Geom::Point3d.new(g_inside_x + 3.5.mm, door_back_y + 37.mm, hz + 16.mm), Geom::Vector3d.new(-1, 0, 0), 2.5.mm, 4.mm, steel_mat)
+      create_cylinder(plate_grp.entities, Geom::Point3d.new(g_inside_x + 3.5.mm, door_back_y + 37.mm, hz - 16.mm), Geom::Vector3d.new(-1, 0, 0), 2.5.mm, 4.mm, steel_mat)
+      # Fixed Base Arm extending forward
+      create_box(plate_grp.entities, [g_inside_x, door_back_y + 2.mm, hz - 6.mm], [6.mm, 35.mm, 12.mm], steel_mat, "Hinge_Arm_Base")
     else
-      create_cylinder(hinge_grp.entities, Geom::Point3d.new(cup_x, door_back_y, hz), Geom::Vector3d.new(0, -1, 0), 17.5.mm, 12.5.mm, steel_mat)
-      create_box(hinge_grp.entities, [cup_x - 10.mm, door_back_y - 2.5.mm, hz - 24.mm], [20.mm, 2.5.mm, 48.mm], steel_mat, "Cup_Flange")
-      create_box(hinge_grp.entities, [cup_x - 4.mm, door_back_y, hz - 6.mm], [g_inside_x - cup_x + 4.mm, 45.mm, 12.mm], steel_mat, "Hinge_Arm")
-      create_box(hinge_grp.entities, [g_inside_x - 3.5.mm, door_back_y + 21.mm, hz - 16.mm], [3.5.mm, 32.mm, 32.mm], steel_mat, "Cruciform_Mounting_Plate")
+      # Cruciform Plate on RH Gable
+      create_box(plate_grp.entities, [g_inside_x - 3.5.mm, door_back_y + 21.mm, hz - 16.mm], [3.5.mm, 32.mm, 32.mm], steel_mat, "Mounting_Plate")
+      create_cylinder(plate_grp.entities, Geom::Point3d.new(g_inside_x, door_back_y + 37.mm, hz + 16.mm), Geom::Vector3d.new(1, 0, 0), 2.5.mm, 4.mm, steel_mat)
+      create_cylinder(plate_grp.entities, Geom::Point3d.new(g_inside_x, door_back_y + 37.mm, hz - 16.mm), Geom::Vector3d.new(1, 0, 0), 2.5.mm, 4.mm, steel_mat)
+      create_box(plate_grp.entities, [g_inside_x - 6.mm, door_back_y + 2.mm, hz - 6.mm], [6.mm, 35.mm, 12.mm], steel_mat, "Hinge_Arm_Base")
     end
 
-    hinge_grp
+    plate_grp
+  end
+
+  # Door Hinge Cup & Flange (Built INSIDE the Door Component so it rotates with the door!)
+  def self.build_blum_door_cup(door_ents, cup_x, door_back_y, hz, mats)
+    cup_grp = door_ents.add_group
+    cup_grp.name = "Blum_35mm_Door_Hinge_Cup"
+    steel_mat = mats[:steel]
+
+    # 1. 35mm Cup Bored 12.5mm forward into the door back
+    create_cylinder(cup_grp.entities, Geom::Point3d.new(cup_x, door_back_y, hz), Geom::Vector3d.new(0, -1, 0), 17.5.mm, 12.5.mm, steel_mat)
+    # 2. Flange with 45mm vertical screw pitch
+    create_box(cup_grp.entities, [cup_x - 10.mm, door_back_y - 2.5.mm, hz - 24.mm], [20.mm, 2.5.mm, 48.mm], steel_mat, "Cup_Flange")
+    # 3. 2x 8mm Dowel/Screw ears
+    create_cylinder(cup_grp.entities, Geom::Point3d.new(cup_x, door_back_y, hz + 22.5.mm), Geom::Vector3d.new(0, -1, 0), 4.0.mm, 11.0.mm, steel_mat)
+    create_cylinder(cup_grp.entities, Geom::Point3d.new(cup_x, door_back_y, hz - 22.5.mm), Geom::Vector3d.new(0, -1, 0), 4.0.mm, 11.0.mm, steel_mat)
+
+    cup_grp
   end
 
   # Roof-Mounted Top Stay / AVENTOS HF Top Hinge (Underside of Roof Panel)
   def self.build_blum_top_roof_hinge(parent_ents, hx, by, depth, roof_underside_z, mats)
-    model = Sketchup.active_model if defined?(Sketchup)
-    cdef  = model ? get_or_load_hinge_definition(model) : nil
-    door_back_y = by - depth
-    cup_z       = roof_underside_z - 3.5.mm
-
-    if cdef
-      pos_pt = Geom::Point3d.new(hx, door_back_y, roof_underside_z)
-      tr_pos = Geom::Transformation.translation(pos_pt.to_a)
-      tr_rot = Geom::Transformation.rotation(pos_pt, Geom::Vector3d.new(0, 1, 0), -90.degrees)
-      inst = parent_ents.add_instance(cdef, tr_pos * tr_rot)
-      inst.name = "Blum_Hinge_Top_Roof_Instance"
-      return inst
-    end
-
     hinge_grp = parent_ents.add_group
     hinge_grp.name = "Blum_CLIP_top_120_Roof_Hinge"
     steel_mat = mats[:steel]
+
+    door_back_y = by - depth
+    cup_z       = roof_underside_z - 3.5.mm
 
     create_cylinder(hinge_grp.entities, Geom::Point3d.new(hx, door_back_y, cup_z), Geom::Vector3d.new(0, -1, 0), 17.5.mm, 12.5.mm, steel_mat)
     create_box(hinge_grp.entities, [hx - 24.mm, door_back_y - 2.5.mm, cup_z - 10.mm], [48.mm, 2.5.mm, 20.mm], steel_mat, "Cup_Flange")
@@ -294,7 +260,7 @@ module CabinetrixBoxEngine
       Geom::Point3d.new(origin_x, -base_depth, z_origin),
       Geom::Point3d.new(origin_x, -base_depth + GOLA_DEPTH, z_origin + C_GOLA_Z0),
       Geom::Point3d.new(origin_x, -base_depth + GOLA_DEPTH, z_origin + C_GOLA_Z0 + C_GOLA_H),
-      Geom::Point3d.new(origin_x, -base_depth, z_origin + C_GOLA_Z0 + C_GOLA_H),
+      Geom::Point3d.new(origin_x, -base_depth + GOLA_DEPTH, z_origin + C_GOLA_Z0 + C_GOLA_H),
       Geom::Point3d.new(origin_x, -base_depth, z_origin + height - L_GOLA_H),
       Geom::Point3d.new(origin_x, -base_depth + GOLA_DEPTH, z_origin + height - L_GOLA_H),
       Geom::Point3d.new(origin_x, -base_depth + GOLA_DEPTH, z_origin + height),
@@ -311,7 +277,7 @@ module CabinetrixBoxEngine
   end
 
   # ----------------------------------------------------------------------------
-  # 4. SCILM GOLA PROFILES
+  # 3. SCILM GOLA PROFILES
   # ----------------------------------------------------------------------------
   def self.build_gola_profile(parent_ents, profile_type, length, origin, mats)
     group = parent_ents.add_group
@@ -363,7 +329,7 @@ module CabinetrixBoxEngine
   end
 
   # ----------------------------------------------------------------------------
-  # 5. GLOBAL DRAWER FUNCTION: HETTICH ACTRO 5D WITH GOLA EXTENDED LIP
+  # 4. GLOBAL DRAWER FUNCTION: HETTICH ACTRO 5D WITH GOLA EXTENDED LIP
   # ----------------------------------------------------------------------------
   def self.build_hettich_undermount_drawer(parent_ents, inner_origin, inner_w, depth, box_height, front_h, pull_offset, mats, front_mat, is_sink_u_shape: false, front_w: nil, box_z_offset: 20.0)
     drawer_unit = parent_ents.add_group
@@ -419,7 +385,7 @@ module CabinetrixBoxEngine
   end
 
   # ----------------------------------------------------------------------------
-  # 6. AUTHENTIC 45° MITERED HOLLOW ALUMINUM SASH DOOR (ALU SYS)
+  # 5. AUTHENTIC 45° MITERED HOLLOW ALUMINUM SASH DOOR (ALU SYS)
   # ----------------------------------------------------------------------------
   def self.create_sash_bar(parent_ents, bar_length, alu_mat)
     group = parent_ents.add_group
@@ -455,7 +421,7 @@ module CabinetrixBoxEngine
     group
   end
 
-  def self.build_senior_sash_door(parent_ents, ox, oy, oz, door_w, door_h, mats, open_angle_deg: 0.0)
+  def self.build_senior_sash_door(parent_ents, ox, oy, oz, door_w, door_h, mats, open_angle_deg: 0.0, hinge_z_list: nil, is_left_hinged: true)
     group = parent_ents.add_group
     group.name = "Alu_Sash_Door_#{door_w.to_mm.round}x#{door_h.to_mm.round}"
     sub = group.entities
@@ -498,9 +464,20 @@ module CabinetrixBoxEngine
     pane_face.pushpull(door_h - 20.mm) if pane_face
     pane.transform!(transform)
 
+    # 6. Door Hinge Cups (Inside Door Group so they rotate perfectly with the door!)
+    if hinge_z_list
+      cup_x = is_left_hinged ? (ox + 20.0.mm) : (ox + door_w - 20.0.mm)
+      door_back_y = oy + 21.2.mm
+      hinge_z_list.each do |hz|
+        build_blum_door_cup(sub, cup_x, door_back_y, hz, mats)
+      end
+    end
+
     if open_angle_deg != 0.0
-      pivot_pt = Geom::Point3d.new(ox, oy, oz + door_h)
-      rot_tr = Geom::Transformation.rotation(pivot_pt, Geom::Vector3d.new(1, 0, 0), -open_angle_deg.degrees)
+      pivot_x = is_left_hinged ? ox : (ox + door_w)
+      pivot_pt = Geom::Point3d.new(pivot_x, oy + 21.2.mm, oz)
+      rot_dir  = is_left_hinged ? -1.0 : 1.0
+      rot_tr = Geom::Transformation.rotation(pivot_pt, Geom::Vector3d.new(0, 0, 1), rot_dir * open_angle_deg.degrees)
       group.transform!(rot_tr)
     end
 
@@ -508,7 +485,7 @@ module CabinetrixBoxEngine
   end
 
   # ----------------------------------------------------------------------------
-  # 7. AUTHENTIC BLUM AVENTOS HF BI-FOLD LIFT MECHANISM & 2-SECTION DOORS
+  # 6. AUTHENTIC BLUM AVENTOS HF BI-FOLD LIFT MECHANISM & 2-SECTION DOORS
   # ----------------------------------------------------------------------------
   def self.build_blum_aventos_hf_bi_fold_doors(parent_ents, bx, by, bz, width, height, depth, mats, front_mat, mode: :closed)
     lift_group = parent_ents.add_group
@@ -567,7 +544,7 @@ module CabinetrixBoxEngine
   end
 
   # ----------------------------------------------------------------------------
-  # 8. UNIVERSAL BOX CREATION API (LOCAL COORDINATES -> RIGID WORLD TRANSFORM)
+  # 7. UNIVERSAL BOX CREATION API (LOCAL COORDINATES -> RIGID WORLD TRANSFORM)
   # ----------------------------------------------------------------------------
   def self.create_cabinet(parent_ents, type, params, location, mats)
     name = params[:name] || "Cabinet_#{type.to_s.upcase}"
@@ -617,17 +594,26 @@ module CabinetrixBoxEngine
       shelf_size   = [inner_w, depth - BOARD_THK - BACK_THK, BOARD_THK]
       create_front_notched_shelf(box_grp.entities, "Corner_Mid_Shelf_With_Upright_Notch", shelf_origin, shelf_size, notch_x, notch_w, notch_d, mats[:carcase])
 
-      # 5. Front Blind Panel & Accessible Working Door WITH HINGES MOUNTED ON MID PILLAR
-      door_open_deg = (mode == :hybrid ? 95.0 : 0.0)
-      door_grp = create_box(box_grp.entities, [bx + 3.mm, by - depth - FRONT_THK, bz + 3.mm], [door_width - 6.mm, FRONT_THK, height - 38.mm], front_mat, "Corner_Working_Door_Left")
-      
-      # 3D Blum CLIP top Concealed Hinges screwed to opening face of Mid Pillar (pillar_center_x - 9mm)
+      # 5. Carcase Mid-Pillar Mounting Plates
       pillar_face_x = pillar_center_x - BOARD_THK/2.0
-      build_blum_concealed_hinge(box_grp.entities, bx, by, depth, bz + 100.mm, false, mats, gable_x: pillar_face_x)
-      build_blum_concealed_hinge(box_grp.entities, bx, by, depth, bz + height - 120.mm, false, mats, gable_x: pillar_face_x)
+      corner_hinge_z = [bz + 100.mm, bz + height - 120.mm]
+      corner_hinge_z.each do |hz|
+        build_blum_carcase_plate(box_grp.entities, pillar_face_x, by - depth, hz, false, mats)
+      end
+
+      # 6. Front Blind Panel & Accessible Working Door WITH HINGE CUPS ATTACHED TO DOOR
+      door_open_deg = (mode == :hybrid ? 95.0 : 0.0)
+      door_grp = box_grp.entities.add_group
+      door_grp.name = "Corner_Working_Door_Assembly"
+      
+      create_box(door_grp.entities, [bx + 3.mm, by - depth - FRONT_THK, bz + 3.mm], [door_width - 6.mm, FRONT_THK, height - 38.mm], front_mat, "Door_Slab")
+      corner_hinge_z.each do |hz|
+        build_blum_door_cup(door_grp.entities, bx + door_width - 21.5.mm, by - depth, hz, mats)
+      end
 
       if door_open_deg > 0
-        door_grp.transform!(Geom::Transformation.rotation(Geom::Point3d.new(bx + upright_x - 3.mm, by - depth - FRONT_THK, bz), Geom::Vector3d.new(0, 0, 1), door_open_deg.degrees))
+        pivot_pt = Geom::Point3d.new(bx + upright_x - 3.mm, by - depth - FRONT_THK, bz)
+        door_grp.transform!(Geom::Transformation.rotation(pivot_pt, Geom::Vector3d.new(0, 0, 1), door_open_deg.degrees))
       end
       create_box(box_grp.entities, [bx + door_width + 3.mm, by - depth - FRONT_THK, bz + 3.mm], [blind_width - 6.mm, FRONT_THK, height - 3.mm], front_mat, "Corner_Blind_Panel_Right")
 
@@ -649,11 +635,20 @@ module CabinetrixBoxEngine
 
       upper_door_h = height - (BASE_DATUM_Z - PLINTH_HEIGHT + 885.mm + BOARD_THK) - 6.mm
       upper_door_z = BASE_DATUM_Z - PLINTH_HEIGHT + 885.mm + BOARD_THK + 3.mm
-      create_box(box_grp.entities, [bx + 1.5.mm, by - depth - FRONT_THK, upper_door_z], [width - 3.mm, FRONT_THK, upper_door_h], front_mat, "Upper_Cupboard_Door")
-      
-      # 3D Concealed Hinges on Inside Face of LH Gable (bx + 18mm)
-      build_blum_concealed_hinge(box_grp.entities, bx, by, depth, upper_door_z + 80.mm, true, mats)
-      build_blum_concealed_hinge(box_grp.entities, bx, by, depth, upper_door_z + upper_door_h - 80.mm, true, mats)
+      oven_hinge_z = [upper_door_z + 80.mm, upper_door_z + upper_door_h - 80.mm]
+
+      # Plates on LH Gable
+      oven_hinge_z.each do |hz|
+        build_blum_carcase_plate(box_grp.entities, bx + BOARD_THK, by - depth, hz, true, mats)
+      end
+
+      # Door Assembly with Hinge Cups
+      door_grp = box_grp.entities.add_group
+      door_grp.name = "Upper_Cupboard_Door_Assembly"
+      create_box(door_grp.entities, [bx + 1.5.mm, by - depth - FRONT_THK, upper_door_z], [width - 3.mm, FRONT_THK, upper_door_h], front_mat, "Door_Slab")
+      oven_hinge_z.each do |hz|
+        build_blum_door_cup(door_grp.entities, bx + 21.5.mm, by - depth, hz, mats)
+      end
 
       build_hettich_undermount_drawer(box_grp.entities, Geom::Point3d.new(bx + BOARD_THK, by - depth, bz + 12.mm), inner_w, depth, 200.mm, 355.mm, 0.mm, mats, front_mat)
       build_hettich_undermount_drawer(box_grp.entities, Geom::Point3d.new(bx + BOARD_THK, by - depth, bz + 380.mm), inner_w, depth, 200.mm, 335.mm, (mode == :hybrid ? 250.mm : 0.mm), mats, front_mat)
@@ -675,14 +670,17 @@ module CabinetrixBoxEngine
       build_adjustable_shelf(box_grp.entities, "Adjustable_Shelf_1", width, depth, 1200.mm + BOARD_THK + 250.mm, mats)
       build_adjustable_shelf(box_grp.entities, "Adjustable_Shelf_2", width, depth, 1200.mm + BOARD_THK + 550.mm, mats)
       
-      door_open_deg = (mode == :hybrid ? 95.0 : 0.0)
-      build_senior_sash_door(box_grp.entities, bx + 1.5.mm, by - depth - 21.2.mm, bz, width - 3.mm, height - bz - 3.mm, mats, open_angle_deg: door_open_deg)
-      
-      # 4x Blum 155° Zero-Protrusion Concealed Hinges attached to INSIDE face of LH Gable (bx + 18mm)
-      # Located at collision-free elevations avoiding all 5 internal drawers
-      [bz + 200.mm, bz + 625.mm, bz + 1250.mm, bz + 1950.mm].each do |hz|
-        build_blum_concealed_hinge(box_grp.entities, bx, by, depth, hz, true, mats)
+      # 4 Collision-Free Elevations avoiding all 5 internal drawers
+      tower_hinge_z = [bz + 200.mm, bz + 625.mm, bz + 1250.mm, bz + 1950.mm]
+
+      # 4x Blum Mounting Plates on LH Gable (Fixed inside carcase)
+      tower_hinge_z.each do |hz|
+        build_blum_carcase_plate(box_grp.entities, bx + BOARD_THK, by - depth, hz, true, mats)
       end
+
+      # Sash Door with Hinge Cups (Rotates with Door)
+      door_open_deg = (mode == :hybrid ? 95.0 : 0.0)
+      build_senior_sash_door(box_grp.entities, bx + 1.5.mm, by - depth - 21.2.mm, bz, width - 3.mm, height - bz - 3.mm, mats, open_angle_deg: door_open_deg, hinge_z_list: tower_hinge_z, is_left_hinged: true)
 
     # ==========================================================================
     # BASE & ISLAND UNITS (WITH AUTHENTIC GOLA BEVELED EXTENDED FRONTS)
@@ -767,16 +765,16 @@ module CabinetrixBoxEngine
       door_h = height + BOARD_THK
       door_z = bz - BOARD_THK
       is_l = (params[:is_left_hinged] != false)
-      build_senior_sash_door(box_grp.entities, bx + 1.5.mm, by - depth - 21.2.mm, door_z, width - 3.mm, door_h, mats)
-      
-      # 3D Concealed Hinges attached to INSIDE face of Gable (bx + 18mm for LH, or bx + width - 18mm for RH)
-      if is_l
-        build_blum_concealed_hinge(box_grp.entities, bx, by, depth, bz + 100.mm, true, mats)
-        build_blum_concealed_hinge(box_grp.entities, bx, by, depth, bz + height - 100.mm, true, mats)
-      else
-        build_blum_concealed_hinge(box_grp.entities, bx + width, by, depth, bz + 100.mm, false, mats)
-        build_blum_concealed_hinge(box_grp.entities, bx + width, by, depth, bz + height - 100.mm, false, mats)
+      wall_hinge_z = [bz + 100.mm, bz + height - 100.mm]
+
+      # Plates on Gable
+      gx = is_l ? (bx + BOARD_THK) : (bx + width - BOARD_THK)
+      wall_hinge_z.each do |hz|
+        build_blum_carcase_plate(box_grp.entities, gx, by - depth, hz, is_l, mats)
       end
+
+      # Sash Door with Hinge Cups
+      build_senior_sash_door(box_grp.entities, bx + 1.5.mm, by - depth - 21.2.mm, door_z, width - 3.mm, door_h, mats, hinge_z_list: wall_hinge_z, is_left_hinged: is_l)
 
     when :wall_cooker_hood
       create_box(box_grp.entities, [bx, by - depth, bz], [BOARD_THK, depth, height], mats[:carcase], "Gable_LH")
@@ -788,11 +786,18 @@ module CabinetrixBoxEngine
       create_box(box_grp.entities, [bx + 10.mm, by - depth + 10.mm, bz], [width - 20.mm, depth - 20.mm, 150.mm], mats[:steel], "Extractor_Hood_Body")
       hood_door_h = height - 160.mm - 3.mm
       hood_door_z = bz + 160.mm + 3.mm
-      create_box(box_grp.entities, [bx + 1.5.mm, by - depth - FRONT_THK, hood_door_z], [width - 3.mm, FRONT_THK, hood_door_h], front_mat, "Upper_Hood_Door")
-      
-      # 3D Concealed Hinges on Inside Face of LH Gable (bx + 18mm)
-      build_blum_concealed_hinge(box_grp.entities, bx, by, depth, hood_door_z + 60.mm, true, mats)
-      build_blum_concealed_hinge(box_grp.entities, bx, by, depth, hood_door_z + hood_door_h - 60.mm, true, mats)
+      hood_hinge_z = [hood_door_z + 60.mm, hood_door_z + hood_door_h - 60.mm]
+
+      hood_hinge_z.each do |hz|
+        build_blum_carcase_plate(box_grp.entities, bx + BOARD_THK, by - depth, hz, true, mats)
+      end
+
+      door_grp = box_grp.entities.add_group
+      door_grp.name = "Hood_Door_Assembly"
+      create_box(door_grp.entities, [bx + 1.5.mm, by - depth - FRONT_THK, hood_door_z], [width - 3.mm, FRONT_THK, hood_door_h], front_mat, "Door_Slab")
+      hood_hinge_z.each do |hz|
+        build_blum_door_cup(door_grp.entities, bx + 21.5.mm, by - depth, hz, mats)
+      end
 
     when :top_bulkhead_flap, :deep_top_bulkhead
       bulkhead_h = params[:height] || 360.mm
@@ -850,7 +855,7 @@ module CabinetrixBoxEngine
     end
 
     # --------------------------------------------------------------------------
-    # 9. RIGID WORLD TRANSFORMATION
+    # 8. RIGID WORLD TRANSFORMATION
     # --------------------------------------------------------------------------
     rot_deg = location[:rotation_deg] || params[:rotation_deg] || 0.0
     tr_rot = Geom::Transformation.rotation(Geom::Point3d.new(0, 0, 0), Geom::Vector3d.new(0, 0, 1), rot_deg.degrees)
@@ -861,7 +866,7 @@ module CabinetrixBoxEngine
   end
 
   # ----------------------------------------------------------------------------
-  # 10. COMPLETE PHYSICAL BOARDS EXTRACTION API
+  # 9. COMPLETE PHYSICAL BOARDS EXTRACTION API
   # ----------------------------------------------------------------------------
   def self.extract_panels_for_cabinet(cab_type, width_mm, height_mm, depth_mm, cab_tag)
     thk = 18.0
