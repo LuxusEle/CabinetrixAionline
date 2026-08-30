@@ -2,15 +2,11 @@
 # CABINETRIX AI — UNIVERSAL PARAMETRIC BOX ENGINE (PRODUCTION STANDARD)
 # File: gemini/cabinetrix_box_engine.rb
 #
-# Production Standard (Verified against Blum Technical Diagrams):
-#   • AUTHENTIC BLUM CONCEALED HINGE SYSTEM:
-#     - Single Unified Hinge (Zero duplicate bores).
-#     - 35mm Hinge Cup: Bored 12.5mm deep into the INSIDE back face of the door (Y = -depth).
-#     - Cruciform Mounting Plate: Screwed strictly to the INSIDE face of the carcase gable
-#       at System 32 standard 37mm setback from front edge (X = 18mm for LH, X = W-18mm for RH).
-#     - Roof Mounting Plate: Screwed to underside of carcase roof (Z = bz + height - 18mm, Y = -depth + 37mm).
-#     - Blind Corner: Screwed to opening face of mid-pillar (X = upright_x - 9mm, Y = -depth + 37mm).
-#     - ZERO hinge parts protruding outside the cabinet body!
+# Production Standard:
+#   • AUTHENTIC 3D BLUM HINGE FROM "Hinge+simplified.skp":
+#     - Dynamically loads and places the exact user component definition "Hinge+simplified.skp".
+#     - Accurately oriented on the inside face of gables and door backs.
+#     - Clean procedural fallback if running outside SketchUp GUI.
 #   • BLUM AVENTOS HF BI-FOLD KINEMATICS:
 #     - Top Hinges (Upper Door Top -> Cabinet Roof).
 #     - Blum 78Z5500T Intermediate Hinges (Upper Door Bottom -> Lower Door Top).
@@ -53,6 +49,8 @@ module CabinetrixBoxEngine
   LOWER_DRAWER_Z    = 3.0.mm
   UPPER_DRAWER_Z    = 390.0.mm
 
+  @hinge_cdef = nil
+
   # ----------------------------------------------------------------------------
   # 1. CORE SOLID PRIMITIVES
   # ----------------------------------------------------------------------------
@@ -91,44 +89,65 @@ module CabinetrixBoxEngine
   end
 
   # ----------------------------------------------------------------------------
-  # 2. AUTHENTIC 3D BLUM CONCEALED HINGE BUILDER (STRICTLY INSIDE CARCASE)
+  # 2. BLUM HINGE LOADER (FROM "Hinge+simplified.skp")
   # ----------------------------------------------------------------------------
-  # Standard Gable/Door Concealed Hinge (Blum CLIP top 110°/155°)
+  def self.get_or_load_hinge_definition(model)
+    return @hinge_cdef if @hinge_cdef && @hinge_cdef.valid?
+    skp_path = File.join(__dir__, 'Hinge+simplified.skp')
+    if File.exist?(skp_path) && defined?(Sketchup)
+      begin
+        @hinge_cdef = model.definitions.find { |d| d.name == "Blum_Hinge_Simplified" }
+        @hinge_cdef ||= model.definitions.load(skp_path)
+        @hinge_cdef.name = "Blum_Hinge_Simplified" if @hinge_cdef
+      rescue => e
+        puts "Notice: Could not load Hinge+simplified.skp: #{e.message}"
+        @hinge_cdef = nil
+      end
+    end
+    @hinge_cdef
+  end
+
+  # ----------------------------------------------------------------------------
+  # 3. AUTHENTIC 3D BLUM CONCEALED HINGE BUILDER
+  # ----------------------------------------------------------------------------
   def self.build_blum_concealed_hinge(parent_ents, bx, by, depth, hz, is_left_hinged, mats, gable_x: nil)
+    model = Sketchup.active_model if defined?(Sketchup)
+    cdef  = model ? get_or_load_hinge_definition(model) : nil
+
+    door_back_y = by - depth
+    g_inside_x  = gable_x || (is_left_hinged ? (bx + BOARD_THK) : (bx - BOARD_THK))
+    cup_x       = is_left_hinged ? (g_inside_x + 3.5.mm) : (g_inside_x - 3.5.mm)
+
+    if cdef
+      # Use imported Blum Hinge+simplified.skp component
+      pos_pt = Geom::Point3d.new(g_inside_x, door_back_y, hz)
+      tr_pos = Geom::Transformation.translation(pos_pt.to_a)
+      
+      tr = if is_left_hinged
+             tr_pos
+           else
+             tr_pos * Geom::Transformation.scaling(pos_pt, -1, 1, 1)
+           end
+
+      inst = parent_ents.add_instance(cdef, tr)
+      inst.name = "Blum_Hinge_Simplified_Instance"
+      return inst
+    end
+
+    # High-precision Procedural Fallback if SKP not loaded
     hinge_grp = parent_ents.add_group
     hinge_grp.name = "Blum_CLIP_top_Concealed_Hinge"
     steel_mat = mats[:steel]
 
-    # Door rear face is at by - depth
-    door_back_y = by - depth
-
     if is_left_hinged
-      # Left Gable application:
-      # Gable inside face is at bx + BOARD_THK (18mm)
-      g_inside_x = gable_x || (bx + BOARD_THK)
-      cup_x      = g_inside_x + 3.5.mm # 21.5mm from cabinet left edge
-
-      # 1. 35mm Hinge Cup: Bored 12.5mm forward into the back of the door
       create_cylinder(hinge_grp.entities, Geom::Point3d.new(cup_x, door_back_y, hz), Geom::Vector3d.new(0, -1, 0), 17.5.mm, 12.5.mm, steel_mat)
-      # 2. Hinge Cup Flange (45mm screw pitch, seated flush on door back)
       create_box(hinge_grp.entities, [cup_x - 10.mm, door_back_y - 2.5.mm, hz - 24.mm], [20.mm, 2.5.mm, 48.mm], steel_mat, "Cup_Flange")
-      # 3. Articulated Hinge Arm extending from cup back onto the inside face of LH gable
       create_box(hinge_grp.entities, [g_inside_x, door_back_y, hz - 6.mm], [cup_x - g_inside_x + 4.mm, 45.mm, 12.mm], steel_mat, "Hinge_Arm")
-      # 4. Cruciform Mounting Plate attached to INSIDE face of LH Gable at 37mm setback
       create_box(hinge_grp.entities, [g_inside_x, door_back_y + 21.mm, hz - 16.mm], [3.5.mm, 32.mm, 32.mm], steel_mat, "Cruciform_Mounting_Plate")
     else
-      # Right Gable application:
-      # Gable inside face is at bx + width - BOARD_THK
-      g_inside_x = gable_x || (bx - BOARD_THK)
-      cup_x      = g_inside_x - 3.5.mm
-
-      # 1. 35mm Hinge Cup
       create_cylinder(hinge_grp.entities, Geom::Point3d.new(cup_x, door_back_y, hz), Geom::Vector3d.new(0, -1, 0), 17.5.mm, 12.5.mm, steel_mat)
-      # 2. Cup Flange
       create_box(hinge_grp.entities, [cup_x - 10.mm, door_back_y - 2.5.mm, hz - 24.mm], [20.mm, 2.5.mm, 48.mm], steel_mat, "Cup_Flange")
-      # 3. Hinge Arm
       create_box(hinge_grp.entities, [cup_x - 4.mm, door_back_y, hz - 6.mm], [g_inside_x - cup_x + 4.mm, 45.mm, 12.mm], steel_mat, "Hinge_Arm")
-      # 4. Cruciform Mounting Plate attached to INSIDE face of RH Gable
       create_box(hinge_grp.entities, [g_inside_x - 3.5.mm, door_back_y + 21.mm, hz - 16.mm], [3.5.mm, 32.mm, 32.mm], steel_mat, "Cruciform_Mounting_Plate")
     end
 
@@ -137,19 +156,27 @@ module CabinetrixBoxEngine
 
   # Roof-Mounted Top Stay / AVENTOS HF Top Hinge (Underside of Roof Panel)
   def self.build_blum_top_roof_hinge(parent_ents, hx, by, depth, roof_underside_z, mats)
+    model = Sketchup.active_model if defined?(Sketchup)
+    cdef  = model ? get_or_load_hinge_definition(model) : nil
+    door_back_y = by - depth
+    cup_z       = roof_underside_z - 3.5.mm
+
+    if cdef
+      pos_pt = Geom::Point3d.new(hx, door_back_y, roof_underside_z)
+      tr_pos = Geom::Transformation.translation(pos_pt.to_a)
+      tr_rot = Geom::Transformation.rotation(pos_pt, Geom::Vector3d.new(0, 1, 0), -90.degrees)
+      inst = parent_ents.add_instance(cdef, tr_pos * tr_rot)
+      inst.name = "Blum_Hinge_Top_Roof_Instance"
+      return inst
+    end
+
     hinge_grp = parent_ents.add_group
     hinge_grp.name = "Blum_CLIP_top_120_Roof_Hinge"
     steel_mat = mats[:steel]
 
-    door_back_y = by - depth
-    cup_z       = roof_underside_z - 3.5.mm # 21.5mm from top edge
-
-    # 1. 35mm Hinge Cup bored forward into the back of the upper door top rail
     create_cylinder(hinge_grp.entities, Geom::Point3d.new(hx, door_back_y, cup_z), Geom::Vector3d.new(0, -1, 0), 17.5.mm, 12.5.mm, steel_mat)
     create_box(hinge_grp.entities, [hx - 24.mm, door_back_y - 2.5.mm, cup_z - 10.mm], [48.mm, 2.5.mm, 20.mm], steel_mat, "Cup_Flange")
-    # 2. Hinge Arm extending back onto underside of carcase roof
     create_box(hinge_grp.entities, [hx - 8.mm, door_back_y, roof_underside_z - 12.mm], [16.mm, 45.mm, 12.mm], steel_mat, "Hinge_Arm")
-    # 3. Horizontal Mounting Plate screwed to underside of Roof Panel at 37mm setback
     create_box(hinge_grp.entities, [hx - 18.mm, door_back_y + 21.mm, roof_underside_z - 3.5.mm], [36.mm, 32.mm, 3.5.mm], steel_mat, "Roof_Mounting_Plate")
 
     hinge_grp
@@ -265,7 +292,6 @@ module CabinetrixBoxEngine
     pts = [
       Geom::Point3d.new(origin_x, 0, z_origin),
       Geom::Point3d.new(origin_x, -base_depth, z_origin),
-      Geom::Point3d.new(origin_x, -base_depth, z_origin + C_GOLA_Z0),
       Geom::Point3d.new(origin_x, -base_depth + GOLA_DEPTH, z_origin + C_GOLA_Z0),
       Geom::Point3d.new(origin_x, -base_depth + GOLA_DEPTH, z_origin + C_GOLA_Z0 + C_GOLA_H),
       Geom::Point3d.new(origin_x, -base_depth, z_origin + C_GOLA_Z0 + C_GOLA_H),
@@ -285,7 +311,7 @@ module CabinetrixBoxEngine
   end
 
   # ----------------------------------------------------------------------------
-  # 3. SCILM GOLA PROFILES
+  # 4. SCILM GOLA PROFILES
   # ----------------------------------------------------------------------------
   def self.build_gola_profile(parent_ents, profile_type, length, origin, mats)
     group = parent_ents.add_group
@@ -337,7 +363,7 @@ module CabinetrixBoxEngine
   end
 
   # ----------------------------------------------------------------------------
-  # 4. GLOBAL DRAWER FUNCTION: HETTICH ACTRO 5D WITH GOLA EXTENDED LIP
+  # 5. GLOBAL DRAWER FUNCTION: HETTICH ACTRO 5D WITH GOLA EXTENDED LIP
   # ----------------------------------------------------------------------------
   def self.build_hettich_undermount_drawer(parent_ents, inner_origin, inner_w, depth, box_height, front_h, pull_offset, mats, front_mat, is_sink_u_shape: false, front_w: nil, box_z_offset: 20.0)
     drawer_unit = parent_ents.add_group
@@ -393,7 +419,7 @@ module CabinetrixBoxEngine
   end
 
   # ----------------------------------------------------------------------------
-  # 5. AUTHENTIC 45° MITERED HOLLOW ALUMINUM SASH DOOR (ALU SYS)
+  # 6. AUTHENTIC 45° MITERED HOLLOW ALUMINUM SASH DOOR (ALU SYS)
   # ----------------------------------------------------------------------------
   def self.create_sash_bar(parent_ents, bar_length, alu_mat)
     group = parent_ents.add_group
@@ -482,7 +508,7 @@ module CabinetrixBoxEngine
   end
 
   # ----------------------------------------------------------------------------
-  # 6. AUTHENTIC BLUM AVENTOS HF BI-FOLD LIFT MECHANISM & 2-SECTION DOORS
+  # 7. AUTHENTIC BLUM AVENTOS HF BI-FOLD LIFT MECHANISM & 2-SECTION DOORS
   # ----------------------------------------------------------------------------
   def self.build_blum_aventos_hf_bi_fold_doors(parent_ents, bx, by, bz, width, height, depth, mats, front_mat, mode: :closed)
     lift_group = parent_ents.add_group
@@ -541,7 +567,7 @@ module CabinetrixBoxEngine
   end
 
   # ----------------------------------------------------------------------------
-  # 7. UNIVERSAL BOX CREATION API (LOCAL COORDINATES -> RIGID WORLD TRANSFORM)
+  # 8. UNIVERSAL BOX CREATION API (LOCAL COORDINATES -> RIGID WORLD TRANSFORM)
   # ----------------------------------------------------------------------------
   def self.create_cabinet(parent_ents, type, params, location, mats)
     name = params[:name] || "Cabinet_#{type.to_s.upcase}"
@@ -824,7 +850,7 @@ module CabinetrixBoxEngine
     end
 
     # --------------------------------------------------------------------------
-    # 8. RIGID WORLD TRANSFORMATION
+    # 9. RIGID WORLD TRANSFORMATION
     # --------------------------------------------------------------------------
     rot_deg = location[:rotation_deg] || params[:rotation_deg] || 0.0
     tr_rot = Geom::Transformation.rotation(Geom::Point3d.new(0, 0, 0), Geom::Vector3d.new(0, 0, 1), rot_deg.degrees)
@@ -835,7 +861,7 @@ module CabinetrixBoxEngine
   end
 
   # ----------------------------------------------------------------------------
-  # 9. COMPLETE PHYSICAL BOARDS EXTRACTION API
+  # 10. COMPLETE PHYSICAL BOARDS EXTRACTION API
   # ----------------------------------------------------------------------------
   def self.extract_panels_for_cabinet(cab_type, width_mm, height_mm, depth_mm, cab_tag)
     thk = 18.0
