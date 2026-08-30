@@ -1,26 +1,28 @@
 # ==============================================================================
-# CABINETRIX AI — 2D PANEL NESTING & CUTTING OPTIMIZATION ENGINE
+# CABINETRIX AI — 2D PANEL NESTING & MACHINING VISUALIZER ENGINE
 # File: gemini/cabinetrix_nesting_engine.rb
 #
-# Production Features:
-#   • 2D Guillotine / MaxRects Bin-Packing for Sheet Goods Optimization
-#   • Grain Direction Awareness (Grain along Length vs None)
-#   • Standard Sheet Sizes (2440x1220mm, 2800x2070mm) with 10mm Trim & 4mm Saw Kerf
-#   • Material Grouping (18mm Carcase, 18mm Fronts, 6mm Backs, 15mm Birch Drawers)
-#   • Computes Yield %, Waste %, Linear Cut Meterage, and Sheet Count
-#   • Interactive SVG & HTML Visual Cutting Diagram Generation
+# Production Standard:
+#   • 2D Guillotine / MaxRects Bin-Packing Optimization
+#   • Visual CNC Machining Operations Overlay on Every Nested Panel:
+#     - 🟡 Yellow Circles (Ø 5mm System 32 shelf pin holes)
+#     - 🟣 Magenta Circles (Ø 8mm Dowel joinery holes)
+#     - 🔵 Cyan Circles (Ø 15mm Minifix 15 cam pockets, 34mm setback)
+#     - 🟢 Green Circles (Ø 35mm Concealed hinge cup pockets)
+#     - 🟦 Dashed Blue Lines (6mm Backing sheet slot groove)
+#     - 🟥 Red Notches (SCILM Top L-Gola & Mid C-Gola gable CNC cutouts)
+#   • Full Multi-Sheet Interactive SVG Gallery for All Raw Boards
 # ==============================================================================
 
 module CabinetrixNestingEngine
   DEFAULT_SHEET_SIZES = {
-    carcase_18: { w: 2440.0, h: 1220.0, thk: 18.0, name: "18mm White Moisture Resistant MDF/MFC" },
-    front_18:   { w: 2440.0, h: 1220.0, thk: 18.0, name: "18mm Anthracite Supermatte Polyurethane" },
-    back_6:     { w: 2440.0, h: 1220.0, thk: 6.0,  name: "6mm White Backing Board" },
-    drawer_15:  { w: 2440.0, h: 1220.0, thk: 15.0, name: "15mm Solid Birch Plywood" }
+    carcase_18: { w: 2440.0, h: 1220.0, thk: 18.0, name: "18mm White Moisture Resistant Carcase MFC" },
+    front_18:   { w: 2440.0, h: 1220.0, thk: 18.0, name: "18mm Anthracite Supermatte Face Poly" },
+    back_6:     { w: 2440.0, h: 1220.0, thk: 6.0,  name: "6mm White Grooved Backing Board" }
   }
 
   SHEET_TRIM = 10.0 # 10mm edge trim on all 4 sheet sides
-  SAW_KERF   = 4.0  # 4mm CNC router / saw blade width
+  SAW_KERF   = 4.0  # 4mm CNC router saw blade width
 
   # ----------------------------------------------------------------------------
   # 1. 2D BIN PACKING ALGORITHM (MAXRECTS GUILLOTINE HEURISTIC)
@@ -79,7 +81,6 @@ module CabinetrixNestingEngine
           free_rects: [{ x: trim, y: trim, w: usable_w, h: usable_h }]
         }
 
-        # Place part in bottom-left of new sheet
         rect = new_sheet[:free_rects][0]
         if p_len <= rect[:w] && p_wid <= rect[:h]
           new_sheet[:placed_parts] << part.merge(
@@ -96,7 +97,6 @@ module CabinetrixNestingEngine
           )
           split_free_rect(new_sheet[:free_rects], 0, rect, p_wid, p_len, kerf)
         else
-          # Oversized part warning
           new_sheet[:placed_parts] << part.merge(
             x: rect[:x], y: rect[:y],
             placed_w: p_len, placed_h: p_wid,
@@ -108,7 +108,6 @@ module CabinetrixNestingEngine
       end
     end
 
-    # Calculate Yield & Waste Stats
     total_raw_area = sheets.length * (sheet_w * sheet_h)
     total_used_area = 0.0
     total_cut_meters = 0.0
@@ -144,54 +143,98 @@ module CabinetrixNestingEngine
 
   def self.split_free_rect(free_rects, idx, rect, pw, ph, kerf)
     free_rects.delete_at(idx)
-    
-    # Right remainder
     rem_right_w = rect[:w] - pw - kerf
     if rem_right_w > 50.0
-      free_rects << {
-        x: rect[:x] + pw + kerf,
-        y: rect[:y],
-        w: rem_right_w,
-        h: ph
-      }
+      free_rects << { x: rect[:x] + pw + kerf, y: rect[:y], w: rem_right_w, h: ph }
     end
-
-    # Top remainder
     rem_top_h = rect[:h] - ph - kerf
     if rem_top_h > 50.0
-      free_rects << {
-        x: rect[:x],
-        y: rect[:y] + ph + kerf,
-        w: rect[:w],
-        h: rem_top_h
-      }
+      free_rects << { x: rect[:x], y: rect[:y] + ph + kerf, w: rect[:w], h: rem_top_h }
     end
   end
 
   # ----------------------------------------------------------------------------
-  # 2. SVG CUTTING PATTERN GENERATOR
+  # 2. SVG CUTTING PATTERN GENERATOR (WITH DETAILED CNC DRILL & CUT OVERLAYS)
   # ----------------------------------------------------------------------------
   def self.generate_sheet_svg(sheet, scale = 0.35)
     svg_w = sheet[:raw_w] * scale
     svg_h = sheet[:raw_h] * scale
 
     svg = []
-    svg << "<svg width='#{svg_w.round}' height='#{svg_h.round}' viewBox='0 0 #{sheet[:raw_w]} #{sheet[:raw_h]}' xmlns='http://www.w3.org/2000/svg' style='background:#1e222b;border:2px solid #444c56;border-radius:6px;margin:10px 0;'>"
+    svg << "<svg width='#{svg_w.round}' height='#{svg_h.round}' viewBox='0 0 #{sheet[:raw_w]} #{sheet[:raw_h]}' xmlns='http://www.w3.org/2000/svg' style='background:#14171f;border:2px solid #30363d;border-radius:6px;margin:8px 0;'>"
     
-    # Sheet Trim Boundary
-    svg << "  <rect x='#{sheet[:trim]}' y='#{sheet[:trim]}' width='#{sheet[:usable_w]}' height='#{sheet[:usable_h]}' fill='#161b22' stroke='#30363d' stroke-dasharray='8 4' stroke-width='2'/>"
+    # Sheet Trim Line
+    svg << "  <rect x='#{sheet[:trim]}' y='#{sheet[:trim]}' width='#{sheet[:usable_w]}' height='#{sheet[:usable_h]}' fill='#161b22' stroke='#484f58' stroke-dasharray='8 4' stroke-width='2'/>"
 
     # Placed Panels
-    colors = ['#388bfd', '#2ea043', '#e3b341', '#f0883e', '#a371f7', '#db61a2', '#58a6ff', '#56d364']
+    colors = ['#1f6feb', '#238636', '#d29922', '#8957e5', '#db61a2', '#388bfd', '#2ea043', '#f0883e']
     sheet[:placed_parts].each_with_index do |p, i|
       c = colors[i % colors.length]
-      svg << "  <g>"
-      svg << "    <rect x='#{p[:x]}' y='#{p[:y]}' width='#{p[:placed_w]}' height='#{p[:placed_h]}' fill='#{c}' fill-opacity='0.25' stroke='#{c}' stroke-width='2'/>"
-      svg << "    <text x='#{p[:x] + 10}' y='#{p[:y] + 25}' fill='#f0f3f6' font-size='22' font-weight='bold' font-family='sans-serif'>#{p[:name]}</text>"
-      svg << "    <text x='#{p[:x] + 10}' y='#{p[:y] + 52}' fill='#8b949e' font-size='18' font-family='sans-serif'>#{p[:placed_w].to_i} x #{p[:placed_h].to_i}mm | #{p[:cab_id]}</text>"
-      if p[:eb_code]
-        svg << "    <text x='#{p[:x] + 10}' y='#{p[:y] + 76}' fill='#e3b341' font-size='15' font-family='sans-serif'>EB: #{p[:eb_code]}</text>"
+      px, py, pw, ph = p[:x], p[:y], p[:placed_w], p[:placed_h]
+
+      svg << "  <g id='part_#{p[:part_id]}'>"
+      svg << "    <rect x='#{px}' y='#{py}' width='#{pw}' height='#{ph}' fill='#{c}' fill-opacity='0.22' stroke='#{c}' stroke-width='2.5'/>"
+
+      # Part Text Label
+      svg << "    <text x='#{px + 12}' y='#{py + 26}' fill='#f0f6fc' font-size='22' font-weight='bold' font-family='monospace'>#{p[:name]}</text>"
+      svg << "    <text x='#{px + 12}' y='#{py + 52}' fill='#8b949e' font-size='17' font-family='sans-serif'>#{pw.to_i} x #{ph.to_i}mm | #{p[:cab_id]}</text>"
+      if p[:eb_l1]
+        svg << "    <text x='#{px + 12}' y='#{py + 76}' fill='#e3b341' font-size='14' font-family='sans-serif'>EB: #{p[:eb_l1]}</text>"
       end
+
+      # ========================================================================
+      # VISUAL CNC DRILL & CUT MACHINING OVERLAYS
+      # ========================================================================
+      # 1. SCILM Gola Notches (if Gable)
+      if p[:name].include?('Gable') && (p[:has_gola_notch] || p[:has_cnc])
+        # Top L-Gola Notch (59mm x 26mm)
+        svg << "    <rect x='#{px + pw - 59}' y='#{py + ph - 26}' width='59' height='26' fill='#f85149' fill-opacity='0.6' stroke='#da3633' stroke-width='2'/>"
+        svg << "    <text x='#{px + pw - 55}' y='#{py + ph - 8}' fill='#fff' font-size='12' font-weight='bold'>L-GOLA</text>"
+
+        # Mid C-Gola Notch (73.5mm x 26mm at Z=330)
+        if pw >= 600
+          svg << "    <rect x='#{px + 330}' y='#{py + ph - 26}' width='73.5' height='26' fill='#f85149' fill-opacity='0.6' stroke='#da3633' stroke-width='2'/>"
+          svg << "    <text x='#{px + 335}' y='#{py + ph - 8}' fill='#fff' font-size='12' font-weight='bold'>C-GOLA</text>"
+        end
+      end
+
+      # 2. Rear Back Panel Slot Groove (Blue Dashed Line)
+      if p[:name].include?('Gable') || p[:has_back_groove]
+        svg << "    <line x1='#{px}' y1='#{py + 25}' x2='#{px + pw}' y2='#{py + 25}' stroke='#58a6ff' stroke-width='4' stroke-dasharray='10 5' />"
+        svg << "    <text x='#{px + pw/2 - 40}' y='#{py + 20}' fill='#58a6ff' font-size='12'>6mm BACK GROOVE</text>"
+      end
+
+      # 3. System 32 Line-Bore Shelf Pins (Yellow Circles Ø 5mm)
+      if p[:name].include?('Gable') || p[:shelf_pin_holes]
+        [0.3, 0.5, 0.7].each do |ratio|
+          hx1, hy1 = px + (pw * ratio), py + 50
+          hx2, hy2 = px + (pw * ratio), py + ph - 50
+          svg << "    <circle cx='#{hx1}' cy='#{hy1}' r='7' fill='#e3b341' stroke='#ffd33d' stroke-width='1.5'/>"
+          svg << "    <circle cx='#{hx2}' cy='#{hy2}' r='7' fill='#e3b341' stroke='#ffd33d' stroke-width='1.5'/>"
+        end
+      end
+
+      # 4. Minifix 15 Cam Pockets (Cyan Circles Ø 15mm) & Dowels (Magenta Circles Ø 8mm)
+      if p[:name].include?('Bottom') || p[:name].include?('Roof') || p[:name].include?('Stretcher')
+        # Minifix Cam Bores (34mm setback)
+        [[px + 34, py + 40], [px + 34, py + ph - 40], [px + pw - 34, py + 40], [px + pw - 34, py + ph - 40]].each do |cx, cy|
+          svg << "    <circle cx='#{cx}' cy='#{cy}' r='12' fill='#79c0ff' fill-opacity='0.6' stroke='#388bfd' stroke-width='2'/>"
+          svg << "    <circle cx='#{cx}' cy='#{cy}' r='3' fill='#fff'/>"
+        end
+        # Dowels (32mm from Minifix)
+        [[px + 10, py + 72], [px + 10, py + ph - 72], [px + pw - 10, py + 72], [px + pw - 10, py + ph - 72]].each do |dx, dy|
+          svg << "    <circle cx='#{dx}' cy='#{dy}' r='7' fill='#d2a8ff' stroke='#a371f7' stroke-width='1.5'/>"
+        end
+      end
+
+      # 5. Concealed 35mm Hinge Cup Bores (Green Circles Ø 35mm)
+      if p[:name].include?('Door')
+        [[px + 22, py + 100], [px + 22, py + ph - 100]].each do |hx, hy|
+          svg << "    <circle cx='#{hx}' cy='#{hy}' r='18' fill='#56d364' fill-opacity='0.6' stroke='#2ea043' stroke-width='2.5'/>"
+          svg << "    <text x='#{hx + 24}' y='#{hy + 5}' fill='#56d364' font-size='12' font-weight='bold'>35mm HINGE</text>"
+        end
+      end
+
       svg << "  </g>"
     end
 

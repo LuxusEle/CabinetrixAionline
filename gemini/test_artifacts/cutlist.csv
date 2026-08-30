@@ -385,103 +385,124 @@ U_S-C2-CLT-B,U_S-C2,Rear_Bottom_Cleat,264.0,100.0,18.0,18mm White MFC,length,-,-
 U_S-C2-BAK,U_S-C2,Back_Panel_Sheet,274.0,694.0,6.0,6mm White Backing,length,-,-,-,-,NO
 U_S-C3-GLH,U_S-C3,Gable_LH,720.0,560.0,18.0,18mm White MFC,length,1.0mm ABS,-,0.4mm,0.4mm,YES
 U_S-C3-GRH,U_S-C3,Gable_RH,720.0,560.0,18.0,18mm White MFC,length,1.0mm ABS,-,0.4mm,0.4mm,YES
-U_S-C3-BOT,U_S-C3,Bottom_Panel,1014.0,560.0,18.0,18mm White MFC,none,1.0mm ABS,-,-,-,YES
-U_S-C3-STR-F,U_S-C3,Top_Front_Stretcher,1014.0,80.0,18.0,18mm White MFC,length,0.4mm,-,-,-,YES
-U_S-C3-STR-R,U_S-C3,Top_Rear_Stretcher,1014.0,80.0,18.0,18mm White MFC,length,0.4mm,-,-,-,YES
-U_S-C3-STR-M,U_S-C3,Mid_C_Gola_Stretcher,1014.0,60.0,18.0,18mm White MFC,length,0.4mm,-,-,-,YES
-U_S-C3-CLT-T,U_S-C3,Rear_Top_Cleat,1014.0,100.0,18.0,18mm White MFC,length,-,-,-,-,NO
-U_S-C3-CLT-B,U_S-C3,Rear_Bottom_Cleat,1014.0,100.0,18.0,18mm White MFC,length,-,-,-,-,NO
-U_S-C3-BAK,U_S-C3,Back_Panel_Sheet,1024.0,694.0,6.0,6mm White Backing,length,-,-,-,-,NO
+U_S-C3-BOT,U_S-C3,Bottom_Panel,864.0,560.0,18.0,18mm White MFC,none,1.0mm ABS,-,-,-,YES
+U_S-C3-STR-F,U_S-C3,Top_Front_Stretcher,864.0,80.0,18.0,18mm White MFC,length,0.4mm,-,-,-,YES
+U_S-C3-STR-R,U_S-C3,Top_Rear_Stretcher,864.0,80.0,18.0,18mm White MFC,length,0.4mm,-,-,-,YES
+U_S-C3-STR-M,U_S-C3,Mid_C_Gola_Stretcher,864.0,60.0,18.0,18mm White MFC,length,0.4mm,-,-,-,YES
+U_S-C3-CLT-T,U_S-C3,Rear_Top_Cleat,864.0,100.0,18.0,18mm White MFC,length,-,-,-,-,NO
+U_S-C3-CLT-B,U_S-C3,Rear_Bottom_Cleat,864.0,100.0,18.0,18mm White MFC,length,-,-,-,-,NO
+U_S-C3-BAK,U_S-C3,Back_Panel_Sheet,874.0,694.0,6.0,6mm White Backing,length,-,-,-,-,NO
+U_S-C3-DW1-LH,U_S-C3,Drawer_Box_LH_Lower,450.0,200.0,15.0,15mm Birch Plywood,length,1.0mm Birch,-,-,-,YES
+U_S-C3-DW1-RH,U_S-C3,Drawer_Box_RH_Lower,450.0,200.0,15.0,15mm Birch Plywood,length,1.0mm Birch,-,-,-,YES
+U_S-C3-DW1-SF,U_S-C3,Drawer_SubFront_Lower,809.0,200.0,15.0,15mm Birch Plywood,length,1.0mm Birch,-,-,-,YES
+U_S-C3-DW1-BK,U_S-C3,Drawer_Back_Lower,809.0,200.0,15.0,15mm Birch Plywood,length,1.0mm Birch,-,-,-,YES
+U_S-C3-DW1-BM,U_S-C3,Drawer_Bottom_Lower,809.0,420.0,16.0,16mm Solid Birch Base,none,-,-,-,-,NO
+U_S-C3-FR1,U_S-C3,Lower_Pot_Drawer_Front,897.0,315.0,18.0,18mm Anthracite Supermatte,length,1.0mm ABS,1.0mm ABS,1.0mm ABS,1.0mm ABS,NO
+U_S-C3-DW2-LH,U_S-C3,Drawer_Box_LH_Upper,450.0,120.0,15.0,15mm Birch Plywood,length,1.0mm Birch,-,-,-,YES
+U_S-C3-DW2-RH,U_S-C3,Drawer_Box_RH_Upper,450.0,120.0,15.0,15mm Birch Plywood,length,1.0mm Birch,-,-,-,YES
+U_S-C3-DW2-SF,U_S-C3,Drawer_SubFront_Upper,809.0,120.0,15.0,15mm Birch Plywood,length,1.0mm Birch,-,-,-,YES
+U_S-C3-DW2-BK,U_S-C3,Drawer_Back_Upper,809.0,120.0,15.0,15mm Birch Plywood,length,1.0mm Birch,-,-,-,YES
+U_S-C3-DW2-BM,U_S-C3,Drawer_Bottom_Upper,809.0,420.0,16.0,16mm Solid Birch Base,none,-,-,-,-,NO
+U_S-C3-FR2,U_S-C3,Upper_Drawer_Front,897.0,248.0,18.0,18mm Anthracite Supermatte,length,1.0mm ABS,1.0mm ABS,1.0mm ABS,1.0mm ABS,NO
 U_S-C4-GLH,U_S-C4,Gable_LH,720.0,560.0,18.0,18mm White MFC,length,1.0mm ABS,-,0.4mm,0.4mm,YES
 U_S-C4-GRH,U_S-C4,Gable_RH,720.0,560.0,18.0,18mm White MFC,length,1.0mm ABS,-,0.4mm,0.4mm,YES
-U_S-C4-BOT,U_S-C4,Bottom_Panel,864.0,560.0,18.0,18mm White MFC,none,1.0mm ABS,-,-,-,YES
-U_S-C4-STR-F,U_S-C4,Top_Front_Stretcher,864.0,80.0,18.0,18mm White MFC,length,0.4mm,-,-,-,YES
-U_S-C4-STR-R,U_S-C4,Top_Rear_Stretcher,864.0,80.0,18.0,18mm White MFC,length,0.4mm,-,-,-,YES
-U_S-C4-STR-M,U_S-C4,Mid_C_Gola_Stretcher,864.0,60.0,18.0,18mm White MFC,length,0.4mm,-,-,-,YES
-U_S-C4-CLT-T,U_S-C4,Rear_Top_Cleat,864.0,100.0,18.0,18mm White MFC,length,-,-,-,-,NO
-U_S-C4-CLT-B,U_S-C4,Rear_Bottom_Cleat,864.0,100.0,18.0,18mm White MFC,length,-,-,-,-,NO
-U_S-C4-BAK,U_S-C4,Back_Panel_Sheet,874.0,694.0,6.0,6mm White Backing,length,-,-,-,-,NO
-U_S-C4-DW1-LH,U_S-C4,Drawer_Box_LH_Lower,450.0,200.0,15.0,15mm Birch Plywood,length,1.0mm Birch,-,-,-,YES
-U_S-C4-DW1-RH,U_S-C4,Drawer_Box_RH_Lower,450.0,200.0,15.0,15mm Birch Plywood,length,1.0mm Birch,-,-,-,YES
-U_S-C4-DW1-SF,U_S-C4,Drawer_SubFront_Lower,809.0,200.0,15.0,15mm Birch Plywood,length,1.0mm Birch,-,-,-,YES
-U_S-C4-DW1-BK,U_S-C4,Drawer_Back_Lower,809.0,200.0,15.0,15mm Birch Plywood,length,1.0mm Birch,-,-,-,YES
-U_S-C4-DW1-BM,U_S-C4,Drawer_Bottom_Lower,809.0,420.0,16.0,16mm Solid Birch Base,none,-,-,-,-,NO
-U_S-C4-FR1,U_S-C4,Lower_Pot_Drawer_Front,897.0,315.0,18.0,18mm Anthracite Supermatte,length,1.0mm ABS,1.0mm ABS,1.0mm ABS,1.0mm ABS,NO
-U_S-C4-DW2-LH,U_S-C4,Drawer_Box_LH_Upper,450.0,120.0,15.0,15mm Birch Plywood,length,1.0mm Birch,-,-,-,YES
-U_S-C4-DW2-RH,U_S-C4,Drawer_Box_RH_Upper,450.0,120.0,15.0,15mm Birch Plywood,length,1.0mm Birch,-,-,-,YES
-U_S-C4-DW2-SF,U_S-C4,Drawer_SubFront_Upper,809.0,120.0,15.0,15mm Birch Plywood,length,1.0mm Birch,-,-,-,YES
-U_S-C4-DW2-BK,U_S-C4,Drawer_Back_Upper,809.0,120.0,15.0,15mm Birch Plywood,length,1.0mm Birch,-,-,-,YES
-U_S-C4-DW2-BM,U_S-C4,Drawer_Bottom_Upper,809.0,420.0,16.0,16mm Solid Birch Base,none,-,-,-,-,NO
-U_S-C4-FR2,U_S-C4,Upper_Drawer_Front,897.0,248.0,18.0,18mm Anthracite Supermatte,length,1.0mm ABS,1.0mm ABS,1.0mm ABS,1.0mm ABS,NO
-U_S-C5-GLH,U_S-C5,Gable_LH,720.0,350.0,18.0,18mm White MFC,length,1.0mm ABS,-,0.4mm,0.4mm,YES
-U_S-C5-GRH,U_S-C5,Gable_RH,720.0,350.0,18.0,18mm White MFC,length,1.0mm ABS,-,0.4mm,0.4mm,YES
-U_S-C5-BOT,U_S-C5,Bottom_Panel,864.0,350.0,18.0,18mm White MFC,none,1.0mm ABS,-,-,-,YES
-U_S-C5-TOP,U_S-C5,Roof_Panel,864.0,350.0,18.0,18mm White MFC,none,1.0mm ABS,-,-,-,YES
+U_S-C4-BOT,U_S-C4,Bottom_Panel,1014.0,560.0,18.0,18mm White MFC,none,1.0mm ABS,-,-,-,YES
+U_S-C4-STR-F,U_S-C4,Top_Front_Stretcher,1014.0,80.0,18.0,18mm White MFC,length,0.4mm,-,-,-,YES
+U_S-C4-STR-R,U_S-C4,Top_Rear_Stretcher,1014.0,80.0,18.0,18mm White MFC,length,0.4mm,-,-,-,YES
+U_S-C4-STR-M,U_S-C4,Mid_C_Gola_Stretcher,1014.0,60.0,18.0,18mm White MFC,length,0.4mm,-,-,-,YES
+U_S-C4-CLT-T,U_S-C4,Rear_Top_Cleat,1014.0,100.0,18.0,18mm White MFC,length,-,-,-,-,NO
+U_S-C4-CLT-B,U_S-C4,Rear_Bottom_Cleat,1014.0,100.0,18.0,18mm White MFC,length,-,-,-,-,NO
+U_S-C4-BAK,U_S-C4,Back_Panel_Sheet,1024.0,694.0,6.0,6mm White Backing,length,-,-,-,-,NO
+U_S-C5-GLH,U_S-C5,Gable_LH,720.0,560.0,18.0,18mm White MFC,length,1.0mm ABS,-,0.4mm,0.4mm,YES
+U_S-C5-GRH,U_S-C5,Gable_RH,720.0,560.0,18.0,18mm White MFC,length,1.0mm ABS,-,0.4mm,0.4mm,YES
+U_S-C5-BOT,U_S-C5,Bottom_Panel,864.0,560.0,18.0,18mm White MFC,none,1.0mm ABS,-,-,-,YES
+U_S-C5-STR-F,U_S-C5,Top_Front_Stretcher,864.0,80.0,18.0,18mm White MFC,length,0.4mm,-,-,-,YES
+U_S-C5-STR-R,U_S-C5,Top_Rear_Stretcher,864.0,80.0,18.0,18mm White MFC,length,0.4mm,-,-,-,YES
+U_S-C5-STR-M,U_S-C5,Mid_C_Gola_Stretcher,864.0,60.0,18.0,18mm White MFC,length,0.4mm,-,-,-,YES
 U_S-C5-CLT-T,U_S-C5,Rear_Top_Cleat,864.0,100.0,18.0,18mm White MFC,length,-,-,-,-,NO
 U_S-C5-CLT-B,U_S-C5,Rear_Bottom_Cleat,864.0,100.0,18.0,18mm White MFC,length,-,-,-,-,NO
 U_S-C5-BAK,U_S-C5,Back_Panel_Sheet,874.0,694.0,6.0,6mm White Backing,length,-,-,-,-,NO
-U_S-C5-SH1,U_S-C5,Wall_Shelf_1,863.0,310.0,18.0,18mm White MFC,length,1.0mm ABS,-,-,-,YES
-U_S-C5-FR,U_S-C5,Wall_Front_Door,897.0,717.0,18.0,18mm Anthracite Supermatte,length,1.0mm ABS,1.0mm ABS,1.0mm ABS,1.0mm ABS,NO
-U_S-C6-GLH,U_S-C6,Gable_LH,720.0,560.0,18.0,18mm White MFC,length,1.0mm ABS,-,0.4mm,0.4mm,YES
-U_S-C6-GRH,U_S-C6,Gable_RH,720.0,560.0,18.0,18mm White MFC,length,1.0mm ABS,-,0.4mm,0.4mm,YES
-U_S-C6-BOT,U_S-C6,Bottom_Panel,1014.0,560.0,18.0,18mm White MFC,none,1.0mm ABS,-,-,-,YES
-U_S-C6-STR-F,U_S-C6,Top_Front_Stretcher,1014.0,80.0,18.0,18mm White MFC,length,0.4mm,-,-,-,YES
-U_S-C6-STR-R,U_S-C6,Top_Rear_Stretcher,1014.0,80.0,18.0,18mm White MFC,length,0.4mm,-,-,-,YES
-U_S-C6-STR-M,U_S-C6,Mid_C_Gola_Stretcher,1014.0,60.0,18.0,18mm White MFC,length,0.4mm,-,-,-,YES
-U_S-C6-CLT-T,U_S-C6,Rear_Top_Cleat,1014.0,100.0,18.0,18mm White MFC,length,-,-,-,-,NO
-U_S-C6-CLT-B,U_S-C6,Rear_Bottom_Cleat,1014.0,100.0,18.0,18mm White MFC,length,-,-,-,-,NO
-U_S-C6-BAK,U_S-C6,Back_Panel_Sheet,1024.0,694.0,6.0,6mm White Backing,length,-,-,-,-,NO
+U_S-C5-DW1-LH,U_S-C5,Drawer_Box_LH_Lower,450.0,200.0,15.0,15mm Birch Plywood,length,1.0mm Birch,-,-,-,YES
+U_S-C5-DW1-RH,U_S-C5,Drawer_Box_RH_Lower,450.0,200.0,15.0,15mm Birch Plywood,length,1.0mm Birch,-,-,-,YES
+U_S-C5-DW1-SF,U_S-C5,Drawer_SubFront_Lower,809.0,200.0,15.0,15mm Birch Plywood,length,1.0mm Birch,-,-,-,YES
+U_S-C5-DW1-BK,U_S-C5,Drawer_Back_Lower,809.0,200.0,15.0,15mm Birch Plywood,length,1.0mm Birch,-,-,-,YES
+U_S-C5-DW1-BM,U_S-C5,Drawer_Bottom_Lower,809.0,420.0,16.0,16mm Solid Birch Base,none,-,-,-,-,NO
+U_S-C5-FR1,U_S-C5,Lower_Pot_Drawer_Front,897.0,315.0,18.0,18mm Anthracite Supermatte,length,1.0mm ABS,1.0mm ABS,1.0mm ABS,1.0mm ABS,NO
+U_S-C5-DW2-LH,U_S-C5,Drawer_Box_LH_Upper,450.0,120.0,15.0,15mm Birch Plywood,length,1.0mm Birch,-,-,-,YES
+U_S-C5-DW2-RH,U_S-C5,Drawer_Box_RH_Upper,450.0,120.0,15.0,15mm Birch Plywood,length,1.0mm Birch,-,-,-,YES
+U_S-C5-DW2-SF,U_S-C5,Drawer_SubFront_Upper,809.0,120.0,15.0,15mm Birch Plywood,length,1.0mm Birch,-,-,-,YES
+U_S-C5-DW2-BK,U_S-C5,Drawer_Back_Upper,809.0,120.0,15.0,15mm Birch Plywood,length,1.0mm Birch,-,-,-,YES
+U_S-C5-DW2-BM,U_S-C5,Drawer_Bottom_Upper,809.0,420.0,16.0,16mm Solid Birch Base,none,-,-,-,-,NO
+U_S-C5-FR2,U_S-C5,Upper_Drawer_Front,897.0,248.0,18.0,18mm Anthracite Supermatte,length,1.0mm ABS,1.0mm ABS,1.0mm ABS,1.0mm ABS,NO
+U_S-C6-GLH,U_S-C6,Gable_LH,720.0,350.0,18.0,18mm White MFC,length,1.0mm ABS,-,0.4mm,0.4mm,YES
+U_S-C6-GRH,U_S-C6,Gable_RH,720.0,350.0,18.0,18mm White MFC,length,1.0mm ABS,-,0.4mm,0.4mm,YES
+U_S-C6-BOT,U_S-C6,Bottom_Panel,864.0,350.0,18.0,18mm White MFC,none,1.0mm ABS,-,-,-,YES
+U_S-C6-TOP,U_S-C6,Roof_Panel,864.0,350.0,18.0,18mm White MFC,none,1.0mm ABS,-,-,-,YES
+U_S-C6-CLT-T,U_S-C6,Rear_Top_Cleat,864.0,100.0,18.0,18mm White MFC,length,-,-,-,-,NO
+U_S-C6-CLT-B,U_S-C6,Rear_Bottom_Cleat,864.0,100.0,18.0,18mm White MFC,length,-,-,-,-,NO
+U_S-C6-BAK,U_S-C6,Back_Panel_Sheet,874.0,694.0,6.0,6mm White Backing,length,-,-,-,-,NO
+U_S-C6-SH1,U_S-C6,Wall_Shelf_1,863.0,310.0,18.0,18mm White MFC,length,1.0mm ABS,-,-,-,YES
+U_S-C6-FR,U_S-C6,Wall_Front_Door,897.0,717.0,18.0,18mm Anthracite Supermatte,length,1.0mm ABS,1.0mm ABS,1.0mm ABS,1.0mm ABS,NO
 U_S-C7-GLH,U_S-C7,Gable_LH,720.0,560.0,18.0,18mm White MFC,length,1.0mm ABS,-,0.4mm,0.4mm,YES
 U_S-C7-GRH,U_S-C7,Gable_RH,720.0,560.0,18.0,18mm White MFC,length,1.0mm ABS,-,0.4mm,0.4mm,YES
-U_S-C7-BOT,U_S-C7,Bottom_Panel,864.0,560.0,18.0,18mm White MFC,none,1.0mm ABS,-,-,-,YES
-U_S-C7-STR-F,U_S-C7,Top_Front_Stretcher,864.0,80.0,18.0,18mm White MFC,length,0.4mm,-,-,-,YES
-U_S-C7-STR-R,U_S-C7,Top_Rear_Stretcher,864.0,80.0,18.0,18mm White MFC,length,0.4mm,-,-,-,YES
-U_S-C7-STR-M,U_S-C7,Mid_C_Gola_Stretcher,864.0,60.0,18.0,18mm White MFC,length,0.4mm,-,-,-,YES
-U_S-C7-CLT-T,U_S-C7,Rear_Top_Cleat,864.0,100.0,18.0,18mm White MFC,length,-,-,-,-,NO
-U_S-C7-CLT-B,U_S-C7,Rear_Bottom_Cleat,864.0,100.0,18.0,18mm White MFC,length,-,-,-,-,NO
-U_S-C7-BAK,U_S-C7,Back_Panel_Sheet,874.0,694.0,6.0,6mm White Backing,length,-,-,-,-,NO
-U_S-C7-DW1-LH,U_S-C7,Drawer_Box_LH_Lower,450.0,200.0,15.0,15mm Birch Plywood,length,1.0mm Birch,-,-,-,YES
-U_S-C7-DW1-RH,U_S-C7,Drawer_Box_RH_Lower,450.0,200.0,15.0,15mm Birch Plywood,length,1.0mm Birch,-,-,-,YES
-U_S-C7-DW1-SF,U_S-C7,Drawer_SubFront_Lower,809.0,200.0,15.0,15mm Birch Plywood,length,1.0mm Birch,-,-,-,YES
-U_S-C7-DW1-BK,U_S-C7,Drawer_Back_Lower,809.0,200.0,15.0,15mm Birch Plywood,length,1.0mm Birch,-,-,-,YES
-U_S-C7-DW1-BM,U_S-C7,Drawer_Bottom_Lower,809.0,420.0,16.0,16mm Solid Birch Base,none,-,-,-,-,NO
-U_S-C7-FR1,U_S-C7,Lower_Pot_Drawer_Front,897.0,315.0,18.0,18mm Anthracite Supermatte,length,1.0mm ABS,1.0mm ABS,1.0mm ABS,1.0mm ABS,NO
-U_S-C7-DW2-LH,U_S-C7,Drawer_Box_LH_Upper,450.0,120.0,15.0,15mm Birch Plywood,length,1.0mm Birch,-,-,-,YES
-U_S-C7-DW2-RH,U_S-C7,Drawer_Box_RH_Upper,450.0,120.0,15.0,15mm Birch Plywood,length,1.0mm Birch,-,-,-,YES
-U_S-C7-DW2-SF,U_S-C7,Drawer_SubFront_Upper,809.0,120.0,15.0,15mm Birch Plywood,length,1.0mm Birch,-,-,-,YES
-U_S-C7-DW2-BK,U_S-C7,Drawer_Back_Upper,809.0,120.0,15.0,15mm Birch Plywood,length,1.0mm Birch,-,-,-,YES
-U_S-C7-DW2-BM,U_S-C7,Drawer_Bottom_Upper,809.0,420.0,16.0,16mm Solid Birch Base,none,-,-,-,-,NO
-U_S-C7-FR2,U_S-C7,Upper_Drawer_Front,897.0,248.0,18.0,18mm Anthracite Supermatte,length,1.0mm ABS,1.0mm ABS,1.0mm ABS,1.0mm ABS,NO
-U_S-C8-GLH,U_S-C8,Gable_LH,720.0,350.0,18.0,18mm White MFC,length,1.0mm ABS,-,0.4mm,0.4mm,YES
-U_S-C8-GRH,U_S-C8,Gable_RH,720.0,350.0,18.0,18mm White MFC,length,1.0mm ABS,-,0.4mm,0.4mm,YES
-U_S-C8-BOT,U_S-C8,Bottom_Panel,864.0,350.0,18.0,18mm White MFC,none,1.0mm ABS,-,-,-,YES
-U_S-C8-TOP,U_S-C8,Roof_Panel,864.0,350.0,18.0,18mm White MFC,none,1.0mm ABS,-,-,-,YES
+U_S-C7-BOT,U_S-C7,Bottom_Panel,1014.0,560.0,18.0,18mm White MFC,none,1.0mm ABS,-,-,-,YES
+U_S-C7-STR-F,U_S-C7,Top_Front_Stretcher,1014.0,80.0,18.0,18mm White MFC,length,0.4mm,-,-,-,YES
+U_S-C7-STR-R,U_S-C7,Top_Rear_Stretcher,1014.0,80.0,18.0,18mm White MFC,length,0.4mm,-,-,-,YES
+U_S-C7-STR-M,U_S-C7,Mid_C_Gola_Stretcher,1014.0,60.0,18.0,18mm White MFC,length,0.4mm,-,-,-,YES
+U_S-C7-CLT-T,U_S-C7,Rear_Top_Cleat,1014.0,100.0,18.0,18mm White MFC,length,-,-,-,-,NO
+U_S-C7-CLT-B,U_S-C7,Rear_Bottom_Cleat,1014.0,100.0,18.0,18mm White MFC,length,-,-,-,-,NO
+U_S-C7-BAK,U_S-C7,Back_Panel_Sheet,1024.0,694.0,6.0,6mm White Backing,length,-,-,-,-,NO
+U_S-C8-GLH,U_S-C8,Gable_LH,720.0,560.0,18.0,18mm White MFC,length,1.0mm ABS,-,0.4mm,0.4mm,YES
+U_S-C8-GRH,U_S-C8,Gable_RH,720.0,560.0,18.0,18mm White MFC,length,1.0mm ABS,-,0.4mm,0.4mm,YES
+U_S-C8-BOT,U_S-C8,Bottom_Panel,864.0,560.0,18.0,18mm White MFC,none,1.0mm ABS,-,-,-,YES
+U_S-C8-STR-F,U_S-C8,Top_Front_Stretcher,864.0,80.0,18.0,18mm White MFC,length,0.4mm,-,-,-,YES
+U_S-C8-STR-R,U_S-C8,Top_Rear_Stretcher,864.0,80.0,18.0,18mm White MFC,length,0.4mm,-,-,-,YES
+U_S-C8-STR-M,U_S-C8,Mid_C_Gola_Stretcher,864.0,60.0,18.0,18mm White MFC,length,0.4mm,-,-,-,YES
 U_S-C8-CLT-T,U_S-C8,Rear_Top_Cleat,864.0,100.0,18.0,18mm White MFC,length,-,-,-,-,NO
 U_S-C8-CLT-B,U_S-C8,Rear_Bottom_Cleat,864.0,100.0,18.0,18mm White MFC,length,-,-,-,-,NO
 U_S-C8-BAK,U_S-C8,Back_Panel_Sheet,874.0,694.0,6.0,6mm White Backing,length,-,-,-,-,NO
-U_S-C8-SH1,U_S-C8,Wall_Shelf_1,863.0,310.0,18.0,18mm White MFC,length,1.0mm ABS,-,-,-,YES
-U_S-C8-FR,U_S-C8,Wall_Front_Door,897.0,717.0,18.0,18mm Anthracite Supermatte,length,1.0mm ABS,1.0mm ABS,1.0mm ABS,1.0mm ABS,NO
-U_S-C9-GLH,U_S-C9,Gable_LH,720.0,560.0,18.0,18mm White MFC,length,1.0mm ABS,-,0.4mm,0.4mm,YES
-U_S-C9-GRH,U_S-C9,Gable_RH,720.0,560.0,18.0,18mm White MFC,length,1.0mm ABS,-,0.4mm,0.4mm,YES
-U_S-C9-BOT,U_S-C9,Bottom_Panel,864.0,560.0,18.0,18mm White MFC,none,1.0mm ABS,-,-,-,YES
-U_S-C9-STR-F,U_S-C9,Top_Front_Stretcher,864.0,80.0,18.0,18mm White MFC,length,0.4mm,-,-,-,YES
-U_S-C9-STR-R,U_S-C9,Top_Rear_Stretcher,864.0,80.0,18.0,18mm White MFC,length,0.4mm,-,-,-,YES
-U_S-C9-STR-M,U_S-C9,Mid_C_Gola_Stretcher,864.0,60.0,18.0,18mm White MFC,length,0.4mm,-,-,-,YES
+U_S-C8-DW1-LH,U_S-C8,Drawer_Box_LH_Lower,450.0,200.0,15.0,15mm Birch Plywood,length,1.0mm Birch,-,-,-,YES
+U_S-C8-DW1-RH,U_S-C8,Drawer_Box_RH_Lower,450.0,200.0,15.0,15mm Birch Plywood,length,1.0mm Birch,-,-,-,YES
+U_S-C8-DW1-SF,U_S-C8,Drawer_SubFront_Lower,809.0,200.0,15.0,15mm Birch Plywood,length,1.0mm Birch,-,-,-,YES
+U_S-C8-DW1-BK,U_S-C8,Drawer_Back_Lower,809.0,200.0,15.0,15mm Birch Plywood,length,1.0mm Birch,-,-,-,YES
+U_S-C8-DW1-BM,U_S-C8,Drawer_Bottom_Lower,809.0,420.0,16.0,16mm Solid Birch Base,none,-,-,-,-,NO
+U_S-C8-FR1,U_S-C8,Lower_Pot_Drawer_Front,897.0,315.0,18.0,18mm Anthracite Supermatte,length,1.0mm ABS,1.0mm ABS,1.0mm ABS,1.0mm ABS,NO
+U_S-C8-DW2-LH,U_S-C8,Drawer_Box_LH_Upper,450.0,120.0,15.0,15mm Birch Plywood,length,1.0mm Birch,-,-,-,YES
+U_S-C8-DW2-RH,U_S-C8,Drawer_Box_RH_Upper,450.0,120.0,15.0,15mm Birch Plywood,length,1.0mm Birch,-,-,-,YES
+U_S-C8-DW2-SF,U_S-C8,Drawer_SubFront_Upper,809.0,120.0,15.0,15mm Birch Plywood,length,1.0mm Birch,-,-,-,YES
+U_S-C8-DW2-BK,U_S-C8,Drawer_Back_Upper,809.0,120.0,15.0,15mm Birch Plywood,length,1.0mm Birch,-,-,-,YES
+U_S-C8-DW2-BM,U_S-C8,Drawer_Bottom_Upper,809.0,420.0,16.0,16mm Solid Birch Base,none,-,-,-,-,NO
+U_S-C8-FR2,U_S-C8,Upper_Drawer_Front,897.0,248.0,18.0,18mm Anthracite Supermatte,length,1.0mm ABS,1.0mm ABS,1.0mm ABS,1.0mm ABS,NO
+U_S-C9-GLH,U_S-C9,Gable_LH,720.0,350.0,18.0,18mm White MFC,length,1.0mm ABS,-,0.4mm,0.4mm,YES
+U_S-C9-GRH,U_S-C9,Gable_RH,720.0,350.0,18.0,18mm White MFC,length,1.0mm ABS,-,0.4mm,0.4mm,YES
+U_S-C9-BOT,U_S-C9,Bottom_Panel,864.0,350.0,18.0,18mm White MFC,none,1.0mm ABS,-,-,-,YES
+U_S-C9-TOP,U_S-C9,Roof_Panel,864.0,350.0,18.0,18mm White MFC,none,1.0mm ABS,-,-,-,YES
 U_S-C9-CLT-T,U_S-C9,Rear_Top_Cleat,864.0,100.0,18.0,18mm White MFC,length,-,-,-,-,NO
 U_S-C9-CLT-B,U_S-C9,Rear_Bottom_Cleat,864.0,100.0,18.0,18mm White MFC,length,-,-,-,-,NO
 U_S-C9-BAK,U_S-C9,Back_Panel_Sheet,874.0,694.0,6.0,6mm White Backing,length,-,-,-,-,NO
-U_S-C9-DW1-LH,U_S-C9,Drawer_Box_LH_Lower,450.0,200.0,15.0,15mm Birch Plywood,length,1.0mm Birch,-,-,-,YES
-U_S-C9-DW1-RH,U_S-C9,Drawer_Box_RH_Lower,450.0,200.0,15.0,15mm Birch Plywood,length,1.0mm Birch,-,-,-,YES
-U_S-C9-DW1-SF,U_S-C9,Drawer_SubFront_Lower,809.0,200.0,15.0,15mm Birch Plywood,length,1.0mm Birch,-,-,-,YES
-U_S-C9-DW1-BK,U_S-C9,Drawer_Back_Lower,809.0,200.0,15.0,15mm Birch Plywood,length,1.0mm Birch,-,-,-,YES
-U_S-C9-DW1-BM,U_S-C9,Drawer_Bottom_Lower,809.0,420.0,16.0,16mm Solid Birch Base,none,-,-,-,-,NO
-U_S-C9-FR1,U_S-C9,Lower_Pot_Drawer_Front,897.0,315.0,18.0,18mm Anthracite Supermatte,length,1.0mm ABS,1.0mm ABS,1.0mm ABS,1.0mm ABS,NO
-U_S-C9-DW2-LH,U_S-C9,Drawer_Box_LH_Upper,450.0,120.0,15.0,15mm Birch Plywood,length,1.0mm Birch,-,-,-,YES
-U_S-C9-DW2-RH,U_S-C9,Drawer_Box_RH_Upper,450.0,120.0,15.0,15mm Birch Plywood,length,1.0mm Birch,-,-,-,YES
-U_S-C9-DW2-SF,U_S-C9,Drawer_SubFront_Upper,809.0,120.0,15.0,15mm Birch Plywood,length,1.0mm Birch,-,-,-,YES
-U_S-C9-DW2-BK,U_S-C9,Drawer_Back_Upper,809.0,120.0,15.0,15mm Birch Plywood,length,1.0mm Birch,-,-,-,YES
-U_S-C9-DW2-BM,U_S-C9,Drawer_Bottom_Upper,809.0,420.0,16.0,16mm Solid Birch Base,none,-,-,-,-,NO
-U_S-C9-FR2,U_S-C9,Upper_Drawer_Front,897.0,248.0,18.0,18mm Anthracite Supermatte,length,1.0mm ABS,1.0mm ABS,1.0mm ABS,1.0mm ABS,NO
+U_S-C9-SH1,U_S-C9,Wall_Shelf_1,863.0,310.0,18.0,18mm White MFC,length,1.0mm ABS,-,-,-,YES
+U_S-C9-FR,U_S-C9,Wall_Front_Door,897.0,717.0,18.0,18mm Anthracite Supermatte,length,1.0mm ABS,1.0mm ABS,1.0mm ABS,1.0mm ABS,NO
+U_S-C10-GLH,U_S-C10,Gable_LH,720.0,560.0,18.0,18mm White MFC,length,1.0mm ABS,-,0.4mm,0.4mm,YES
+U_S-C10-GRH,U_S-C10,Gable_RH,720.0,560.0,18.0,18mm White MFC,length,1.0mm ABS,-,0.4mm,0.4mm,YES
+U_S-C10-BOT,U_S-C10,Bottom_Panel,864.0,560.0,18.0,18mm White MFC,none,1.0mm ABS,-,-,-,YES
+U_S-C10-STR-F,U_S-C10,Top_Front_Stretcher,864.0,80.0,18.0,18mm White MFC,length,0.4mm,-,-,-,YES
+U_S-C10-STR-R,U_S-C10,Top_Rear_Stretcher,864.0,80.0,18.0,18mm White MFC,length,0.4mm,-,-,-,YES
+U_S-C10-STR-M,U_S-C10,Mid_C_Gola_Stretcher,864.0,60.0,18.0,18mm White MFC,length,0.4mm,-,-,-,YES
+U_S-C10-CLT-T,U_S-C10,Rear_Top_Cleat,864.0,100.0,18.0,18mm White MFC,length,-,-,-,-,NO
+U_S-C10-CLT-B,U_S-C10,Rear_Bottom_Cleat,864.0,100.0,18.0,18mm White MFC,length,-,-,-,-,NO
+U_S-C10-BAK,U_S-C10,Back_Panel_Sheet,874.0,694.0,6.0,6mm White Backing,length,-,-,-,-,NO
+U_S-C10-DW1-LH,U_S-C10,Drawer_Box_LH_Lower,450.0,200.0,15.0,15mm Birch Plywood,length,1.0mm Birch,-,-,-,YES
+U_S-C10-DW1-RH,U_S-C10,Drawer_Box_RH_Lower,450.0,200.0,15.0,15mm Birch Plywood,length,1.0mm Birch,-,-,-,YES
+U_S-C10-DW1-SF,U_S-C10,Drawer_SubFront_Lower,809.0,200.0,15.0,15mm Birch Plywood,length,1.0mm Birch,-,-,-,YES
+U_S-C10-DW1-BK,U_S-C10,Drawer_Back_Lower,809.0,200.0,15.0,15mm Birch Plywood,length,1.0mm Birch,-,-,-,YES
+U_S-C10-DW1-BM,U_S-C10,Drawer_Bottom_Lower,809.0,420.0,16.0,16mm Solid Birch Base,none,-,-,-,-,NO
+U_S-C10-FR1,U_S-C10,Lower_Pot_Drawer_Front,897.0,315.0,18.0,18mm Anthracite Supermatte,length,1.0mm ABS,1.0mm ABS,1.0mm ABS,1.0mm ABS,NO
+U_S-C10-DW2-LH,U_S-C10,Drawer_Box_LH_Upper,450.0,120.0,15.0,15mm Birch Plywood,length,1.0mm Birch,-,-,-,YES
+U_S-C10-DW2-RH,U_S-C10,Drawer_Box_RH_Upper,450.0,120.0,15.0,15mm Birch Plywood,length,1.0mm Birch,-,-,-,YES
+U_S-C10-DW2-SF,U_S-C10,Drawer_SubFront_Upper,809.0,120.0,15.0,15mm Birch Plywood,length,1.0mm Birch,-,-,-,YES
+U_S-C10-DW2-BK,U_S-C10,Drawer_Back_Upper,809.0,120.0,15.0,15mm Birch Plywood,length,1.0mm Birch,-,-,-,YES
+U_S-C10-DW2-BM,U_S-C10,Drawer_Bottom_Upper,809.0,420.0,16.0,16mm Solid Birch Base,none,-,-,-,-,NO
+U_S-C10-FR2,U_S-C10,Upper_Drawer_Front,897.0,248.0,18.0,18mm Anthracite Supermatte,length,1.0mm ABS,1.0mm ABS,1.0mm ABS,1.0mm ABS,NO
 GAL-C1-GLH,GAL-C1,Gable_LH,2160.0,600.0,18.0,18mm White MFC,length,1.0mm ABS,-,0.4mm,0.4mm,YES
 GAL-C1-GRH,GAL-C1,Gable_RH,2160.0,600.0,18.0,18mm White MFC,length,1.0mm ABS,-,0.4mm,0.4mm,YES
 GAL-C1-BOT,GAL-C1,Bottom_Panel,564.0,600.0,18.0,18mm White MFC,none,1.0mm ABS,-,-,-,YES
