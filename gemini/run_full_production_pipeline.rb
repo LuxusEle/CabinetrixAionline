@@ -16,13 +16,16 @@
 # ==============================================================================
 require 'sketchup.rb'
 require 'fileutils'
-require_relative 'cabinetrix_collision_engine'
-require_relative 'cabinetrix_box_engine'
-require_relative 'cabinetrix_wardrobe_engine'
-require_relative 'cabinetrix_layout_matrix'
-require_relative 'cabinetrix_nesting_engine'
-require_relative 'cabinetrix_export_engine'
-require_relative 'cabinetrix_callout_engine'
+
+# Force Dynamic Hot-Reloading in SketchUp Session
+_current_dir = File.dirname(__FILE__)
+load File.join(_current_dir, 'cabinetrix_collision_engine.rb')
+load File.join(_current_dir, 'cabinetrix_box_engine.rb')
+load File.join(_current_dir, 'cabinetrix_wardrobe_engine.rb')
+load File.join(_current_dir, 'cabinetrix_layout_matrix.rb')
+load File.join(_current_dir, 'cabinetrix_nesting_engine.rb')
+load File.join(_current_dir, 'cabinetrix_export_engine.rb')
+load File.join(_current_dir, 'cabinetrix_callout_engine.rb')
 
 module CabinetrixMasterPipeline
   def self.get_or_create_material(model, name, rgb, alpha = 1.0)
@@ -80,6 +83,8 @@ module CabinetrixMasterPipeline
       CabinetrixLayoutMatrix.build_layout(pipeline_root.entities, l_key, offset_x, 0.0, mats, :hybrid)
       
       layout_def = CabinetrixLayoutMatrix::LAYOUTS[l_key]
+      next unless layout_def && layout_def[:cabinets]
+
       layout_def[:cabinets].each_with_index do |cab, c_idx|
         mod_def = CabinetrixLayoutMatrix::MODULE_CATALOG[cab[:mod_id]]
         next unless mod_def
