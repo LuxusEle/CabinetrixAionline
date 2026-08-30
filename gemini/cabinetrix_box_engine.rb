@@ -679,16 +679,32 @@ module CabinetrixBoxEngine
       build_structural_shelf(box_grp.entities, "Roof_Panel", width, depth, height - BOARD_THK, mats, full_depth_to_wall: true)
       build_shotgun_grooved_back(box_grp.entities, name, width, bz, height, mats, has_mid_cleat: true, mid_cleat_z: 1200.mm)
 
-      drawer_pull = (mode == :hybrid ? 300.mm : 0.mm)
-      [bz + 20.mm, bz + 230.mm, bz + 440.mm, bz + 650.mm, bz + 860.mm].each_with_index do |dz, i|
-        pull_dist = (i == 1) ? drawer_pull : 0.mm
-        build_hettich_undermount_drawer(box_grp.entities, Geom::Point3d.new(bx + BOARD_THK, by - depth + 25.mm, dz), inner_w, depth, 140.mm, 160.mm, pull_dist, mats, mats[:carcase], front_w: (inner_w - 28.mm), is_inner_drawer: true)
-      end
+      if depth.to_mm >= 450.0
+        # Deep units (D >= 450mm): Internal Inset Drawers in lower zone + Shelves in upper zone
+        drawer_pull = (mode == :hybrid ? 300.mm : 0.mm)
+        [bz + 20.mm, bz + 230.mm, bz + 440.mm, bz + 650.mm, bz + 860.mm].each_with_index do |dz, i|
+          pull_dist = (i == 1) ? drawer_pull : 0.mm
+          build_hettich_undermount_drawer(box_grp.entities, Geom::Point3d.new(bx + BOARD_THK, by - depth + 25.mm, dz), inner_w, depth, 140.mm, 160.mm, pull_dist, mats, mats[:carcase], front_w: (inner_w - 28.mm), is_inner_drawer: true)
+        end
 
-      upper_clear_h = height.to_mm - 1200.0 - 36.0
-      safe_shelves = CabinetrixCollisionEngine.calculate_safe_shelf_elevations(upper_clear_h)
-      safe_shelves.each_with_index do |sz, idx|
-        build_adjustable_shelf(box_grp.entities, "Adjustable_Shelf_#{idx+1}", width, depth, 1200.mm + sz.mm, mats)
+        upper_clear_h = height.to_mm - 1200.0 - 36.0
+        safe_shelves = CabinetrixCollisionEngine.calculate_safe_shelf_elevations(upper_clear_h)
+        safe_shelves.each_with_index do |sz, idx|
+          build_adjustable_shelf(box_grp.entities, "Adjustable_Shelf_#{idx+1}", width, depth, 1200.mm + sz.mm, mats)
+        end
+      else
+        # Shallow units (D < 450mm): Full-Height Adjustable Shelving (ZERO sticking-out drawers!)
+        lower_clear_h = 1200.0 - 36.0
+        lower_shelves = CabinetrixCollisionEngine.calculate_safe_shelf_elevations(lower_clear_h)
+        lower_shelves.each_with_index do |sz, idx|
+          build_adjustable_shelf(box_grp.entities, "Lower_Shelf_#{idx+1}", width, depth, bz + sz.mm, mats)
+        end
+
+        upper_clear_h = height.to_mm - 1200.0 - 36.0
+        upper_shelves = CabinetrixCollisionEngine.calculate_safe_shelf_elevations(upper_clear_h)
+        upper_shelves.each_with_index do |sz, idx|
+          build_adjustable_shelf(box_grp.entities, "Upper_Shelf_#{idx+1}", width, depth, 1200.mm + sz.mm, mats)
+        end
       end
       
       tower_hinge_z = [bz + 200.mm, bz + 625.mm, bz + 1250.mm, bz + 1950.mm]

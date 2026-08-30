@@ -52,12 +52,24 @@ module CabinetrixCollisionEngine
   # ----------------------------------------------------------------------------
   # 1. DRAWER GEOMETRY FUNCTION (WITH INNER INSET SPACER)
   # ----------------------------------------------------------------------------
-  def self.calculate_drawer_geometry(internal_w, internal_d = 560.0, side_gap: 12.5, box_thk: 15.0, front_h: 248.0, runner_len: 450.0, hinge_spacer: 0.0)
+  def self.calculate_drawer_geometry(internal_w, internal_d = 560.0, side_gap: 12.5, box_thk: 15.0, front_h: 248.0, runner_len: nil, hinge_spacer: 0.0)
     total_side_reveal = side_gap + hinge_spacer
     box_w = internal_w - (2.0 * total_side_reveal)
     sub_front_w = box_w - (2.0 * box_thk)
     bottom_w = box_w - (2.0 * box_thk)
-    bottom_d = runner_len - (2.0 * box_thk)
+    
+    # Calculate runner length strictly clamped to internal depth with 40mm rear clearance
+    max_runner_fit = [internal_d - 40.0, 150.0].max
+    r_len = runner_len || if max_runner_fit >= 500.0 then 500.0
+                          elsif max_runner_fit >= 450.0 then 450.0
+                          elsif max_runner_fit >= 400.0 then 400.0
+                          elsif max_runner_fit >= 350.0 then 350.0
+                          elsif max_runner_fit >= 300.0 then 300.0
+                          elsif max_runner_fit >= 250.0 then 250.0
+                          else max_runner_fit
+                          end
+
+    bottom_d = r_len - (2.0 * box_thk)
     max_box_h = [front_h - 40.0, 200.0].min
 
     {
@@ -67,7 +79,7 @@ module CabinetrixCollisionEngine
       hinge_spacer: hinge_spacer,
       total_side_reveal: total_side_reveal,
       box_w: box_w,
-      box_d: runner_len,
+      box_d: r_len,
       box_h: max_box_h,
       sub_front_w: sub_front_w,
       bottom_w: bottom_w,
