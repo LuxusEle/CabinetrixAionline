@@ -2,14 +2,12 @@
 # CABINETRIX AI — MASTER KITCHEN LAYOUT MATRIX & 20-MODULE CATALOG
 # File: gemini/cabinetrix_layout_matrix.rb
 #
-# Contains:
-#   1. Catalog of 20 Standard Parametric Kitchen Cabinet Boxes
-#   2. Pre-configured Multi-Zone Layout Formulations:
-#      - Layout A: Straight Linear Wall (4200mm)
-#      - Layout B: Executive L-Shaped Kitchen (3300mm x 2700mm)
-#      - Layout C: Master U-Shaped Kitchen (3600mm x 2850mm x 2400mm)
-#      - Layout D: Luxury Galley with Central Island (4800mm Tall + 2700mm Island)
-#      - Layout E: 2700mm Ceiling Height Suite with Bulkheads & Open Display Racks
+# Production Standard:
+#   • REAL 3D ARCHITECTURAL ROOM FORMULATIONS:
+#     - Layout A: True I-Shape (Straight Single Wall 4200mm) with Full 2700mm Bulkheads
+#     - Layout B: True L-Shape (90° Perpendicular Return Wall with LeMans II Corner)
+#     - Layout C: True U-Shape (3-Sided Room with Dual Corners & Peninsula Return)
+#     - Layout D: Luxury Galley with Freestanding Central Island (Double-Sided Gola & Overhead Gantry)
 # ==============================================================================
 require 'sketchup.rb'
 require_relative 'cabinetrix_box_engine'
@@ -194,87 +192,103 @@ module CabinetrixLayoutMatrix
   }
 
   # ----------------------------------------------------------------------------
-  # 2. COMPLETE MULTI-ZONE KITCHEN LAYOUT FORMULATIONS
+  # 2. REAL 3D MULTI-ZONE KITCHEN LAYOUT FORMULATIONS
   # ----------------------------------------------------------------------------
   LAYOUTS = {
-    # Layout A: Straight Linear Wall (4200mm)
-    linear_suite: {
-      name: "Layout A — Linear 4200mm Single Wall Suite",
-      description: "Linear run combining Space Tower, 2-Drawer Gola, Cooktop, Sink Base, and AVENTOS Wall Units.",
+    # --------------------------------------------------------------------------
+    # Layout A: True I-Shape (Straight Single Wall 4200mm)
+    # --------------------------------------------------------------------------
+    i_shaped_linear: {
+      name: "Layout A — True I-Shape Linear Kitchen (4200mm)",
+      description: "Single wall run featuring Space Tower, Cooktop, Pot Drawers, Sink Cargo, Oven Tower, AVENTOS HF & 2700mm Bulkheads.",
       cabinets: [
         { mod_id: "T_SPACE_TOWER_600", x: 0.0, y: 0.0, z: 100.0 },
         { mod_id: "B_GOLA_COOKTOP_900", x: 600.0, y: 0.0, z: 100.0 },
+        { mod_id: "W_HOOD_INTEGRATED_900", x: 600.0, y: 0.0, z: 1480.0 },
+        { mod_id: "BLK_FLAP_HK_900", x: 600.0, y: 0.0, z: 2200.0 },
+
         { mod_id: "B_GOLA_2D_900", x: 1500.0, y: 0.0, z: 100.0 },
-        { mod_id: "B_GOLA_SINK_900", x: 2400.0, y: 0.0, z: 100.0 },
-        { mod_id: "T_OVEN_TOWER_600", x: 3300.0, y: 0.0, z: 100.0 },
-        { mod_id: "B_GOLA_SPICE_300", x: 3900.0, y: 0.0, z: 100.0 },
-        # Wall Units
-        { mod_id: "W_HOOD_INTEGRATED_900", x: 600.0, y: 0.0, z: 1480.0 },
         { mod_id: "W_LIFT_AVENTOS_HF_900", x: 1500.0, y: 0.0, z: 1480.0 },
-        { mod_id: "W_GLASS_DISPLAY_900", x: 2400.0, y: 0.0, z: 1480.0 }
+        { mod_id: "BLK_FLAP_HK_900", x: 1500.0, y: 0.0, z: 2200.0 },
+
+        { mod_id: "B_GOLA_SINK_900", x: 2400.0, y: 0.0, z: 100.0 },
+        { mod_id: "W_GLASS_DISPLAY_900", x: 2400.0, y: 0.0, z: 1480.0 },
+        { mod_id: "BLK_FLAP_HK_900", x: 2400.0, y: 0.0, z: 2200.0 },
+
+        { mod_id: "T_OVEN_TOWER_600", x: 3300.0, y: 0.0, z: 100.0 },
+        { mod_id: "B_GOLA_SPICE_300", x: 3900.0, y: 0.0, z: 100.0 }
       ]
     },
 
-    # Layout B: Executive L-Shaped Kitchen (3300mm x 2700mm)
-    l_shaped_suite: {
-      name: "Layout B — Executive L-Shaped Kitchen Suite",
-      description: "L-Shape with LeMans II corner swivel unit, tall oven tower, Gola drawers, and AVENTOS lift.",
+    # --------------------------------------------------------------------------
+    # Layout B: True L-Shape (90° Perpendicular Return Wall)
+    # --------------------------------------------------------------------------
+    l_shaped_kitchen: {
+      name: "Layout B — True L-Shaped Kitchen (3300mm x 2700mm)",
+      description: "L-Shape with LeMans II corner unit, cooking zone on Wall 1, and 90° perpendicular sink run on Wall 2.",
       cabinets: [
-        { mod_id: "T_OVEN_TOWER_600", x: 0.0, y: 0.0, z: 100.0 },
-        { mod_id: "B_GOLA_COOKTOP_900", x: 600.0, y: 0.0, z: 100.0 },
-        { mod_id: "B_LEMANS_CORNER_1050", x: 1500.0, y: 0.0, z: 100.0 },
-        { mod_id: "B_GOLA_SINK_900", x: 2550.0, y: 0.0, z: 100.0 },
-        { mod_id: "W_HOOD_INTEGRATED_900", x: 600.0, y: 0.0, z: 1480.0 },
-        { mod_id: "W_LIFT_AVENTOS_HF_900", x: 1500.0, y: 0.0, z: 1480.0 }
-      ]
-    },
-
-    # Layout C: Master U-Shaped Kitchen (3600mm x 2850mm x 2400mm)
-    u_shaped_suite: {
-      name: "Layout C — Master U-Shaped Kitchen Suite",
-      description: "U-Shape featuring Magic Corner, Sink Cargo, Cooktop, Spice, and Wine storage units.",
-      cabinets: [
+        # Wall 1 Main Run (Along X-axis, facing -Y)
         { mod_id: "T_SPACE_TOWER_600", x: 0.0, y: 0.0, z: 100.0 },
-        { mod_id: "B_MAGIC_CORNER_1050", x: 600.0, y: 0.0, z: 100.0 },
-        { mod_id: "B_GOLA_SINK_900", x: 1650.0, y: 0.0, z: 100.0 },
-        { mod_id: "B_LEMANS_CORNER_1050", x: 2550.0, y: 0.0, z: 100.0 },
-        { mod_id: "B_GOLA_COOKTOP_900", x: 3600.0, y: 0.0, z: 100.0 },
-        { mod_id: "B_GOLA_SPICE_300", x: 4500.0, y: 0.0, z: 100.0 },
-        { mod_id: "W_LIFT_AVENTOS_HF_900", x: 1650.0, y: 0.0, z: 1480.0 },
-        { mod_id: "W_HOOD_INTEGRATED_900", x: 3600.0, y: 0.0, z: 1480.0 }
+        { mod_id: "B_GOLA_COOKTOP_900", x: 600.0, y: 0.0, z: 100.0 },
+        { mod_id: "W_HOOD_INTEGRATED_900", x: 600.0, y: 0.0, z: 1480.0 },
+        { mod_id: "B_LEMANS_CORNER_1050", x: 1500.0, y: 0.0, z: 100.0 },
+        { mod_id: "W_LIFT_AVENTOS_HF_900", x: 1500.0, y: 0.0, z: 1480.0 },
+
+        # Wall 2 Return Run (Perpendicular 90° along Y-axis, facing +X)
+        { mod_id: "B_GOLA_SINK_900", x: 2550.0, y: -560.0, z: 100.0, rotation_deg: 90.0 },
+        { mod_id: "W_GLASS_DISPLAY_900", x: 2550.0, y: -560.0, z: 1480.0, rotation_deg: 90.0 },
+        { mod_id: "B_GOLA_2D_900", x: 2550.0, y: -1460.0, z: 100.0, rotation_deg: 90.0 },
+        { mod_id: "T_OVEN_TOWER_600", x: 2550.0, y: -2360.0, z: 100.0, rotation_deg: 90.0 }
       ]
     },
 
-    # Layout D: Luxury Galley with Central Island (4800mm Tall + 2700mm Island)
-    galley_island_suite: {
-      name: "Layout D — Luxury Galley with Double-Sided Island",
-      description: "Architectural 4-tower tall bank + 2700mm freestanding double-sided social island.",
+    # --------------------------------------------------------------------------
+    # Layout C: True U-Shape (3-Sided Room with Dual Corners & Peninsula)
+    # --------------------------------------------------------------------------
+    u_shaped_kitchen: {
+      name: "Layout C — True U-Shaped Kitchen (3600mm x 2850mm x 2400mm)",
+      description: "3-Sided U-Shape with Magic Corner on left, sink base in center, LeMans II on right, and peninsula return.",
       cabinets: [
-        # Tall Wall Bank
+        # Left Run (Wall 1 along Y-axis, facing +X)
+        { mod_id: "T_SPACE_TOWER_600", x: 0.0, y: -1800.0, z: 100.0, rotation_deg: 90.0 },
+        { mod_id: "B_GOLA_SPICE_300", x: 0.0, y: -1200.0, z: 100.0, rotation_deg: 90.0 },
+
+        # Left Corner & Center Main Run (Wall 2 along X-axis, facing -Y)
+        { mod_id: "B_MAGIC_CORNER_1050", x: 0.0, y: 0.0, z: 100.0 },
+        { mod_id: "B_GOLA_SINK_900", x: 1050.0, y: 0.0, z: 100.0 },
+        { mod_id: "W_LIFT_AVENTOS_HF_900", x: 1050.0, y: 0.0, z: 1480.0 },
+        { mod_id: "B_LEMANS_CORNER_1050", x: 1950.0, y: 0.0, z: 100.0 },
+
+        # Right Run / Peninsula (Wall 3 along Y-axis, facing -X into room)
+        { mod_id: "B_GOLA_COOKTOP_900", x: 3000.0, y: -560.0, z: 100.0, rotation_deg: -90.0 },
+        { mod_id: "W_HOOD_INTEGRATED_900", x: 3000.0, y: -560.0, z: 1480.0, rotation_deg: -90.0 },
+        { mod_id: "B_GOLA_2D_900", x: 3000.0, y: -1460.0, z: 100.0, rotation_deg: -90.0 }
+      ]
+    },
+
+    # --------------------------------------------------------------------------
+    # Layout D: Luxury Galley with Freestanding Central Island
+    # --------------------------------------------------------------------------
+    galley_with_island: {
+      name: "Layout D — Luxury Galley Kitchen with Freestanding Central Island",
+      description: "4-Tower tall appliance wall bank with 2700mm freestanding double-sided social island across a 1200mm aisle.",
+      cabinets: [
+        # Back Wall Tall Bank (Facing -Y)
         { mod_id: "T_SPACE_TOWER_600", x: 0.0, y: 0.0, z: 100.0 },
         { mod_id: "T_OVEN_TOWER_600", x: 600.0, y: 0.0, z: 100.0 },
         { mod_id: "T_OVEN_TOWER_600", x: 1200.0, y: 0.0, z: 100.0 },
         { mod_id: "T_PANTRY_LARDER_600", x: 1800.0, y: 0.0, z: 100.0 },
-        # Freestanding Central Island (Y = -1400mm)
-        { mod_id: "ISL_GOLA_2D_900", x: 0.0, y: -1400.0, z: 100.0, facing_dir: :aisle },
-        { mod_id: "ISL_PREP_SINK_900", x: 900.0, y: -1400.0, z: 100.0, facing_dir: :aisle },
-        { mod_id: "B_GOLA_WINE_600", x: 1800.0, y: -1400.0, z: 100.0, facing_dir: :aisle }
-      ]
-    },
+        { mod_id: "W_GLASS_DISPLAY_900", x: 2400.0, y: 0.0, z: 1480.0 },
+        { mod_id: "BLK_FLAP_HK_900", x: 2400.0, y: 0.0, z: 2200.0 },
 
-    # Layout E: Full 2700mm Ceiling Height Suite with Bulkheads & Open Racks
-    ceiling_bulkhead_suite: {
-      name: "Layout E — 2700mm Ceiling Height Suite with Bulkheads & Open Racks",
-      description: "Full ceiling height architecture with top stay lift flaps and matte black open display racks.",
-      cabinets: [
-        { mod_id: "B_GOLA_2D_900", x: 0.0, y: 0.0, z: 100.0 },
-        { mod_id: "B_GOLA_SINK_900", x: 900.0, y: 0.0, z: 100.0 },
-        { mod_id: "W_GLASS_DISPLAY_900", x: 0.0, y: 0.0, z: 1480.0 },
-        { mod_id: "BLK_FLAP_HK_900", x: 0.0, y: 0.0, z: 2200.0 },
-        { mod_id: "W_LIFT_AVENTOS_HF_900", x: 900.0, y: 0.0, z: 1480.0 },
-        { mod_id: "BLK_FLAP_HK_900", x: 900.0, y: 0.0, z: 2200.0 },
-        { mod_id: "OPN_METAL_RACK_600", x: 1800.0, y: 0.0, z: 1480.0 },
-        { mod_id: "OPN_WINE_GRID_400", x: 2400.0, y: 0.0, z: 1480.0 }
+        # Freestanding Central Island (Parallel across 1200mm walkway, Y = -1800mm, facing +Y)
+        { mod_id: "ISL_PREP_SINK_900", x: 300.0, y: -1800.0, z: 100.0, rotation_deg: 180.0 },
+        { mod_id: "ISL_GOLA_2D_900", x: 1200.0, y: -1800.0, z: 100.0, rotation_deg: 180.0 },
+        { mod_id: "B_GOLA_WINE_600", x: 2100.0, y: -1800.0, z: 100.0, rotation_deg: 180.0 },
+
+        # Overhead Suspended Gantry Racks (Z = 1600mm)
+        { mod_id: "OPN_METAL_RACK_600", x: 600.0, y: -1800.0, z: 1600.0 },
+        { mod_id: "OPN_WINE_GRID_400", x: 1400.0, y: -1800.0, z: 1600.0 }
       ]
     }
   }
@@ -297,7 +311,8 @@ module CabinetrixLayoutMatrix
         x: (origin_x + item[:x]).mm,
         y: (origin_y + item[:y]).mm,
         z: item[:z].mm,
-        facing_dir: item[:facing_dir] || :front
+        facing_dir: item[:facing_dir] || :front,
+        rotation_deg: item[:rotation_deg] || 0.0
       }
       params = {
         width: mod_def[:w].mm,

@@ -1,89 +1,159 @@
-Part ID,Cabinet ID,Part Name,Length (mm),Width (mm),Thk (mm),Material,Edgebanding,CNC Machining
-CAB-01-LH,CAB-01,Gable_LH,720,560,18.0,18mm White MFC,1.0mm ABS Front,YES
-CAB-01-RH,CAB-01,Gable_RH,720,560,18.0,18mm White MFC,1.0mm ABS Front,YES
-CAB-01-BOT,CAB-01,Bottom_Panel,864.0,560,18.0,18mm White MFC,1.0mm ABS Front,YES
-CAB-01-FR1,CAB-01,Lower_Pot_Drawer_Front,897,315,18.0,18mm Anthracite Supermatte,1.0mm ABS (4 edges),NO
-CAB-01-FR2,CAB-01,Upper_Drawer_Front,897,248,18.0,18mm Anthracite Supermatte,1.0mm ABS (4 edges),NO
-CAB-01-BAK,CAB-01,Back_Sheet,874.0,694.0,6.0,6mm White Backing,-,NO
-CAB-02-LH,CAB-02,Gable_LH,720,560,18.0,18mm White MFC,1.0mm ABS Front,YES
-CAB-02-RH,CAB-02,Gable_RH,720,560,18.0,18mm White MFC,1.0mm ABS Front,YES
-CAB-02-BOT,CAB-02,Bottom_Panel,564.0,560,18.0,18mm White MFC,1.0mm ABS Front,YES
-CAB-02-FR1,CAB-02,Lower_Pot_Drawer_Front,597,315,18.0,18mm Anthracite Supermatte,1.0mm ABS (4 edges),NO
-CAB-02-FR2,CAB-02,Upper_Drawer_Front,597,248,18.0,18mm Anthracite Supermatte,1.0mm ABS (4 edges),NO
-CAB-02-BAK,CAB-02,Back_Sheet,574.0,694.0,6.0,6mm White Backing,-,NO
-CAB-03-LH,CAB-03,Gable_LH,720,560,18.0,18mm White MFC,1.0mm ABS Front,YES
-CAB-03-RH,CAB-03,Gable_RH,720,560,18.0,18mm White MFC,1.0mm ABS Front,YES
-CAB-03-BOT,CAB-03,Bottom_Panel,864.0,560,18.0,18mm White MFC,1.0mm ABS Front,YES
-CAB-03-BAK,CAB-03,Back_Sheet,874.0,694.0,6.0,6mm White Backing,-,NO
-CAB-04-LH,CAB-04,Gable_LH,720,560,18.0,18mm White MFC,1.0mm ABS Front,YES
-CAB-04-RH,CAB-04,Gable_RH,720,560,18.0,18mm White MFC,1.0mm ABS Front,YES
-CAB-04-BOT,CAB-04,Bottom_Panel,864.0,560,18.0,18mm White MFC,1.0mm ABS Front,YES
-CAB-04-FR1,CAB-04,Lower_Pot_Drawer_Front,897,315,18.0,18mm Anthracite Supermatte,1.0mm ABS (4 edges),NO
-CAB-04-FR2,CAB-04,Upper_Drawer_Front,897,248,18.0,18mm Anthracite Supermatte,1.0mm ABS (4 edges),NO
-CAB-04-BAK,CAB-04,Back_Sheet,874.0,694.0,6.0,6mm White Backing,-,NO
-CAB-05-LH,CAB-05,Gable_LH,720,560,18.0,18mm White MFC,1.0mm ABS Front,YES
-CAB-05-RH,CAB-05,Gable_RH,720,560,18.0,18mm White MFC,1.0mm ABS Front,YES
-CAB-05-BOT,CAB-05,Bottom_Panel,264.0,560,18.0,18mm White MFC,1.0mm ABS Front,YES
-CAB-05-BAK,CAB-05,Back_Sheet,274.0,694.0,6.0,6mm White Backing,-,NO
-CAB-06-LH,CAB-06,Gable_LH,720,560,18.0,18mm White MFC,1.0mm ABS Front,YES
-CAB-06-RH,CAB-06,Gable_RH,720,560,18.0,18mm White MFC,1.0mm ABS Front,YES
-CAB-06-BOT,CAB-06,Bottom_Panel,564.0,560,18.0,18mm White MFC,1.0mm ABS Front,YES
-CAB-06-BAK,CAB-06,Back_Sheet,574.0,694.0,6.0,6mm White Backing,-,NO
-CAB-07-LH,CAB-07,Gable_LH,720,560,18.0,18mm White MFC,1.0mm ABS Front,YES
-CAB-07-RH,CAB-07,Gable_RH,720,560,18.0,18mm White MFC,1.0mm ABS Front,YES
-CAB-07-BOT,CAB-07,Bottom_Panel,1014.0,560,18.0,18mm White MFC,1.0mm ABS Front,YES
-CAB-07-BAK,CAB-07,Back_Sheet,1024.0,694.0,6.0,6mm White Backing,-,NO
-CAB-08-LH,CAB-08,Gable_LH,720,560,18.0,18mm White MFC,1.0mm ABS Front,YES
-CAB-08-RH,CAB-08,Gable_RH,720,560,18.0,18mm White MFC,1.0mm ABS Front,YES
-CAB-08-BOT,CAB-08,Bottom_Panel,1014.0,560,18.0,18mm White MFC,1.0mm ABS Front,YES
-CAB-08-BAK,CAB-08,Back_Sheet,1024.0,694.0,6.0,6mm White Backing,-,NO
-CAB-09-LH,CAB-09,Gable_LH,720,900,18.0,18mm White MFC,1.0mm ABS Front,YES
-CAB-09-RH,CAB-09,Gable_RH,720,900,18.0,18mm White MFC,1.0mm ABS Front,YES
-CAB-09-BOT,CAB-09,Bottom_Panel,864.0,900,18.0,18mm White MFC,1.0mm ABS Front,YES
-CAB-09-BAK,CAB-09,Back_Sheet,874.0,694.0,6.0,6mm White Backing,-,NO
-CAB-10-LH,CAB-10,Gable_LH,2160,600,18.0,18mm White MFC,1.0mm ABS Front,YES
-CAB-10-RH,CAB-10,Gable_RH,2160,600,18.0,18mm White MFC,1.0mm ABS Front,YES
-CAB-10-BOT,CAB-10,Bottom_Panel,564.0,600,18.0,18mm White MFC,1.0mm ABS Front,YES
-CAB-10-BAK,CAB-10,Back_Sheet,574.0,2134.0,6.0,6mm White Backing,-,NO
-CAB-11-LH,CAB-11,Gable_LH,2160,600,18.0,18mm White MFC,1.0mm ABS Front,YES
-CAB-11-RH,CAB-11,Gable_RH,2160,600,18.0,18mm White MFC,1.0mm ABS Front,YES
-CAB-11-BOT,CAB-11,Bottom_Panel,564.0,600,18.0,18mm White MFC,1.0mm ABS Front,YES
-CAB-11-BAK,CAB-11,Back_Sheet,574.0,2134.0,6.0,6mm White Backing,-,NO
-CAB-12-LH,CAB-12,Gable_LH,2160,600,18.0,18mm White MFC,1.0mm ABS Front,YES
-CAB-12-RH,CAB-12,Gable_RH,2160,600,18.0,18mm White MFC,1.0mm ABS Front,YES
-CAB-12-BOT,CAB-12,Bottom_Panel,564.0,600,18.0,18mm White MFC,1.0mm ABS Front,YES
-CAB-12-BAK,CAB-12,Back_Sheet,574.0,2134.0,6.0,6mm White Backing,-,NO
-CAB-13-LH,CAB-13,Gable_LH,720,350,18.0,18mm White MFC,1.0mm ABS Front,YES
-CAB-13-RH,CAB-13,Gable_RH,720,350,18.0,18mm White MFC,1.0mm ABS Front,YES
-CAB-13-BOT,CAB-13,Bottom_Panel,864.0,350,18.0,18mm White MFC,1.0mm ABS Front,YES
-CAB-13-BAK,CAB-13,Back_Sheet,874.0,694.0,6.0,6mm White Backing,-,NO
-CAB-14-LH,CAB-14,Gable_LH,720,350,18.0,18mm White MFC,1.0mm ABS Front,YES
-CAB-14-RH,CAB-14,Gable_RH,720,350,18.0,18mm White MFC,1.0mm ABS Front,YES
-CAB-14-BOT,CAB-14,Bottom_Panel,864.0,350,18.0,18mm White MFC,1.0mm ABS Front,YES
-CAB-14-BAK,CAB-14,Back_Sheet,874.0,694.0,6.0,6mm White Backing,-,NO
-CAB-15-LH,CAB-15,Gable_LH,720,350,18.0,18mm White MFC,1.0mm ABS Front,YES
-CAB-15-RH,CAB-15,Gable_RH,720,350,18.0,18mm White MFC,1.0mm ABS Front,YES
-CAB-15-BOT,CAB-15,Bottom_Panel,864.0,350,18.0,18mm White MFC,1.0mm ABS Front,YES
-CAB-15-BAK,CAB-15,Back_Sheet,874.0,694.0,6.0,6mm White Backing,-,NO
-CAB-16-LH,CAB-16,Gable_LH,360,350,18.0,18mm White MFC,1.0mm ABS Front,YES
-CAB-16-RH,CAB-16,Gable_RH,360,350,18.0,18mm White MFC,1.0mm ABS Front,YES
-CAB-16-BOT,CAB-16,Bottom_Panel,864.0,350,18.0,18mm White MFC,1.0mm ABS Front,YES
-CAB-16-BAK,CAB-16,Back_Sheet,874.0,334.0,6.0,6mm White Backing,-,NO
-CAB-17-LH,CAB-17,Gable_LH,720,350,18.0,18mm White MFC,1.0mm ABS Front,YES
-CAB-17-RH,CAB-17,Gable_RH,720,350,18.0,18mm White MFC,1.0mm ABS Front,YES
-CAB-17-BOT,CAB-17,Bottom_Panel,564.0,350,18.0,18mm White MFC,1.0mm ABS Front,YES
-CAB-17-BAK,CAB-17,Back_Sheet,574.0,694.0,6.0,6mm White Backing,-,NO
-CAB-18-LH,CAB-18,Gable_LH,720,350,18.0,18mm White MFC,1.0mm ABS Front,YES
-CAB-18-RH,CAB-18,Gable_RH,720,350,18.0,18mm White MFC,1.0mm ABS Front,YES
-CAB-18-BOT,CAB-18,Bottom_Panel,364.0,350,18.0,18mm White MFC,1.0mm ABS Front,YES
-CAB-18-BAK,CAB-18,Back_Sheet,374.0,694.0,6.0,6mm White Backing,-,NO
-CAB-19-LH,CAB-19,Gable_LH,720,560,18.0,18mm White MFC,1.0mm ABS Front,YES
-CAB-19-RH,CAB-19,Gable_RH,720,560,18.0,18mm White MFC,1.0mm ABS Front,YES
-CAB-19-BOT,CAB-19,Bottom_Panel,864.0,560,18.0,18mm White MFC,1.0mm ABS Front,YES
-CAB-19-FR1,CAB-19,Lower_Pot_Drawer_Front,897,315,18.0,18mm Anthracite Supermatte,1.0mm ABS (4 edges),NO
-CAB-19-FR2,CAB-19,Upper_Drawer_Front,897,248,18.0,18mm Anthracite Supermatte,1.0mm ABS (4 edges),NO
-CAB-19-BAK,CAB-19,Back_Sheet,874.0,694.0,6.0,6mm White Backing,-,NO
-CAB-20-LH,CAB-20,Gable_LH,720,560,18.0,18mm White MFC,1.0mm ABS Front,YES
-CAB-20-RH,CAB-20,Gable_RH,720,560,18.0,18mm White MFC,1.0mm ABS Front,YES
-CAB-20-BOT,CAB-20,Bottom_Panel,864.0,560,18.0,18mm White MFC,1.0mm ABS Front,YES
-CAB-20-BAK,CAB-20,Back_Sheet,874.0,694.0,6.0,6mm White Backing,-,NO
+Part ID,Cabinet ID,Part Name,Length (mm),Width (mm),Thk (mm),Material,Grain,EB Length 1,EB Length 2,EB Width 1,EB Width 2,CNC Machining
+LIN-C1-LH,LIN-C1,Gable_LH,2160.0,600.0,18.0,18mm White MFC,length,1.0mm ABS,-,0.4mm,0.4mm,YES
+LIN-C1-RH,LIN-C1,Gable_RH,2160.0,600.0,18.0,18mm White MFC,length,1.0mm ABS,-,0.4mm,0.4mm,YES
+LIN-C1-BOT,LIN-C1,Bottom_Panel,564.0,600.0,18.0,18mm White MFC,none,1.0mm ABS,-,-,-,YES
+LIN-C1-BAK,LIN-C1,Back_Panel_Sheet,574.0,2134.0,6.0,6mm White Backing,length,-,-,-,-,NO
+LIN-C2-LH,LIN-C2,Gable_LH,720.0,560.0,18.0,18mm White MFC,length,1.0mm ABS,-,0.4mm,0.4mm,YES
+LIN-C2-RH,LIN-C2,Gable_RH,720.0,560.0,18.0,18mm White MFC,length,1.0mm ABS,-,0.4mm,0.4mm,YES
+LIN-C2-BOT,LIN-C2,Bottom_Panel,864.0,560.0,18.0,18mm White MFC,none,1.0mm ABS,-,-,-,YES
+LIN-C2-BAK,LIN-C2,Back_Panel_Sheet,874.0,694.0,6.0,6mm White Backing,length,-,-,-,-,NO
+LIN-C3-LH,LIN-C3,Gable_LH,720.0,560.0,18.0,18mm White MFC,length,1.0mm ABS,-,0.4mm,0.4mm,YES
+LIN-C3-RH,LIN-C3,Gable_RH,720.0,560.0,18.0,18mm White MFC,length,1.0mm ABS,-,0.4mm,0.4mm,YES
+LIN-C3-BOT,LIN-C3,Bottom_Panel,864.0,560.0,18.0,18mm White MFC,none,1.0mm ABS,-,-,-,YES
+LIN-C3-FR1,LIN-C3,Lower_Pot_Drawer_Front,897.0,315.0,18.0,18mm Anthracite Supermatte,length,1.0mm ABS,1.0mm ABS,1.0mm ABS,1.0mm ABS,NO
+LIN-C3-FR2,LIN-C3,Upper_Drawer_Front,897.0,248.0,18.0,18mm Anthracite Supermatte,length,1.0mm ABS,1.0mm ABS,1.0mm ABS,1.0mm ABS,NO
+LIN-C3-BAK,LIN-C3,Back_Panel_Sheet,874.0,694.0,6.0,6mm White Backing,length,-,-,-,-,NO
+LIN-C4-LH,LIN-C4,Gable_LH,720.0,560.0,18.0,18mm White MFC,length,1.0mm ABS,-,0.4mm,0.4mm,YES
+LIN-C4-RH,LIN-C4,Gable_RH,720.0,560.0,18.0,18mm White MFC,length,1.0mm ABS,-,0.4mm,0.4mm,YES
+LIN-C4-BOT,LIN-C4,Bottom_Panel,864.0,560.0,18.0,18mm White MFC,none,1.0mm ABS,-,-,-,YES
+LIN-C4-BAK,LIN-C4,Back_Panel_Sheet,874.0,694.0,6.0,6mm White Backing,length,-,-,-,-,NO
+LIN-C5-LH,LIN-C5,Gable_LH,2160.0,600.0,18.0,18mm White MFC,length,1.0mm ABS,-,0.4mm,0.4mm,YES
+LIN-C5-RH,LIN-C5,Gable_RH,2160.0,600.0,18.0,18mm White MFC,length,1.0mm ABS,-,0.4mm,0.4mm,YES
+LIN-C5-BOT,LIN-C5,Bottom_Panel,564.0,600.0,18.0,18mm White MFC,none,1.0mm ABS,-,-,-,YES
+LIN-C5-BAK,LIN-C5,Back_Panel_Sheet,574.0,2134.0,6.0,6mm White Backing,length,-,-,-,-,NO
+LIN-C6-LH,LIN-C6,Gable_LH,720.0,560.0,18.0,18mm White MFC,length,1.0mm ABS,-,0.4mm,0.4mm,YES
+LIN-C6-RH,LIN-C6,Gable_RH,720.0,560.0,18.0,18mm White MFC,length,1.0mm ABS,-,0.4mm,0.4mm,YES
+LIN-C6-BOT,LIN-C6,Bottom_Panel,264.0,560.0,18.0,18mm White MFC,none,1.0mm ABS,-,-,-,YES
+LIN-C6-BAK,LIN-C6,Back_Panel_Sheet,274.0,694.0,6.0,6mm White Backing,length,-,-,-,-,NO
+LIN-C7-LH,LIN-C7,Gable_LH,720.0,350.0,18.0,18mm White MFC,length,1.0mm ABS,-,0.4mm,0.4mm,YES
+LIN-C7-RH,LIN-C7,Gable_RH,720.0,350.0,18.0,18mm White MFC,length,1.0mm ABS,-,0.4mm,0.4mm,YES
+LIN-C7-BOT,LIN-C7,Bottom_Panel,864.0,350.0,18.0,18mm White MFC,none,1.0mm ABS,-,-,-,YES
+LIN-C7-BAK,LIN-C7,Back_Panel_Sheet,874.0,694.0,6.0,6mm White Backing,length,-,-,-,-,NO
+LIN-C8-LH,LIN-C8,Gable_LH,720.0,350.0,18.0,18mm White MFC,length,1.0mm ABS,-,0.4mm,0.4mm,YES
+LIN-C8-RH,LIN-C8,Gable_RH,720.0,350.0,18.0,18mm White MFC,length,1.0mm ABS,-,0.4mm,0.4mm,YES
+LIN-C8-BOT,LIN-C8,Bottom_Panel,864.0,350.0,18.0,18mm White MFC,none,1.0mm ABS,-,-,-,YES
+LIN-C8-BAK,LIN-C8,Back_Panel_Sheet,874.0,694.0,6.0,6mm White Backing,length,-,-,-,-,NO
+LIN-C9-LH,LIN-C9,Gable_LH,720.0,350.0,18.0,18mm White MFC,length,1.0mm ABS,-,0.4mm,0.4mm,YES
+LIN-C9-RH,LIN-C9,Gable_RH,720.0,350.0,18.0,18mm White MFC,length,1.0mm ABS,-,0.4mm,0.4mm,YES
+LIN-C9-BOT,LIN-C9,Bottom_Panel,864.0,350.0,18.0,18mm White MFC,none,1.0mm ABS,-,-,-,YES
+LIN-C9-BAK,LIN-C9,Back_Panel_Sheet,874.0,694.0,6.0,6mm White Backing,length,-,-,-,-,NO
+L_S-C1-LH,L_S-C1,Gable_LH,2160.0,600.0,18.0,18mm White MFC,length,1.0mm ABS,-,0.4mm,0.4mm,YES
+L_S-C1-RH,L_S-C1,Gable_RH,2160.0,600.0,18.0,18mm White MFC,length,1.0mm ABS,-,0.4mm,0.4mm,YES
+L_S-C1-BOT,L_S-C1,Bottom_Panel,564.0,600.0,18.0,18mm White MFC,none,1.0mm ABS,-,-,-,YES
+L_S-C1-BAK,L_S-C1,Back_Panel_Sheet,574.0,2134.0,6.0,6mm White Backing,length,-,-,-,-,NO
+L_S-C2-LH,L_S-C2,Gable_LH,720.0,560.0,18.0,18mm White MFC,length,1.0mm ABS,-,0.4mm,0.4mm,YES
+L_S-C2-RH,L_S-C2,Gable_RH,720.0,560.0,18.0,18mm White MFC,length,1.0mm ABS,-,0.4mm,0.4mm,YES
+L_S-C2-BOT,L_S-C2,Bottom_Panel,864.0,560.0,18.0,18mm White MFC,none,1.0mm ABS,-,-,-,YES
+L_S-C2-BAK,L_S-C2,Back_Panel_Sheet,874.0,694.0,6.0,6mm White Backing,length,-,-,-,-,NO
+L_S-C3-LH,L_S-C3,Gable_LH,720.0,560.0,18.0,18mm White MFC,length,1.0mm ABS,-,0.4mm,0.4mm,YES
+L_S-C3-RH,L_S-C3,Gable_RH,720.0,560.0,18.0,18mm White MFC,length,1.0mm ABS,-,0.4mm,0.4mm,YES
+L_S-C3-BOT,L_S-C3,Bottom_Panel,1014.0,560.0,18.0,18mm White MFC,none,1.0mm ABS,-,-,-,YES
+L_S-C3-BAK,L_S-C3,Back_Panel_Sheet,1024.0,694.0,6.0,6mm White Backing,length,-,-,-,-,NO
+L_S-C4-LH,L_S-C4,Gable_LH,720.0,560.0,18.0,18mm White MFC,length,1.0mm ABS,-,0.4mm,0.4mm,YES
+L_S-C4-RH,L_S-C4,Gable_RH,720.0,560.0,18.0,18mm White MFC,length,1.0mm ABS,-,0.4mm,0.4mm,YES
+L_S-C4-BOT,L_S-C4,Bottom_Panel,864.0,560.0,18.0,18mm White MFC,none,1.0mm ABS,-,-,-,YES
+L_S-C4-BAK,L_S-C4,Back_Panel_Sheet,874.0,694.0,6.0,6mm White Backing,length,-,-,-,-,NO
+L_S-C5-LH,L_S-C5,Gable_LH,720.0,350.0,18.0,18mm White MFC,length,1.0mm ABS,-,0.4mm,0.4mm,YES
+L_S-C5-RH,L_S-C5,Gable_RH,720.0,350.0,18.0,18mm White MFC,length,1.0mm ABS,-,0.4mm,0.4mm,YES
+L_S-C5-BOT,L_S-C5,Bottom_Panel,864.0,350.0,18.0,18mm White MFC,none,1.0mm ABS,-,-,-,YES
+L_S-C5-BAK,L_S-C5,Back_Panel_Sheet,874.0,694.0,6.0,6mm White Backing,length,-,-,-,-,NO
+L_S-C6-LH,L_S-C6,Gable_LH,720.0,350.0,18.0,18mm White MFC,length,1.0mm ABS,-,0.4mm,0.4mm,YES
+L_S-C6-RH,L_S-C6,Gable_RH,720.0,350.0,18.0,18mm White MFC,length,1.0mm ABS,-,0.4mm,0.4mm,YES
+L_S-C6-BOT,L_S-C6,Bottom_Panel,864.0,350.0,18.0,18mm White MFC,none,1.0mm ABS,-,-,-,YES
+L_S-C6-BAK,L_S-C6,Back_Panel_Sheet,874.0,694.0,6.0,6mm White Backing,length,-,-,-,-,NO
+U_S-C1-LH,U_S-C1,Gable_LH,2160.0,600.0,18.0,18mm White MFC,length,1.0mm ABS,-,0.4mm,0.4mm,YES
+U_S-C1-RH,U_S-C1,Gable_RH,2160.0,600.0,18.0,18mm White MFC,length,1.0mm ABS,-,0.4mm,0.4mm,YES
+U_S-C1-BOT,U_S-C1,Bottom_Panel,564.0,600.0,18.0,18mm White MFC,none,1.0mm ABS,-,-,-,YES
+U_S-C1-BAK,U_S-C1,Back_Panel_Sheet,574.0,2134.0,6.0,6mm White Backing,length,-,-,-,-,NO
+U_S-C2-LH,U_S-C2,Gable_LH,720.0,560.0,18.0,18mm White MFC,length,1.0mm ABS,-,0.4mm,0.4mm,YES
+U_S-C2-RH,U_S-C2,Gable_RH,720.0,560.0,18.0,18mm White MFC,length,1.0mm ABS,-,0.4mm,0.4mm,YES
+U_S-C2-BOT,U_S-C2,Bottom_Panel,1014.0,560.0,18.0,18mm White MFC,none,1.0mm ABS,-,-,-,YES
+U_S-C2-BAK,U_S-C2,Back_Panel_Sheet,1024.0,694.0,6.0,6mm White Backing,length,-,-,-,-,NO
+U_S-C3-LH,U_S-C3,Gable_LH,720.0,560.0,18.0,18mm White MFC,length,1.0mm ABS,-,0.4mm,0.4mm,YES
+U_S-C3-RH,U_S-C3,Gable_RH,720.0,560.0,18.0,18mm White MFC,length,1.0mm ABS,-,0.4mm,0.4mm,YES
+U_S-C3-BOT,U_S-C3,Bottom_Panel,864.0,560.0,18.0,18mm White MFC,none,1.0mm ABS,-,-,-,YES
+U_S-C3-BAK,U_S-C3,Back_Panel_Sheet,874.0,694.0,6.0,6mm White Backing,length,-,-,-,-,NO
+U_S-C4-LH,U_S-C4,Gable_LH,720.0,560.0,18.0,18mm White MFC,length,1.0mm ABS,-,0.4mm,0.4mm,YES
+U_S-C4-RH,U_S-C4,Gable_RH,720.0,560.0,18.0,18mm White MFC,length,1.0mm ABS,-,0.4mm,0.4mm,YES
+U_S-C4-BOT,U_S-C4,Bottom_Panel,1014.0,560.0,18.0,18mm White MFC,none,1.0mm ABS,-,-,-,YES
+U_S-C4-BAK,U_S-C4,Back_Panel_Sheet,1024.0,694.0,6.0,6mm White Backing,length,-,-,-,-,NO
+U_S-C5-LH,U_S-C5,Gable_LH,720.0,560.0,18.0,18mm White MFC,length,1.0mm ABS,-,0.4mm,0.4mm,YES
+U_S-C5-RH,U_S-C5,Gable_RH,720.0,560.0,18.0,18mm White MFC,length,1.0mm ABS,-,0.4mm,0.4mm,YES
+U_S-C5-BOT,U_S-C5,Bottom_Panel,864.0,560.0,18.0,18mm White MFC,none,1.0mm ABS,-,-,-,YES
+U_S-C5-BAK,U_S-C5,Back_Panel_Sheet,874.0,694.0,6.0,6mm White Backing,length,-,-,-,-,NO
+U_S-C6-LH,U_S-C6,Gable_LH,720.0,560.0,18.0,18mm White MFC,length,1.0mm ABS,-,0.4mm,0.4mm,YES
+U_S-C6-RH,U_S-C6,Gable_RH,720.0,560.0,18.0,18mm White MFC,length,1.0mm ABS,-,0.4mm,0.4mm,YES
+U_S-C6-BOT,U_S-C6,Bottom_Panel,264.0,560.0,18.0,18mm White MFC,none,1.0mm ABS,-,-,-,YES
+U_S-C6-BAK,U_S-C6,Back_Panel_Sheet,274.0,694.0,6.0,6mm White Backing,length,-,-,-,-,NO
+U_S-C7-LH,U_S-C7,Gable_LH,720.0,350.0,18.0,18mm White MFC,length,1.0mm ABS,-,0.4mm,0.4mm,YES
+U_S-C7-RH,U_S-C7,Gable_RH,720.0,350.0,18.0,18mm White MFC,length,1.0mm ABS,-,0.4mm,0.4mm,YES
+U_S-C7-BOT,U_S-C7,Bottom_Panel,864.0,350.0,18.0,18mm White MFC,none,1.0mm ABS,-,-,-,YES
+U_S-C7-BAK,U_S-C7,Back_Panel_Sheet,874.0,694.0,6.0,6mm White Backing,length,-,-,-,-,NO
+U_S-C8-LH,U_S-C8,Gable_LH,720.0,350.0,18.0,18mm White MFC,length,1.0mm ABS,-,0.4mm,0.4mm,YES
+U_S-C8-RH,U_S-C8,Gable_RH,720.0,350.0,18.0,18mm White MFC,length,1.0mm ABS,-,0.4mm,0.4mm,YES
+U_S-C8-BOT,U_S-C8,Bottom_Panel,864.0,350.0,18.0,18mm White MFC,none,1.0mm ABS,-,-,-,YES
+U_S-C8-BAK,U_S-C8,Back_Panel_Sheet,874.0,694.0,6.0,6mm White Backing,length,-,-,-,-,NO
+GAL-C1-LH,GAL-C1,Gable_LH,2160.0,600.0,18.0,18mm White MFC,length,1.0mm ABS,-,0.4mm,0.4mm,YES
+GAL-C1-RH,GAL-C1,Gable_RH,2160.0,600.0,18.0,18mm White MFC,length,1.0mm ABS,-,0.4mm,0.4mm,YES
+GAL-C1-BOT,GAL-C1,Bottom_Panel,564.0,600.0,18.0,18mm White MFC,none,1.0mm ABS,-,-,-,YES
+GAL-C1-BAK,GAL-C1,Back_Panel_Sheet,574.0,2134.0,6.0,6mm White Backing,length,-,-,-,-,NO
+GAL-C2-LH,GAL-C2,Gable_LH,2160.0,600.0,18.0,18mm White MFC,length,1.0mm ABS,-,0.4mm,0.4mm,YES
+GAL-C2-RH,GAL-C2,Gable_RH,2160.0,600.0,18.0,18mm White MFC,length,1.0mm ABS,-,0.4mm,0.4mm,YES
+GAL-C2-BOT,GAL-C2,Bottom_Panel,564.0,600.0,18.0,18mm White MFC,none,1.0mm ABS,-,-,-,YES
+GAL-C2-BAK,GAL-C2,Back_Panel_Sheet,574.0,2134.0,6.0,6mm White Backing,length,-,-,-,-,NO
+GAL-C3-LH,GAL-C3,Gable_LH,2160.0,600.0,18.0,18mm White MFC,length,1.0mm ABS,-,0.4mm,0.4mm,YES
+GAL-C3-RH,GAL-C3,Gable_RH,2160.0,600.0,18.0,18mm White MFC,length,1.0mm ABS,-,0.4mm,0.4mm,YES
+GAL-C3-BOT,GAL-C3,Bottom_Panel,564.0,600.0,18.0,18mm White MFC,none,1.0mm ABS,-,-,-,YES
+GAL-C3-BAK,GAL-C3,Back_Panel_Sheet,574.0,2134.0,6.0,6mm White Backing,length,-,-,-,-,NO
+GAL-C4-LH,GAL-C4,Gable_LH,2160.0,600.0,18.0,18mm White MFC,length,1.0mm ABS,-,0.4mm,0.4mm,YES
+GAL-C4-RH,GAL-C4,Gable_RH,2160.0,600.0,18.0,18mm White MFC,length,1.0mm ABS,-,0.4mm,0.4mm,YES
+GAL-C4-BOT,GAL-C4,Bottom_Panel,564.0,600.0,18.0,18mm White MFC,none,1.0mm ABS,-,-,-,YES
+GAL-C4-BAK,GAL-C4,Back_Panel_Sheet,574.0,2134.0,6.0,6mm White Backing,length,-,-,-,-,NO
+GAL-C5-LH,GAL-C5,Gable_LH,720.0,560.0,18.0,18mm White MFC,length,1.0mm ABS,-,0.4mm,0.4mm,YES
+GAL-C5-RH,GAL-C5,Gable_RH,720.0,560.0,18.0,18mm White MFC,length,1.0mm ABS,-,0.4mm,0.4mm,YES
+GAL-C5-BOT,GAL-C5,Bottom_Panel,864.0,560.0,18.0,18mm White MFC,none,1.0mm ABS,-,-,-,YES
+GAL-C5-FR1,GAL-C5,Lower_Pot_Drawer_Front,897.0,315.0,18.0,18mm Anthracite Supermatte,length,1.0mm ABS,1.0mm ABS,1.0mm ABS,1.0mm ABS,NO
+GAL-C5-FR2,GAL-C5,Upper_Drawer_Front,897.0,248.0,18.0,18mm Anthracite Supermatte,length,1.0mm ABS,1.0mm ABS,1.0mm ABS,1.0mm ABS,NO
+GAL-C5-BAK,GAL-C5,Back_Panel_Sheet,874.0,694.0,6.0,6mm White Backing,length,-,-,-,-,NO
+GAL-C6-LH,GAL-C6,Gable_LH,720.0,560.0,18.0,18mm White MFC,length,1.0mm ABS,-,0.4mm,0.4mm,YES
+GAL-C6-RH,GAL-C6,Gable_RH,720.0,560.0,18.0,18mm White MFC,length,1.0mm ABS,-,0.4mm,0.4mm,YES
+GAL-C6-BOT,GAL-C6,Bottom_Panel,864.0,560.0,18.0,18mm White MFC,none,1.0mm ABS,-,-,-,YES
+GAL-C6-BAK,GAL-C6,Back_Panel_Sheet,874.0,694.0,6.0,6mm White Backing,length,-,-,-,-,NO
+GAL-C7-LH,GAL-C7,Gable_LH,720.0,560.0,18.0,18mm White MFC,length,1.0mm ABS,-,0.4mm,0.4mm,YES
+GAL-C7-RH,GAL-C7,Gable_RH,720.0,560.0,18.0,18mm White MFC,length,1.0mm ABS,-,0.4mm,0.4mm,YES
+GAL-C7-BOT,GAL-C7,Bottom_Panel,564.0,560.0,18.0,18mm White MFC,none,1.0mm ABS,-,-,-,YES
+GAL-C7-BAK,GAL-C7,Back_Panel_Sheet,574.0,694.0,6.0,6mm White Backing,length,-,-,-,-,NO
+CEI-C1-LH,CEI-C1,Gable_LH,720.0,560.0,18.0,18mm White MFC,length,1.0mm ABS,-,0.4mm,0.4mm,YES
+CEI-C1-RH,CEI-C1,Gable_RH,720.0,560.0,18.0,18mm White MFC,length,1.0mm ABS,-,0.4mm,0.4mm,YES
+CEI-C1-BOT,CEI-C1,Bottom_Panel,864.0,560.0,18.0,18mm White MFC,none,1.0mm ABS,-,-,-,YES
+CEI-C1-FR1,CEI-C1,Lower_Pot_Drawer_Front,897.0,315.0,18.0,18mm Anthracite Supermatte,length,1.0mm ABS,1.0mm ABS,1.0mm ABS,1.0mm ABS,NO
+CEI-C1-FR2,CEI-C1,Upper_Drawer_Front,897.0,248.0,18.0,18mm Anthracite Supermatte,length,1.0mm ABS,1.0mm ABS,1.0mm ABS,1.0mm ABS,NO
+CEI-C1-BAK,CEI-C1,Back_Panel_Sheet,874.0,694.0,6.0,6mm White Backing,length,-,-,-,-,NO
+CEI-C2-LH,CEI-C2,Gable_LH,720.0,560.0,18.0,18mm White MFC,length,1.0mm ABS,-,0.4mm,0.4mm,YES
+CEI-C2-RH,CEI-C2,Gable_RH,720.0,560.0,18.0,18mm White MFC,length,1.0mm ABS,-,0.4mm,0.4mm,YES
+CEI-C2-BOT,CEI-C2,Bottom_Panel,864.0,560.0,18.0,18mm White MFC,none,1.0mm ABS,-,-,-,YES
+CEI-C2-BAK,CEI-C2,Back_Panel_Sheet,874.0,694.0,6.0,6mm White Backing,length,-,-,-,-,NO
+CEI-C3-LH,CEI-C3,Gable_LH,720.0,350.0,18.0,18mm White MFC,length,1.0mm ABS,-,0.4mm,0.4mm,YES
+CEI-C3-RH,CEI-C3,Gable_RH,720.0,350.0,18.0,18mm White MFC,length,1.0mm ABS,-,0.4mm,0.4mm,YES
+CEI-C3-BOT,CEI-C3,Bottom_Panel,864.0,350.0,18.0,18mm White MFC,none,1.0mm ABS,-,-,-,YES
+CEI-C3-BAK,CEI-C3,Back_Panel_Sheet,874.0,694.0,6.0,6mm White Backing,length,-,-,-,-,NO
+CEI-C4-LH,CEI-C4,Gable_LH,360.0,350.0,18.0,18mm White MFC,length,1.0mm ABS,-,0.4mm,0.4mm,YES
+CEI-C4-RH,CEI-C4,Gable_RH,360.0,350.0,18.0,18mm White MFC,length,1.0mm ABS,-,0.4mm,0.4mm,YES
+CEI-C4-BOT,CEI-C4,Bottom_Panel,864.0,350.0,18.0,18mm White MFC,none,1.0mm ABS,-,-,-,YES
+CEI-C4-BAK,CEI-C4,Back_Panel_Sheet,874.0,334.0,6.0,6mm White Backing,length,-,-,-,-,NO
+CEI-C5-LH,CEI-C5,Gable_LH,720.0,350.0,18.0,18mm White MFC,length,1.0mm ABS,-,0.4mm,0.4mm,YES
+CEI-C5-RH,CEI-C5,Gable_RH,720.0,350.0,18.0,18mm White MFC,length,1.0mm ABS,-,0.4mm,0.4mm,YES
+CEI-C5-BOT,CEI-C5,Bottom_Panel,864.0,350.0,18.0,18mm White MFC,none,1.0mm ABS,-,-,-,YES
+CEI-C5-BAK,CEI-C5,Back_Panel_Sheet,874.0,694.0,6.0,6mm White Backing,length,-,-,-,-,NO
+CEI-C6-LH,CEI-C6,Gable_LH,360.0,350.0,18.0,18mm White MFC,length,1.0mm ABS,-,0.4mm,0.4mm,YES
+CEI-C6-RH,CEI-C6,Gable_RH,360.0,350.0,18.0,18mm White MFC,length,1.0mm ABS,-,0.4mm,0.4mm,YES
+CEI-C6-BOT,CEI-C6,Bottom_Panel,864.0,350.0,18.0,18mm White MFC,none,1.0mm ABS,-,-,-,YES
+CEI-C6-BAK,CEI-C6,Back_Panel_Sheet,874.0,334.0,6.0,6mm White Backing,length,-,-,-,-,NO
+CEI-C7-LH,CEI-C7,Gable_LH,720.0,350.0,18.0,18mm White MFC,length,1.0mm ABS,-,0.4mm,0.4mm,YES
+CEI-C7-RH,CEI-C7,Gable_RH,720.0,350.0,18.0,18mm White MFC,length,1.0mm ABS,-,0.4mm,0.4mm,YES
+CEI-C7-BOT,CEI-C7,Bottom_Panel,564.0,350.0,18.0,18mm White MFC,none,1.0mm ABS,-,-,-,YES
+CEI-C7-BAK,CEI-C7,Back_Panel_Sheet,574.0,694.0,6.0,6mm White Backing,length,-,-,-,-,NO
+CEI-C8-LH,CEI-C8,Gable_LH,720.0,350.0,18.0,18mm White MFC,length,1.0mm ABS,-,0.4mm,0.4mm,YES
+CEI-C8-RH,CEI-C8,Gable_RH,720.0,350.0,18.0,18mm White MFC,length,1.0mm ABS,-,0.4mm,0.4mm,YES
+CEI-C8-BOT,CEI-C8,Bottom_Panel,364.0,350.0,18.0,18mm White MFC,none,1.0mm ABS,-,-,-,YES
+CEI-C8-BAK,CEI-C8,Back_Panel_Sheet,374.0,694.0,6.0,6mm White Backing,length,-,-,-,-,NO

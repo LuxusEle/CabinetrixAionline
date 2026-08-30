@@ -1,193 +1,3669 @@
-<!DOCTYPE html><html><head><title>Cabinetrix Labels</title></head><body style='background:#f0f2f5; padding:20px;'><h2 style='font-family:sans-serif;'>WORKSHOP PRODUCTION LABELS (100x50mm)</h2>
-        <div style="border:2px solid #222; padding:12px; border-radius:4px; background:#fff; margin:8px; width:260px; display:inline-block; vertical-align:top; font-family:sans-serif;">
-          <div style="display:flex; justify-content:space-between; font-weight:bold; font-size:12px; border-bottom:1px solid #333; padding-bottom:4px;">
-            <span style="background:#222; color:#fff; padding:2px 5px; border-radius:3px;">CAB-01</span>
-            <span>UID: CAB-01-LH</span>
-          </div>
-          <div style="font-size:15px; font-weight:bold; margin:6px 0 2px 0;">Gable_LH</div>
-          <div style="font-size:14px; font-weight:bold; color:#0066cc;">720 x 560 x 18.0 mm</div>
-          <div style="font-size:11px; color:#555; margin-bottom:6px;">Mat: 18mm White MFC</div>
-          <div style="border:1px dashed #777; background:#fafafa; font-size:10px; text-align:center; padding:3px;">EB: 1.0mm ABS Front | GRAIN: L</div>
-          <div style="margin-top:6px; font-family:monospace; font-size:13px; letter-spacing:2px; font-weight:bold;">||| | |||| | |||||| ||</div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Cabinetrix AI — Workshop Production Labels</title>
+  <style>
+    body { font-family: "Segoe UI", Arial, sans-serif; background: #eaedf0; margin: 0; padding: 20px; }
+    .labels-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 15px; }
+    .label-card { background: #fff; border: 2px solid #222; border-radius: 4px; padding: 12px; box-sizing: border-box; width: 100%; height: 190px; position: relative; }
+    .label-header { display: flex; justify-content: space-between; border-bottom: 1.5px solid #222; padding-bottom: 4px; font-weight: bold; font-size: 13px; }
+    .cab-tag { background: #222; color: #fff; padding: 2px 6px; border-radius: 3px; }
+    .part-name { font-size: 16px; font-weight: bold; color: #111; margin: 6px 0 2px 0; }
+    .part-dims { font-size: 15px; font-weight: bold; color: #0066cc; }
+    .part-mat { font-size: 11px; color: #555; margin-bottom: 6px; }
+    .eb-diagram { border: 1px dashed #777; background: #fafafa; padding: 4px; font-size: 10px; text-align: center; margin-bottom: 6px; }
+    .eb-mid { display: flex; justify-content: space-between; margin: 2px 0; }
+    .grain-arrow { color: #28a745; font-weight: bold; }
+    .barcode-zone { display: flex; justify-content: space-between; align-items: flex-end; margin-top: 4px; }
+    .barcode-mock { font-family: monospace; font-size: 16px; letter-spacing: 2px; font-weight: bold; }
+    .prog-name { font-size: 10px; font-weight: bold; color: #444; }
+    @media print {
+      body { background: #fff; padding: 0; }
+      .label-card { break-inside: avoid; page-break-inside: avoid; margin-bottom: 10px; }
+    }
+  </style>
+</head>
+<body>
+  <div style="margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center;">
+    <h2>🏷️ CABINETRIX PRODUCTION LABELS (100mm x 50mm)</h2>
+    <button onclick="window.print()" style="padding: 8px 16px; font-weight: bold; cursor: pointer;">🖨️ Print Labels</button>
+  </div>
+  <div class="labels-grid">
+          <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">LIN-C1</span>
+          <span class="part-uid">UID: LIN-C1-LH</span>
         </div>
-        
-        <div style="border:2px solid #222; padding:12px; border-radius:4px; background:#fff; margin:8px; width:260px; display:inline-block; vertical-align:top; font-family:sans-serif;">
-          <div style="display:flex; justify-content:space-between; font-weight:bold; font-size:12px; border-bottom:1px solid #333; padding-bottom:4px;">
-            <span style="background:#222; color:#fff; padding:2px 5px; border-radius:3px;">CAB-01</span>
-            <span>UID: CAB-01-RH</span>
+        <div class="part-name">Gable_LH</div>
+        <div class="part-dims">2160 x 600 x 18 mm</div>
+        <div class="part-mat">Mat: 18mm White MFC</div>
+        <div class="eb-diagram">
+          <div class="eb-top">0.4mm</div>
+          <div class="eb-mid">
+            <span class="eb-left">1.0mm ABS</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
           </div>
-          <div style="font-size:15px; font-weight:bold; margin:6px 0 2px 0;">Gable_RH</div>
-          <div style="font-size:14px; font-weight:bold; color:#0066cc;">720 x 560 x 18.0 mm</div>
-          <div style="font-size:11px; color:#555; margin-bottom:6px;">Mat: 18mm White MFC</div>
-          <div style="border:1px dashed #777; background:#fafafa; font-size:10px; text-align:center; padding:3px;">EB: 1.0mm ABS Front | GRAIN: L</div>
-          <div style="margin-top:6px; font-family:monospace; font-size:13px; letter-spacing:2px; font-weight:bold;">||| | |||| | |||||| ||</div>
+          <div class="eb-bottom">0.4mm</div>
         </div>
-        
-        <div style="border:2px solid #222; padding:12px; border-radius:4px; background:#fff; margin:8px; width:260px; display:inline-block; vertical-align:top; font-family:sans-serif;">
-          <div style="display:flex; justify-content:space-between; font-weight:bold; font-size:12px; border-bottom:1px solid #333; padding-bottom:4px;">
-            <span style="background:#222; color:#fff; padding:2px 5px; border-radius:3px;">CAB-01</span>
-            <span>UID: CAB-01-BOT</span>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: GABLE_LH</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">LIN-C1</span>
+          <span class="part-uid">UID: LIN-C1-RH</span>
+        </div>
+        <div class="part-name">Gable_RH</div>
+        <div class="part-dims">2160 x 600 x 18 mm</div>
+        <div class="part-mat">Mat: 18mm White MFC</div>
+        <div class="eb-diagram">
+          <div class="eb-top">0.4mm</div>
+          <div class="eb-mid">
+            <span class="eb-left">1.0mm ABS</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
           </div>
-          <div style="font-size:15px; font-weight:bold; margin:6px 0 2px 0;">Bottom_Panel</div>
-          <div style="font-size:14px; font-weight:bold; color:#0066cc;">864.0 x 560 x 18.0 mm</div>
-          <div style="font-size:11px; color:#555; margin-bottom:6px;">Mat: 18mm White MFC</div>
-          <div style="border:1px dashed #777; background:#fafafa; font-size:10px; text-align:center; padding:3px;">EB: 1.0mm ABS Front | GRAIN: L</div>
-          <div style="margin-top:6px; font-family:monospace; font-size:13px; letter-spacing:2px; font-weight:bold;">||| | |||| | |||||| ||</div>
+          <div class="eb-bottom">0.4mm</div>
         </div>
-        
-        <div style="border:2px solid #222; padding:12px; border-radius:4px; background:#fff; margin:8px; width:260px; display:inline-block; vertical-align:top; font-family:sans-serif;">
-          <div style="display:flex; justify-content:space-between; font-weight:bold; font-size:12px; border-bottom:1px solid #333; padding-bottom:4px;">
-            <span style="background:#222; color:#fff; padding:2px 5px; border-radius:3px;">CAB-01</span>
-            <span>UID: CAB-01-FR1</span>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: GABLE_RH</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">LIN-C1</span>
+          <span class="part-uid">UID: LIN-C1-BOT</span>
+        </div>
+        <div class="part-name">Bottom_Panel</div>
+        <div class="part-dims">564 x 600 x 18 mm</div>
+        <div class="part-mat">Mat: 18mm White MFC</div>
+        <div class="eb-diagram">
+          <div class="eb-top">-</div>
+          <div class="eb-mid">
+            <span class="eb-left">1.0mm ABS</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
           </div>
-          <div style="font-size:15px; font-weight:bold; margin:6px 0 2px 0;">Lower_Pot_Drawer_Front</div>
-          <div style="font-size:14px; font-weight:bold; color:#0066cc;">897 x 315 x 18.0 mm</div>
-          <div style="font-size:11px; color:#555; margin-bottom:6px;">Mat: 18mm Anthracite Supermatte</div>
-          <div style="border:1px dashed #777; background:#fafafa; font-size:10px; text-align:center; padding:3px;">EB: 1.0mm ABS (4 edges) | GRAIN: L</div>
-          <div style="margin-top:6px; font-family:monospace; font-size:13px; letter-spacing:2px; font-weight:bold;">||| | |||| | |||||| ||</div>
+          <div class="eb-bottom">-</div>
         </div>
-        
-        <div style="border:2px solid #222; padding:12px; border-radius:4px; background:#fff; margin:8px; width:260px; display:inline-block; vertical-align:top; font-family:sans-serif;">
-          <div style="display:flex; justify-content:space-between; font-weight:bold; font-size:12px; border-bottom:1px solid #333; padding-bottom:4px;">
-            <span style="background:#222; color:#fff; padding:2px 5px; border-radius:3px;">CAB-01</span>
-            <span>UID: CAB-01-FR2</span>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: BOTTOM_PANEL</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">LIN-C1</span>
+          <span class="part-uid">UID: LIN-C1-BAK</span>
+        </div>
+        <div class="part-name">Back_Panel_Sheet</div>
+        <div class="part-dims">574 x 2134 x 6 mm</div>
+        <div class="part-mat">Mat: 6mm White Backing</div>
+        <div class="eb-diagram">
+          <div class="eb-top">-</div>
+          <div class="eb-mid">
+            <span class="eb-left">-</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
           </div>
-          <div style="font-size:15px; font-weight:bold; margin:6px 0 2px 0;">Upper_Drawer_Front</div>
-          <div style="font-size:14px; font-weight:bold; color:#0066cc;">897 x 248 x 18.0 mm</div>
-          <div style="font-size:11px; color:#555; margin-bottom:6px;">Mat: 18mm Anthracite Supermatte</div>
-          <div style="border:1px dashed #777; background:#fafafa; font-size:10px; text-align:center; padding:3px;">EB: 1.0mm ABS (4 edges) | GRAIN: L</div>
-          <div style="margin-top:6px; font-family:monospace; font-size:13px; letter-spacing:2px; font-weight:bold;">||| | |||| | |||||| ||</div>
+          <div class="eb-bottom">-</div>
         </div>
-        
-        <div style="border:2px solid #222; padding:12px; border-radius:4px; background:#fff; margin:8px; width:260px; display:inline-block; vertical-align:top; font-family:sans-serif;">
-          <div style="display:flex; justify-content:space-between; font-weight:bold; font-size:12px; border-bottom:1px solid #333; padding-bottom:4px;">
-            <span style="background:#222; color:#fff; padding:2px 5px; border-radius:3px;">CAB-01</span>
-            <span>UID: CAB-01-BAK</span>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: BACK_PANEL_SHEET</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">LIN-C2</span>
+          <span class="part-uid">UID: LIN-C2-LH</span>
+        </div>
+        <div class="part-name">Gable_LH</div>
+        <div class="part-dims">720 x 560 x 18 mm</div>
+        <div class="part-mat">Mat: 18mm White MFC</div>
+        <div class="eb-diagram">
+          <div class="eb-top">0.4mm</div>
+          <div class="eb-mid">
+            <span class="eb-left">1.0mm ABS</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
           </div>
-          <div style="font-size:15px; font-weight:bold; margin:6px 0 2px 0;">Back_Sheet</div>
-          <div style="font-size:14px; font-weight:bold; color:#0066cc;">874.0 x 694.0 x 6.0 mm</div>
-          <div style="font-size:11px; color:#555; margin-bottom:6px;">Mat: 6mm White Backing</div>
-          <div style="border:1px dashed #777; background:#fafafa; font-size:10px; text-align:center; padding:3px;">EB: - | GRAIN: L</div>
-          <div style="margin-top:6px; font-family:monospace; font-size:13px; letter-spacing:2px; font-weight:bold;">||| | |||| | |||||| ||</div>
+          <div class="eb-bottom">0.4mm</div>
         </div>
-        
-        <div style="border:2px solid #222; padding:12px; border-radius:4px; background:#fff; margin:8px; width:260px; display:inline-block; vertical-align:top; font-family:sans-serif;">
-          <div style="display:flex; justify-content:space-between; font-weight:bold; font-size:12px; border-bottom:1px solid #333; padding-bottom:4px;">
-            <span style="background:#222; color:#fff; padding:2px 5px; border-radius:3px;">CAB-02</span>
-            <span>UID: CAB-02-LH</span>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: GABLE_LH</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">LIN-C2</span>
+          <span class="part-uid">UID: LIN-C2-RH</span>
+        </div>
+        <div class="part-name">Gable_RH</div>
+        <div class="part-dims">720 x 560 x 18 mm</div>
+        <div class="part-mat">Mat: 18mm White MFC</div>
+        <div class="eb-diagram">
+          <div class="eb-top">0.4mm</div>
+          <div class="eb-mid">
+            <span class="eb-left">1.0mm ABS</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
           </div>
-          <div style="font-size:15px; font-weight:bold; margin:6px 0 2px 0;">Gable_LH</div>
-          <div style="font-size:14px; font-weight:bold; color:#0066cc;">720 x 560 x 18.0 mm</div>
-          <div style="font-size:11px; color:#555; margin-bottom:6px;">Mat: 18mm White MFC</div>
-          <div style="border:1px dashed #777; background:#fafafa; font-size:10px; text-align:center; padding:3px;">EB: 1.0mm ABS Front | GRAIN: L</div>
-          <div style="margin-top:6px; font-family:monospace; font-size:13px; letter-spacing:2px; font-weight:bold;">||| | |||| | |||||| ||</div>
+          <div class="eb-bottom">0.4mm</div>
         </div>
-        
-        <div style="border:2px solid #222; padding:12px; border-radius:4px; background:#fff; margin:8px; width:260px; display:inline-block; vertical-align:top; font-family:sans-serif;">
-          <div style="display:flex; justify-content:space-between; font-weight:bold; font-size:12px; border-bottom:1px solid #333; padding-bottom:4px;">
-            <span style="background:#222; color:#fff; padding:2px 5px; border-radius:3px;">CAB-02</span>
-            <span>UID: CAB-02-RH</span>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: GABLE_RH</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">LIN-C2</span>
+          <span class="part-uid">UID: LIN-C2-BOT</span>
+        </div>
+        <div class="part-name">Bottom_Panel</div>
+        <div class="part-dims">864 x 560 x 18 mm</div>
+        <div class="part-mat">Mat: 18mm White MFC</div>
+        <div class="eb-diagram">
+          <div class="eb-top">-</div>
+          <div class="eb-mid">
+            <span class="eb-left">1.0mm ABS</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
           </div>
-          <div style="font-size:15px; font-weight:bold; margin:6px 0 2px 0;">Gable_RH</div>
-          <div style="font-size:14px; font-weight:bold; color:#0066cc;">720 x 560 x 18.0 mm</div>
-          <div style="font-size:11px; color:#555; margin-bottom:6px;">Mat: 18mm White MFC</div>
-          <div style="border:1px dashed #777; background:#fafafa; font-size:10px; text-align:center; padding:3px;">EB: 1.0mm ABS Front | GRAIN: L</div>
-          <div style="margin-top:6px; font-family:monospace; font-size:13px; letter-spacing:2px; font-weight:bold;">||| | |||| | |||||| ||</div>
+          <div class="eb-bottom">-</div>
         </div>
-        
-        <div style="border:2px solid #222; padding:12px; border-radius:4px; background:#fff; margin:8px; width:260px; display:inline-block; vertical-align:top; font-family:sans-serif;">
-          <div style="display:flex; justify-content:space-between; font-weight:bold; font-size:12px; border-bottom:1px solid #333; padding-bottom:4px;">
-            <span style="background:#222; color:#fff; padding:2px 5px; border-radius:3px;">CAB-02</span>
-            <span>UID: CAB-02-BOT</span>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: BOTTOM_PANEL</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">LIN-C2</span>
+          <span class="part-uid">UID: LIN-C2-BAK</span>
+        </div>
+        <div class="part-name">Back_Panel_Sheet</div>
+        <div class="part-dims">874 x 694 x 6 mm</div>
+        <div class="part-mat">Mat: 6mm White Backing</div>
+        <div class="eb-diagram">
+          <div class="eb-top">-</div>
+          <div class="eb-mid">
+            <span class="eb-left">-</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
           </div>
-          <div style="font-size:15px; font-weight:bold; margin:6px 0 2px 0;">Bottom_Panel</div>
-          <div style="font-size:14px; font-weight:bold; color:#0066cc;">564.0 x 560 x 18.0 mm</div>
-          <div style="font-size:11px; color:#555; margin-bottom:6px;">Mat: 18mm White MFC</div>
-          <div style="border:1px dashed #777; background:#fafafa; font-size:10px; text-align:center; padding:3px;">EB: 1.0mm ABS Front | GRAIN: L</div>
-          <div style="margin-top:6px; font-family:monospace; font-size:13px; letter-spacing:2px; font-weight:bold;">||| | |||| | |||||| ||</div>
+          <div class="eb-bottom">-</div>
         </div>
-        
-        <div style="border:2px solid #222; padding:12px; border-radius:4px; background:#fff; margin:8px; width:260px; display:inline-block; vertical-align:top; font-family:sans-serif;">
-          <div style="display:flex; justify-content:space-between; font-weight:bold; font-size:12px; border-bottom:1px solid #333; padding-bottom:4px;">
-            <span style="background:#222; color:#fff; padding:2px 5px; border-radius:3px;">CAB-02</span>
-            <span>UID: CAB-02-FR1</span>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: BACK_PANEL_SHEET</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">LIN-C3</span>
+          <span class="part-uid">UID: LIN-C3-LH</span>
+        </div>
+        <div class="part-name">Gable_LH</div>
+        <div class="part-dims">720 x 560 x 18 mm</div>
+        <div class="part-mat">Mat: 18mm White MFC</div>
+        <div class="eb-diagram">
+          <div class="eb-top">0.4mm</div>
+          <div class="eb-mid">
+            <span class="eb-left">1.0mm ABS</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
           </div>
-          <div style="font-size:15px; font-weight:bold; margin:6px 0 2px 0;">Lower_Pot_Drawer_Front</div>
-          <div style="font-size:14px; font-weight:bold; color:#0066cc;">597 x 315 x 18.0 mm</div>
-          <div style="font-size:11px; color:#555; margin-bottom:6px;">Mat: 18mm Anthracite Supermatte</div>
-          <div style="border:1px dashed #777; background:#fafafa; font-size:10px; text-align:center; padding:3px;">EB: 1.0mm ABS (4 edges) | GRAIN: L</div>
-          <div style="margin-top:6px; font-family:monospace; font-size:13px; letter-spacing:2px; font-weight:bold;">||| | |||| | |||||| ||</div>
+          <div class="eb-bottom">0.4mm</div>
         </div>
-        
-        <div style="border:2px solid #222; padding:12px; border-radius:4px; background:#fff; margin:8px; width:260px; display:inline-block; vertical-align:top; font-family:sans-serif;">
-          <div style="display:flex; justify-content:space-between; font-weight:bold; font-size:12px; border-bottom:1px solid #333; padding-bottom:4px;">
-            <span style="background:#222; color:#fff; padding:2px 5px; border-radius:3px;">CAB-02</span>
-            <span>UID: CAB-02-FR2</span>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: GABLE_LH</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">LIN-C3</span>
+          <span class="part-uid">UID: LIN-C3-RH</span>
+        </div>
+        <div class="part-name">Gable_RH</div>
+        <div class="part-dims">720 x 560 x 18 mm</div>
+        <div class="part-mat">Mat: 18mm White MFC</div>
+        <div class="eb-diagram">
+          <div class="eb-top">0.4mm</div>
+          <div class="eb-mid">
+            <span class="eb-left">1.0mm ABS</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
           </div>
-          <div style="font-size:15px; font-weight:bold; margin:6px 0 2px 0;">Upper_Drawer_Front</div>
-          <div style="font-size:14px; font-weight:bold; color:#0066cc;">597 x 248 x 18.0 mm</div>
-          <div style="font-size:11px; color:#555; margin-bottom:6px;">Mat: 18mm Anthracite Supermatte</div>
-          <div style="border:1px dashed #777; background:#fafafa; font-size:10px; text-align:center; padding:3px;">EB: 1.0mm ABS (4 edges) | GRAIN: L</div>
-          <div style="margin-top:6px; font-family:monospace; font-size:13px; letter-spacing:2px; font-weight:bold;">||| | |||| | |||||| ||</div>
+          <div class="eb-bottom">0.4mm</div>
         </div>
-        
-        <div style="border:2px solid #222; padding:12px; border-radius:4px; background:#fff; margin:8px; width:260px; display:inline-block; vertical-align:top; font-family:sans-serif;">
-          <div style="display:flex; justify-content:space-between; font-weight:bold; font-size:12px; border-bottom:1px solid #333; padding-bottom:4px;">
-            <span style="background:#222; color:#fff; padding:2px 5px; border-radius:3px;">CAB-02</span>
-            <span>UID: CAB-02-BAK</span>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: GABLE_RH</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">LIN-C3</span>
+          <span class="part-uid">UID: LIN-C3-BOT</span>
+        </div>
+        <div class="part-name">Bottom_Panel</div>
+        <div class="part-dims">864 x 560 x 18 mm</div>
+        <div class="part-mat">Mat: 18mm White MFC</div>
+        <div class="eb-diagram">
+          <div class="eb-top">-</div>
+          <div class="eb-mid">
+            <span class="eb-left">1.0mm ABS</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
           </div>
-          <div style="font-size:15px; font-weight:bold; margin:6px 0 2px 0;">Back_Sheet</div>
-          <div style="font-size:14px; font-weight:bold; color:#0066cc;">574.0 x 694.0 x 6.0 mm</div>
-          <div style="font-size:11px; color:#555; margin-bottom:6px;">Mat: 6mm White Backing</div>
-          <div style="border:1px dashed #777; background:#fafafa; font-size:10px; text-align:center; padding:3px;">EB: - | GRAIN: L</div>
-          <div style="margin-top:6px; font-family:monospace; font-size:13px; letter-spacing:2px; font-weight:bold;">||| | |||| | |||||| ||</div>
+          <div class="eb-bottom">-</div>
         </div>
-        
-        <div style="border:2px solid #222; padding:12px; border-radius:4px; background:#fff; margin:8px; width:260px; display:inline-block; vertical-align:top; font-family:sans-serif;">
-          <div style="display:flex; justify-content:space-between; font-weight:bold; font-size:12px; border-bottom:1px solid #333; padding-bottom:4px;">
-            <span style="background:#222; color:#fff; padding:2px 5px; border-radius:3px;">CAB-03</span>
-            <span>UID: CAB-03-LH</span>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: BOTTOM_PANEL</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">LIN-C3</span>
+          <span class="part-uid">UID: LIN-C3-FR1</span>
+        </div>
+        <div class="part-name">Lower_Pot_Drawer_Front</div>
+        <div class="part-dims">897 x 315 x 18 mm</div>
+        <div class="part-mat">Mat: 18mm Anthracite Supermatte</div>
+        <div class="eb-diagram">
+          <div class="eb-top">1.0mm ABS</div>
+          <div class="eb-mid">
+            <span class="eb-left">1.0mm ABS</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">1.0mm ABS</span>
           </div>
-          <div style="font-size:15px; font-weight:bold; margin:6px 0 2px 0;">Gable_LH</div>
-          <div style="font-size:14px; font-weight:bold; color:#0066cc;">720 x 560 x 18.0 mm</div>
-          <div style="font-size:11px; color:#555; margin-bottom:6px;">Mat: 18mm White MFC</div>
-          <div style="border:1px dashed #777; background:#fafafa; font-size:10px; text-align:center; padding:3px;">EB: 1.0mm ABS Front | GRAIN: L</div>
-          <div style="margin-top:6px; font-family:monospace; font-size:13px; letter-spacing:2px; font-weight:bold;">||| | |||| | |||||| ||</div>
+          <div class="eb-bottom">1.0mm ABS</div>
         </div>
-        
-        <div style="border:2px solid #222; padding:12px; border-radius:4px; background:#fff; margin:8px; width:260px; display:inline-block; vertical-align:top; font-family:sans-serif;">
-          <div style="display:flex; justify-content:space-between; font-weight:bold; font-size:12px; border-bottom:1px solid #333; padding-bottom:4px;">
-            <span style="background:#222; color:#fff; padding:2px 5px; border-radius:3px;">CAB-03</span>
-            <span>UID: CAB-03-RH</span>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: LOWER_POT_DRAWER_FRONT</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">LIN-C3</span>
+          <span class="part-uid">UID: LIN-C3-FR2</span>
+        </div>
+        <div class="part-name">Upper_Drawer_Front</div>
+        <div class="part-dims">897 x 248 x 18 mm</div>
+        <div class="part-mat">Mat: 18mm Anthracite Supermatte</div>
+        <div class="eb-diagram">
+          <div class="eb-top">1.0mm ABS</div>
+          <div class="eb-mid">
+            <span class="eb-left">1.0mm ABS</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">1.0mm ABS</span>
           </div>
-          <div style="font-size:15px; font-weight:bold; margin:6px 0 2px 0;">Gable_RH</div>
-          <div style="font-size:14px; font-weight:bold; color:#0066cc;">720 x 560 x 18.0 mm</div>
-          <div style="font-size:11px; color:#555; margin-bottom:6px;">Mat: 18mm White MFC</div>
-          <div style="border:1px dashed #777; background:#fafafa; font-size:10px; text-align:center; padding:3px;">EB: 1.0mm ABS Front | GRAIN: L</div>
-          <div style="margin-top:6px; font-family:monospace; font-size:13px; letter-spacing:2px; font-weight:bold;">||| | |||| | |||||| ||</div>
+          <div class="eb-bottom">1.0mm ABS</div>
         </div>
-        
-        <div style="border:2px solid #222; padding:12px; border-radius:4px; background:#fff; margin:8px; width:260px; display:inline-block; vertical-align:top; font-family:sans-serif;">
-          <div style="display:flex; justify-content:space-between; font-weight:bold; font-size:12px; border-bottom:1px solid #333; padding-bottom:4px;">
-            <span style="background:#222; color:#fff; padding:2px 5px; border-radius:3px;">CAB-03</span>
-            <span>UID: CAB-03-BOT</span>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: UPPER_DRAWER_FRONT</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">LIN-C3</span>
+          <span class="part-uid">UID: LIN-C3-BAK</span>
+        </div>
+        <div class="part-name">Back_Panel_Sheet</div>
+        <div class="part-dims">874 x 694 x 6 mm</div>
+        <div class="part-mat">Mat: 6mm White Backing</div>
+        <div class="eb-diagram">
+          <div class="eb-top">-</div>
+          <div class="eb-mid">
+            <span class="eb-left">-</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
           </div>
-          <div style="font-size:15px; font-weight:bold; margin:6px 0 2px 0;">Bottom_Panel</div>
-          <div style="font-size:14px; font-weight:bold; color:#0066cc;">864.0 x 560 x 18.0 mm</div>
-          <div style="font-size:11px; color:#555; margin-bottom:6px;">Mat: 18mm White MFC</div>
-          <div style="border:1px dashed #777; background:#fafafa; font-size:10px; text-align:center; padding:3px;">EB: 1.0mm ABS Front | GRAIN: L</div>
-          <div style="margin-top:6px; font-family:monospace; font-size:13px; letter-spacing:2px; font-weight:bold;">||| | |||| | |||||| ||</div>
+          <div class="eb-bottom">-</div>
         </div>
-        
-        <div style="border:2px solid #222; padding:12px; border-radius:4px; background:#fff; margin:8px; width:260px; display:inline-block; vertical-align:top; font-family:sans-serif;">
-          <div style="display:flex; justify-content:space-between; font-weight:bold; font-size:12px; border-bottom:1px solid #333; padding-bottom:4px;">
-            <span style="background:#222; color:#fff; padding:2px 5px; border-radius:3px;">CAB-03</span>
-            <span>UID: CAB-03-BAK</span>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: BACK_PANEL_SHEET</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">LIN-C4</span>
+          <span class="part-uid">UID: LIN-C4-LH</span>
+        </div>
+        <div class="part-name">Gable_LH</div>
+        <div class="part-dims">720 x 560 x 18 mm</div>
+        <div class="part-mat">Mat: 18mm White MFC</div>
+        <div class="eb-diagram">
+          <div class="eb-top">0.4mm</div>
+          <div class="eb-mid">
+            <span class="eb-left">1.0mm ABS</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
           </div>
-          <div style="font-size:15px; font-weight:bold; margin:6px 0 2px 0;">Back_Sheet</div>
-          <div style="font-size:14px; font-weight:bold; color:#0066cc;">874.0 x 694.0 x 6.0 mm</div>
-          <div style="font-size:11px; color:#555; margin-bottom:6px;">Mat: 6mm White Backing</div>
-          <div style="border:1px dashed #777; background:#fafafa; font-size:10px; text-align:center; padding:3px;">EB: - | GRAIN: L</div>
-          <div style="margin-top:6px; font-family:monospace; font-size:13px; letter-spacing:2px; font-weight:bold;">||| | |||| | |||||| ||</div>
+          <div class="eb-bottom">0.4mm</div>
         </div>
-        </body></html>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: GABLE_LH</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">LIN-C4</span>
+          <span class="part-uid">UID: LIN-C4-RH</span>
+        </div>
+        <div class="part-name">Gable_RH</div>
+        <div class="part-dims">720 x 560 x 18 mm</div>
+        <div class="part-mat">Mat: 18mm White MFC</div>
+        <div class="eb-diagram">
+          <div class="eb-top">0.4mm</div>
+          <div class="eb-mid">
+            <span class="eb-left">1.0mm ABS</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
+          </div>
+          <div class="eb-bottom">0.4mm</div>
+        </div>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: GABLE_RH</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">LIN-C4</span>
+          <span class="part-uid">UID: LIN-C4-BOT</span>
+        </div>
+        <div class="part-name">Bottom_Panel</div>
+        <div class="part-dims">864 x 560 x 18 mm</div>
+        <div class="part-mat">Mat: 18mm White MFC</div>
+        <div class="eb-diagram">
+          <div class="eb-top">-</div>
+          <div class="eb-mid">
+            <span class="eb-left">1.0mm ABS</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
+          </div>
+          <div class="eb-bottom">-</div>
+        </div>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: BOTTOM_PANEL</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">LIN-C4</span>
+          <span class="part-uid">UID: LIN-C4-BAK</span>
+        </div>
+        <div class="part-name">Back_Panel_Sheet</div>
+        <div class="part-dims">874 x 694 x 6 mm</div>
+        <div class="part-mat">Mat: 6mm White Backing</div>
+        <div class="eb-diagram">
+          <div class="eb-top">-</div>
+          <div class="eb-mid">
+            <span class="eb-left">-</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
+          </div>
+          <div class="eb-bottom">-</div>
+        </div>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: BACK_PANEL_SHEET</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">LIN-C5</span>
+          <span class="part-uid">UID: LIN-C5-LH</span>
+        </div>
+        <div class="part-name">Gable_LH</div>
+        <div class="part-dims">2160 x 600 x 18 mm</div>
+        <div class="part-mat">Mat: 18mm White MFC</div>
+        <div class="eb-diagram">
+          <div class="eb-top">0.4mm</div>
+          <div class="eb-mid">
+            <span class="eb-left">1.0mm ABS</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
+          </div>
+          <div class="eb-bottom">0.4mm</div>
+        </div>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: GABLE_LH</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">LIN-C5</span>
+          <span class="part-uid">UID: LIN-C5-RH</span>
+        </div>
+        <div class="part-name">Gable_RH</div>
+        <div class="part-dims">2160 x 600 x 18 mm</div>
+        <div class="part-mat">Mat: 18mm White MFC</div>
+        <div class="eb-diagram">
+          <div class="eb-top">0.4mm</div>
+          <div class="eb-mid">
+            <span class="eb-left">1.0mm ABS</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
+          </div>
+          <div class="eb-bottom">0.4mm</div>
+        </div>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: GABLE_RH</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">LIN-C5</span>
+          <span class="part-uid">UID: LIN-C5-BOT</span>
+        </div>
+        <div class="part-name">Bottom_Panel</div>
+        <div class="part-dims">564 x 600 x 18 mm</div>
+        <div class="part-mat">Mat: 18mm White MFC</div>
+        <div class="eb-diagram">
+          <div class="eb-top">-</div>
+          <div class="eb-mid">
+            <span class="eb-left">1.0mm ABS</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
+          </div>
+          <div class="eb-bottom">-</div>
+        </div>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: BOTTOM_PANEL</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">LIN-C5</span>
+          <span class="part-uid">UID: LIN-C5-BAK</span>
+        </div>
+        <div class="part-name">Back_Panel_Sheet</div>
+        <div class="part-dims">574 x 2134 x 6 mm</div>
+        <div class="part-mat">Mat: 6mm White Backing</div>
+        <div class="eb-diagram">
+          <div class="eb-top">-</div>
+          <div class="eb-mid">
+            <span class="eb-left">-</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
+          </div>
+          <div class="eb-bottom">-</div>
+        </div>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: BACK_PANEL_SHEET</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">LIN-C6</span>
+          <span class="part-uid">UID: LIN-C6-LH</span>
+        </div>
+        <div class="part-name">Gable_LH</div>
+        <div class="part-dims">720 x 560 x 18 mm</div>
+        <div class="part-mat">Mat: 18mm White MFC</div>
+        <div class="eb-diagram">
+          <div class="eb-top">0.4mm</div>
+          <div class="eb-mid">
+            <span class="eb-left">1.0mm ABS</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
+          </div>
+          <div class="eb-bottom">0.4mm</div>
+        </div>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: GABLE_LH</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">LIN-C6</span>
+          <span class="part-uid">UID: LIN-C6-RH</span>
+        </div>
+        <div class="part-name">Gable_RH</div>
+        <div class="part-dims">720 x 560 x 18 mm</div>
+        <div class="part-mat">Mat: 18mm White MFC</div>
+        <div class="eb-diagram">
+          <div class="eb-top">0.4mm</div>
+          <div class="eb-mid">
+            <span class="eb-left">1.0mm ABS</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
+          </div>
+          <div class="eb-bottom">0.4mm</div>
+        </div>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: GABLE_RH</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">LIN-C6</span>
+          <span class="part-uid">UID: LIN-C6-BOT</span>
+        </div>
+        <div class="part-name">Bottom_Panel</div>
+        <div class="part-dims">264 x 560 x 18 mm</div>
+        <div class="part-mat">Mat: 18mm White MFC</div>
+        <div class="eb-diagram">
+          <div class="eb-top">-</div>
+          <div class="eb-mid">
+            <span class="eb-left">1.0mm ABS</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
+          </div>
+          <div class="eb-bottom">-</div>
+        </div>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: BOTTOM_PANEL</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">LIN-C6</span>
+          <span class="part-uid">UID: LIN-C6-BAK</span>
+        </div>
+        <div class="part-name">Back_Panel_Sheet</div>
+        <div class="part-dims">274 x 694 x 6 mm</div>
+        <div class="part-mat">Mat: 6mm White Backing</div>
+        <div class="eb-diagram">
+          <div class="eb-top">-</div>
+          <div class="eb-mid">
+            <span class="eb-left">-</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
+          </div>
+          <div class="eb-bottom">-</div>
+        </div>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: BACK_PANEL_SHEET</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">LIN-C7</span>
+          <span class="part-uid">UID: LIN-C7-LH</span>
+        </div>
+        <div class="part-name">Gable_LH</div>
+        <div class="part-dims">720 x 350 x 18 mm</div>
+        <div class="part-mat">Mat: 18mm White MFC</div>
+        <div class="eb-diagram">
+          <div class="eb-top">0.4mm</div>
+          <div class="eb-mid">
+            <span class="eb-left">1.0mm ABS</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
+          </div>
+          <div class="eb-bottom">0.4mm</div>
+        </div>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: GABLE_LH</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">LIN-C7</span>
+          <span class="part-uid">UID: LIN-C7-RH</span>
+        </div>
+        <div class="part-name">Gable_RH</div>
+        <div class="part-dims">720 x 350 x 18 mm</div>
+        <div class="part-mat">Mat: 18mm White MFC</div>
+        <div class="eb-diagram">
+          <div class="eb-top">0.4mm</div>
+          <div class="eb-mid">
+            <span class="eb-left">1.0mm ABS</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
+          </div>
+          <div class="eb-bottom">0.4mm</div>
+        </div>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: GABLE_RH</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">LIN-C7</span>
+          <span class="part-uid">UID: LIN-C7-BOT</span>
+        </div>
+        <div class="part-name">Bottom_Panel</div>
+        <div class="part-dims">864 x 350 x 18 mm</div>
+        <div class="part-mat">Mat: 18mm White MFC</div>
+        <div class="eb-diagram">
+          <div class="eb-top">-</div>
+          <div class="eb-mid">
+            <span class="eb-left">1.0mm ABS</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
+          </div>
+          <div class="eb-bottom">-</div>
+        </div>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: BOTTOM_PANEL</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">LIN-C7</span>
+          <span class="part-uid">UID: LIN-C7-BAK</span>
+        </div>
+        <div class="part-name">Back_Panel_Sheet</div>
+        <div class="part-dims">874 x 694 x 6 mm</div>
+        <div class="part-mat">Mat: 6mm White Backing</div>
+        <div class="eb-diagram">
+          <div class="eb-top">-</div>
+          <div class="eb-mid">
+            <span class="eb-left">-</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
+          </div>
+          <div class="eb-bottom">-</div>
+        </div>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: BACK_PANEL_SHEET</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">LIN-C8</span>
+          <span class="part-uid">UID: LIN-C8-LH</span>
+        </div>
+        <div class="part-name">Gable_LH</div>
+        <div class="part-dims">720 x 350 x 18 mm</div>
+        <div class="part-mat">Mat: 18mm White MFC</div>
+        <div class="eb-diagram">
+          <div class="eb-top">0.4mm</div>
+          <div class="eb-mid">
+            <span class="eb-left">1.0mm ABS</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
+          </div>
+          <div class="eb-bottom">0.4mm</div>
+        </div>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: GABLE_LH</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">LIN-C8</span>
+          <span class="part-uid">UID: LIN-C8-RH</span>
+        </div>
+        <div class="part-name">Gable_RH</div>
+        <div class="part-dims">720 x 350 x 18 mm</div>
+        <div class="part-mat">Mat: 18mm White MFC</div>
+        <div class="eb-diagram">
+          <div class="eb-top">0.4mm</div>
+          <div class="eb-mid">
+            <span class="eb-left">1.0mm ABS</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
+          </div>
+          <div class="eb-bottom">0.4mm</div>
+        </div>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: GABLE_RH</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">LIN-C8</span>
+          <span class="part-uid">UID: LIN-C8-BOT</span>
+        </div>
+        <div class="part-name">Bottom_Panel</div>
+        <div class="part-dims">864 x 350 x 18 mm</div>
+        <div class="part-mat">Mat: 18mm White MFC</div>
+        <div class="eb-diagram">
+          <div class="eb-top">-</div>
+          <div class="eb-mid">
+            <span class="eb-left">1.0mm ABS</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
+          </div>
+          <div class="eb-bottom">-</div>
+        </div>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: BOTTOM_PANEL</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">LIN-C8</span>
+          <span class="part-uid">UID: LIN-C8-BAK</span>
+        </div>
+        <div class="part-name">Back_Panel_Sheet</div>
+        <div class="part-dims">874 x 694 x 6 mm</div>
+        <div class="part-mat">Mat: 6mm White Backing</div>
+        <div class="eb-diagram">
+          <div class="eb-top">-</div>
+          <div class="eb-mid">
+            <span class="eb-left">-</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
+          </div>
+          <div class="eb-bottom">-</div>
+        </div>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: BACK_PANEL_SHEET</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">LIN-C9</span>
+          <span class="part-uid">UID: LIN-C9-LH</span>
+        </div>
+        <div class="part-name">Gable_LH</div>
+        <div class="part-dims">720 x 350 x 18 mm</div>
+        <div class="part-mat">Mat: 18mm White MFC</div>
+        <div class="eb-diagram">
+          <div class="eb-top">0.4mm</div>
+          <div class="eb-mid">
+            <span class="eb-left">1.0mm ABS</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
+          </div>
+          <div class="eb-bottom">0.4mm</div>
+        </div>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: GABLE_LH</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">LIN-C9</span>
+          <span class="part-uid">UID: LIN-C9-RH</span>
+        </div>
+        <div class="part-name">Gable_RH</div>
+        <div class="part-dims">720 x 350 x 18 mm</div>
+        <div class="part-mat">Mat: 18mm White MFC</div>
+        <div class="eb-diagram">
+          <div class="eb-top">0.4mm</div>
+          <div class="eb-mid">
+            <span class="eb-left">1.0mm ABS</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
+          </div>
+          <div class="eb-bottom">0.4mm</div>
+        </div>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: GABLE_RH</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">LIN-C9</span>
+          <span class="part-uid">UID: LIN-C9-BOT</span>
+        </div>
+        <div class="part-name">Bottom_Panel</div>
+        <div class="part-dims">864 x 350 x 18 mm</div>
+        <div class="part-mat">Mat: 18mm White MFC</div>
+        <div class="eb-diagram">
+          <div class="eb-top">-</div>
+          <div class="eb-mid">
+            <span class="eb-left">1.0mm ABS</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
+          </div>
+          <div class="eb-bottom">-</div>
+        </div>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: BOTTOM_PANEL</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">LIN-C9</span>
+          <span class="part-uid">UID: LIN-C9-BAK</span>
+        </div>
+        <div class="part-name">Back_Panel_Sheet</div>
+        <div class="part-dims">874 x 694 x 6 mm</div>
+        <div class="part-mat">Mat: 6mm White Backing</div>
+        <div class="eb-diagram">
+          <div class="eb-top">-</div>
+          <div class="eb-mid">
+            <span class="eb-left">-</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
+          </div>
+          <div class="eb-bottom">-</div>
+        </div>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: BACK_PANEL_SHEET</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">L_S-C1</span>
+          <span class="part-uid">UID: L_S-C1-LH</span>
+        </div>
+        <div class="part-name">Gable_LH</div>
+        <div class="part-dims">2160 x 600 x 18 mm</div>
+        <div class="part-mat">Mat: 18mm White MFC</div>
+        <div class="eb-diagram">
+          <div class="eb-top">0.4mm</div>
+          <div class="eb-mid">
+            <span class="eb-left">1.0mm ABS</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
+          </div>
+          <div class="eb-bottom">0.4mm</div>
+        </div>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: GABLE_LH</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">L_S-C1</span>
+          <span class="part-uid">UID: L_S-C1-RH</span>
+        </div>
+        <div class="part-name">Gable_RH</div>
+        <div class="part-dims">2160 x 600 x 18 mm</div>
+        <div class="part-mat">Mat: 18mm White MFC</div>
+        <div class="eb-diagram">
+          <div class="eb-top">0.4mm</div>
+          <div class="eb-mid">
+            <span class="eb-left">1.0mm ABS</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
+          </div>
+          <div class="eb-bottom">0.4mm</div>
+        </div>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: GABLE_RH</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">L_S-C1</span>
+          <span class="part-uid">UID: L_S-C1-BOT</span>
+        </div>
+        <div class="part-name">Bottom_Panel</div>
+        <div class="part-dims">564 x 600 x 18 mm</div>
+        <div class="part-mat">Mat: 18mm White MFC</div>
+        <div class="eb-diagram">
+          <div class="eb-top">-</div>
+          <div class="eb-mid">
+            <span class="eb-left">1.0mm ABS</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
+          </div>
+          <div class="eb-bottom">-</div>
+        </div>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: BOTTOM_PANEL</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">L_S-C1</span>
+          <span class="part-uid">UID: L_S-C1-BAK</span>
+        </div>
+        <div class="part-name">Back_Panel_Sheet</div>
+        <div class="part-dims">574 x 2134 x 6 mm</div>
+        <div class="part-mat">Mat: 6mm White Backing</div>
+        <div class="eb-diagram">
+          <div class="eb-top">-</div>
+          <div class="eb-mid">
+            <span class="eb-left">-</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
+          </div>
+          <div class="eb-bottom">-</div>
+        </div>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: BACK_PANEL_SHEET</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">L_S-C2</span>
+          <span class="part-uid">UID: L_S-C2-LH</span>
+        </div>
+        <div class="part-name">Gable_LH</div>
+        <div class="part-dims">720 x 560 x 18 mm</div>
+        <div class="part-mat">Mat: 18mm White MFC</div>
+        <div class="eb-diagram">
+          <div class="eb-top">0.4mm</div>
+          <div class="eb-mid">
+            <span class="eb-left">1.0mm ABS</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
+          </div>
+          <div class="eb-bottom">0.4mm</div>
+        </div>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: GABLE_LH</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">L_S-C2</span>
+          <span class="part-uid">UID: L_S-C2-RH</span>
+        </div>
+        <div class="part-name">Gable_RH</div>
+        <div class="part-dims">720 x 560 x 18 mm</div>
+        <div class="part-mat">Mat: 18mm White MFC</div>
+        <div class="eb-diagram">
+          <div class="eb-top">0.4mm</div>
+          <div class="eb-mid">
+            <span class="eb-left">1.0mm ABS</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
+          </div>
+          <div class="eb-bottom">0.4mm</div>
+        </div>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: GABLE_RH</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">L_S-C2</span>
+          <span class="part-uid">UID: L_S-C2-BOT</span>
+        </div>
+        <div class="part-name">Bottom_Panel</div>
+        <div class="part-dims">864 x 560 x 18 mm</div>
+        <div class="part-mat">Mat: 18mm White MFC</div>
+        <div class="eb-diagram">
+          <div class="eb-top">-</div>
+          <div class="eb-mid">
+            <span class="eb-left">1.0mm ABS</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
+          </div>
+          <div class="eb-bottom">-</div>
+        </div>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: BOTTOM_PANEL</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">L_S-C2</span>
+          <span class="part-uid">UID: L_S-C2-BAK</span>
+        </div>
+        <div class="part-name">Back_Panel_Sheet</div>
+        <div class="part-dims">874 x 694 x 6 mm</div>
+        <div class="part-mat">Mat: 6mm White Backing</div>
+        <div class="eb-diagram">
+          <div class="eb-top">-</div>
+          <div class="eb-mid">
+            <span class="eb-left">-</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
+          </div>
+          <div class="eb-bottom">-</div>
+        </div>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: BACK_PANEL_SHEET</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">L_S-C3</span>
+          <span class="part-uid">UID: L_S-C3-LH</span>
+        </div>
+        <div class="part-name">Gable_LH</div>
+        <div class="part-dims">720 x 560 x 18 mm</div>
+        <div class="part-mat">Mat: 18mm White MFC</div>
+        <div class="eb-diagram">
+          <div class="eb-top">0.4mm</div>
+          <div class="eb-mid">
+            <span class="eb-left">1.0mm ABS</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
+          </div>
+          <div class="eb-bottom">0.4mm</div>
+        </div>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: GABLE_LH</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">L_S-C3</span>
+          <span class="part-uid">UID: L_S-C3-RH</span>
+        </div>
+        <div class="part-name">Gable_RH</div>
+        <div class="part-dims">720 x 560 x 18 mm</div>
+        <div class="part-mat">Mat: 18mm White MFC</div>
+        <div class="eb-diagram">
+          <div class="eb-top">0.4mm</div>
+          <div class="eb-mid">
+            <span class="eb-left">1.0mm ABS</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
+          </div>
+          <div class="eb-bottom">0.4mm</div>
+        </div>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: GABLE_RH</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">L_S-C3</span>
+          <span class="part-uid">UID: L_S-C3-BOT</span>
+        </div>
+        <div class="part-name">Bottom_Panel</div>
+        <div class="part-dims">1014 x 560 x 18 mm</div>
+        <div class="part-mat">Mat: 18mm White MFC</div>
+        <div class="eb-diagram">
+          <div class="eb-top">-</div>
+          <div class="eb-mid">
+            <span class="eb-left">1.0mm ABS</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
+          </div>
+          <div class="eb-bottom">-</div>
+        </div>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: BOTTOM_PANEL</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">L_S-C3</span>
+          <span class="part-uid">UID: L_S-C3-BAK</span>
+        </div>
+        <div class="part-name">Back_Panel_Sheet</div>
+        <div class="part-dims">1024 x 694 x 6 mm</div>
+        <div class="part-mat">Mat: 6mm White Backing</div>
+        <div class="eb-diagram">
+          <div class="eb-top">-</div>
+          <div class="eb-mid">
+            <span class="eb-left">-</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
+          </div>
+          <div class="eb-bottom">-</div>
+        </div>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: BACK_PANEL_SHEET</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">L_S-C4</span>
+          <span class="part-uid">UID: L_S-C4-LH</span>
+        </div>
+        <div class="part-name">Gable_LH</div>
+        <div class="part-dims">720 x 560 x 18 mm</div>
+        <div class="part-mat">Mat: 18mm White MFC</div>
+        <div class="eb-diagram">
+          <div class="eb-top">0.4mm</div>
+          <div class="eb-mid">
+            <span class="eb-left">1.0mm ABS</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
+          </div>
+          <div class="eb-bottom">0.4mm</div>
+        </div>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: GABLE_LH</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">L_S-C4</span>
+          <span class="part-uid">UID: L_S-C4-RH</span>
+        </div>
+        <div class="part-name">Gable_RH</div>
+        <div class="part-dims">720 x 560 x 18 mm</div>
+        <div class="part-mat">Mat: 18mm White MFC</div>
+        <div class="eb-diagram">
+          <div class="eb-top">0.4mm</div>
+          <div class="eb-mid">
+            <span class="eb-left">1.0mm ABS</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
+          </div>
+          <div class="eb-bottom">0.4mm</div>
+        </div>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: GABLE_RH</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">L_S-C4</span>
+          <span class="part-uid">UID: L_S-C4-BOT</span>
+        </div>
+        <div class="part-name">Bottom_Panel</div>
+        <div class="part-dims">864 x 560 x 18 mm</div>
+        <div class="part-mat">Mat: 18mm White MFC</div>
+        <div class="eb-diagram">
+          <div class="eb-top">-</div>
+          <div class="eb-mid">
+            <span class="eb-left">1.0mm ABS</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
+          </div>
+          <div class="eb-bottom">-</div>
+        </div>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: BOTTOM_PANEL</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">L_S-C4</span>
+          <span class="part-uid">UID: L_S-C4-BAK</span>
+        </div>
+        <div class="part-name">Back_Panel_Sheet</div>
+        <div class="part-dims">874 x 694 x 6 mm</div>
+        <div class="part-mat">Mat: 6mm White Backing</div>
+        <div class="eb-diagram">
+          <div class="eb-top">-</div>
+          <div class="eb-mid">
+            <span class="eb-left">-</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
+          </div>
+          <div class="eb-bottom">-</div>
+        </div>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: BACK_PANEL_SHEET</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">L_S-C5</span>
+          <span class="part-uid">UID: L_S-C5-LH</span>
+        </div>
+        <div class="part-name">Gable_LH</div>
+        <div class="part-dims">720 x 350 x 18 mm</div>
+        <div class="part-mat">Mat: 18mm White MFC</div>
+        <div class="eb-diagram">
+          <div class="eb-top">0.4mm</div>
+          <div class="eb-mid">
+            <span class="eb-left">1.0mm ABS</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
+          </div>
+          <div class="eb-bottom">0.4mm</div>
+        </div>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: GABLE_LH</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">L_S-C5</span>
+          <span class="part-uid">UID: L_S-C5-RH</span>
+        </div>
+        <div class="part-name">Gable_RH</div>
+        <div class="part-dims">720 x 350 x 18 mm</div>
+        <div class="part-mat">Mat: 18mm White MFC</div>
+        <div class="eb-diagram">
+          <div class="eb-top">0.4mm</div>
+          <div class="eb-mid">
+            <span class="eb-left">1.0mm ABS</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
+          </div>
+          <div class="eb-bottom">0.4mm</div>
+        </div>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: GABLE_RH</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">L_S-C5</span>
+          <span class="part-uid">UID: L_S-C5-BOT</span>
+        </div>
+        <div class="part-name">Bottom_Panel</div>
+        <div class="part-dims">864 x 350 x 18 mm</div>
+        <div class="part-mat">Mat: 18mm White MFC</div>
+        <div class="eb-diagram">
+          <div class="eb-top">-</div>
+          <div class="eb-mid">
+            <span class="eb-left">1.0mm ABS</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
+          </div>
+          <div class="eb-bottom">-</div>
+        </div>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: BOTTOM_PANEL</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">L_S-C5</span>
+          <span class="part-uid">UID: L_S-C5-BAK</span>
+        </div>
+        <div class="part-name">Back_Panel_Sheet</div>
+        <div class="part-dims">874 x 694 x 6 mm</div>
+        <div class="part-mat">Mat: 6mm White Backing</div>
+        <div class="eb-diagram">
+          <div class="eb-top">-</div>
+          <div class="eb-mid">
+            <span class="eb-left">-</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
+          </div>
+          <div class="eb-bottom">-</div>
+        </div>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: BACK_PANEL_SHEET</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">L_S-C6</span>
+          <span class="part-uid">UID: L_S-C6-LH</span>
+        </div>
+        <div class="part-name">Gable_LH</div>
+        <div class="part-dims">720 x 350 x 18 mm</div>
+        <div class="part-mat">Mat: 18mm White MFC</div>
+        <div class="eb-diagram">
+          <div class="eb-top">0.4mm</div>
+          <div class="eb-mid">
+            <span class="eb-left">1.0mm ABS</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
+          </div>
+          <div class="eb-bottom">0.4mm</div>
+        </div>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: GABLE_LH</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">L_S-C6</span>
+          <span class="part-uid">UID: L_S-C6-RH</span>
+        </div>
+        <div class="part-name">Gable_RH</div>
+        <div class="part-dims">720 x 350 x 18 mm</div>
+        <div class="part-mat">Mat: 18mm White MFC</div>
+        <div class="eb-diagram">
+          <div class="eb-top">0.4mm</div>
+          <div class="eb-mid">
+            <span class="eb-left">1.0mm ABS</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
+          </div>
+          <div class="eb-bottom">0.4mm</div>
+        </div>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: GABLE_RH</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">L_S-C6</span>
+          <span class="part-uid">UID: L_S-C6-BOT</span>
+        </div>
+        <div class="part-name">Bottom_Panel</div>
+        <div class="part-dims">864 x 350 x 18 mm</div>
+        <div class="part-mat">Mat: 18mm White MFC</div>
+        <div class="eb-diagram">
+          <div class="eb-top">-</div>
+          <div class="eb-mid">
+            <span class="eb-left">1.0mm ABS</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
+          </div>
+          <div class="eb-bottom">-</div>
+        </div>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: BOTTOM_PANEL</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">L_S-C6</span>
+          <span class="part-uid">UID: L_S-C6-BAK</span>
+        </div>
+        <div class="part-name">Back_Panel_Sheet</div>
+        <div class="part-dims">874 x 694 x 6 mm</div>
+        <div class="part-mat">Mat: 6mm White Backing</div>
+        <div class="eb-diagram">
+          <div class="eb-top">-</div>
+          <div class="eb-mid">
+            <span class="eb-left">-</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
+          </div>
+          <div class="eb-bottom">-</div>
+        </div>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: BACK_PANEL_SHEET</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">U_S-C1</span>
+          <span class="part-uid">UID: U_S-C1-LH</span>
+        </div>
+        <div class="part-name">Gable_LH</div>
+        <div class="part-dims">2160 x 600 x 18 mm</div>
+        <div class="part-mat">Mat: 18mm White MFC</div>
+        <div class="eb-diagram">
+          <div class="eb-top">0.4mm</div>
+          <div class="eb-mid">
+            <span class="eb-left">1.0mm ABS</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
+          </div>
+          <div class="eb-bottom">0.4mm</div>
+        </div>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: GABLE_LH</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">U_S-C1</span>
+          <span class="part-uid">UID: U_S-C1-RH</span>
+        </div>
+        <div class="part-name">Gable_RH</div>
+        <div class="part-dims">2160 x 600 x 18 mm</div>
+        <div class="part-mat">Mat: 18mm White MFC</div>
+        <div class="eb-diagram">
+          <div class="eb-top">0.4mm</div>
+          <div class="eb-mid">
+            <span class="eb-left">1.0mm ABS</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
+          </div>
+          <div class="eb-bottom">0.4mm</div>
+        </div>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: GABLE_RH</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">U_S-C1</span>
+          <span class="part-uid">UID: U_S-C1-BOT</span>
+        </div>
+        <div class="part-name">Bottom_Panel</div>
+        <div class="part-dims">564 x 600 x 18 mm</div>
+        <div class="part-mat">Mat: 18mm White MFC</div>
+        <div class="eb-diagram">
+          <div class="eb-top">-</div>
+          <div class="eb-mid">
+            <span class="eb-left">1.0mm ABS</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
+          </div>
+          <div class="eb-bottom">-</div>
+        </div>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: BOTTOM_PANEL</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">U_S-C1</span>
+          <span class="part-uid">UID: U_S-C1-BAK</span>
+        </div>
+        <div class="part-name">Back_Panel_Sheet</div>
+        <div class="part-dims">574 x 2134 x 6 mm</div>
+        <div class="part-mat">Mat: 6mm White Backing</div>
+        <div class="eb-diagram">
+          <div class="eb-top">-</div>
+          <div class="eb-mid">
+            <span class="eb-left">-</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
+          </div>
+          <div class="eb-bottom">-</div>
+        </div>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: BACK_PANEL_SHEET</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">U_S-C2</span>
+          <span class="part-uid">UID: U_S-C2-LH</span>
+        </div>
+        <div class="part-name">Gable_LH</div>
+        <div class="part-dims">720 x 560 x 18 mm</div>
+        <div class="part-mat">Mat: 18mm White MFC</div>
+        <div class="eb-diagram">
+          <div class="eb-top">0.4mm</div>
+          <div class="eb-mid">
+            <span class="eb-left">1.0mm ABS</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
+          </div>
+          <div class="eb-bottom">0.4mm</div>
+        </div>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: GABLE_LH</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">U_S-C2</span>
+          <span class="part-uid">UID: U_S-C2-RH</span>
+        </div>
+        <div class="part-name">Gable_RH</div>
+        <div class="part-dims">720 x 560 x 18 mm</div>
+        <div class="part-mat">Mat: 18mm White MFC</div>
+        <div class="eb-diagram">
+          <div class="eb-top">0.4mm</div>
+          <div class="eb-mid">
+            <span class="eb-left">1.0mm ABS</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
+          </div>
+          <div class="eb-bottom">0.4mm</div>
+        </div>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: GABLE_RH</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">U_S-C2</span>
+          <span class="part-uid">UID: U_S-C2-BOT</span>
+        </div>
+        <div class="part-name">Bottom_Panel</div>
+        <div class="part-dims">1014 x 560 x 18 mm</div>
+        <div class="part-mat">Mat: 18mm White MFC</div>
+        <div class="eb-diagram">
+          <div class="eb-top">-</div>
+          <div class="eb-mid">
+            <span class="eb-left">1.0mm ABS</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
+          </div>
+          <div class="eb-bottom">-</div>
+        </div>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: BOTTOM_PANEL</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">U_S-C2</span>
+          <span class="part-uid">UID: U_S-C2-BAK</span>
+        </div>
+        <div class="part-name">Back_Panel_Sheet</div>
+        <div class="part-dims">1024 x 694 x 6 mm</div>
+        <div class="part-mat">Mat: 6mm White Backing</div>
+        <div class="eb-diagram">
+          <div class="eb-top">-</div>
+          <div class="eb-mid">
+            <span class="eb-left">-</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
+          </div>
+          <div class="eb-bottom">-</div>
+        </div>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: BACK_PANEL_SHEET</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">U_S-C3</span>
+          <span class="part-uid">UID: U_S-C3-LH</span>
+        </div>
+        <div class="part-name">Gable_LH</div>
+        <div class="part-dims">720 x 560 x 18 mm</div>
+        <div class="part-mat">Mat: 18mm White MFC</div>
+        <div class="eb-diagram">
+          <div class="eb-top">0.4mm</div>
+          <div class="eb-mid">
+            <span class="eb-left">1.0mm ABS</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
+          </div>
+          <div class="eb-bottom">0.4mm</div>
+        </div>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: GABLE_LH</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">U_S-C3</span>
+          <span class="part-uid">UID: U_S-C3-RH</span>
+        </div>
+        <div class="part-name">Gable_RH</div>
+        <div class="part-dims">720 x 560 x 18 mm</div>
+        <div class="part-mat">Mat: 18mm White MFC</div>
+        <div class="eb-diagram">
+          <div class="eb-top">0.4mm</div>
+          <div class="eb-mid">
+            <span class="eb-left">1.0mm ABS</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
+          </div>
+          <div class="eb-bottom">0.4mm</div>
+        </div>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: GABLE_RH</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">U_S-C3</span>
+          <span class="part-uid">UID: U_S-C3-BOT</span>
+        </div>
+        <div class="part-name">Bottom_Panel</div>
+        <div class="part-dims">864 x 560 x 18 mm</div>
+        <div class="part-mat">Mat: 18mm White MFC</div>
+        <div class="eb-diagram">
+          <div class="eb-top">-</div>
+          <div class="eb-mid">
+            <span class="eb-left">1.0mm ABS</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
+          </div>
+          <div class="eb-bottom">-</div>
+        </div>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: BOTTOM_PANEL</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">U_S-C3</span>
+          <span class="part-uid">UID: U_S-C3-BAK</span>
+        </div>
+        <div class="part-name">Back_Panel_Sheet</div>
+        <div class="part-dims">874 x 694 x 6 mm</div>
+        <div class="part-mat">Mat: 6mm White Backing</div>
+        <div class="eb-diagram">
+          <div class="eb-top">-</div>
+          <div class="eb-mid">
+            <span class="eb-left">-</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
+          </div>
+          <div class="eb-bottom">-</div>
+        </div>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: BACK_PANEL_SHEET</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">U_S-C4</span>
+          <span class="part-uid">UID: U_S-C4-LH</span>
+        </div>
+        <div class="part-name">Gable_LH</div>
+        <div class="part-dims">720 x 560 x 18 mm</div>
+        <div class="part-mat">Mat: 18mm White MFC</div>
+        <div class="eb-diagram">
+          <div class="eb-top">0.4mm</div>
+          <div class="eb-mid">
+            <span class="eb-left">1.0mm ABS</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
+          </div>
+          <div class="eb-bottom">0.4mm</div>
+        </div>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: GABLE_LH</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">U_S-C4</span>
+          <span class="part-uid">UID: U_S-C4-RH</span>
+        </div>
+        <div class="part-name">Gable_RH</div>
+        <div class="part-dims">720 x 560 x 18 mm</div>
+        <div class="part-mat">Mat: 18mm White MFC</div>
+        <div class="eb-diagram">
+          <div class="eb-top">0.4mm</div>
+          <div class="eb-mid">
+            <span class="eb-left">1.0mm ABS</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
+          </div>
+          <div class="eb-bottom">0.4mm</div>
+        </div>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: GABLE_RH</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">U_S-C4</span>
+          <span class="part-uid">UID: U_S-C4-BOT</span>
+        </div>
+        <div class="part-name">Bottom_Panel</div>
+        <div class="part-dims">1014 x 560 x 18 mm</div>
+        <div class="part-mat">Mat: 18mm White MFC</div>
+        <div class="eb-diagram">
+          <div class="eb-top">-</div>
+          <div class="eb-mid">
+            <span class="eb-left">1.0mm ABS</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
+          </div>
+          <div class="eb-bottom">-</div>
+        </div>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: BOTTOM_PANEL</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">U_S-C4</span>
+          <span class="part-uid">UID: U_S-C4-BAK</span>
+        </div>
+        <div class="part-name">Back_Panel_Sheet</div>
+        <div class="part-dims">1024 x 694 x 6 mm</div>
+        <div class="part-mat">Mat: 6mm White Backing</div>
+        <div class="eb-diagram">
+          <div class="eb-top">-</div>
+          <div class="eb-mid">
+            <span class="eb-left">-</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
+          </div>
+          <div class="eb-bottom">-</div>
+        </div>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: BACK_PANEL_SHEET</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">U_S-C5</span>
+          <span class="part-uid">UID: U_S-C5-LH</span>
+        </div>
+        <div class="part-name">Gable_LH</div>
+        <div class="part-dims">720 x 560 x 18 mm</div>
+        <div class="part-mat">Mat: 18mm White MFC</div>
+        <div class="eb-diagram">
+          <div class="eb-top">0.4mm</div>
+          <div class="eb-mid">
+            <span class="eb-left">1.0mm ABS</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
+          </div>
+          <div class="eb-bottom">0.4mm</div>
+        </div>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: GABLE_LH</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">U_S-C5</span>
+          <span class="part-uid">UID: U_S-C5-RH</span>
+        </div>
+        <div class="part-name">Gable_RH</div>
+        <div class="part-dims">720 x 560 x 18 mm</div>
+        <div class="part-mat">Mat: 18mm White MFC</div>
+        <div class="eb-diagram">
+          <div class="eb-top">0.4mm</div>
+          <div class="eb-mid">
+            <span class="eb-left">1.0mm ABS</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
+          </div>
+          <div class="eb-bottom">0.4mm</div>
+        </div>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: GABLE_RH</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">U_S-C5</span>
+          <span class="part-uid">UID: U_S-C5-BOT</span>
+        </div>
+        <div class="part-name">Bottom_Panel</div>
+        <div class="part-dims">864 x 560 x 18 mm</div>
+        <div class="part-mat">Mat: 18mm White MFC</div>
+        <div class="eb-diagram">
+          <div class="eb-top">-</div>
+          <div class="eb-mid">
+            <span class="eb-left">1.0mm ABS</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
+          </div>
+          <div class="eb-bottom">-</div>
+        </div>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: BOTTOM_PANEL</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">U_S-C5</span>
+          <span class="part-uid">UID: U_S-C5-BAK</span>
+        </div>
+        <div class="part-name">Back_Panel_Sheet</div>
+        <div class="part-dims">874 x 694 x 6 mm</div>
+        <div class="part-mat">Mat: 6mm White Backing</div>
+        <div class="eb-diagram">
+          <div class="eb-top">-</div>
+          <div class="eb-mid">
+            <span class="eb-left">-</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
+          </div>
+          <div class="eb-bottom">-</div>
+        </div>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: BACK_PANEL_SHEET</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">U_S-C6</span>
+          <span class="part-uid">UID: U_S-C6-LH</span>
+        </div>
+        <div class="part-name">Gable_LH</div>
+        <div class="part-dims">720 x 560 x 18 mm</div>
+        <div class="part-mat">Mat: 18mm White MFC</div>
+        <div class="eb-diagram">
+          <div class="eb-top">0.4mm</div>
+          <div class="eb-mid">
+            <span class="eb-left">1.0mm ABS</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
+          </div>
+          <div class="eb-bottom">0.4mm</div>
+        </div>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: GABLE_LH</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">U_S-C6</span>
+          <span class="part-uid">UID: U_S-C6-RH</span>
+        </div>
+        <div class="part-name">Gable_RH</div>
+        <div class="part-dims">720 x 560 x 18 mm</div>
+        <div class="part-mat">Mat: 18mm White MFC</div>
+        <div class="eb-diagram">
+          <div class="eb-top">0.4mm</div>
+          <div class="eb-mid">
+            <span class="eb-left">1.0mm ABS</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
+          </div>
+          <div class="eb-bottom">0.4mm</div>
+        </div>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: GABLE_RH</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">U_S-C6</span>
+          <span class="part-uid">UID: U_S-C6-BOT</span>
+        </div>
+        <div class="part-name">Bottom_Panel</div>
+        <div class="part-dims">264 x 560 x 18 mm</div>
+        <div class="part-mat">Mat: 18mm White MFC</div>
+        <div class="eb-diagram">
+          <div class="eb-top">-</div>
+          <div class="eb-mid">
+            <span class="eb-left">1.0mm ABS</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
+          </div>
+          <div class="eb-bottom">-</div>
+        </div>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: BOTTOM_PANEL</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">U_S-C6</span>
+          <span class="part-uid">UID: U_S-C6-BAK</span>
+        </div>
+        <div class="part-name">Back_Panel_Sheet</div>
+        <div class="part-dims">274 x 694 x 6 mm</div>
+        <div class="part-mat">Mat: 6mm White Backing</div>
+        <div class="eb-diagram">
+          <div class="eb-top">-</div>
+          <div class="eb-mid">
+            <span class="eb-left">-</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
+          </div>
+          <div class="eb-bottom">-</div>
+        </div>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: BACK_PANEL_SHEET</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">U_S-C7</span>
+          <span class="part-uid">UID: U_S-C7-LH</span>
+        </div>
+        <div class="part-name">Gable_LH</div>
+        <div class="part-dims">720 x 350 x 18 mm</div>
+        <div class="part-mat">Mat: 18mm White MFC</div>
+        <div class="eb-diagram">
+          <div class="eb-top">0.4mm</div>
+          <div class="eb-mid">
+            <span class="eb-left">1.0mm ABS</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
+          </div>
+          <div class="eb-bottom">0.4mm</div>
+        </div>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: GABLE_LH</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">U_S-C7</span>
+          <span class="part-uid">UID: U_S-C7-RH</span>
+        </div>
+        <div class="part-name">Gable_RH</div>
+        <div class="part-dims">720 x 350 x 18 mm</div>
+        <div class="part-mat">Mat: 18mm White MFC</div>
+        <div class="eb-diagram">
+          <div class="eb-top">0.4mm</div>
+          <div class="eb-mid">
+            <span class="eb-left">1.0mm ABS</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
+          </div>
+          <div class="eb-bottom">0.4mm</div>
+        </div>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: GABLE_RH</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">U_S-C7</span>
+          <span class="part-uid">UID: U_S-C7-BOT</span>
+        </div>
+        <div class="part-name">Bottom_Panel</div>
+        <div class="part-dims">864 x 350 x 18 mm</div>
+        <div class="part-mat">Mat: 18mm White MFC</div>
+        <div class="eb-diagram">
+          <div class="eb-top">-</div>
+          <div class="eb-mid">
+            <span class="eb-left">1.0mm ABS</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
+          </div>
+          <div class="eb-bottom">-</div>
+        </div>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: BOTTOM_PANEL</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">U_S-C7</span>
+          <span class="part-uid">UID: U_S-C7-BAK</span>
+        </div>
+        <div class="part-name">Back_Panel_Sheet</div>
+        <div class="part-dims">874 x 694 x 6 mm</div>
+        <div class="part-mat">Mat: 6mm White Backing</div>
+        <div class="eb-diagram">
+          <div class="eb-top">-</div>
+          <div class="eb-mid">
+            <span class="eb-left">-</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
+          </div>
+          <div class="eb-bottom">-</div>
+        </div>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: BACK_PANEL_SHEET</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">U_S-C8</span>
+          <span class="part-uid">UID: U_S-C8-LH</span>
+        </div>
+        <div class="part-name">Gable_LH</div>
+        <div class="part-dims">720 x 350 x 18 mm</div>
+        <div class="part-mat">Mat: 18mm White MFC</div>
+        <div class="eb-diagram">
+          <div class="eb-top">0.4mm</div>
+          <div class="eb-mid">
+            <span class="eb-left">1.0mm ABS</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
+          </div>
+          <div class="eb-bottom">0.4mm</div>
+        </div>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: GABLE_LH</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">U_S-C8</span>
+          <span class="part-uid">UID: U_S-C8-RH</span>
+        </div>
+        <div class="part-name">Gable_RH</div>
+        <div class="part-dims">720 x 350 x 18 mm</div>
+        <div class="part-mat">Mat: 18mm White MFC</div>
+        <div class="eb-diagram">
+          <div class="eb-top">0.4mm</div>
+          <div class="eb-mid">
+            <span class="eb-left">1.0mm ABS</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
+          </div>
+          <div class="eb-bottom">0.4mm</div>
+        </div>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: GABLE_RH</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">U_S-C8</span>
+          <span class="part-uid">UID: U_S-C8-BOT</span>
+        </div>
+        <div class="part-name">Bottom_Panel</div>
+        <div class="part-dims">864 x 350 x 18 mm</div>
+        <div class="part-mat">Mat: 18mm White MFC</div>
+        <div class="eb-diagram">
+          <div class="eb-top">-</div>
+          <div class="eb-mid">
+            <span class="eb-left">1.0mm ABS</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
+          </div>
+          <div class="eb-bottom">-</div>
+        </div>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: BOTTOM_PANEL</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">U_S-C8</span>
+          <span class="part-uid">UID: U_S-C8-BAK</span>
+        </div>
+        <div class="part-name">Back_Panel_Sheet</div>
+        <div class="part-dims">874 x 694 x 6 mm</div>
+        <div class="part-mat">Mat: 6mm White Backing</div>
+        <div class="eb-diagram">
+          <div class="eb-top">-</div>
+          <div class="eb-mid">
+            <span class="eb-left">-</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
+          </div>
+          <div class="eb-bottom">-</div>
+        </div>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: BACK_PANEL_SHEET</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">GAL-C1</span>
+          <span class="part-uid">UID: GAL-C1-LH</span>
+        </div>
+        <div class="part-name">Gable_LH</div>
+        <div class="part-dims">2160 x 600 x 18 mm</div>
+        <div class="part-mat">Mat: 18mm White MFC</div>
+        <div class="eb-diagram">
+          <div class="eb-top">0.4mm</div>
+          <div class="eb-mid">
+            <span class="eb-left">1.0mm ABS</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
+          </div>
+          <div class="eb-bottom">0.4mm</div>
+        </div>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: GABLE_LH</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">GAL-C1</span>
+          <span class="part-uid">UID: GAL-C1-RH</span>
+        </div>
+        <div class="part-name">Gable_RH</div>
+        <div class="part-dims">2160 x 600 x 18 mm</div>
+        <div class="part-mat">Mat: 18mm White MFC</div>
+        <div class="eb-diagram">
+          <div class="eb-top">0.4mm</div>
+          <div class="eb-mid">
+            <span class="eb-left">1.0mm ABS</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
+          </div>
+          <div class="eb-bottom">0.4mm</div>
+        </div>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: GABLE_RH</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">GAL-C1</span>
+          <span class="part-uid">UID: GAL-C1-BOT</span>
+        </div>
+        <div class="part-name">Bottom_Panel</div>
+        <div class="part-dims">564 x 600 x 18 mm</div>
+        <div class="part-mat">Mat: 18mm White MFC</div>
+        <div class="eb-diagram">
+          <div class="eb-top">-</div>
+          <div class="eb-mid">
+            <span class="eb-left">1.0mm ABS</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
+          </div>
+          <div class="eb-bottom">-</div>
+        </div>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: BOTTOM_PANEL</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">GAL-C1</span>
+          <span class="part-uid">UID: GAL-C1-BAK</span>
+        </div>
+        <div class="part-name">Back_Panel_Sheet</div>
+        <div class="part-dims">574 x 2134 x 6 mm</div>
+        <div class="part-mat">Mat: 6mm White Backing</div>
+        <div class="eb-diagram">
+          <div class="eb-top">-</div>
+          <div class="eb-mid">
+            <span class="eb-left">-</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
+          </div>
+          <div class="eb-bottom">-</div>
+        </div>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: BACK_PANEL_SHEET</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">GAL-C2</span>
+          <span class="part-uid">UID: GAL-C2-LH</span>
+        </div>
+        <div class="part-name">Gable_LH</div>
+        <div class="part-dims">2160 x 600 x 18 mm</div>
+        <div class="part-mat">Mat: 18mm White MFC</div>
+        <div class="eb-diagram">
+          <div class="eb-top">0.4mm</div>
+          <div class="eb-mid">
+            <span class="eb-left">1.0mm ABS</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
+          </div>
+          <div class="eb-bottom">0.4mm</div>
+        </div>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: GABLE_LH</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">GAL-C2</span>
+          <span class="part-uid">UID: GAL-C2-RH</span>
+        </div>
+        <div class="part-name">Gable_RH</div>
+        <div class="part-dims">2160 x 600 x 18 mm</div>
+        <div class="part-mat">Mat: 18mm White MFC</div>
+        <div class="eb-diagram">
+          <div class="eb-top">0.4mm</div>
+          <div class="eb-mid">
+            <span class="eb-left">1.0mm ABS</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
+          </div>
+          <div class="eb-bottom">0.4mm</div>
+        </div>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: GABLE_RH</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">GAL-C2</span>
+          <span class="part-uid">UID: GAL-C2-BOT</span>
+        </div>
+        <div class="part-name">Bottom_Panel</div>
+        <div class="part-dims">564 x 600 x 18 mm</div>
+        <div class="part-mat">Mat: 18mm White MFC</div>
+        <div class="eb-diagram">
+          <div class="eb-top">-</div>
+          <div class="eb-mid">
+            <span class="eb-left">1.0mm ABS</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
+          </div>
+          <div class="eb-bottom">-</div>
+        </div>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: BOTTOM_PANEL</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">GAL-C2</span>
+          <span class="part-uid">UID: GAL-C2-BAK</span>
+        </div>
+        <div class="part-name">Back_Panel_Sheet</div>
+        <div class="part-dims">574 x 2134 x 6 mm</div>
+        <div class="part-mat">Mat: 6mm White Backing</div>
+        <div class="eb-diagram">
+          <div class="eb-top">-</div>
+          <div class="eb-mid">
+            <span class="eb-left">-</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
+          </div>
+          <div class="eb-bottom">-</div>
+        </div>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: BACK_PANEL_SHEET</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">GAL-C3</span>
+          <span class="part-uid">UID: GAL-C3-LH</span>
+        </div>
+        <div class="part-name">Gable_LH</div>
+        <div class="part-dims">2160 x 600 x 18 mm</div>
+        <div class="part-mat">Mat: 18mm White MFC</div>
+        <div class="eb-diagram">
+          <div class="eb-top">0.4mm</div>
+          <div class="eb-mid">
+            <span class="eb-left">1.0mm ABS</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
+          </div>
+          <div class="eb-bottom">0.4mm</div>
+        </div>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: GABLE_LH</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">GAL-C3</span>
+          <span class="part-uid">UID: GAL-C3-RH</span>
+        </div>
+        <div class="part-name">Gable_RH</div>
+        <div class="part-dims">2160 x 600 x 18 mm</div>
+        <div class="part-mat">Mat: 18mm White MFC</div>
+        <div class="eb-diagram">
+          <div class="eb-top">0.4mm</div>
+          <div class="eb-mid">
+            <span class="eb-left">1.0mm ABS</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
+          </div>
+          <div class="eb-bottom">0.4mm</div>
+        </div>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: GABLE_RH</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">GAL-C3</span>
+          <span class="part-uid">UID: GAL-C3-BOT</span>
+        </div>
+        <div class="part-name">Bottom_Panel</div>
+        <div class="part-dims">564 x 600 x 18 mm</div>
+        <div class="part-mat">Mat: 18mm White MFC</div>
+        <div class="eb-diagram">
+          <div class="eb-top">-</div>
+          <div class="eb-mid">
+            <span class="eb-left">1.0mm ABS</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
+          </div>
+          <div class="eb-bottom">-</div>
+        </div>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: BOTTOM_PANEL</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">GAL-C3</span>
+          <span class="part-uid">UID: GAL-C3-BAK</span>
+        </div>
+        <div class="part-name">Back_Panel_Sheet</div>
+        <div class="part-dims">574 x 2134 x 6 mm</div>
+        <div class="part-mat">Mat: 6mm White Backing</div>
+        <div class="eb-diagram">
+          <div class="eb-top">-</div>
+          <div class="eb-mid">
+            <span class="eb-left">-</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
+          </div>
+          <div class="eb-bottom">-</div>
+        </div>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: BACK_PANEL_SHEET</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">GAL-C4</span>
+          <span class="part-uid">UID: GAL-C4-LH</span>
+        </div>
+        <div class="part-name">Gable_LH</div>
+        <div class="part-dims">2160 x 600 x 18 mm</div>
+        <div class="part-mat">Mat: 18mm White MFC</div>
+        <div class="eb-diagram">
+          <div class="eb-top">0.4mm</div>
+          <div class="eb-mid">
+            <span class="eb-left">1.0mm ABS</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
+          </div>
+          <div class="eb-bottom">0.4mm</div>
+        </div>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: GABLE_LH</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">GAL-C4</span>
+          <span class="part-uid">UID: GAL-C4-RH</span>
+        </div>
+        <div class="part-name">Gable_RH</div>
+        <div class="part-dims">2160 x 600 x 18 mm</div>
+        <div class="part-mat">Mat: 18mm White MFC</div>
+        <div class="eb-diagram">
+          <div class="eb-top">0.4mm</div>
+          <div class="eb-mid">
+            <span class="eb-left">1.0mm ABS</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
+          </div>
+          <div class="eb-bottom">0.4mm</div>
+        </div>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: GABLE_RH</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">GAL-C4</span>
+          <span class="part-uid">UID: GAL-C4-BOT</span>
+        </div>
+        <div class="part-name">Bottom_Panel</div>
+        <div class="part-dims">564 x 600 x 18 mm</div>
+        <div class="part-mat">Mat: 18mm White MFC</div>
+        <div class="eb-diagram">
+          <div class="eb-top">-</div>
+          <div class="eb-mid">
+            <span class="eb-left">1.0mm ABS</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
+          </div>
+          <div class="eb-bottom">-</div>
+        </div>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: BOTTOM_PANEL</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">GAL-C4</span>
+          <span class="part-uid">UID: GAL-C4-BAK</span>
+        </div>
+        <div class="part-name">Back_Panel_Sheet</div>
+        <div class="part-dims">574 x 2134 x 6 mm</div>
+        <div class="part-mat">Mat: 6mm White Backing</div>
+        <div class="eb-diagram">
+          <div class="eb-top">-</div>
+          <div class="eb-mid">
+            <span class="eb-left">-</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
+          </div>
+          <div class="eb-bottom">-</div>
+        </div>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: BACK_PANEL_SHEET</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">GAL-C5</span>
+          <span class="part-uid">UID: GAL-C5-LH</span>
+        </div>
+        <div class="part-name">Gable_LH</div>
+        <div class="part-dims">720 x 560 x 18 mm</div>
+        <div class="part-mat">Mat: 18mm White MFC</div>
+        <div class="eb-diagram">
+          <div class="eb-top">0.4mm</div>
+          <div class="eb-mid">
+            <span class="eb-left">1.0mm ABS</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
+          </div>
+          <div class="eb-bottom">0.4mm</div>
+        </div>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: GABLE_LH</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">GAL-C5</span>
+          <span class="part-uid">UID: GAL-C5-RH</span>
+        </div>
+        <div class="part-name">Gable_RH</div>
+        <div class="part-dims">720 x 560 x 18 mm</div>
+        <div class="part-mat">Mat: 18mm White MFC</div>
+        <div class="eb-diagram">
+          <div class="eb-top">0.4mm</div>
+          <div class="eb-mid">
+            <span class="eb-left">1.0mm ABS</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
+          </div>
+          <div class="eb-bottom">0.4mm</div>
+        </div>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: GABLE_RH</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">GAL-C5</span>
+          <span class="part-uid">UID: GAL-C5-BOT</span>
+        </div>
+        <div class="part-name">Bottom_Panel</div>
+        <div class="part-dims">864 x 560 x 18 mm</div>
+        <div class="part-mat">Mat: 18mm White MFC</div>
+        <div class="eb-diagram">
+          <div class="eb-top">-</div>
+          <div class="eb-mid">
+            <span class="eb-left">1.0mm ABS</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
+          </div>
+          <div class="eb-bottom">-</div>
+        </div>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: BOTTOM_PANEL</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">GAL-C5</span>
+          <span class="part-uid">UID: GAL-C5-FR1</span>
+        </div>
+        <div class="part-name">Lower_Pot_Drawer_Front</div>
+        <div class="part-dims">897 x 315 x 18 mm</div>
+        <div class="part-mat">Mat: 18mm Anthracite Supermatte</div>
+        <div class="eb-diagram">
+          <div class="eb-top">1.0mm ABS</div>
+          <div class="eb-mid">
+            <span class="eb-left">1.0mm ABS</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">1.0mm ABS</span>
+          </div>
+          <div class="eb-bottom">1.0mm ABS</div>
+        </div>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: LOWER_POT_DRAWER_FRONT</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">GAL-C5</span>
+          <span class="part-uid">UID: GAL-C5-FR2</span>
+        </div>
+        <div class="part-name">Upper_Drawer_Front</div>
+        <div class="part-dims">897 x 248 x 18 mm</div>
+        <div class="part-mat">Mat: 18mm Anthracite Supermatte</div>
+        <div class="eb-diagram">
+          <div class="eb-top">1.0mm ABS</div>
+          <div class="eb-mid">
+            <span class="eb-left">1.0mm ABS</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">1.0mm ABS</span>
+          </div>
+          <div class="eb-bottom">1.0mm ABS</div>
+        </div>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: UPPER_DRAWER_FRONT</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">GAL-C5</span>
+          <span class="part-uid">UID: GAL-C5-BAK</span>
+        </div>
+        <div class="part-name">Back_Panel_Sheet</div>
+        <div class="part-dims">874 x 694 x 6 mm</div>
+        <div class="part-mat">Mat: 6mm White Backing</div>
+        <div class="eb-diagram">
+          <div class="eb-top">-</div>
+          <div class="eb-mid">
+            <span class="eb-left">-</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
+          </div>
+          <div class="eb-bottom">-</div>
+        </div>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: BACK_PANEL_SHEET</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">GAL-C6</span>
+          <span class="part-uid">UID: GAL-C6-LH</span>
+        </div>
+        <div class="part-name">Gable_LH</div>
+        <div class="part-dims">720 x 560 x 18 mm</div>
+        <div class="part-mat">Mat: 18mm White MFC</div>
+        <div class="eb-diagram">
+          <div class="eb-top">0.4mm</div>
+          <div class="eb-mid">
+            <span class="eb-left">1.0mm ABS</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
+          </div>
+          <div class="eb-bottom">0.4mm</div>
+        </div>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: GABLE_LH</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">GAL-C6</span>
+          <span class="part-uid">UID: GAL-C6-RH</span>
+        </div>
+        <div class="part-name">Gable_RH</div>
+        <div class="part-dims">720 x 560 x 18 mm</div>
+        <div class="part-mat">Mat: 18mm White MFC</div>
+        <div class="eb-diagram">
+          <div class="eb-top">0.4mm</div>
+          <div class="eb-mid">
+            <span class="eb-left">1.0mm ABS</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
+          </div>
+          <div class="eb-bottom">0.4mm</div>
+        </div>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: GABLE_RH</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">GAL-C6</span>
+          <span class="part-uid">UID: GAL-C6-BOT</span>
+        </div>
+        <div class="part-name">Bottom_Panel</div>
+        <div class="part-dims">864 x 560 x 18 mm</div>
+        <div class="part-mat">Mat: 18mm White MFC</div>
+        <div class="eb-diagram">
+          <div class="eb-top">-</div>
+          <div class="eb-mid">
+            <span class="eb-left">1.0mm ABS</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
+          </div>
+          <div class="eb-bottom">-</div>
+        </div>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: BOTTOM_PANEL</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">GAL-C6</span>
+          <span class="part-uid">UID: GAL-C6-BAK</span>
+        </div>
+        <div class="part-name">Back_Panel_Sheet</div>
+        <div class="part-dims">874 x 694 x 6 mm</div>
+        <div class="part-mat">Mat: 6mm White Backing</div>
+        <div class="eb-diagram">
+          <div class="eb-top">-</div>
+          <div class="eb-mid">
+            <span class="eb-left">-</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
+          </div>
+          <div class="eb-bottom">-</div>
+        </div>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: BACK_PANEL_SHEET</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">GAL-C7</span>
+          <span class="part-uid">UID: GAL-C7-LH</span>
+        </div>
+        <div class="part-name">Gable_LH</div>
+        <div class="part-dims">720 x 560 x 18 mm</div>
+        <div class="part-mat">Mat: 18mm White MFC</div>
+        <div class="eb-diagram">
+          <div class="eb-top">0.4mm</div>
+          <div class="eb-mid">
+            <span class="eb-left">1.0mm ABS</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
+          </div>
+          <div class="eb-bottom">0.4mm</div>
+        </div>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: GABLE_LH</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">GAL-C7</span>
+          <span class="part-uid">UID: GAL-C7-RH</span>
+        </div>
+        <div class="part-name">Gable_RH</div>
+        <div class="part-dims">720 x 560 x 18 mm</div>
+        <div class="part-mat">Mat: 18mm White MFC</div>
+        <div class="eb-diagram">
+          <div class="eb-top">0.4mm</div>
+          <div class="eb-mid">
+            <span class="eb-left">1.0mm ABS</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
+          </div>
+          <div class="eb-bottom">0.4mm</div>
+        </div>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: GABLE_RH</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">GAL-C7</span>
+          <span class="part-uid">UID: GAL-C7-BOT</span>
+        </div>
+        <div class="part-name">Bottom_Panel</div>
+        <div class="part-dims">564 x 560 x 18 mm</div>
+        <div class="part-mat">Mat: 18mm White MFC</div>
+        <div class="eb-diagram">
+          <div class="eb-top">-</div>
+          <div class="eb-mid">
+            <span class="eb-left">1.0mm ABS</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
+          </div>
+          <div class="eb-bottom">-</div>
+        </div>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: BOTTOM_PANEL</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">GAL-C7</span>
+          <span class="part-uid">UID: GAL-C7-BAK</span>
+        </div>
+        <div class="part-name">Back_Panel_Sheet</div>
+        <div class="part-dims">574 x 694 x 6 mm</div>
+        <div class="part-mat">Mat: 6mm White Backing</div>
+        <div class="eb-diagram">
+          <div class="eb-top">-</div>
+          <div class="eb-mid">
+            <span class="eb-left">-</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
+          </div>
+          <div class="eb-bottom">-</div>
+        </div>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: BACK_PANEL_SHEET</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">CEI-C1</span>
+          <span class="part-uid">UID: CEI-C1-LH</span>
+        </div>
+        <div class="part-name">Gable_LH</div>
+        <div class="part-dims">720 x 560 x 18 mm</div>
+        <div class="part-mat">Mat: 18mm White MFC</div>
+        <div class="eb-diagram">
+          <div class="eb-top">0.4mm</div>
+          <div class="eb-mid">
+            <span class="eb-left">1.0mm ABS</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
+          </div>
+          <div class="eb-bottom">0.4mm</div>
+        </div>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: GABLE_LH</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">CEI-C1</span>
+          <span class="part-uid">UID: CEI-C1-RH</span>
+        </div>
+        <div class="part-name">Gable_RH</div>
+        <div class="part-dims">720 x 560 x 18 mm</div>
+        <div class="part-mat">Mat: 18mm White MFC</div>
+        <div class="eb-diagram">
+          <div class="eb-top">0.4mm</div>
+          <div class="eb-mid">
+            <span class="eb-left">1.0mm ABS</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
+          </div>
+          <div class="eb-bottom">0.4mm</div>
+        </div>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: GABLE_RH</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">CEI-C1</span>
+          <span class="part-uid">UID: CEI-C1-BOT</span>
+        </div>
+        <div class="part-name">Bottom_Panel</div>
+        <div class="part-dims">864 x 560 x 18 mm</div>
+        <div class="part-mat">Mat: 18mm White MFC</div>
+        <div class="eb-diagram">
+          <div class="eb-top">-</div>
+          <div class="eb-mid">
+            <span class="eb-left">1.0mm ABS</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
+          </div>
+          <div class="eb-bottom">-</div>
+        </div>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: BOTTOM_PANEL</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">CEI-C1</span>
+          <span class="part-uid">UID: CEI-C1-FR1</span>
+        </div>
+        <div class="part-name">Lower_Pot_Drawer_Front</div>
+        <div class="part-dims">897 x 315 x 18 mm</div>
+        <div class="part-mat">Mat: 18mm Anthracite Supermatte</div>
+        <div class="eb-diagram">
+          <div class="eb-top">1.0mm ABS</div>
+          <div class="eb-mid">
+            <span class="eb-left">1.0mm ABS</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">1.0mm ABS</span>
+          </div>
+          <div class="eb-bottom">1.0mm ABS</div>
+        </div>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: LOWER_POT_DRAWER_FRONT</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">CEI-C1</span>
+          <span class="part-uid">UID: CEI-C1-FR2</span>
+        </div>
+        <div class="part-name">Upper_Drawer_Front</div>
+        <div class="part-dims">897 x 248 x 18 mm</div>
+        <div class="part-mat">Mat: 18mm Anthracite Supermatte</div>
+        <div class="eb-diagram">
+          <div class="eb-top">1.0mm ABS</div>
+          <div class="eb-mid">
+            <span class="eb-left">1.0mm ABS</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">1.0mm ABS</span>
+          </div>
+          <div class="eb-bottom">1.0mm ABS</div>
+        </div>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: UPPER_DRAWER_FRONT</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">CEI-C1</span>
+          <span class="part-uid">UID: CEI-C1-BAK</span>
+        </div>
+        <div class="part-name">Back_Panel_Sheet</div>
+        <div class="part-dims">874 x 694 x 6 mm</div>
+        <div class="part-mat">Mat: 6mm White Backing</div>
+        <div class="eb-diagram">
+          <div class="eb-top">-</div>
+          <div class="eb-mid">
+            <span class="eb-left">-</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
+          </div>
+          <div class="eb-bottom">-</div>
+        </div>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: BACK_PANEL_SHEET</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">CEI-C2</span>
+          <span class="part-uid">UID: CEI-C2-LH</span>
+        </div>
+        <div class="part-name">Gable_LH</div>
+        <div class="part-dims">720 x 560 x 18 mm</div>
+        <div class="part-mat">Mat: 18mm White MFC</div>
+        <div class="eb-diagram">
+          <div class="eb-top">0.4mm</div>
+          <div class="eb-mid">
+            <span class="eb-left">1.0mm ABS</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
+          </div>
+          <div class="eb-bottom">0.4mm</div>
+        </div>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: GABLE_LH</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">CEI-C2</span>
+          <span class="part-uid">UID: CEI-C2-RH</span>
+        </div>
+        <div class="part-name">Gable_RH</div>
+        <div class="part-dims">720 x 560 x 18 mm</div>
+        <div class="part-mat">Mat: 18mm White MFC</div>
+        <div class="eb-diagram">
+          <div class="eb-top">0.4mm</div>
+          <div class="eb-mid">
+            <span class="eb-left">1.0mm ABS</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
+          </div>
+          <div class="eb-bottom">0.4mm</div>
+        </div>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: GABLE_RH</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">CEI-C2</span>
+          <span class="part-uid">UID: CEI-C2-BOT</span>
+        </div>
+        <div class="part-name">Bottom_Panel</div>
+        <div class="part-dims">864 x 560 x 18 mm</div>
+        <div class="part-mat">Mat: 18mm White MFC</div>
+        <div class="eb-diagram">
+          <div class="eb-top">-</div>
+          <div class="eb-mid">
+            <span class="eb-left">1.0mm ABS</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
+          </div>
+          <div class="eb-bottom">-</div>
+        </div>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: BOTTOM_PANEL</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">CEI-C2</span>
+          <span class="part-uid">UID: CEI-C2-BAK</span>
+        </div>
+        <div class="part-name">Back_Panel_Sheet</div>
+        <div class="part-dims">874 x 694 x 6 mm</div>
+        <div class="part-mat">Mat: 6mm White Backing</div>
+        <div class="eb-diagram">
+          <div class="eb-top">-</div>
+          <div class="eb-mid">
+            <span class="eb-left">-</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
+          </div>
+          <div class="eb-bottom">-</div>
+        </div>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: BACK_PANEL_SHEET</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">CEI-C3</span>
+          <span class="part-uid">UID: CEI-C3-LH</span>
+        </div>
+        <div class="part-name">Gable_LH</div>
+        <div class="part-dims">720 x 350 x 18 mm</div>
+        <div class="part-mat">Mat: 18mm White MFC</div>
+        <div class="eb-diagram">
+          <div class="eb-top">0.4mm</div>
+          <div class="eb-mid">
+            <span class="eb-left">1.0mm ABS</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
+          </div>
+          <div class="eb-bottom">0.4mm</div>
+        </div>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: GABLE_LH</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">CEI-C3</span>
+          <span class="part-uid">UID: CEI-C3-RH</span>
+        </div>
+        <div class="part-name">Gable_RH</div>
+        <div class="part-dims">720 x 350 x 18 mm</div>
+        <div class="part-mat">Mat: 18mm White MFC</div>
+        <div class="eb-diagram">
+          <div class="eb-top">0.4mm</div>
+          <div class="eb-mid">
+            <span class="eb-left">1.0mm ABS</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
+          </div>
+          <div class="eb-bottom">0.4mm</div>
+        </div>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: GABLE_RH</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">CEI-C3</span>
+          <span class="part-uid">UID: CEI-C3-BOT</span>
+        </div>
+        <div class="part-name">Bottom_Panel</div>
+        <div class="part-dims">864 x 350 x 18 mm</div>
+        <div class="part-mat">Mat: 18mm White MFC</div>
+        <div class="eb-diagram">
+          <div class="eb-top">-</div>
+          <div class="eb-mid">
+            <span class="eb-left">1.0mm ABS</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
+          </div>
+          <div class="eb-bottom">-</div>
+        </div>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: BOTTOM_PANEL</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">CEI-C3</span>
+          <span class="part-uid">UID: CEI-C3-BAK</span>
+        </div>
+        <div class="part-name">Back_Panel_Sheet</div>
+        <div class="part-dims">874 x 694 x 6 mm</div>
+        <div class="part-mat">Mat: 6mm White Backing</div>
+        <div class="eb-diagram">
+          <div class="eb-top">-</div>
+          <div class="eb-mid">
+            <span class="eb-left">-</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
+          </div>
+          <div class="eb-bottom">-</div>
+        </div>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: BACK_PANEL_SHEET</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">CEI-C4</span>
+          <span class="part-uid">UID: CEI-C4-LH</span>
+        </div>
+        <div class="part-name">Gable_LH</div>
+        <div class="part-dims">360 x 350 x 18 mm</div>
+        <div class="part-mat">Mat: 18mm White MFC</div>
+        <div class="eb-diagram">
+          <div class="eb-top">0.4mm</div>
+          <div class="eb-mid">
+            <span class="eb-left">1.0mm ABS</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
+          </div>
+          <div class="eb-bottom">0.4mm</div>
+        </div>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: GABLE_LH</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">CEI-C4</span>
+          <span class="part-uid">UID: CEI-C4-RH</span>
+        </div>
+        <div class="part-name">Gable_RH</div>
+        <div class="part-dims">360 x 350 x 18 mm</div>
+        <div class="part-mat">Mat: 18mm White MFC</div>
+        <div class="eb-diagram">
+          <div class="eb-top">0.4mm</div>
+          <div class="eb-mid">
+            <span class="eb-left">1.0mm ABS</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
+          </div>
+          <div class="eb-bottom">0.4mm</div>
+        </div>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: GABLE_RH</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">CEI-C4</span>
+          <span class="part-uid">UID: CEI-C4-BOT</span>
+        </div>
+        <div class="part-name">Bottom_Panel</div>
+        <div class="part-dims">864 x 350 x 18 mm</div>
+        <div class="part-mat">Mat: 18mm White MFC</div>
+        <div class="eb-diagram">
+          <div class="eb-top">-</div>
+          <div class="eb-mid">
+            <span class="eb-left">1.0mm ABS</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
+          </div>
+          <div class="eb-bottom">-</div>
+        </div>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: BOTTOM_PANEL</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">CEI-C4</span>
+          <span class="part-uid">UID: CEI-C4-BAK</span>
+        </div>
+        <div class="part-name">Back_Panel_Sheet</div>
+        <div class="part-dims">874 x 334 x 6 mm</div>
+        <div class="part-mat">Mat: 6mm White Backing</div>
+        <div class="eb-diagram">
+          <div class="eb-top">-</div>
+          <div class="eb-mid">
+            <span class="eb-left">-</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
+          </div>
+          <div class="eb-bottom">-</div>
+        </div>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: BACK_PANEL_SHEET</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">CEI-C5</span>
+          <span class="part-uid">UID: CEI-C5-LH</span>
+        </div>
+        <div class="part-name">Gable_LH</div>
+        <div class="part-dims">720 x 350 x 18 mm</div>
+        <div class="part-mat">Mat: 18mm White MFC</div>
+        <div class="eb-diagram">
+          <div class="eb-top">0.4mm</div>
+          <div class="eb-mid">
+            <span class="eb-left">1.0mm ABS</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
+          </div>
+          <div class="eb-bottom">0.4mm</div>
+        </div>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: GABLE_LH</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">CEI-C5</span>
+          <span class="part-uid">UID: CEI-C5-RH</span>
+        </div>
+        <div class="part-name">Gable_RH</div>
+        <div class="part-dims">720 x 350 x 18 mm</div>
+        <div class="part-mat">Mat: 18mm White MFC</div>
+        <div class="eb-diagram">
+          <div class="eb-top">0.4mm</div>
+          <div class="eb-mid">
+            <span class="eb-left">1.0mm ABS</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
+          </div>
+          <div class="eb-bottom">0.4mm</div>
+        </div>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: GABLE_RH</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">CEI-C5</span>
+          <span class="part-uid">UID: CEI-C5-BOT</span>
+        </div>
+        <div class="part-name">Bottom_Panel</div>
+        <div class="part-dims">864 x 350 x 18 mm</div>
+        <div class="part-mat">Mat: 18mm White MFC</div>
+        <div class="eb-diagram">
+          <div class="eb-top">-</div>
+          <div class="eb-mid">
+            <span class="eb-left">1.0mm ABS</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
+          </div>
+          <div class="eb-bottom">-</div>
+        </div>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: BOTTOM_PANEL</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">CEI-C5</span>
+          <span class="part-uid">UID: CEI-C5-BAK</span>
+        </div>
+        <div class="part-name">Back_Panel_Sheet</div>
+        <div class="part-dims">874 x 694 x 6 mm</div>
+        <div class="part-mat">Mat: 6mm White Backing</div>
+        <div class="eb-diagram">
+          <div class="eb-top">-</div>
+          <div class="eb-mid">
+            <span class="eb-left">-</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
+          </div>
+          <div class="eb-bottom">-</div>
+        </div>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: BACK_PANEL_SHEET</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">CEI-C6</span>
+          <span class="part-uid">UID: CEI-C6-LH</span>
+        </div>
+        <div class="part-name">Gable_LH</div>
+        <div class="part-dims">360 x 350 x 18 mm</div>
+        <div class="part-mat">Mat: 18mm White MFC</div>
+        <div class="eb-diagram">
+          <div class="eb-top">0.4mm</div>
+          <div class="eb-mid">
+            <span class="eb-left">1.0mm ABS</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
+          </div>
+          <div class="eb-bottom">0.4mm</div>
+        </div>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: GABLE_LH</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">CEI-C6</span>
+          <span class="part-uid">UID: CEI-C6-RH</span>
+        </div>
+        <div class="part-name">Gable_RH</div>
+        <div class="part-dims">360 x 350 x 18 mm</div>
+        <div class="part-mat">Mat: 18mm White MFC</div>
+        <div class="eb-diagram">
+          <div class="eb-top">0.4mm</div>
+          <div class="eb-mid">
+            <span class="eb-left">1.0mm ABS</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
+          </div>
+          <div class="eb-bottom">0.4mm</div>
+        </div>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: GABLE_RH</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">CEI-C6</span>
+          <span class="part-uid">UID: CEI-C6-BOT</span>
+        </div>
+        <div class="part-name">Bottom_Panel</div>
+        <div class="part-dims">864 x 350 x 18 mm</div>
+        <div class="part-mat">Mat: 18mm White MFC</div>
+        <div class="eb-diagram">
+          <div class="eb-top">-</div>
+          <div class="eb-mid">
+            <span class="eb-left">1.0mm ABS</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
+          </div>
+          <div class="eb-bottom">-</div>
+        </div>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: BOTTOM_PANEL</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">CEI-C6</span>
+          <span class="part-uid">UID: CEI-C6-BAK</span>
+        </div>
+        <div class="part-name">Back_Panel_Sheet</div>
+        <div class="part-dims">874 x 334 x 6 mm</div>
+        <div class="part-mat">Mat: 6mm White Backing</div>
+        <div class="eb-diagram">
+          <div class="eb-top">-</div>
+          <div class="eb-mid">
+            <span class="eb-left">-</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
+          </div>
+          <div class="eb-bottom">-</div>
+        </div>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: BACK_PANEL_SHEET</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">CEI-C7</span>
+          <span class="part-uid">UID: CEI-C7-LH</span>
+        </div>
+        <div class="part-name">Gable_LH</div>
+        <div class="part-dims">720 x 350 x 18 mm</div>
+        <div class="part-mat">Mat: 18mm White MFC</div>
+        <div class="eb-diagram">
+          <div class="eb-top">0.4mm</div>
+          <div class="eb-mid">
+            <span class="eb-left">1.0mm ABS</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
+          </div>
+          <div class="eb-bottom">0.4mm</div>
+        </div>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: GABLE_LH</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">CEI-C7</span>
+          <span class="part-uid">UID: CEI-C7-RH</span>
+        </div>
+        <div class="part-name">Gable_RH</div>
+        <div class="part-dims">720 x 350 x 18 mm</div>
+        <div class="part-mat">Mat: 18mm White MFC</div>
+        <div class="eb-diagram">
+          <div class="eb-top">0.4mm</div>
+          <div class="eb-mid">
+            <span class="eb-left">1.0mm ABS</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
+          </div>
+          <div class="eb-bottom">0.4mm</div>
+        </div>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: GABLE_RH</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">CEI-C7</span>
+          <span class="part-uid">UID: CEI-C7-BOT</span>
+        </div>
+        <div class="part-name">Bottom_Panel</div>
+        <div class="part-dims">564 x 350 x 18 mm</div>
+        <div class="part-mat">Mat: 18mm White MFC</div>
+        <div class="eb-diagram">
+          <div class="eb-top">-</div>
+          <div class="eb-mid">
+            <span class="eb-left">1.0mm ABS</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
+          </div>
+          <div class="eb-bottom">-</div>
+        </div>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: BOTTOM_PANEL</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">CEI-C7</span>
+          <span class="part-uid">UID: CEI-C7-BAK</span>
+        </div>
+        <div class="part-name">Back_Panel_Sheet</div>
+        <div class="part-dims">574 x 694 x 6 mm</div>
+        <div class="part-mat">Mat: 6mm White Backing</div>
+        <div class="eb-diagram">
+          <div class="eb-top">-</div>
+          <div class="eb-mid">
+            <span class="eb-left">-</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
+          </div>
+          <div class="eb-bottom">-</div>
+        </div>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: BACK_PANEL_SHEET</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">CEI-C8</span>
+          <span class="part-uid">UID: CEI-C8-LH</span>
+        </div>
+        <div class="part-name">Gable_LH</div>
+        <div class="part-dims">720 x 350 x 18 mm</div>
+        <div class="part-mat">Mat: 18mm White MFC</div>
+        <div class="eb-diagram">
+          <div class="eb-top">0.4mm</div>
+          <div class="eb-mid">
+            <span class="eb-left">1.0mm ABS</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
+          </div>
+          <div class="eb-bottom">0.4mm</div>
+        </div>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: GABLE_LH</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">CEI-C8</span>
+          <span class="part-uid">UID: CEI-C8-RH</span>
+        </div>
+        <div class="part-name">Gable_RH</div>
+        <div class="part-dims">720 x 350 x 18 mm</div>
+        <div class="part-mat">Mat: 18mm White MFC</div>
+        <div class="eb-diagram">
+          <div class="eb-top">0.4mm</div>
+          <div class="eb-mid">
+            <span class="eb-left">1.0mm ABS</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
+          </div>
+          <div class="eb-bottom">0.4mm</div>
+        </div>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: GABLE_RH</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">CEI-C8</span>
+          <span class="part-uid">UID: CEI-C8-BOT</span>
+        </div>
+        <div class="part-name">Bottom_Panel</div>
+        <div class="part-dims">364 x 350 x 18 mm</div>
+        <div class="part-mat">Mat: 18mm White MFC</div>
+        <div class="eb-diagram">
+          <div class="eb-top">-</div>
+          <div class="eb-mid">
+            <span class="eb-left">1.0mm ABS</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
+          </div>
+          <div class="eb-bottom">-</div>
+        </div>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: BOTTOM_PANEL</div>
+        </div>
+      </div>
+
+      <div class="label-card">
+        <div class="label-header">
+          <span class="cab-tag">CEI-C8</span>
+          <span class="part-uid">UID: CEI-C8-BAK</span>
+        </div>
+        <div class="part-name">Back_Panel_Sheet</div>
+        <div class="part-dims">374 x 694 x 6 mm</div>
+        <div class="part-mat">Mat: 6mm White Backing</div>
+        <div class="eb-diagram">
+          <div class="eb-top">-</div>
+          <div class="eb-mid">
+            <span class="eb-left">-</span>
+            <span class="grain-arrow">⬆ GRAIN</span>
+            <span class="eb-right">-</span>
+          </div>
+          <div class="eb-bottom">-</div>
+        </div>
+        <div class="barcode-zone">
+          <div class="barcode-mock">||| | |||| | |||||| || ||| | |||</div>
+          <div class="prog-name">CNC: BACK_PANEL_SHEET</div>
+        </div>
+      </div>
+
+  </div>
+</body>
+</html>

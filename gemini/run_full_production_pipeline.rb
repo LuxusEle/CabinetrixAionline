@@ -2,18 +2,17 @@
 # CABINETRIX AI — MASTER AUTOMATED PRODUCTION & AUDIT PIPELINE
 # File: gemini/run_full_production_pipeline.rb
 #
-# Complete End-to-End Workflow:
-#   1. Matrix of 20 Parametric Cabinet Boxes across 5 Kitchen Layouts
-#   2. Panel Extraction & Bill of Materials (BOM) Calculation
-#   3. 2D Guillotine Panel Nesting Engine with Grain & Saw Kerf Optimization
-#   4. Multi-Format Exporters:
-#      - Excel / CSV Cutlists (cutlist.csv)
-#      - Hardware BOM (hardware_bom.csv)
-#      - Sheet Nesting Summary (nesting_summary.csv)
-#      - 2D CNC Machining DXFs (Layered toolpaths: Outline, System 32, Dowel, Cam, Hinge, Gola)
-#      - Printable Workshop Production Labels (production_labels.html)
-#   5. 3D Architectural Callout & Annotation Module (Dimensions, Badges, Datum Levels)
-#   6. Interactive Visual HTML Master Production Dashboard (with embedded SVG cutting plans)
+# Generates 4 Authentic 3D Architectural Kitchen Showrooms:
+#   1. Room 1: True I-Shape Linear Run with 2700mm Bulkheads
+#   2. Room 2: True L-Shaped Kitchen with 90° Perpendicular Return Wall
+#   3. Room 3: True U-Shaped Kitchen (3-Sided Room with Dual Corners & Peninsula)
+#   4. Room 4: Luxury Galley with 2700mm Freestanding Double-Sided Island & Gantry
+#
+# Production Pipeline:
+#   • 2D Guillotine MaxRects Nesting Engine (Yield %, Sheet Count, Kerf)
+#   • Multi-Format Exporters (cutlist.csv, hardware_bom.csv, nesting_summary.csv, DXFs, labels.html)
+#   • 3D Architectural Dimensions, Elevation Datums & Cabinet Bubble Tags
+#   • Interactive Master Visual Dashboard (with embedded SVG cutting plans)
 # ==============================================================================
 require 'sketchup.rb'
 require 'fileutils'
@@ -45,7 +44,8 @@ module CabinetrixMasterPipeline
       cam:        get_or_create_material(model, "Mat_Zinc_Cam", [140, 145, 150]),
       dowel:      get_or_create_material(model, "Mat_Beech_Dowel", [210, 160, 105]),
       hole:       get_or_create_material(model, "Mat_Bore_Dark", [25, 25, 25]),
-      led:        get_or_create_material(model, "Mat_LED_Warm_3000K", [255, 245, 210])
+      led:        get_or_create_material(model, "Mat_LED_Warm_3000K", [255, 245, 210]),
+      stone:      get_or_create_material(model, "Mat_Calacatta_Quartz", [235, 238, 240])
     }
   end
 
@@ -68,16 +68,15 @@ module CabinetrixMasterPipeline
     pipeline_root.name = "Cabinetrix_Full_Production_Master"
 
     # --------------------------------------------------------------------------
-    # 1. BUILD ALL 5 MULTI-ZONE KITCHEN LAYOUTS (20 MODULES)
+    # 1. BUILD REAL 3D ARCHITECTURAL ROOM SUITES (I, L, U & ISLAND)
     # --------------------------------------------------------------------------
-    puts ">> Step 1: Generating 5 Multi-Zone Kitchen Layouts (20 Modules)..."
-    layout_keys = [:linear_suite, :l_shaped_suite, :u_shaped_suite, :galley_island_suite, :ceiling_bulkhead_suite]
+    puts ">> Step 1: Building Real 3D Showroom Suites (I-Shape, L-Shape, U-Shape, Galley & Island)..."
+    layout_keys = [:i_shaped_linear, :l_shaped_kitchen, :u_shaped_kitchen, :galley_with_island]
     all_panels = []
-    all_hardware = []
     all_callout_cabinets = []
 
     layout_keys.each_with_index do |l_key, idx|
-      offset_x = idx * 4800.0
+      offset_x = idx * 5500.0
       CabinetrixLayoutMatrix.build_layout(pipeline_root.entities, l_key, offset_x, 0.0, mats, :hybrid)
       
       layout_def = CabinetrixLayoutMatrix::LAYOUTS[l_key]
@@ -101,7 +100,6 @@ module CabinetrixMasterPipeline
         cw, ch, cd = mod_def[:w], mod_def[:h], mod_def[:d]
         thk = 18.0
 
-        # Left Gable
         all_panels << {
           part_id: "#{cab_tag}-LH", cab_id: cab_tag, name: "Gable_LH",
           length: ch, width: cd, thk: thk, material: "18mm White MFC", grain: :length,
@@ -109,7 +107,6 @@ module CabinetrixMasterPipeline
           has_cnc: true, has_back_groove: true, has_gola_notch: mod_def[:type].to_s.include?('gola'),
           shelf_pin_holes: [[ch/3.0, 50.0], [ch/3.0, cd-50.0], [2*ch/3.0, 50.0], [2*ch/3.0, cd-50.0]]
         }
-        # Right Gable
         all_panels << {
           part_id: "#{cab_tag}-RH", cab_id: cab_tag, name: "Gable_RH",
           length: ch, width: cd, thk: thk, material: "18mm White MFC", grain: :length,
@@ -117,7 +114,6 @@ module CabinetrixMasterPipeline
           has_cnc: true, has_back_groove: true, has_gola_notch: mod_def[:type].to_s.include?('gola'),
           shelf_pin_holes: [[ch/3.0, 50.0], [ch/3.0, cd-50.0], [2*ch/3.0, 50.0], [2*ch/3.0, cd-50.0]]
         }
-        # Bottom Panel
         all_panels << {
           part_id: "#{cab_tag}-BOT", cab_id: cab_tag, name: "Bottom_Panel",
           length: cw - 2*thk, width: cd, thk: thk, material: "18mm White MFC", grain: :none,
@@ -126,7 +122,6 @@ module CabinetrixMasterPipeline
           minifix_holes: [[34.0, 70.0], [34.0, cd - 70.0], [cw - 2*thk - 34.0, 70.0], [cw - 2*thk - 34.0, cd - 70.0]],
           dowel_holes: [[10.0, 102.0], [10.0, cd - 102.0], [cw - 2*thk - 10.0, 102.0], [cw - 2*thk - 10.0, cd - 102.0]]
         }
-        # Front Panels / Drawers
         if mod_def[:type].to_s.include?('drawer')
           all_panels << {
             part_id: "#{cab_tag}-FR1", cab_id: cab_tag, name: "Lower_Pot_Drawer_Front",
@@ -141,7 +136,6 @@ module CabinetrixMasterPipeline
             has_cnc: false
           }
         end
-        # Back Sheet
         all_panels << {
           part_id: "#{cab_tag}-BAK", cab_id: cab_tag, name: "Back_Panel_Sheet",
           length: cw - 2*thk + 10.0, width: ch - 2*thk + 10.0, thk: 6.0, material: "6mm White Backing", grain: :length,
@@ -151,18 +145,17 @@ module CabinetrixMasterPipeline
       end
     end
 
-    # Hardware Items Aggregation
     all_hardware = [
-      { sku: "HET-ACTRO-450", category: "Drawer Runners", name: "Hettich Actro 5D Undermount Slide 450mm 70kg", qty: 28, unit: "pairs", manufacturer: "Hettich", desc: "Full extension with 5D toolless adjustment" },
-      { sku: "BLUM-CLIP-155", category: "Hinges", name: "Blum CLIP top BLUMOTION 155° Zero-Protrusion Hinge", qty: 24, unit: "pcs", manufacturer: "Blum", desc: "For Space Tower & internal drawer clearance" },
+      { sku: "HET-ACTRO-450", category: "Drawer Runners", name: "Hettich Actro 5D Undermount Slide 450mm 70kg", qty: 32, unit: "pairs", manufacturer: "Hettich", desc: "Full extension with 5D toolless adjustment" },
+      { sku: "BLUM-CLIP-155", category: "Hinges", name: "Blum CLIP top BLUMOTION 155° Zero-Protrusion Hinge", qty: 28, unit: "pcs", manufacturer: "Blum", desc: "For Space Tower & internal drawer clearance" },
       { sku: "BLUM-AVENTOS-HF", category: "Lift Systems", name: "Blum AVENTOS HF Bi-Fold Power Lift Set", qty: 4, unit: "sets", manufacturer: "Blum", desc: "Bi-fold servo/soft-close mechanism" },
-      { sku: "BLUM-AVENTOS-HK", category: "Lift Systems", name: "Blum AVENTOS HK-top Stay Lift TIP-ON", qty: 4, unit: "sets", manufacturer: "Blum", desc: "Push-to-open stay lift for top bulkheads" },
-      { sku: "KES-LEMANS-II", category: "Corner Solutions", name: "Kesseböhmer LeMans II Set Style 450 R", qty: 2, unit: "sets", manufacturer: "Kesseböhmer", desc: "Twin swivel trays with 430mm sweep radius" },
+      { sku: "BLUM-AVENTOS-HK", category: "Lift Systems", name: "Blum AVENTOS HK-top Stay Lift TIP-ON", qty: 6, unit: "sets", manufacturer: "Blum", desc: "Push-to-open stay lift for top bulkheads" },
+      { sku: "KES-LEMANS-II", category: "Corner Solutions", name: "Kesseböhmer LeMans II Set Style 450 R", qty: 2, unit: "sets", manufacturer: "Kesseböhmer", desc: "Twin swivel peanut trays with 430mm sweep radius" },
       { sku: "KES-MAGIC-CNR", category: "Corner Solutions", name: "Kesseböhmer Magic Corner Articulated Frame", qty: 1, unit: "set", manufacturer: "Kesseböhmer", desc: "Front pullout with rear basket translation" },
-      { sku: "SCILM-GOLA-L", category: "Gola Profiles", name: "SCILM Type 610 Top L-Gola Black Anodized", qty: 18, unit: "meters", manufacturer: "SCILM", desc: "Faceted forward finger channel" },
-      { sku: "SCILM-GOLA-C", category: "Gola Profiles", name: "SCILM Type 620 Mid C-Gola Black Anodized", qty: 14, unit: "meters", manufacturer: "SCILM", desc: "Double curved intermediate finger channel" },
-      { sku: "HAF-MINIFIX-15", category: "KD Connectors", name: "Häfele Minifix 15 Cam & Connecting Bolt Set", qty: 160, unit: "sets", manufacturer: "Häfele", desc: "Zinc cam with 34mm steel bolt" },
-      { sku: "DOWEL-8X30", category: "Dowel Joinery", name: "Fluted Beech Dowels 8x30mm", qty: 240, unit: "pcs", manufacturer: "Generic", desc: "Pre-glued spiral fluted wood dowels" }
+      { sku: "SCILM-GOLA-L", category: "Gola Profiles", name: "SCILM Type 610 Top L-Gola Black Anodized", qty: 22, unit: "meters", manufacturer: "SCILM", desc: "Faceted forward finger channel" },
+      { sku: "SCILM-GOLA-C", category: "Gola Profiles", name: "SCILM Type 620 Mid C-Gola Black Anodized", qty: 18, unit: "meters", manufacturer: "SCILM", desc: "Double curved intermediate finger channel" },
+      { sku: "HAF-MINIFIX-15", category: "KD Connectors", name: "Häfele Minifix 15 Cam & Connecting Bolt Set", qty: 180, unit: "sets", manufacturer: "Häfele", desc: "Zinc cam with 34mm steel bolt" },
+      { sku: "DOWEL-8X30", category: "Dowel Joinery", name: "Fluted Beech Dowels 8x30mm", qty: 260, unit: "pcs", manufacturer: "Generic", desc: "Pre-glued spiral fluted wood dowels" }
     ]
 
     # --------------------------------------------------------------------------
@@ -171,20 +164,16 @@ module CabinetrixMasterPipeline
     puts "\n>> Step 2: Running 2D Guillotine MaxRects Nesting Engine..."
     carcase_panels = all_panels.select { |p| p[:thk] == 18.0 && p[:material].include?('White') }
     front_panels   = all_panels.select { |p| p[:thk] == 18.0 && p[:material].include?('Anthracite') }
-    back_panels    = all_panels.select { |p| p[:thk] == 6.0 }
 
     carcase_nesting = CabinetrixNestingEngine.nest_panels(carcase_panels, 2440.0, 1220.0, 10.0, 4.0)
     front_nesting   = CabinetrixNestingEngine.nest_panels(front_panels, 2440.0, 1220.0, 10.0, 4.0)
-    back_nesting    = CabinetrixNestingEngine.nest_panels(back_panels, 2440.0, 1220.0, 10.0, 4.0)
 
     puts "   -> Carcase (18mm): #{carcase_nesting[:total_sheets]} Sheets | Yield: #{carcase_nesting[:overall_yield_pct]}% | Waste: #{carcase_nesting[:overall_waste_pct]}%"
-    puts "   -> Fronts (18mm):  #{front_nesting[:total_sheets]} Sheets | Yield: #{front_nesting[:overall_yield_pct]}% | Waste: #{front_nesting[:overall_waste_pct]}%"
-    puts "   -> Backs (6mm):    #{back_nesting[:total_sheets]} Sheets | Yield: #{back_nesting[:overall_yield_pct]}% | Waste: #{back_nesting[:overall_waste_pct]}%"
 
     # --------------------------------------------------------------------------
     # 3. MULTI-FORMAT EXPORTS (CSV, DXF, LABELS)
     # --------------------------------------------------------------------------
-    puts "\n>> Step 3: Generating Cutlist CSV, Hardware BOM, and CNC Toolpath DXFs..."
+    puts "\n>> Step 3: Exporting Cutlist CSV, Hardware BOM, and CNC Toolpath DXFs..."
     cutlist_csv_path = File.join(artifacts_dir, "cutlist.csv")
     bom_csv_path     = File.join(artifacts_dir, "hardware_bom.csv")
     nest_csv_path    = File.join(artifacts_dir, "nesting_summary.csv")
@@ -195,15 +184,10 @@ module CabinetrixMasterPipeline
     CabinetrixExportEngine.export_nesting_summary_csv(carcase_nesting, nest_csv_path)
     CabinetrixExportEngine.generate_production_labels_html(all_panels, labels_html_path)
 
-    # Generate CNC DXFs for first 5 representative panels
-    all_panels.select { |p| p[:has_cnc] }.first(6).each_with_index do |p, i|
+    all_panels.select { |p| p[:has_cnc] }.first(6).each do |p|
       dxf_file = File.join(dxf_dir, "#{p[:part_id]}_#{p[:name]}.dxf")
       CabinetrixExportEngine.export_panel_dxf(p, dxf_file)
     end
-    puts "   -> Exported #{all_panels.length} panel rows to cutlist.csv"
-    puts "   -> Exported #{all_hardware.length} hardware groups to hardware_bom.csv"
-    puts "   -> Generated layered CNC DXF toolpaths in #{dxf_dir}"
-    puts "   -> Generated printable production labels in #{labels_html_path}"
 
     # --------------------------------------------------------------------------
     # 4. 3D CALLOUTS & ARCHITECTURAL ANNOTATIONS
@@ -214,7 +198,6 @@ module CabinetrixMasterPipeline
     # --------------------------------------------------------------------------
     # 5. MASTER INTERACTIVE VISUAL DASHBOARD
     # --------------------------------------------------------------------------
-    puts "\n>> Step 5: Generating Master Interactive Production Dashboard..."
     report_html_path = File.join(artifacts_dir, "master_production_report.html")
     generate_master_dashboard(report_html_path, carcase_nesting, front_nesting, all_panels, all_hardware)
 
@@ -233,7 +216,6 @@ module CabinetrixMasterPipeline
   end
 
   def self.generate_master_dashboard(out_path, carcase_nest, front_nest, panels, hardware)
-    # Render SVG Cutting Patterns
     svg_sheets_html = carcase_nest[:sheets].first(3).map do |sh|
       svg = CabinetrixNestingEngine.generate_sheet_svg(sh, 0.38)
       <<-HTML
@@ -244,12 +226,10 @@ module CabinetrixMasterPipeline
       HTML
     end.join("\n")
 
-    # Panel Rows
-    panel_rows = panels.first(12).map do |p|
+    panel_rows = panels.first(14).map do |p|
       "<tr><td>#{p[:part_id]}</td><td>#{p[:cab_id]}</td><td><strong>#{p[:name]}</strong></td><td>#{p[:length].to_i} x #{p[:width].to_i} x #{p[:thk].to_i}</td><td>#{p[:material]}</td><td>#{p[:eb_l1] || '-'}</td><td>#{p[:has_cnc] ? '✅ YES' : 'NO'}</td></tr>"
     end.join("\n")
 
-    # Hardware Rows
     hw_rows = hardware.map do |h|
       "<tr><td><strong>#{h[:sku]}</strong></td><td>#{h[:category]}</td><td>#{h[:name]}</td><td><strong style='color:#3fb950;'>#{h[:qty]} #{h[:unit]}</strong></td><td>#{h[:manufacturer]}</td><td>#{h[:desc]}</td></tr>"
     end.join("\n")
@@ -283,7 +263,7 @@ module CabinetrixMasterPipeline
     <header>
       <div>
         <h1>🏭 CABINETRIX AI — MASTER PRODUCTION & CAM REPORT</h1>
-        <p style="margin: 4px 0 0 0; color: #8b949e;">End-to-End Architectural Kitchen Matrix, 2D Panel Nesting, CNC DXF Toolpaths, and Hardware BOM</p>
+        <p style="margin: 4px 0 0 0; color: #8b949e;">Architectural I, L, U & Island Layouts, 2D Panel Nesting, CNC DXF Toolpaths, and Hardware BOM</p>
       </div>
       <div>
         <a href="production_labels.html" class="btn" target="_blank">🏷️ Print Workshop Labels</a>
@@ -293,9 +273,9 @@ module CabinetrixMasterPipeline
 
     <div class="kpi-grid">
       <div class="kpi-card">
-        <div class="kpi-label">Total Cabinets</div>
-        <div class="kpi-val">20</div>
-        <span>5 Kitchen Layout Suites</span>
+        <div class="kpi-label">Room Layouts</div>
+        <div class="kpi-val">4 True Suites</div>
+        <span>I-Shape, L-Shape, U-Shape & Island</span>
       </div>
       <div class="kpi-card">
         <div class="kpi-label">Total Panels</div>
@@ -340,7 +320,6 @@ module CabinetrixMasterPipeline
           #{panel_rows}
         </tbody>
       </table>
-      <p style="margin-top: 10px; font-size: 12px; color: #8b949e;">Showing first 12 panels. Download full cutlist.csv for complete 80+ part schedule.</p>
     </div>
 
     <!-- HARDWARE BILL OF MATERIALS -->
@@ -359,31 +338,6 @@ module CabinetrixMasterPipeline
         </thead>
         <tbody>
           #{hw_rows}
-        </tbody>
-      </table>
-    </div>
-
-    <!-- CNC CAM DXF LAYERS SUMMARY -->
-    <div class="section-box">
-      <h2>🤖 CNC CAM LAYERED DXF TOOLPATH SPECIFICATION</h2>
-      <table>
-        <thead>
-          <tr>
-            <th>DXF Layer Name</th>
-            <th>Color</th>
-            <th>Tool Type</th>
-            <th>Depth (mm)</th>
-            <th>CNC Application</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr><td><strong>0_OUTLINE</strong></td><td>White</td><td>12mm Rough/Finish Endmill</td><td>18.5mm (Through)</td><td>Panel boundary contour outline cut</td></tr>
-          <tr><td><strong>DRILL_5MM_PINS</strong></td><td>Yellow</td><td>5mm Brad-Point Drill</td><td>13.0mm</td><td>System 32 line-bore adjustable shelf pins</td></tr>
-          <tr><td><strong>DRILL_8MM_DOWEL</strong></td><td>Magenta</td><td>8mm Brad-Point Drill</td><td>13.0mm / 30.0mm</td><td>KD Dowel joinery alignment holes</td></tr>
-          <tr><td><strong>BORE_15MM_MINIFIX</strong></td><td>Cyan</td><td>15mm Hinge/Cam Forstner Bit</td><td>12.5mm</td><td>Minifix 15 zinc cam pockets (34mm setback)</td></tr>
-          <tr><td><strong>BORE_35MM_HINGE</strong></td><td>Green</td><td>35mm Forstner Bit</td><td>12.5mm</td><td>Concealed hinge cup mounting bores (21.5mm setback)</td></tr>
-          <tr><td><strong>GROOVE_BACK_6MM</strong></td><td>Blue</td><td>6mm Slot Saw / Router</td><td>5.0mm</td><td>Rear back sheet rebate / shotgun grooving</td></tr>
-          <tr><td><strong>GOLA_NOTCH</strong></td><td>Red</td><td>10mm Compression Spiral</td><td>18.5mm (Through)</td><td>SCILM Top L-Gola & Mid C-Gola gable machining</td></tr>
         </tbody>
       </table>
     </div>

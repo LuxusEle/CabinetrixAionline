@@ -1,7 +1,11 @@
-SKU,Category,Item Name,Quantity,Unit,Manufacturer,Description
-HET-ACTRO-450,Drawer Runners,Hettich Actro 5D Undermount Slide 450mm,28,pairs,Hettich,Full extension 70kg
-BLUM-CLIP-155,Hinges,Blum CLIP top BLUMOTION 155° Zero-Protrusion,24,pcs,Blum,Space Tower clearance
-BLUM-AVENTOS-HF,Lift Systems,Blum AVENTOS HF Bi-Fold Power Lift,4,sets,Blum,Upper wall lift
-KES-LEMANS-II,Corner Solutions,Kesseböhmer LeMans II Set Style 450,2,sets,Kesseböhmer,Twin swivel peanut trays
-SCILM-GOLA-L,Gola Profiles,SCILM Type 610 Top L-Gola Black Anodized,18,meters,SCILM,Faceted top finger pocket
-SCILM-GOLA-C,Gola Profiles,SCILM Type 620 Mid C-Gola Black Anodized,14,meters,SCILM,Intermediate finger channel
+Item SKU,Category,Item Name,Quantity,Unit,Manufacturer,Description
+HET-ACTRO-450,Drawer Runners,Hettich Actro 5D Undermount Slide 450mm 70kg,28,pairs,Hettich,Full extension with 5D toolless adjustment
+BLUM-CLIP-155,Hinges,Blum CLIP top BLUMOTION 155° Zero-Protrusion Hinge,24,pcs,Blum,For Space Tower & internal drawer clearance
+BLUM-AVENTOS-HF,Lift Systems,Blum AVENTOS HF Bi-Fold Power Lift Set,4,sets,Blum,Bi-fold servo/soft-close mechanism
+BLUM-AVENTOS-HK,Lift Systems,Blum AVENTOS HK-top Stay Lift TIP-ON,4,sets,Blum,Push-to-open stay lift for top bulkheads
+KES-LEMANS-II,Corner Solutions,Kesseböhmer LeMans II Set Style 450 R,2,sets,Kesseböhmer,Twin swivel trays with 430mm sweep radius
+KES-MAGIC-CNR,Corner Solutions,Kesseböhmer Magic Corner Articulated Frame,1,set,Kesseböhmer,Front pullout with rear basket translation
+SCILM-GOLA-L,Gola Profiles,SCILM Type 610 Top L-Gola Black Anodized,18,meters,SCILM,Faceted forward finger channel
+SCILM-GOLA-C,Gola Profiles,SCILM Type 620 Mid C-Gola Black Anodized,14,meters,SCILM,Double curved intermediate finger channel
+HAF-MINIFIX-15,KD Connectors,Häfele Minifix 15 Cam & Connecting Bolt Set,160,sets,Häfele,Zinc cam with 34mm steel bolt
+DOWEL-8X30,Dowel Joinery,Fluted Beech Dowels 8x30mm,240,pcs,Generic,Pre-glued spiral fluted wood dowels
