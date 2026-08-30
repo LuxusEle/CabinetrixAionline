@@ -1,13 +1,13 @@
 # ==============================================================================
-# CABINETRIX AI — 3D WAREHOUSE HARDWARE AUTO-IMPORTER & GALLERY ORGANIZER
+# CABINETRIX AI — OFFICIAL BLUM & HARDWARE 3D SHOWCASE GALLERY
 # File: gemini/import_and_organize_hardware.rb
 #
 # Production Standard:
-#   • Automatically scans SketchUp's Model Definitions, Downloads folder, and gemini/
-#     for any downloaded 3D Warehouse hardware components (.skp).
-#   • Places each loaded 3D model onto an exhibition display pedestal with 
-#     real 3D extruded gold, cyan, and white labels.
-#   • ZERO CARCASES / ZERO BOXES — Pure hardware exhibition.
+#   • Scans ONLY the dedicated hardware directory: gemini/skp/*.skp.
+#   • Renders official Blum 3D Warehouse components (BLUM+AVENTOS.skp, Hinge+simplified.skp).
+#   • Places each model onto a custom dark exhibition display pedestal.
+#   • Real Solid 3D Extruded Labels with component names and millimeter bounding dimensions.
+#   • PURE STANDALONE HARDWARE — ZERO CARCASES / ZERO BOXES.
 # ==============================================================================
 require 'sketchup.rb'
 
@@ -16,15 +16,14 @@ load File.join(_dir, 'cabinetrix_machining_engine.rb')
 load File.join(_dir, 'show_hardware_only_gallery.rb')
 
 module CabinetrixHardwareImporter
-  DOWNLOADS_DIR = File.expand_path("~/Downloads")
-  GEMINI_DIR    = File.dirname(__FILE__)
+  HARDWARE_SKP_DIR = File.join(File.dirname(__FILE__), "skp")
 
   def self.scan_and_render_all_hardware
     model = Sketchup.active_model
-    model.start_operation("Cabinetrix 3D Warehouse Hardware Gallery", true)
+    model.start_operation("Cabinetrix Official Blum Hardware Gallery", true)
     entities = model.active_entities
 
-    # Erase any old exhibition floor groups to prevent overlapping
+    # Clean old exhibition groups to guarantee a pristine scene
     to_erase = entities.select { |e| e.is_a?(Sketchup::Group) && (e.name =~ /Cabinetrix_/i) }
     to_erase.each(&:erase!)
 
@@ -35,24 +34,17 @@ module CabinetrixHardwareImporter
     root.name = "Cabinetrix_Imported_Hardware_Showcase"
 
     puts "\n" + "=" * 70
-    puts " 🔩 SCANNING & RENDERING 3D WAREHOUSE HARDWARE COMPONENTS"
-    puts "    (STANDALONE 3D HARDWARE MODELS ON DISPLAY PEDESTALS)"
+    puts " 🔩 RENDERING OFFICIAL BLUM 3D HARDWARE MODELS & CONNECTORS"
+    puts "    (STANDALONE 3D HARDWARE ON DISPLAY PEDESTALS — ZERO CARCASES)"
     puts "=" * 70 + "\n"
 
-    # 1. Gather all available SKP files in gemini/ and Downloads/
-    skp_files = []
-    [GEMINI_DIR, DOWNLOADS_DIR].each do |dir|
-      if Dir.exist?(dir)
-        Dir.glob(File.join(dir, "*.skp")).each do |f|
-          skp_files << f unless skp_files.any? { |existing| File.basename(existing) == File.basename(f) }
-        end
-      end
-    end
+    # 1. Gather all official hardware SKP files strictly inside gemini/skp/
+    skp_files = Dir.glob(File.join(HARDWARE_SKP_DIR, "*.skp"))
 
-    # 2. Render Header
+    # 2. Zone 1 Header
     CabinetrixHardwareOnlyGallery.add_3d_label(
       root.entities,
-      "IMPORTED 3D WAREHOUSE HARDWARE MODELS & CONNECTORS GALLERY",
+      "ZONE 1: OFFICIAL BLUM 3D WAREHOUSE HARDWARE COMPONENTS",
       Geom::Point3d.new(-300.mm, 250.mm, 0.mm),
       55.0, 8.0, mats[:text_gold]
     )
@@ -60,12 +52,11 @@ module CabinetrixHardwareImporter
     x_cursor = 0.0
     rendered_count = 0
 
-    # 3. Import and place each SKP component onto its own pedestal
     skp_files.each do |skp_path|
       filename = File.basename(skp_path)
       base_name = File.basename(skp_path, ".*")
       
-      puts "   [LOADING] #{filename} from #{skp_path}..."
+      puts "   [LOADING] #{filename}..."
       begin
         cdef = model.definitions.load(skp_path)
         next unless cdef
@@ -83,7 +74,7 @@ module CabinetrixHardwareImporter
         # Build pedestal
         CabinetrixHardwareOnlyGallery.build_display_pedestal(root.entities, ped_pt, ped_w, ped_d, 80.0, pedestal_mat)
 
-        # Place component instance on top of pedestal
+        # Place component instance centered on top of pedestal
         comp_pt = Geom::Point3d.new(x_cursor.mm - b.center.x, -b.center.y, 85.mm - b.min.z)
         inst = root.entities.add_instance(cdef, Geom::Transformation.translation(comp_pt))
         inst.name = "Instance_#{base_name}"
@@ -110,11 +101,11 @@ module CabinetrixHardwareImporter
       end
     end
 
-    # 4. Also render the master connector set (Minifix, Cabineo, Rafix, Dowels) alongside
+    # 3. Zone 2: Standard CNC Connectors & Leveling System
     y_conn = -800.0.mm
     CabinetrixHardwareOnlyGallery.add_3d_label(
       root.entities,
-      "STANDARD CNC CONNECTORS & LEVELING SYSTEM",
+      "ZONE 2: INDUSTRIAL CONNECTORS & CNC JOINERY",
       Geom::Point3d.new(-300.mm, y_conn + 250.mm, 0.mm),
       50.0, 7.0, mats[:text_gold]
     )
@@ -147,7 +138,7 @@ module CabinetrixHardwareImporter
     model.commit_operation
 
     puts "\n" + "=" * 70
-    puts " 🌟 HARDWARE AUTO-IMPORTER GALLERY COMPLETE (#{rendered_count} SKP Models + 5 Connectors Rendered)!"
+    puts " 🌟 OFFICIAL BLUM HARDWARE GALLERY RENDERED (#{rendered_count} SKP Models + 5 Connectors)!"
     puts "=" * 70 + "\n"
   end
 end
