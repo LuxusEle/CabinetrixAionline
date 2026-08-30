@@ -258,14 +258,15 @@ module CabinetrixBoxEngine
     pts = [
       Geom::Point3d.new(origin_x, 0, z_origin),
       Geom::Point3d.new(origin_x, -base_depth, z_origin),
+      Geom::Point3d.new(origin_x, -base_depth, z_origin + C_GOLA_Z0),
       Geom::Point3d.new(origin_x, -base_depth + GOLA_DEPTH, z_origin + C_GOLA_Z0),
       Geom::Point3d.new(origin_x, -base_depth + GOLA_DEPTH, z_origin + C_GOLA_Z0 + C_GOLA_H),
-      Geom::Point3d.new(origin_x, -base_depth + GOLA_DEPTH, z_origin + C_GOLA_Z0 + C_GOLA_H),
+      Geom::Point3d.new(origin_x, -base_depth, z_origin + C_GOLA_Z0 + C_GOLA_H),
       Geom::Point3d.new(origin_x, -base_depth, z_origin + height - L_GOLA_H),
       Geom::Point3d.new(origin_x, -base_depth + GOLA_DEPTH, z_origin + height - L_GOLA_H),
       Geom::Point3d.new(origin_x, -base_depth + GOLA_DEPTH, z_origin + height),
       Geom::Point3d.new(origin_x, 0, z_origin + height)
-    ]
+    ].uniq
 
     face = group.entities.add_face(pts)
     if face
