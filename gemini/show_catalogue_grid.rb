@@ -1,9 +1,10 @@
 # ==============================================================================
-# CABINETRIX AI — 3D EXHIBITION GRID OF ALL CATALOGUE BOXES (WITH 3D TEXT)
+# CABINETRIX AI — COMPLETE 3D EXHIBITION GRID OF ALL CATALOGUE BOXES (WITH 3D TEXT)
 # File: gemini/show_catalogue_grid.rb
 #
 # Production Standard:
-#   • Generous Spacing between Cabinets (1000mm gap between boxes, 2800mm between rows)
+#   • Renders ALL 84+ distinct Carcass, Open-Frame & Wardrobe Boxes from Catalog.
+#   • Generous Spacing between Cabinets (1000mm gap between boxes, 2800mm between rows).
 #   • Real Solid 3D Extruded Text Labels on the Floor in front of each box.
 #   • Clean Category Row Headers in Bold 3D Text.
 # ==============================================================================
@@ -40,11 +41,10 @@ module CabinetrixCatalogueGrid
     }
   end
 
-  def self.add_3d_label(parent_ents, text_str, origin_pt, letter_height_mm, extrusion_mm, text_mat, bg_mat = nil)
+  def self.add_3d_label(parent_ents, text_str, origin_pt, letter_height_mm, extrusion_mm, text_mat)
     grp = parent_ents.add_group
     grp.name = "Label_#{text_str.gsub(/[^a-zA-Z0-9]/, '_')}"
     
-    # 3D Text Geometry
     text_sub = grp.entities.add_group
     text_sub.entities.add_3d_text(
       text_str,
@@ -60,7 +60,6 @@ module CabinetrixCatalogueGrid
     )
     text_sub.material = text_mat
     
-    # Position on floor
     tr = Geom::Transformation.translation(origin_pt)
     grp.transform!(tr)
     grp
@@ -68,42 +67,81 @@ module CabinetrixCatalogueGrid
 
   def self.render_grid
     model = Sketchup.active_model
-    model.start_operation("Cabinetrix 3D Catalogue Floor Grid", true)
+    model.start_operation("Cabinetrix 3D Complete Catalogue Exhibition", true)
     entities = model.active_entities
     mats = build_materials(model)
 
     grid_root = entities.add_group
-    grid_root.name = "Cabinetrix_Catalogue_Exhibition_Floor"
+    grid_root.name = "Cabinetrix_Complete_Catalogue_Floor"
 
-    puts "\n" + "=" * 65
-    puts " 🏛️ RENDERING 3D CATALOGUE EXHIBITION FLOOR GRID (WITH 3D TEXT)"
-    puts "=" * 65 + "\n"
+    puts "\n" + "=" * 70
+    puts " 🏛️ RENDERING COMPLETE 3D CATALOGUE EXHIBITION FLOOR GRID (84+ BOXES)"
+    puts "=" * 70 + "\n"
 
     rows = [
       {
-        category: "ROW 1: BASE GOLA UNITS",
+        category: "ROW 1: SIGNATURE SHOWROOM STENCILS (12 BOXES)",
         y_offset: 0.0,
-        items: ["B_GOLA_2D", "B_GOLA_SINK", "B_GOLA_COOKTOP", "B_GOLA_SPICE"]
+        items: [
+          "B_GOLA_2D", "B_GOLA_SINK", "B_GOLA_COOKTOP", "B_GOLA_SPICE",
+          "B_CNR_LEMANS", "B_CNR_MAGIC", "T_SPACE_TOWER", "T_OVEN_TOWER",
+          "W_LIFT_HF", "W_GLASS_SASH", "BLK_FLAP_HK", "ISL_GOLA_2D"
+        ]
       },
       {
-        category: "ROW 2: CORNER STORAGE UNITS",
-        y_offset: -2600.0,
-        items: ["B_CNR_LEMANS", "B_CNR_MAGIC"]
+        category: "ROW 2: KITCHEN BASE CARCASSES (METOD 200..800mm)",
+        y_offset: -3200.0,
+        items: [
+          "K-BAS-01", "K-BAS-02", "K-BAS-03", "K-BAS-04", "K-BAS-05",
+          "K-BAS-06", "K-BAS-07", "K-BAS-08", "K-BAS-09",
+          "K-BIN-01", "K-BIN-02", "K-BCO-01", "K-BCO-02"
+        ]
       },
       {
-        category: "ROW 3: TALL APPLIANCE & PANTRY TOWERS",
-        y_offset: -5200.0,
-        items: ["T_SPACE_TOWER", "T_OVEN_TOWER"]
+        category: "ROW 3: KITCHEN WALL CABINETS (METOD 200..800mm, H400..1000mm)",
+        y_offset: -6400.0,
+        items: [
+          "K-WAL-01", "K-WAL-02", "K-WAL-03", "K-WAL-04", "K-WAL-05",
+          "K-WAL-06", "K-WAL-07", "K-WAL-08", "K-WAL-09", "K-WAL-10",
+          "K-WAL-11", "K-WAL-12", "K-WAL-13", "K-WAL-14", "K-WAL-15",
+          "K-WCO-01", "K-WCO-02", "K-WCO-03"
+        ]
       },
       {
-        category: "ROW 4: WALL & BULKHEAD UNITS",
-        y_offset: -7800.0,
-        items: ["W_LIFT_HF", "W_GLASS_SASH", "BLK_FLAP_HK"]
+        category: "ROW 4: EXTRACTOR HOODS & TOP BULKHEADS",
+        y_offset: -9600.0,
+        items: [
+          "K-HOD-01", "K-HOD-02", "K-HOD-03", "K-HOD-04", "K-HOD-05", "K-HOD-06",
+          "K-TOP-01", "K-TFR-01", "K-TFR-02"
+        ]
       },
       {
-        category: "ROW 5: FREESTANDING ISLAND PREP",
-        y_offset: -10400.0,
-        items: ["ISL_GOLA_2D"]
+        category: "ROW 5: TALL HIGH STORAGE & APPLIANCE TOWERS (METOD H1400..2200mm)",
+        y_offset: -12800.0,
+        items: [
+          "K-HBI-01", "K-HBI-02", "K-HBI-03",
+          "K-HIG-01", "K-HIG-02", "K-HIG-03", "K-HIG-04", "K-HIG-05", "K-HIG-06", "K-HIG-07"
+        ]
+      },
+      {
+        category: "ROW 6: OPEN STORAGE & METAL FRAMES (ENHET, TORNVIKEN, VADHOLMA)",
+        y_offset: -16000.0,
+        items: [
+          "O-TOR-01", "O-TOR-02", "O-TOR-03",
+          "O-VAD-01", "O-VAD-02", "O-VAD-03",
+          "O-VDR-01", "O-TWI-01", "O-VWI-01",
+          "O-EW15-01", "O-EW15-02", "O-EW30-01", "O-EW30-02",
+          "O-EHI-01", "O-EHI-02", "O-EBA-01", "O-EBA-02", "O-TIT-01"
+        ]
+      },
+      {
+        category: "ROW 7: PAX WARDROBE FRAMES & CORNER ADD-ONS (PAX H2010..2360mm)",
+        y_offset: -19200.0,
+        items: [
+          "W-PAX-01", "W-PAX-02", "W-PAX-03", "W-PAX-04", "W-PAX-05", "W-PAX-06",
+          "W-PAX-07", "W-PAX-08", "W-PAX-09", "W-PAX-10", "W-PAX-11", "W-PAX-12",
+          "W-COR-01", "W-COR-02", "W-COR-03", "W-COR-04"
+        ]
       }
     ]
 
@@ -121,24 +159,30 @@ module CabinetrixCatalogueGrid
         next unless tmpl
 
         total_rendered += 1
-        w = tmpl[:dimensions][:w][:default]
-        h = tmpl[:dimensions][:h][:default]
-        d = tmpl[:dimensions][:d][:default]
+        w_val = tmpl.dig(:dimensions, :w)
+        w = (w_val.is_a?(Hash) ? w_val[:default] : w_val) || 600.0
+        h_val = tmpl.dig(:dimensions, :h)
+        h = (h_val.is_a?(Hash) ? h_val[:default] : h_val) || 720.0
+        d_val = tmpl.dig(:dimensions, :d)
+        d = (d_val.is_a?(Hash) ? d_val[:default] : d_val) || 560.0
 
         loc = { x: x_cursor.mm, y: row[:y_offset].mm, z: 100.mm, rotation_deg: 0.0 }
         box_params = { width: w.mm, height: h.mm, depth: d.mm, name: "#{tmpl_id}_#{w.to_i}", mode: :closed }
 
-        box_type = case tmpl[:category]
+        box_type = tmpl[:engine_type] || case tmpl[:category]
                    when :base_drawer then :base_gola_drawers
                    when :base_sink   then :base_gola_sink
                    when :base_cooking then :base_gola_cooktop
                    when :base_storage then :base_gola_spice
-                   when :corner_base then :base_lemans_corner
-                   when :tall_tower  then (tmpl_id.include?('OVEN') ? :tall_oven_tower : :tall_space_tower)
+                   when :corner_base, :kitchen_corner_base then :base_blind_corner
+                   when :tall_tower, :kitchen_tall then (tmpl_id.include?('OVEN') || tmpl_id.include?('HBI') ? :tall_oven_tower : :tall_space_tower)
                    when :wall_lift   then :wall_lift_aventos
-                   when :wall_display then :wall_glass_display
-                   when :top_bulkhead then :top_bulkhead_flap
+                   when :wall_display, :kitchen_wall, :kitchen_corner_wall then :wall_glass_display
+                   when :top_bulkhead, :kitchen_top_bulkhead then :top_bulkhead_flap
                    when :island_prep then :island_gola_drawers
+                   when :open_wine   then :open_wine_grid
+                   when :open_frame  then :open_rack_metal
+                   when :wardrobe_frame then :tall_space_tower
                    else :base_gola_drawers
                    end
 
@@ -160,16 +204,16 @@ module CabinetrixCatalogueGrid
         # Dimensions (Gold 3D Text)
         add_3d_label(grid_root.entities, label_line3, Geom::Point3d.new(b_x.mm, (b_y - 160.0).mm, 0.mm), 32.0, 5.0, mats[:text_gold])
 
-        puts "   [RENDERED] #{tmpl_id} at X=#{x_cursor.to_i}mm, Y=#{row[:y_offset].to_i}mm"
+        puts "   [RENDERED] #{tmpl_id} at X=#{x_cursor.to_i}mm, Y=#{row[:y_offset].to_i}mm (#{w.to_i}x#{h.to_i}x#{d.to_i}mm)"
         x_cursor += (w + 950.0) # 950mm wide clear spacing between boxes
       end
     end
 
     model.commit_operation
 
-    puts "\n" + "=" * 65
-    puts " 🌟 CATALOGUE EXHIBITION GRID COMPLETE WITH 3D TEXT (#{total_rendered} BOXES)!"
-    puts "=" * 65 + "\n"
+    puts "\n" + "=" * 70
+    puts " 🌟 COMPLETE CATALOGUE EXHIBITION GRID RENDERED (#{total_rendered} BOXES)!"
+    puts "=" * 70 + "\n"
   end
 end
 
