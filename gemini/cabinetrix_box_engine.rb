@@ -717,7 +717,64 @@ module CabinetrixBoxEngine
       build_senior_sash_door(box_grp.entities, bx + 1.5.mm, by - depth - 21.2.mm, bz, width - 3.mm, height - bz - 3.mm, mats, open_angle_deg: door_open_deg, hinge_z_list: tower_hinge_z, is_left_hinged: true)
 
     # ==========================================================================
-    # BASE GOLA UNITS (FLUSH CLOSED DRAWERS WITH FULL PROFILE COVERAGE)
+    # METOD STANDARD BASE UNITS (800MM FULL OVERLAY DOORS / ZERO GAPS)
+    # ==========================================================================
+    when :metod_base_unit
+      create_box(box_grp.entities, [bx, by - depth, bz], [BOARD_THK, depth, height], mats[:carcase], "Gable_LH")
+      create_box(box_grp.entities, [bx + width - BOARD_THK, by - depth, bz], [BOARD_THK, depth, height], mats[:carcase], "Gable_RH")
+      build_structural_shelf(box_grp.entities, "Bottom_Panel", width, depth, bz, mats)
+      build_shotgun_grooved_back(box_grp.entities, name, width, bz, bz + height, mats)
+
+      # Top Stretchers (Standard METOD steel / wood rail system)
+      create_box(box_grp.entities, [bx + BOARD_THK, by - depth, bz + height - BOARD_THK], [inner_w, 80.mm, BOARD_THK], mats[:carcase], "Top_Front_Stretcher")
+      create_box(box_grp.entities, [bx + BOARD_THK, by - 80.mm, bz + height - BOARD_THK], [inner_w, 80.mm, BOARD_THK], mats[:carcase], "Top_Rear_Stretcher")
+
+      # Dynamic Internal Shelves
+      safe_shelves = CabinetrixCollisionEngine.calculate_safe_shelf_elevations(height.to_mm)
+      safe_shelves.each_with_index do |sz, idx|
+        build_adjustable_shelf(box_grp.entities, "Adjustable_Shelf_#{idx+1}", width, depth, bz + sz.mm, mats)
+      end
+
+      door_h = height - 3.0.mm
+      door_y = by - depth - FRONT_THK
+      hinge_z_list = [bz + 100.mm, bz + height - 100.mm]
+
+      if width.to_mm <= 450.0
+        # Single Full-Overlay Door (200..400mm)
+        hinge_z_list.each do |hz|
+          build_blum_carcase_plate(box_grp.entities, bx + BOARD_THK, by - depth, hz, true, mats)
+        end
+        door_grp = box_grp.entities.add_group
+        door_grp.name = "METOD_Single_Door_Assembly"
+        create_box(door_grp.entities, [bx + 1.5.mm, door_y, bz + 1.5.mm], [width - 3.mm, FRONT_THK, door_h], front_mat, "Door_Slab")
+        hinge_z_list.each do |hz|
+          build_blum_door_cup(door_grp.entities, bx + 21.5.mm, by - depth, hz, mats)
+        end
+      else
+        # Double Full-Overlay Doors (600..800mm)
+        single_w = (width - 6.mm) / 2.0
+        hinge_z_list.each do |hz|
+          build_blum_carcase_plate(box_grp.entities, bx + BOARD_THK, by - depth, hz, true, mats)
+          build_blum_carcase_plate(box_grp.entities, bx + width - BOARD_THK, by - depth, hz, false, mats)
+        end
+
+        door_l = box_grp.entities.add_group
+        door_l.name = "METOD_Door_LH"
+        create_box(door_l.entities, [bx + 1.5.mm, door_y, bz + 1.5.mm], [single_w, FRONT_THK, door_h], front_mat, "Door_Slab_LH")
+        hinge_z_list.each do |hz|
+          build_blum_door_cup(door_l.entities, bx + 21.5.mm, by - depth, hz, mats)
+        end
+
+        door_r = box_grp.entities.add_group
+        door_r.name = "METOD_Door_RH"
+        create_box(door_r.entities, [bx + 1.5.mm + single_w + 3.mm, door_y, bz + 1.5.mm], [single_w, FRONT_THK, door_h], front_mat, "Door_Slab_RH")
+        hinge_z_list.each do |hz|
+          build_blum_door_cup(door_r.entities, bx + width - 21.5.mm, by - depth, hz, mats)
+        end
+      end
+
+    # ==========================================================================
+    # BASE GOLA UNITS (720MM CARCASE WITH SCILM PROFILES)
     # ==========================================================================
     when :base_gola_drawers, :base_gola_cooktop, :base_gola_sink, :base_gola_spice, :base_gola_wine, :island_gola_drawers, :island_gola_sink
       stretcher_z = bz + height - BOARD_THK

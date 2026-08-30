@@ -9,7 +9,7 @@ module CabinetrixCatalogue
     name: "Standard base cabinet (METOD)",
     brand: "METOD",
     category: :kitchen_base,
-    engine_type: :base_gola_drawers,
+    engine_type: :metod_base_unit,
     desc: "General under-worktop carcass; configure with doors, drawers,",
     pdf_page: 3,
     dimensions: { w: 200.0, d: 600.0, h: 800.0 }
@@ -20,7 +20,7 @@ module CabinetrixCatalogue
     name: "Standard base cabinet (METOD)",
     brand: "METOD",
     category: :kitchen_base,
-    engine_type: :base_gola_drawers,
+    engine_type: :metod_base_unit,
     desc: "General under-worktop carcass; configure with doors, drawers,",
     pdf_page: 3,
     dimensions: { w: 300.0, d: 370.0, h: 800.0 }
@@ -31,7 +31,7 @@ module CabinetrixCatalogue
     name: "Standard base cabinet (METOD)",
     brand: "METOD",
     category: :kitchen_base,
-    engine_type: :base_gola_drawers,
+    engine_type: :metod_base_unit,
     desc: "General under-worktop carcass; configure with doors, drawers,",
     pdf_page: 3,
     dimensions: { w: 300.0, d: 600.0, h: 800.0 }
@@ -42,7 +42,7 @@ module CabinetrixCatalogue
     name: "Standard base cabinet (METOD)",
     brand: "METOD",
     category: :kitchen_base,
-    engine_type: :base_gola_drawers,
+    engine_type: :metod_base_unit,
     desc: "General under-worktop carcass; configure with doors, drawers,",
     pdf_page: 3,
     dimensions: { w: 400.0, d: 370.0, h: 800.0 }
@@ -53,7 +53,7 @@ module CabinetrixCatalogue
     name: "Standard base cabinet (METOD)",
     brand: "METOD",
     category: :kitchen_base,
-    engine_type: :base_gola_drawers,
+    engine_type: :metod_base_unit,
     desc: "General under-worktop carcass; configure with doors, drawers,",
     pdf_page: 3,
     dimensions: { w: 400.0, d: 600.0, h: 800.0 }
@@ -64,7 +64,7 @@ module CabinetrixCatalogue
     name: "Standard base cabinet (METOD)",
     brand: "METOD",
     category: :kitchen_base,
-    engine_type: :base_gola_drawers,
+    engine_type: :metod_base_unit,
     desc: "General under-worktop carcass; configure with doors, drawers,",
     pdf_page: 3,
     dimensions: { w: 600.0, d: 370.0, h: 800.0 }
@@ -75,7 +75,7 @@ module CabinetrixCatalogue
     name: "Standard base cabinet (METOD)",
     brand: "METOD",
     category: :kitchen_base,
-    engine_type: :base_gola_drawers,
+    engine_type: :metod_base_unit,
     desc: "General under-worktop carcass; configure with doors, drawers,",
     pdf_page: 3,
     dimensions: { w: 600.0, d: 600.0, h: 800.0 }
@@ -86,7 +86,7 @@ module CabinetrixCatalogue
     name: "Standard base cabinet (METOD)",
     brand: "METOD",
     category: :kitchen_base,
-    engine_type: :base_gola_drawers,
+    engine_type: :metod_base_unit,
     desc: "General under-worktop carcass; configure with doors, drawers,",
     pdf_page: 3,
     dimensions: { w: 800.0, d: 370.0, h: 800.0 }
@@ -97,7 +97,7 @@ module CabinetrixCatalogue
     name: "Standard base cabinet (METOD)",
     brand: "METOD",
     category: :kitchen_base,
-    engine_type: :base_gola_drawers,
+    engine_type: :metod_base_unit,
     desc: "General under-worktop carcass; configure with doors, drawers,",
     pdf_page: 3,
     dimensions: { w: 800.0, d: 600.0, h: 800.0 }
@@ -108,7 +108,7 @@ module CabinetrixCatalogue
     name: "Base cabinet for built-in oven/sink (METOD)",
     brand: "METOD",
     category: :kitchen_base,
-    engine_type: :base_gola_drawers,
+    engine_type: :metod_base_unit,
     desc: "Service/appliance-ready base carcass for sink or built-in oven.",
     pdf_page: 3,
     dimensions: { w: 600.0, d: 600.0, h: 800.0 }
@@ -119,7 +119,7 @@ module CabinetrixCatalogue
     name: "Base cabinet for built-in oven/sink (METOD)",
     brand: "METOD",
     category: :kitchen_base,
-    engine_type: :base_gola_drawers,
+    engine_type: :metod_base_unit,
     desc: "Service/appliance-ready base carcass for sink or built-in oven.",
     pdf_page: 3,
     dimensions: { w: 800.0, d: 600.0, h: 800.0 }

@@ -29,7 +29,7 @@ for item in items:
     if prefix == 'K':
         if sub in ['BAS', 'BIN']:
             cat = ':kitchen_base'
-            eng_type = ':base_gola_drawers'
+            eng_type = ':metod_base_unit'
         elif sub == 'BCO':
             cat = ':kitchen_corner_base'
             eng_type = ':base_blind_corner'
