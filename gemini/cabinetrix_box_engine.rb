@@ -3,13 +3,14 @@
 # File: gemini/cabinetrix_box_engine.rb
 #
 # Production Standard:
-#   • AUTHENTIC GOLA BEVELED FINGER-PULL DRAWER FRONTS:
-#     - 30° Beveled Grip Overhang extending directly into L-Gola & C-Gola channels.
-#     - Upper Front: Z=390.0mm -> 675.0mm (Height=285mm) with top 30° finger grip bevel.
-#     - Lower Front: Z=3.0mm -> 345.0mm (Height=342mm) with top 30° finger grip bevel.
-#   • SHOTGUN NOTCHED CORNER SHELF:
-#     - Clean CNC pass-through notch allowing the solid shelf to fit around the upright baffle.
-#   • DUAL TOP STRETCHERS & MID C-GOLA SUB-STRETCHER
+#   • EXACT SHOTGUN BLIND CORNER IMPLEMENTATION:
+#     - Full carcase with dual top stretchers & grooved back.
+#     - Upright corner door support baffle (18mm x 100mm).
+#     - 1-Piece solid front-notched mid shelf with CNC pass-through U-notch around upright.
+#     - Clean front blind filler panel and working door (Zero clutter, zero duplicate trays).
+#   • AUTHENTIC GOLA BEVELED FINGER-PULL EXTENDED FRONTS:
+#     - Lower Front: Z=3.0mm -> 345.0mm (Height=342mm)
+#     - Upper Front: Z=390.0mm -> 675.0mm (Height=285mm)
 # ==============================================================================
 require 'sketchup.rb'
 require_relative 'cabinetrix_collision_engine'
@@ -83,42 +84,31 @@ module CabinetrixBoxEngine
     group
   end
 
-  # Creates a 3D Beveled Gola Finger-Pull Front Slab with a 30-degree chamfer lip
-  def self.create_gola_front_face(entities, origin, width, height, material = nil, name = "Gola_Front_Face", has_top_bevel: true)
+  # Authentic Shotgun Front U-Notched Single Solid Sheet
+  def self.create_front_notched_shelf(entities, name, origin, size, notch_x0, notch_w, notch_d, material)
     group = entities.add_group
     group.name = name
     ox, oy, oz = origin
-    thk = FRONT_THK
-    bevel_d = 8.0.mm
-    bevel_h = 14.0.mm
+    sw, sd, sthk = size
 
-    pts = if has_top_bevel
-            [
-              Geom::Point3d.new(ox, oy - thk, oz),
-              Geom::Point3d.new(ox + width, oy - thk, oz),
-              Geom::Point3d.new(ox + width, oy, oz),
-              Geom::Point3d.new(ox + width, oy, oz + height - bevel_h),
-              Geom::Point3d.new(ox + width, oy - bevel_d, oz + height),
-              Geom::Point3d.new(ox + width, oy - thk, oz + height),
-              Geom::Point3d.new(ox, oy - thk, oz + height),
-              Geom::Point3d.new(ox, oy - bevel_d, oz + height),
-              Geom::Point3d.new(ox, oy, oz + height - bevel_h),
-              Geom::Point3d.new(ox, oy, oz)
-            ]
-          else
-            [
-              Geom::Point3d.new(ox, oy - thk, oz),
-              Geom::Point3d.new(ox + width, oy - thk, oz),
-              Geom::Point3d.new(ox + width, oy, oz),
-              Geom::Point3d.new(ox + width, oy, oz + height),
-              Geom::Point3d.new(ox + width, oy - thk, oz + height),
-              Geom::Point3d.new(ox, oy - thk, oz + height),
-              Geom::Point3d.new(ox, oy, oz + height),
-              Geom::Point3d.new(ox, oy, oz)
-            ]
-          end
+    # Polygon outline with front U-notch cutout
+    # Front is at oy (most negative Y = -depth), Back is at oy + sd
+    pts = [
+      Geom::Point3d.new(ox, oy + sd, oz),                               # Back-Left
+      Geom::Point3d.new(ox + sw, oy + sd, oz),                          # Back-Right
+      Geom::Point3d.new(ox + sw, oy, oz),                               # Front-Right
+      Geom::Point3d.new(notch_x0 + notch_w, oy, oz),                    # Notch-Right-Front
+      Geom::Point3d.new(notch_x0 + notch_w, oy + notch_d, oz),          # Notch-Right-Back
+      Geom::Point3d.new(notch_x0, oy + notch_d, oz),                    # Notch-Left-Back
+      Geom::Point3d.new(notch_x0, oy, oz),                              # Notch-Left-Front
+      Geom::Point3d.new(ox, oy, oz)                                     # Front-Left
+    ]
 
-    create_box(group.entities, [ox, oy - thk, oz], [width, thk, height], material, name)
+    face = group.entities.add_face(pts)
+    if face
+      face.reverse! if face.normal.z < 0
+      face.pushpull(sthk)
+    end
     group.material = material if material
     group
   end
@@ -174,28 +164,6 @@ module CabinetrixBoxEngine
     shelf_thk = is_glass ? 8.0.mm : BOARD_THK
     mat = is_glass ? mats[:glass] : mats[:carcase]
     create_box(group.entities, [sh_x, sh_y, z_pos], [shelf_w, shelf_d, shelf_thk], mat, is_glass ? "Glass_Shelf_Slab" : "Wood_Shelf_Slab")
-    group
-  end
-
-  # Authentic Shotgun Notched Corner Shelf (Passes through upright baffle)
-  def self.build_notched_corner_shelf(parent_ents, name, width, depth, z_pos, baffle_x, baffle_d, mats)
-    group = parent_ents.add_group
-    group.name = name
-
-    inner_w = width - (2 * BOARD_THK)
-    shelf_d = depth - 30.0.mm
-    thk = BOARD_THK
-
-    # 1. Main Continuous Shelf Section in Door Opening
-    door_section_w = baffle_x - BOARD_THK - 1.0.mm
-    create_box(group.entities, [BOARD_THK + 0.5.mm, -depth + 20.mm, z_pos], [door_section_w, shelf_d, thk], mats[:carcase], "Corner_Shelf_Door_Section")
-
-    # 2. Deep Blind Shelf Section behind Baffle
-    blind_section_w = inner_w - door_section_w - 19.0.mm
-    blind_section_d = depth - baffle_d - 20.0.mm
-    create_box(group.entities, [baffle_x + 19.0.mm, -depth + 20.mm, z_pos], [blind_section_w, shelf_d, thk], mats[:carcase], "Corner_Shelf_Blind_Front_Section")
-    create_box(group.entities, [baffle_x - 5.mm, -depth + baffle_d + 5.mm, z_pos], [blind_section_w + 24.mm, blind_section_d, thk], mats[:carcase], "Corner_Shelf_Rear_PassThrough")
-
     group
   end
 
@@ -383,44 +351,41 @@ module CabinetrixBoxEngine
 
     case type
     # ==========================================================================
-    # CORNER BASE CABINETS (SHOTGUN NOTCHED CORNER SHELF & UPRIGHT BAFFLE)
+    # CORNER BASE CABINETS — EXACT SHOTGUN BLIND CORNER IMPLEMENTATION
     # ==========================================================================
     when :base_blind_corner, :base_lemans_corner, :base_magic_corner, :base_corner_shelf
-      blind_w = 600.mm
-      door_w = width - blind_w - 3.mm
-      baffle_x = bx + door_w + 3.mm
-      baffle_d = depth - 50.mm
+      blind_width = 600.0.mm
+      door_width  = width - blind_width
+      upright_x   = door_width
 
+      # 1. Carcase
       create_box(box_grp.entities, [bx, by - depth, bz], [BOARD_THK, depth, height], mats[:carcase], "Gable_LH")
       create_box(box_grp.entities, [bx + width - BOARD_THK, by - depth, bz], [BOARD_THK, depth, height], mats[:carcase], "Gable_RH")
       build_structural_shelf(box_grp.entities, "Bottom_Panel", width, depth, bz, mats)
       build_shotgun_grooved_back(box_grp.entities, name, width, bz, bz + height, mats)
 
+      # 2. Dual Top Stretchers
       create_box(box_grp.entities, [bx + BOARD_THK, by - depth + GOLA_DEPTH, bz + height - BOARD_THK], [inner_w, 80.mm, BOARD_THK], mats[:carcase], "Top_Front_Stretcher")
       create_box(box_grp.entities, [bx + BOARD_THK, by - 80.mm, bz + height - BOARD_THK], [inner_w, 80.mm, BOARD_THK], mats[:carcase], "Top_Rear_Stretcher")
 
-      # Upright Dividing Baffle & Front Blind Filler
-      create_box(box_grp.entities, [baffle_x, by - depth, bz], [18.mm, baffle_d, height], mats[:carcase], "Blind_Corner_Internal_Baffle")
-      create_box(box_grp.entities, [baffle_x, by - depth - FRONT_THK, bz], [blind_w - 3.mm, FRONT_THK, height], front_mat, "Blind_Corner_Front_Filler")
-      
-      # Notched Shelf with Pass-Through cutout around Baffle
-      build_notched_corner_shelf(box_grp.entities, "Corner_Internal_Notched_Shelf", width, depth, bz + height/2.0, baffle_x, baffle_d, mats)
+      # 3. Upright Door Support Baffle (18mm x 100mm)
+      create_box(box_grp.entities, [bx + upright_x - BOARD_THK/2.0, by - depth, bz + BOARD_THK], [BOARD_THK, 100.mm, height - 3*BOARD_THK], mats[:carcase], "Corner_Door_Support_Upright")
 
+      # 4. Shotgun 1-Piece Front-Notched Shelf with CNC U-Notch around Upright
+      notch_w = BOARD_THK + 2.0.mm # 20mm
+      notch_d = 100.0.mm
+      notch_x = bx + upright_x - notch_w/2.0
+      shelf_origin = [bx + BOARD_THK, by - depth, bz + height/2.0]
+      shelf_size   = [inner_w, depth - BOARD_THK - BACK_THK, BOARD_THK]
+      create_front_notched_shelf(box_grp.entities, "Corner_Mid_Shelf_With_Upright_Notch", shelf_origin, shelf_size, notch_x, notch_w, notch_d, mats[:carcase])
+
+      # 5. Front Blind Panel & Accessible Working Door
       door_open_deg = (mode == :hybrid ? 95.0 : 0.0)
-      door_grp = create_box(box_grp.entities, [bx + 1.5.mm, by - depth - FRONT_THK, bz + 3.mm], [door_w, FRONT_THK, height - 38.mm], front_mat, "Accessible_Corner_Door")
+      door_grp = create_box(box_grp.entities, [bx + 3.mm, by - depth - FRONT_THK, bz + 3.mm], [door_width - 6.mm, FRONT_THK, height - 38.mm], front_mat, "Corner_Working_Door_Left")
       if door_open_deg > 0
-        door_grp.transform!(Geom::Transformation.rotation(Geom::Point3d.new(bx + 1.5.mm, by - depth - FRONT_THK, bz), Geom::Vector3d.new(0, 0, 1), -door_open_deg.degrees))
+        door_grp.transform!(Geom::Transformation.rotation(Geom::Point3d.new(bx + 3.mm, by - depth - FRONT_THK, bz), Geom::Vector3d.new(0, 0, 1), -door_open_deg.degrees))
       end
-
-      if type == :base_lemans_corner
-        tray_pull = (mode == :hybrid ? 350.mm : 0.mm)
-        [bz + 150.mm, bz + 450.mm].each_with_index do |tz, tidx|
-          tray = box_grp.entities.add_group
-          tray.name = "LeMans_Swivel_Tray_#{tidx+1}"
-          create_box(tray.entities, [bx + 40.mm, by - depth + 50.mm - (tidx==0 ? tray_pull : 0.mm), tz], [door_w + 180.mm, depth - 100.mm, 20.mm], mats[:carcase], "Peanut_Tray_Base")
-          create_cylinder(tray.entities, Geom::Point3d.new(bx + 40.mm + door_w, by - depth + 80.mm, tz), Geom::Vector3d.new(0, 0, 1), 18.mm, 250.mm, mats[:steel], 16)
-        end
-      end
+      create_box(box_grp.entities, [bx + door_width + 3.mm, by - depth - FRONT_THK, bz + 3.mm], [blind_width - 6.mm, FRONT_THK, height - 3.mm], front_mat, "Corner_Blind_Panel_Right")
 
     # ==========================================================================
     # TALL APPLIANCE & PANTRY TOWERS
